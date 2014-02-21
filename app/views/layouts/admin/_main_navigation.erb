@@ -1,0 +1,25 @@
+<nav id="main-nav">
+  <div class="navigation">
+
+    <!-- search form visible on phone -->
+    <div class="search">
+      <form action="search_results.html" method="get">
+        <div class="search-wrapper">
+          <input value="" class="search-query form-control" placeholder="Search..." autocomplete="off" name="q" type="text">
+          <button class="btn btn-link icon-search" name="button" type="submit"></button>
+        </div>
+      </form>
+    </div>
+
+    <!-- navigation items -->
+    <ul class="nav nav-stacked">
+      <!-- single navigation item -->
+      <%= nav_item(:li, nil, { link: '' }) do %>
+        <%= link_to('') do %>
+          <i class="icon-shopping-cart"></i>
+          <span>購物車管理</span>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</nav>
