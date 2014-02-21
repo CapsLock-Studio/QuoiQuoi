@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QuoiQuoi 布知道 - 後台管理系統</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+</head>
+<body class="contrast-sea-blue">
+
+<header>
+  <%= render 'layouts/admin/header_navigation' %>
+</header>
+
+<div id="wrapper">
+  <div id="main-nav-bg"></div>
+  <%= render 'layouts/admin/main_navigation' %>
+
+  <section id="content">
+    <div class="container">
+      <div id="content-wrapper" class="row">
+        <%= yield %>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
