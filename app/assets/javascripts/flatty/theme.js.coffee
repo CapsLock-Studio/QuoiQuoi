@@ -50,6 +50,7 @@ $(document).ready ->
 @nav_open = ->
   return $("body").hasClass("main-nav-opened") || $("#main-nav").width() > 50
 
+
 # JS plugins initializations
 $(document).on 'page:change', ->
   setTimeAgo()
@@ -60,6 +61,9 @@ $(document).on 'page:change', ->
   setCharCounter()
   setMaxLength()
   setValidateForm()
+
+  # switch bootstrapSwitch initial
+  $(".switch").bootstrapSwitch()
 
   # --------------------------------------------------------------------------------------------------------------------
   # removes .box after click on .box-remove button
@@ -272,13 +276,14 @@ $(document).on 'page:change', ->
 
       dt = $(elem).dataTable
         sDom: sdom
+        bStateSave: true
         sPaginationType: "bootstrap"
         "iDisplayLength": $(elem).data("pagination-records") || 10
         oLanguage:
-          sLengthMenu: "_MENU_ records per page"
+          sLengthMenu: "_MENU_ 每頁"
       dt.columnFilter() if $(elem).hasClass("data-table-column-filter")
       dt.closest('.dataTables_wrapper').find('div[id$=_filter] input').css("width", "200px");
-      dt.closest('.dataTables_wrapper').find('input').addClass("form-control input-sm").attr('placeholder', 'Search')
+      dt.closest('.dataTables_wrapper').find('input').addClass("form-control input-sm").attr('placeholder', '關鍵字')
 
 # --------------------------------------------------------------------------------------------------------------------
 

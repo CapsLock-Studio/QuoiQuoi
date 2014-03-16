@@ -1,0 +1,45 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.handmadebag') %>
+<div class="container">
+  <div class="row">
+    <%= render 'side_navigation' %>
+    <div class="col-md-9">
+      <div class="row">
+        <% @products.each do |product| %>
+          <% product.product_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+            <% unless translate.name.blank? %>
+              <div class="col-md-4 col-sm-6">
+                <div class="thumbnails thumbnail-style">
+                  <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path product.image.url(:large) %>">
+                    <span class="overlay-zoom">
+                      <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+                      <div class="zoom-icon"></div>
+                    </span>
+                  </a>
+                  <div class="caption">
+                    <h4><%= translate.name %></h4>
+                  </div>
+                  <div class="w-footer">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <span class="price">
+                          <%= number_to_currency(product.price) %>
+                        </span>
+                        <%= link_to t('view_detail'),
+                                    product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'btn btn-default pull-right' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="border-top: 1px solid #F1F1F1;">
+          <%= paginate @products %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

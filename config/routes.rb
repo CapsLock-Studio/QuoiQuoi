@@ -1,4 +1,5 @@
 QuoiQuoi::Application.routes.draw do
+  get "other_products/Admin"
   devise_for :admin, controller: { sessions: 'admin/sessions' }
   # Disable new registration but allow edit
   as :admin do
@@ -12,6 +13,30 @@ QuoiQuoi::Application.routes.draw do
   namespace :admin do
     root to: 'home#index'
     resources :home
+    resources :products
+    resources :product_types
+    resources :other_products
+    resources :product_custom_types
+    resources :orders
+    resources :locales
+  end
+
+  root to: 'home#index'
+
+  resource :home
+  resources :products do
+    collection do
+      get 'search'
+    end
+  end
+  resources :news
+  resources :courses
+  resource :reservation
+  resource :requirement
+  resource :contact
+
+  resources :product_types do
+    resources :products
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

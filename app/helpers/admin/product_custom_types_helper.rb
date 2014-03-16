@@ -1,0 +1,2 @@
+module Admin::ProductCustomTypesHelper
+end

@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      語系
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content">
+    <%= form_for([:admin, @locale], html: { class: 'form validate-form' }) do |f| %>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= f.label :lang, 'l18n' %>
+          <div class="controls">
+            <%= f.text_field :lang, class: 'form-control', placeholder: '請輸入語系英文略稱', data: { 'rule-required' => true } %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :name, '語系名稱' %>
+          <div class="controls">
+            <%= f.text_field :name, class: 'form-control', placeholder: '請輸入語系名稱', data: { 'rule-required' => true } %>
+          </div>
+        </div>
+        <div class="form-actions row">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= f.button class: 'btn btn-primary btn-lg' do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+              <%= link_to '取消', admin_locales_path, class: 'btn btn-lg' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

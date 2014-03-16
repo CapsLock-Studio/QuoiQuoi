@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220135349) do
+ActiveRecord::Schema.define(version: 20140314123315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,10 +37,15 @@ ActiveRecord::Schema.define(version: 20140220135349) do
 
   create_table "good_custom_description_images", force: true do |t|
     t.integer  "good_id"
-    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
+
+  add_index "good_custom_description_images", ["good_id"], name: "index_good_custom_description_images_on_good_id", using: :btree
 
   create_table "good_custom_items", force: true do |t|
     t.integer  "good_id"
@@ -48,6 +53,9 @@ ActiveRecord::Schema.define(version: 20140220135349) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "good_custom_items", ["good_id"], name: "index_good_custom_items_on_good_id", using: :btree
+  add_index "good_custom_items", ["product_custom_item_id"], name: "index_good_custom_items_on_product_custom_item_id", using: :btree
 
   create_table "goods", force: true do |t|
     t.integer  "order_id"
@@ -58,6 +66,16 @@ ActiveRecord::Schema.define(version: 20140220135349) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  add_index "goods", ["order_id"], name: "index_goods_on_order_id", using: :btree
+  add_index "goods", ["product_id"], name: "index_goods_on_product_id", using: :btree
+
+  create_table "locales", force: true do |t|
+    t.string   "lang"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "models", force: true do |t|
@@ -86,31 +104,99 @@ ActiveRecord::Schema.define(version: 20140220135349) do
     t.datetime "updated_at"
   end
 
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "product_custom_item_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_custom_item_id"
+  end
+
+  add_index "product_custom_item_translates", ["locale_id"], name: "index_product_custom_item_translates_on_locale_id", using: :btree
+  add_index "product_custom_item_translates", ["product_custom_item_id"], name: "index_product_custom_item_translates_on_product_custom_item_id", using: :btree
+
   create_table "product_custom_items", force: true do |t|
     t.integer  "product_id"
     t.integer  "product_custom_type_id"
-    t.string   "name"
-    t.string   "image"
     t.integer  "price"
     t.integer  "workday"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
-  create_table "product_custom_types", force: true do |t|
+  add_index "product_custom_items", ["product_custom_type_id"], name: "index_product_custom_items_on_product_custom_type_id", using: :btree
+  add_index "product_custom_items", ["product_id"], name: "index_product_custom_items_on_product_id", using: :btree
+
+  create_table "product_custom_type_translates", force: true do |t|
+    t.integer  "locale_id"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_custom_type_id"
+  end
+
+  add_index "product_custom_type_translates", ["locale_id"], name: "index_product_custom_type_translates_on_locale_id", using: :btree
+  add_index "product_custom_type_translates", ["product_custom_type_id"], name: "index_product_custom_type_translates_on_product_custom_type_id", using: :btree
+
+  create_table "product_custom_types", force: true do |t|
     t.boolean  "multi"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "products", force: true do |t|
+  create_table "product_images", force: true do |t|
+    t.integer  "product_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
+
+  create_table "product_translates", force: true do |t|
+    t.integer  "locale_id"
     t.string   "name"
-    t.string   "image"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_id"
+  end
+
+  add_index "product_translates", ["locale_id"], name: "index_product_translates_on_locale_id", using: :btree
+  add_index "product_translates", ["product_id"], name: "index_product_translates_on_product_id", using: :btree
+
+  create_table "product_type_translates", force: true do |t|
+    t.string   "name"
+    t.integer  "product_type_id"
+    t.integer  "locale_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_types", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
     t.integer  "price"
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "product_type_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "ships", force: true do |t|
@@ -119,7 +205,10 @@ ActiveRecord::Schema.define(version: 20140220135349) do
     t.boolean  "delivered"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "completed"
   end
+
+  add_index "ships", ["order_id"], name: "index_ships_on_order_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

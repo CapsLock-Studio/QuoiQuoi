@@ -1,0 +1,74 @@
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to(root_path, class: 'navbar-brand') do %>
+        <h2 id="logo-header" style="line-height:0;">TKU<span class="color-red">I</span>M</h2>
+      <% end %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div style="height: 1px;" class="navbar-collapse navbar-responsive-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <%= nav_item(root_path) do %>
+          <%= link_to(root_path) do %>
+            <i class="glyphicon glyphicon-home"></i>
+          <% end %>
+        <% end %>
+        <%= nav_item(products_path, {rule: /#{:products}.*/}) do %>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
+            <%= t('header.navigation.shop') %>
+            <i class="icon-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <%= link_to t('header.navigation.handmadebag'), products_path %>
+            </li>
+            <li>
+              <%= link_to t('header.navigation.custom_handmadebag'), products_path %>
+            </li>
+            <li>
+              <%= link_to t('header.navigation.order_request'), products_path %>
+            </li>
+            <% @product_types.each do |product_type| %>
+              <li>
+                <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase, product_type_products_path(product_type) %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%= nav_item(news_index_path) do %>
+          <%= link_to t('header.navigation.news'), news_index_path %>
+        <% end %>
+        <%= nav_item(courses_path) do %>
+          <%= link_to t('header.navigation.class'), courses_path %>
+        <% end %>
+        <li>
+          <%= link_to t('header.navigation.requirement'), root_path(anchor: 'information') %>
+        </li>
+        <li>
+          <%= link_to t('header.navigation.rent'), root_path(anchor: 'registration') %>
+        </li>
+        <li>
+          <%= link_to t('header.navigation.contact'), root_path(anchor: 'sponsor') %>
+        </li>
+        <li class="hidden-sm"><a class="search"><i class="icon-search search-btn"></i></a></li>
+      </ul>
+      <div class="search-open">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" />
+          <span class="input-group-btn">
+            <button class="btn-u" type="button">Go</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+    </div><!-- /navbar-collapse -->
+  </div>
+</nav>

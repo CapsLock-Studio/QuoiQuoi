@@ -2,11 +2,11 @@
 <html>
 <head>
   <title>QuoiQuoi 布知道 - 後台管理系統</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    'flatty', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag 'flatty', 'data-turbolinks-track' => true %>
 </head>
-<body class="contrast-sea-blue">
+<body class="contrast-orange">
 
 <header>
   <%= render 'layouts/admin/header_navigation' %>
@@ -24,5 +24,6 @@
     </div>
   </section>
 </div>
+<%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
 </body>
 </html>

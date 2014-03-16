@@ -14,11 +14,87 @@
     <!-- navigation items -->
     <ul class="nav nav-stacked">
       <!-- single navigation item -->
-      <%= nav_item(:li, nil, { link: '' }) do %>
-        <%= link_to('') do %>
-          <i class="icon-shopping-cart"></i>
-          <span>購物車管理</span>
+      <%= nav_item_with_resource(admin_root_path, nil, Admin) do %>
+        <%= link_to(admin_root_path) do %>
+          <i class="icon-dashboard"></i>
+          <span>Dashboard</span>
         <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_locales_path, {rule: /#{admin_locales_path}.*/}, Admin::Locale) do %>
+        <%= link_to(admin_locales_path) do %>
+          <i class="icon-globe"></i>
+          <span>語系管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_product_custom_types_path, {rule: /#{admin_product_custom_types_path}.*/}, Admin::ProductCustomType) do %>
+        <%= link_to(admin_product_custom_types_path) do %>
+          <i class="icon-anchor"></i>
+          <span>手工包客製化種類管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_product_types_path, {rule: /#{admin_product_types_path}.*/}, Admin::ProductType) do %>
+        <%= link_to(admin_product_types_path) do %>
+          <i class="icon-anchor"></i>
+          <span>其他商品種類管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_products_path, {rule: /#{admin_products_path}.*||#{admin_other_products_path}.*/}, Admin::Product) do %>
+        <a class="dropdown-collapse" href="#">
+          <i class="icon-inbox"></i>
+          <span>購物車管理</span>
+          <i class="icon-angle-down angle-down"></i>
+        </a>
+        <ul class="nav nav-stacked">
+          <%= nav_item_with_resource(admin_products_path, {rule: /#{admin_products_path}.*/}, Admin::Product) do %>
+            <%= link_to(admin_products_path) do %>
+              <i class="icon-shopping-cart"></i>
+              <span>手工包管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_other_products_path, {rule: /#{admin_other_products_path}.*/}, Admin::Product) do %>
+            <%= link_to(admin_other_products_path) do %>
+              <i class="icon-shopping-cart"></i>
+              <span>其他商品管理</span>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+      <%= nav_item_with_resource('#', nil, Admin::Order) do %>
+        <a class="dropdown-collapse" href="#">
+          <i class="icon-inbox"></i>
+          <span>訂單管理</span>
+          <i class="icon-angle-down angle-down"></i>
+        </a>
+        <ul class="nav nav-stacked">
+          <%= nav_item_with_resource(admin_order_path(1), nil, Admin::Order) do %>
+            <%= link_to(admin_order_path(1)) do %>
+              <i class="icon-check"></i>
+              <span>待確認訂單</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_order_path(2), nil, Admin::Order) do %>
+            <%= link_to(admin_order_path(2)) do %>
+              <i class="icon-check"></i>
+              <span>待確認匯款</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_order_path(3), nil, Admin::Order) do %>
+            <%= link_to(admin_order_path(3)) do %>
+              <i class="icon-truck"></i>
+              <span>待出貨訂單</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_order_path(4), nil, Admin::Order) do %>
+            <%= link_to(admin_order_path(4)) do %>
+              <i class="icon-flag"></i>
+              <span>已完成訂單記錄</span>
+            <% end %>
+          <% end %>
+        </ul>
       <% end %>
     </ul>
   </div>

@@ -1,0 +1,44 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+zh-TW:
+  header:
+    top:
+      language: '語言'
+      login: '登入'
+    navigation:
+      home: '首頁'
+      shop: '商店'
+      news: '最新消息'
+      handmadebag: '手工包'
+      custom_handmadebag: '客製化手工包'
+      order_request: '訂製手工包'
+      class: '手作教室'
+      requirement: '人才招募'
+      rent: '場地租借'
+      contact: '聯絡我們'
+  footer:
+    login: '管理登入'
+  item: '項目'
+  view_detail: '查看詳細'
+  category: '商品類別'
+  search_product: '查詢商品'
+  search_for_product: '商品名稱'

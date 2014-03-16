@@ -1,0 +1,18 @@
+<div class="col-md-3">
+  <ul class="list-group sidebar-nav-v1">
+    <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}(\/\d*)?$/}) do %>
+      <%= link_to t('header.navigation.handmadebag').titleize, products_path %>
+    <% end %>
+    <li class="list-group-item">
+      <%= link_to t('header.navigation.custom_handmadebag').titleize, products_path %>
+    </li>
+    <li class="list-group-item">
+      <%= link_to t('header.navigation.order_request').titleize, products_path %>
+    </li>
+    <% @product_types.each do |product_type| %>
+      <%= nav_item(product_type_products_path(product_type), {class: 'list-group-item', rule: /^\/#{:product_types}\/#{product_type.id}\/#{:products}(\/\d*)?$/}) do %>
+        <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name, product_type_products_path(product_type) %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
