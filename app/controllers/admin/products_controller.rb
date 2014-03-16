@@ -22,7 +22,6 @@ class Admin::ProductsController < AdminController
     add_breadcrumb '新增商品'
 
     @product = Product.new
-    @product.product_images.build
     @locales = Locale.all
     @locales.each do |locale|
       @product.product_translates.build(locale_id: locale.id)

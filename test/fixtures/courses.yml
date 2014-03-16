@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  price: 1
+  time: 2014-03-17 04:46:46
+  attendance: 1
+
+two:
+  price: 1
+  time: 2014-03-17 04:46:46
+  attendance: 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140314123315) do
+ActiveRecord::Schema.define(version: 20140316195446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,42 @@ ActiveRecord::Schema.define(version: 20140314123315) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "course_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "course_translates", force: true do |t|
+    t.integer  "course_id"
+    t.integer  "locale_id"
+    t.string   "name"
+    t.string   "teacher"
+    t.string   "description"
+    t.string   "note"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_translates", ["course_id"], name: "index_course_translates_on_course_id", using: :btree
+  add_index "course_translates", ["locale_id"], name: "index_course_translates_on_locale_id", using: :btree
+
+  create_table "courses", force: true do |t|
+    t.integer  "price"
+    t.datetime "time"
+    t.integer  "attendance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
 
   create_table "good_custom_description_images", force: true do |t|
     t.integer  "good_id"
@@ -198,6 +234,17 @@ ActiveRecord::Schema.define(version: 20140314123315) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  create_table "registrations", force: true do |t|
+    t.integer  "course_id"
+    t.integer  "user_id"
+    t.boolean  "accept"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree
+  add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "ships", force: true do |t|
     t.integer  "order_id"

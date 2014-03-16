@@ -15,6 +15,7 @@ QuoiQuoi::Application.routes.draw do
     resources :home
     resources :products
     resources :product_types
+    resources :courses
     resources :other_products
     resources :product_custom_types
     resources :orders

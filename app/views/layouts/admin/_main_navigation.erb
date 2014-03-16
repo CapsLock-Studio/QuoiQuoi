@@ -63,6 +63,14 @@
           <% end %>
         </ul>
       <% end %>
+
+      <%= nav_item_with_resource(admin_courses_path, {rule: /#{admin_courses_path}.*/}, Admin::Course) do %>
+        <%= link_to(admin_courses_path) do %>
+          <i class="icon-book"></i>
+          <span>課程管理</span>
+        <% end %>
+      <% end %>
+
       <%= nav_item_with_resource('#', nil, Admin::Order) do %>
         <a class="dropdown-collapse" href="#">
           <i class="icon-inbox"></i>

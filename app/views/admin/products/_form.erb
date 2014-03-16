@@ -64,20 +64,35 @@
               </div>
             </div>
             <%= f.fields_for :product_translates do |builder| %>
-              <div class="form-group">
-                <%= builder.label :name, "商品#{@product.product_translates[builder.index].locale.name}名稱" %>
-                <div class="controls">
-                  <%= builder.text_field :name, class: 'form-control',
-                                         placeholder: "請輸入#{@product.product_translates[builder.index].locale.name}名稱" %>
+              <div class="box">
+                <div class="box-header">
+                  <div class="title">
+                    <%= @product.product_translates[builder.index].locale.name %>
+                    <small style="margin-left:10px;">
+                      <span class="label label-success">可留空</span>
+                    </small>
+                  </div>
+                  <div class="actions">
+                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="form-group">
+                    <%= builder.label :name, '商品名稱' %>
+                    <div class="controls">
+                      <%= builder.text_field :name, class: 'form-control',
+                                             placeholder: '請輸入名稱' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= builder.label :description, '商品敘述' %>
+                    <div class="controls">
+                      <%= builder.text_area :description, class: 'form-control', placeholder: '請輸入敘述' %>
+                    </div>
+                  </div>
+                  <%= builder.hidden_field :locale_id %>
                 </div>
               </div>
-              <div class="form-group">
-                <%= builder.label :description, "商品#{@product.product_translates[builder.index].locale.name}敘述" %>
-                <div class="controls">
-                  <%= builder.text_area :description, class: 'form-control', placeholder: "請輸入#{@product.product_translates[builder.index].locale.name}敘述" %>
-                </div>
-              </div>
-              <%= builder.hidden_field :locale_id %>
             <% end %>
           </div>
         </div>
