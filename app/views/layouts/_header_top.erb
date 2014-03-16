@@ -1,0 +1,20 @@
+<div class="container">
+  <ul class="loginbar pull-right">
+    <li>
+      <i class="icon-globe"></i>
+      <a><%= t('header.top.language') %></a>
+      <ul class="lenguages">
+        <%= lang_nav_item('zh-TW') do %>
+          <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+        <% end %>
+        <%= lang_nav_item('en') do %>
+          <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
+        <% end %>
+      </ul>
+    </li>
+    <li class="devider"></li>
+    <li>
+      <%= link_to t('header.top.login'), new_user_session_path %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,59 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-globe"></i>
+      <span>其他商品種類管理</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增其他商品種類', new_admin_product_type_path, class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">其他商品種類列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                  <tr>
+                    <th>其他商品種類</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @product_types.each do |product_type| %>
+                    <tr>
+                      <td>
+                        <%= product_type.product_type_translates.collect{|product_type_translate| product_type_translate.name }.join(' - ') %>
+                      </td>
+                      <td>
+                        <div class='text-right'>
+                          <%= link_to(edit_admin_product_type_path(product_type), class: 'btn btn-md') do %>
+                            <i class='icon-pencil'></i>
+                          <% end %>
+                          <%= link_to(admin_product_type_path(product_type), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                            <i class='icon-remove'></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

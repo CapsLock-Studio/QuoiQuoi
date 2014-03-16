@@ -1,0 +1,2 @@
+module Admin::OtherProductsHelper
+end

@@ -1,0 +1,44 @@
+@import 'unify/bootstrap/bootstrap';
+@import 'unify/plugins/plugins';
+@import 'unify/jquery/jquery_ui';
+
+@import 'unify/responsive';
+
+@import 'unify/style';
+
+@import 'unify/headers/header1';
+@import 'unify/themes/light';
+
+@import 'unify/pages/pages';
+
+@import 'unify/themes/default';
+@import 'unify/themes/light';
+@import 'unify/themes/headers/header1-light';
+
+.breadcrumb > li:last-child {
+  color: #E67E22;
+}
+
+.w-footer {
+  border-top: 1px solid #F1F1F1;
+  padding: 10px 0;
+}
+
+.w-footer span {
+  font-size: 18px;
+  color: #616161;
+}
+
+.thumbnail-style {
+  padding-bottom: 0;
+}
+
+.list-group-item {
+  border: none;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+  text-decoration: none;
+  background-color: #F5F5F5;
+  color: #262626;
+}

@@ -1,21 +1,50 @@
 module ApplicationHelper
-  def nav_item(name, content_or_options_with_block = nil, options = nil, escape = true, &block)
+  def nav_item(link, options = nil, &block)
+    options ||= {}
+    options[:class] ||= ''
 
     if options[:rule].nil?
       # set up active
-      options[:class] = 'active' if current_page?(options[:link])
+      options[:class] << ' active' if current_page?(link)
     else
-      options[:class] = 'active' if options[:link] =~ options[:rule]
+      options[:class] << ' active' if request.env['PATH_INFO'] =~ options[:rule]
     end
 
-    # remove link from hash table
-    options[:link] = nil
+    if block_given?
+      content_tag_string(:li, capture(&block), options, true)
+    else
+      content_tag_string(:li, nil, options, true)
+    end
+  end
+
+  def nav_item_with_resource(link, options = nil, resource = nil, &block)
+    options ||= {}
+    options[:class] ||= ''
+
+    if !resource.nil? && can?(:read, resource)
+      if options[:rule].nil?
+        # set up active
+        options[:class] << ' active' if current_page?(link)
+      else
+        options[:class] << ' active' if request.env['PATH_INFO'] =~ options[:rule]
+      end
+
+      if block_given?
+        content_tag_string(:li, capture(&block), options, true)
+      else
+        content_tag_string(:li, nil, options, true)
+      end
+    end
+  end
+
+  def lang_nav_item(language, &block)
+    options ||= {}
+    options[:class] = 'active' if I18n.locale == language.to_sym
 
     if block_given?
-      options = content_or_options_with_block if content_or_options_with_block.is_a?(Hash)
-      content_tag_string(name, capture(&block), options, escape)
+      content_tag_string(:li, capture(&block), options, true)
     else
-      content_tag_string(name, content_or_options_with_block, options, escape)
+      content_tag_string(:li, nil, options, true)
     end
   end
 end

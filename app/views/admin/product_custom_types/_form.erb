@@ -1,0 +1,36 @@
+<%= form_for([:admin, @product_custom_type], html: { class: 'form validate-form' }) do |f| %>
+  <div class="col-sm-12">
+    <div class="form-group">
+      <%= f.fields_for :product_custom_type_translates do |builder| %>
+        <%= builder.label :name, "商品客製化種類#{@product_custom_type.product_custom_type_translates[builder.index].locale.name}名稱" %>
+        <div class="controls">
+          <%= builder.text_field :name, class: 'form-control', placeholder: "請輸入商品客製化種類#{@product_custom_type.product_custom_type_translates[builder.index].locale.name}名稱", data: { 'rule-required' => true } %>
+        </div>
+        <%= builder.hidden_field :locale_id %>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <%= f.label :multi, '是否可以多選', class: 'col-sm-6' %>
+        <div class="controls col-sm-6">
+          <div class="switch pull-right" data-off="danger" data-on="primary" data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>'>
+            <%= f.check_box :multi %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row form-actions">
+      <div class="col-sm-12">
+        <div class="pull-right">
+          <%= f.button class: 'btn btn-primary btn-lg' do %>
+            <i class="icon-save"></i>
+            儲存
+          <% end %>
+          <%= link_to admin_product_custom_types_path, class: 'btn btn-default btn-lg' do %>
+            取消
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

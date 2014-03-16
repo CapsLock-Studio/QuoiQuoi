@@ -20,4 +20,24 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  header:
+    top:
+      language: 'LANGUAGE'
+      login: 'LOGIN'
+    navigation:
+      home: 'HOME'
+      shop: 'SHOP'
+      news: 'NEWS'
+      handmadebag: 'HANDMADEBAG'
+      custom_handmadebag: 'CUSTOM HANDMADEBAG'
+      order_request: 'ORDER YOUR BAG'
+      class: 'CLASS'
+      requirement: 'REQUIREMENT'
+      rent: 'TO RENT'
+      contact: 'CONTACTS'
+  footer:
+    login: 'Login Admin'
+  view_detail: 'View Detail'
+  category: 'Category'
+  search_product: 'Search Products'
+  search_for_product: 'Search for Products'

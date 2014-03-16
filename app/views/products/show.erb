@@ -1,0 +1,171 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.handmadebag') %>
+<div class="container">
+  <div class="row">
+    <%= render 'side_navigation' %>
+    <div class="col-md-9">
+      <div class="row margin-bottom-40">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path @product.image.url(:large) %>">
+                <span class="overlay-zoom">
+                  <%= image_tag @product.image.url(:medium), class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+              </a>
+            </div>
+            <% @product.product_images.each do |product_image| %>
+              <div class="col-sm-4" style="margin-top:15px;">
+                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path product_image.image.url(:large) %>">
+                <span class="overlay-zoom">
+                  <%= image_tag product_image.image.url(:medium), class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+                </a>
+              </div>
+            <% end %>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form_for :order do %>
+            <% @product.product_translates.select([:name, :description]).where(locale_id: session[:locale_id]).each do |translate| %>
+              <div class="row">
+                <div class="col-md-12 margin-bottom-50">
+                  <ul class="social-icons pull-right">
+                    <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
+                    <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
+                    <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
+                  </ul>
+                  <h3 style="color:#666;">
+                    <strong>
+                      <%= translate.name %>
+                    </strong>
+                  </h3>
+                  <p>
+                    <%= translate.description %>
+                  </p>
+                </div>
+                <div class="col-md-12 margin-bottom-10">
+                  <div class="header">
+                    <span class="color-green">搭配你的手工包</span>
+                  </div>
+                </div>
+                <div class="col-md-12 margin-bottom-10">
+                  <label for="color">顏色</label>
+                  <select id="color" class="selectpicker" data-width="100%">
+                    <option>紅色</option>
+                    <option>綠色</option>
+                  </select>
+                </div>
+                <div class="col-md-12 margin-bottom-10">
+                  <label for="color">配件</label>
+                  <select id="color" class="selectpicker" data-width="100%" multiple>
+                    <option>熊熊</option>
+                    <option>兔兔</option>
+                    <option>花花</option>
+                    <option>太陽</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <h4 class="margin-bottom-20">
+                    <strong style="color:#666;">$ 3,000</strong>
+                    <small>需要的工作天大約為 10 天</small>
+                  </h4>
+                  <a href="#" class="btn btn-block btn-u">加到購物車</a>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Recent Works -->
+          <div class="headline"><h2>Recent Works</h2></div>
+          <div class="margin-bottom-40">
+            <ul id="list" class="bxslider recent-work">
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/2.jpg" alt="" /></em>
+                    <span>
+                        <strong>Happy New Year</strong>
+                        <i>Anim pariatur cliche reprehenderit</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/9.jpg" alt="" /></em>
+                    <span>
+                        <strong>Award Winning Agency</strong>
+                        <i>Responsive Bootstrap Template</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/4.jpg" alt="" /></em>
+                    <span>
+                        <strong>Wolf Moon Officia</strong>
+                        <i>Pariatur prehe cliche reprehrit</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/5.jpg" alt="" /></em>
+                    <span>
+                        <strong>Food Truck Quinoa Nesciunt</strong>
+                        <i>Craft labore wes anderson cred</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/6.jpg" alt="" /></em>
+                    <span>
+                        <strong>Happy New Year</strong>
+                        <i>Anim pariatur cliche reprehenderit</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/7.jpg" alt="" /></em>
+                    <span>
+                        <strong>Award Winning Agency</strong>
+                        <i>Responsive Bootstrap Template</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/8.jpg" alt="" /></em>
+                    <span>
+                        <strong>Wolf Moon Officia</strong>
+                        <i>Pariatur prehe cliche reprehrit</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden"><img src="assets/img/main/9.jpg" alt="" /></em>
+                    <span>
+                        <strong>Food Truck Quinoa Nesciunt</strong>
+                        <i>Craft labore wes anderson cred</i>
+                    </span>
+                </a>
+              </li>
+            </ul>
+          </div><!--/row-->
+          <!-- End Recent Works -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

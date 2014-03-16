@@ -2,13 +2,34 @@
 <html>
 <head>
   <title>QuoiQuoi</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    'unify', media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag 'unify', "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="navbar" style="margin-bottom:0;border:0;">
+  <div class="top">
+    <%= render 'layouts/header_top' %>
+  </div>
+  <header class="header">
+    <%= render 'layouts/header_navigation' %>
+  </header>
+</div>
 
 <%= yield %>
 
+<div id="topcontrol">
+  <%= image_tag 'unify/up.png', style: 'width:51px;height:42px;', width: '51', height: '42' %>
+</div>
+
+<div class="footer">
+  <%= render 'layouts/footer' %>
+</div>
+
+<div class="copyright">
+  <%= render 'layouts/copyright' %>
+</div>
+
+<%= javascript_include_tag 'application', data: { 'turbolinks-track' => true } %>
 </body>
 </html>

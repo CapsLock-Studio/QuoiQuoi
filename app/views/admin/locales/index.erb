@@ -1,0 +1,63 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-globe"></i>
+      <span>語系管理</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增語系', new_admin_locale_path, class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box orange-border" style="margin-bottom:0;">
+        <div class="box-header orange-background">
+          <div class="title">語系列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                  <tr>
+                    <th>l18n</th>
+                    <th>語言</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @locales.each do |locale| %>
+                    <tr>
+                      <td>
+                        <%= locale.lang %>
+                      </td>
+                      <td>
+                        <%= locale.name %>
+                      </td>
+                      <td>
+                        <div class="text-right">
+                          <%= link_to(edit_admin_locale_path(locale), class: 'btn btn-success btn-xs') do %>
+                            <i class="icon-edit"></i>
+                          <% end %>
+                          <%= link_to(admin_locale_path(locale), class: 'btn btn-danger btn-xs', method: :delete, data: { confirm: '你確定要刪除嗎？' }) do %>
+                            <i class="icon-remove"></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

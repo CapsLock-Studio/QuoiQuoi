@@ -1,0 +1,26 @@
+<%= form_for([:admin, @product_type], html: { class: 'form validate-form' }) do |f| %>
+  <div class="col-sm-12">
+    <div class="form-group">
+      <%= f.fields_for :product_type_translates do |builder| %>
+        <%= builder.label :name, "其他商品種類#{@product_type.product_type_translates[builder.index].locale.name}名稱" %>
+        <div class="controls">
+          <%= builder.text_field :name, class: 'form-control', placeholder: "請輸入其他商品種類#{@product_type.product_type_translates[builder.index].locale.name}名稱", data: { 'rule-required' => true } %>
+        </div>
+        <%= builder.hidden_field :locale_id %>
+      <% end %>
+    </div>
+    <div class="row form-actions">
+      <div class="col-sm-12">
+        <div class="pull-right">
+          <%= f.button class: 'btn btn-primary btn-lg' do %>
+            <i class="icon-save"></i>
+            儲存
+          <% end %>
+          <%= link_to admin_product_types_path, class: 'btn btn-default btn-lg' do %>
+            取消
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
