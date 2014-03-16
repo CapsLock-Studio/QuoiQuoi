@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140316195446) do
+ActiveRecord::Schema.define(version: 20140316232350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,22 @@ ActiveRecord::Schema.define(version: 20140316195446) do
   add_index "course_translates", ["course_id"], name: "index_course_translates_on_course_id", using: :btree
   add_index "course_translates", ["locale_id"], name: "index_course_translates_on_locale_id", using: :btree
 
+  create_table "course_type_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.integer  "course_type_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_type_translates", ["course_type_id"], name: "index_course_type_translates_on_course_type_id", using: :btree
+  add_index "course_type_translates", ["locale_id"], name: "index_course_type_translates_on_locale_id", using: :btree
+
+  create_table "course_types", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "courses", force: true do |t|
     t.integer  "price"
     t.datetime "time"
@@ -69,7 +85,11 @@ ActiveRecord::Schema.define(version: 20140316195446) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "course"
+    t.integer  "course_type_id"
   end
+
+  add_index "courses", ["course_type_id"], name: "index_courses_on_course_type_id", using: :btree
 
   create_table "good_custom_description_images", force: true do |t|
     t.integer  "good_id"

@@ -27,7 +27,7 @@ en:
     navigation:
       home: 'HOME'
       shop: 'SHOP'
-      news: 'NEWS'
+      report_remittance: 'Report Remittance'
       handmadebag: 'HANDMADEBAG'
       custom_handmadebag: 'CUSTOM HANDMADEBAG'
       order_request: 'ORDER YOUR BAG'

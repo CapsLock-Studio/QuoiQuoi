@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  locale_id: 
+  course_type_id: 
+  name: MyString
+
+two:
+  locale_id: 
+  course_type_id: 
+  name: MyString

@@ -43,7 +43,7 @@
                         </div>
                       </td>
                       <td>
-                        <%= product.product_translates.collect{|translate| translate.name.blank?? 'No Data' : translate.name}.join(' - ') %>
+                        <%= product.product_translates.collect{|translate| translate.name.blank?? 'No Translate' : translate.name}.join(' - ') %>
                       </td>
                       <td>
                         <%= product.quantity %>
