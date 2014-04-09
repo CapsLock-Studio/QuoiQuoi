@@ -17,7 +17,12 @@
 //= require jquery_ujs
 //= require unify/bootstrap/bootstrap.min
 //= require unify/plugins/plugins
+
+//= require flatty/plugins/fullcalendar/fullcalendar.min
+
 //= require turbolinks
 //= require unify/theme
 //= require unify/app
 //= require unify/pages/index
+
+//= require flatty/plugins/bootbox/bootbox.min.js

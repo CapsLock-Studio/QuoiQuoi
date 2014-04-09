@@ -7,7 +7,8 @@ module ApplicationHelper
       # set up active
       options[:class] << ' active' if current_page?(link)
     else
-      options[:class] << ' active' if request.env['PATH_INFO'] =~ options[:rule]
+      options[:class] << ' active' if request.env['PATH_INFO'] =~ options[:rule] || request.env['REQUEST_URI'] =~ options[:rule]
+      options[:rule] = nil
     end
 
     if block_given?
@@ -26,7 +27,8 @@ module ApplicationHelper
         # set up active
         options[:class] << ' active' if current_page?(link)
       else
-        options[:class] << ' active' if request.env['PATH_INFO'] =~ options[:rule]
+        options[:class] << ' active' if request.env['PATH_INFO'] =~ options[:rule] || request.env['REQUEST_URI'] =~ options[:rule]
+        options[:rule] = nil
       end
 
       if block_given?
@@ -45,6 +47,19 @@ module ApplicationHelper
       content_tag_string(:li, capture(&block), options, true)
     else
       content_tag_string(:li, nil, options, true)
+    end
+  end
+
+  def link_to_with_product_type(product, &block)
+    link_path = product_path(product)
+    unless product.product_type.nil?
+      link_path = product_type_product_path(product.product_type, product)
+    end
+
+    if block_given?
+      link_to(capture(&block), link_path)
+    else
+      link_to link_path
     end
   end
 end

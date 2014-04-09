@@ -1,7 +1,23 @@
 class CoursesController < ApplicationController
   # GET /course
   def index
-    @courses = Course.all.page(params[:page]).per(12)
+    respond_to do |format|
+      format.html do
+        if params[:month].blank?
+          redirect_to courses_path(month: Date.today.month)
+        end
+        @courses = Course.by_month(params[:month]).page(params[:page]).per(12)
+      end
+
+      format.json do
+        @courses = Course.all
+      end
+    end
+
+  end
+
+  def calendar
+
   end
 
   # GET /course/1

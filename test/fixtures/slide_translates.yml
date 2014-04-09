@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  locale_id: 
+  slide_id: 
+  title: MyString
+  description: MyString
+
+two:
+  locale_id: 
+  slide_id: 
+  title: MyString
+  description: MyString

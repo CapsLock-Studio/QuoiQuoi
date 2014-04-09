@@ -21,21 +21,38 @@ QuoiQuoi::Application.routes.draw do
     resources :product_custom_types
     resources :orders
     resources :locales
+    resources :slides do
+      put 'sort', on: :collection
+    end
+    resources :slide_positions
+    resources :broadcasts do
+      put 'sort', on: :collection
+    end
   end
 
   root to: 'home#index'
+  get 'cart' => 'cart#index'
 
-  resource :home
+  resource :home do
+    get 'style1' => 'home#style1'
+    get 'style2' => 'home#style2'
+  end
   resources :products do
     collection do
       get 'search'
     end
   end
   resources :news
-  resources :courses
-  resource :reservation
-  resource :requirement
-  resource :contact
+  resources :courses do
+    get 'calendar', on: :collection
+  end
+  resources :reports
+  resource :requirements
+  resource :contacts
+  resource :rents
+  resources :orders
+  resource :order_custom_items
+  resources :order_products
 
   resources :product_types do
     resources :products

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140316232350) do
+ActiveRecord::Schema.define(version: 20140407141115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,25 @@ ActiveRecord::Schema.define(version: 20140316232350) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
+  create_table "broadcast_translates", force: true do |t|
+    t.integer  "broadcast_id"
+    t.string   "notification"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+  end
+
+  add_index "broadcast_translates", ["broadcast_id"], name: "index_broadcast_translates_on_broadcast_id", using: :btree
+
+  create_table "broadcasts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sort"
+    t.string   "link"
+  end
+
   create_table "course_images", force: true do |t|
+    t.integer  "course_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -44,6 +62,8 @@ ActiveRecord::Schema.define(version: 20140316232350) do
     t.datetime "updated_at"
   end
 
+  add_index "course_images", ["course_id"], name: "index_course_images_on_course_id", using: :btree
+
   create_table "course_translates", force: true do |t|
     t.integer  "course_id"
     t.integer  "locale_id"
@@ -51,7 +71,6 @@ ActiveRecord::Schema.define(version: 20140316232350) do
     t.string   "teacher"
     t.string   "description"
     t.string   "note"
-    t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -78,7 +97,6 @@ ActiveRecord::Schema.define(version: 20140316232350) do
   create_table "courses", force: true do |t|
     t.integer  "price"
     t.datetime "time"
-    t.integer  "attendance"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
@@ -86,52 +104,32 @@ ActiveRecord::Schema.define(version: 20140316232350) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "course"
-    t.integer  "course_type_id"
+    t.float    "length"
   end
-
-  add_index "courses", ["course_type_id"], name: "index_courses_on_course_type_id", using: :btree
-
-  create_table "good_custom_description_images", force: true do |t|
-    t.integer  "good_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-  end
-
-  add_index "good_custom_description_images", ["good_id"], name: "index_good_custom_description_images_on_good_id", using: :btree
-
-  create_table "good_custom_items", force: true do |t|
-    t.integer  "good_id"
-    t.integer  "product_custom_item_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "good_custom_items", ["good_id"], name: "index_good_custom_items_on_good_id", using: :btree
-  add_index "good_custom_items", ["product_custom_item_id"], name: "index_good_custom_items_on_product_custom_item_id", using: :btree
-
-  create_table "goods", force: true do |t|
-    t.integer  "order_id"
-    t.integer  "product_id"
-    t.string   "custom_description"
-    t.string   "note"
-    t.integer  "workday"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "goods", ["order_id"], name: "index_goods_on_order_id", using: :btree
-  add_index "goods", ["product_id"], name: "index_goods_on_product_id", using: :btree
 
   create_table "locales", force: true do |t|
     t.string   "lang"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+  end
+
+  create_table "material_translates", force: true do |t|
+    t.string   "name"
+    t.integer  "material_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "material_translates", ["material_id"], name: "index_material_translates_on_material_id", using: :btree
+
+  create_table "materials", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "models", force: true do |t|
@@ -152,12 +150,69 @@ ActiveRecord::Schema.define(version: 20140316232350) do
   add_index "models", ["email"], name: "index_models_on_email", unique: true, using: :btree
   add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true, using: :btree
 
+  create_table "order_custom_item_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "order_custom_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_custom_item_images", ["order_custom_item_id"], name: "index_order_custom_item_images_on_order_custom_item_id", using: :btree
+
+  create_table "order_custom_items", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.string   "design"
+    t.string   "style"
+    t.integer  "material_id"
+    t.string   "description"
+    t.string   "response"
+    t.integer  "workday"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "price"
+    t.boolean  "accept"
+  end
+
+  add_index "order_custom_items", ["material_id"], name: "index_order_custom_items_on_material_id", using: :btree
+  add_index "order_custom_items", ["order_id"], name: "index_order_custom_items_on_order_id", using: :btree
+  add_index "order_custom_items", ["product_id"], name: "index_order_custom_items_on_product_id", using: :btree
+
+  create_table "order_product_custom_items", force: true do |t|
+    t.integer  "order_product_id"
+    t.integer  "product_custom_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_product_custom_items", ["order_product_id"], name: "index_order_product_custom_items_on_order_product_id", using: :btree
+  add_index "order_product_custom_items", ["product_custom_item_id"], name: "index_order_product_custom_items_on_product_custom_item_id", using: :btree
+
+  create_table "order_products", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_products", ["order_id"], name: "index_order_products_on_order_id", using: :btree
+  add_index "order_products", ["product_id"], name: "index_order_products_on_product_id", using: :btree
+
   create_table "orders", force: true do |t|
     t.integer  "subtotal"
     t.integer  "user_id"
-    t.boolean  "accept"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "closed"
+    t.boolean  "verified"
+    t.integer  "paid"
+    t.datetime "paid_time"
+    t.boolean  "delivered"
+    t.boolean  "checkout"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -243,6 +298,15 @@ ActiveRecord::Schema.define(version: 20140316232350) do
     t.datetime "updated_at"
   end
 
+  create_table "product_youtubes", force: true do |t|
+    t.integer  "product_id"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_youtubes", ["product_id"], name: "index_product_youtubes_on_product_id", using: :btree
+
   create_table "products", force: true do |t|
     t.integer  "price"
     t.integer  "quantity"
@@ -276,6 +340,39 @@ ActiveRecord::Schema.define(version: 20140316232350) do
   end
 
   add_index "ships", ["order_id"], name: "index_ships_on_order_id", using: :btree
+
+  create_table "slide_positions", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "slide_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.integer  "slide_id"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "slide_translates", ["locale_id"], name: "index_slide_translates_on_locale_id", using: :btree
+  add_index "slide_translates", ["slide_id"], name: "index_slide_translates_on_slide_id", using: :btree
+
+  create_table "slides", force: true do |t|
+    t.integer  "sort"
+    t.string   "link"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "slide_position_id"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

@@ -1,0 +1,221 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.class') %>
+<div class="container">
+  <div class="row">
+    <%= render 'side_navigation' %>
+    <div class="col-md-9">
+      <div class="row margin-bottom-60">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course1.jpg' %>">
+                <span class="overlay-zoom">
+                  <%= image_tag 'course1.jpg', class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+              </a>
+            </div>
+            <div class="col-sm-4" style="margin-top:15px;">
+              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course2.jpg' %>">
+                <span class="overlay-zoom">
+                  <%= image_tag 'course2.jpg', class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+              </a>
+            </div>
+            <div class="col-sm-4" style="margin-top:15px;">
+              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course3.jpg' %>">
+                <span class="overlay-zoom">
+                  <%= image_tag 'course3.jpg', class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+              </a>
+            </div>
+            <div class="col-sm-4" style="margin-top:15px;">
+              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course4.jpg' %>">
+                <span class="overlay-zoom">
+                  <%= image_tag 'course4.jpg', class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form_for :registration do %>
+            <div class="row">
+              <div class="col-md-12 margin-bottom-50">
+                <ul class="social-icons pull-right">
+                  <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
+                  <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
+                  <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
+                </ul>
+                <h3 style="color:#666;">
+                  <strong>
+                    多肉植栽&花藝小特餐
+                  </strong>
+                </h3>
+                <ul class="list-unstyled">
+                  <li>
+                    <strong>開課時間：2014/2/15 10:00 - 12:30</strong>
+                  </li>
+                  <li>
+                    <strong>開課老師：漢那老師</strong>
+                  </li>
+                </ul>
+                <p>
+                  多肉植物小星球的漢娜老師要為我們帶來不一樣的花藝課程<br/>
+                  兩艘小船滿載著鮮花和多肉<br/>
+                  為情人節特別訂製的手作花藝課<br/>
+                  可以兩人一同報名課程<br/>
+                  當然，好朋友一起來也可以<br/>
+                  <br/>
+                  莓果小船是莓果球型花類（品種依時節不同）<br/>
+                  <br/>
+                  放置2週以上，也可以再製成乾燥花<br/>
+                  多肉小船是藤蔓之類的多肉（品種依時節不同）<br/>
+                  可以長期種植
+                </p>
+              </div>
+              <div class="col-md-12">
+                <h4 class="margin-bottom-20">
+                  <strong style="color:#666;">$ 3,000</strong>
+                  <small>包含材料一份、學費、場地費用、工具借用</small>
+                </h4>
+                <a href="#" class="btn btn-block btn-u">報名課程</a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Recent Works -->
+          <div class="headline">
+            <h2>其他課程</h2>
+          </div>
+          <div class="margin-bottom-40">
+            <ul id="list" class="bxslider recent-work">
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li><li>
+              <a href="#">
+                <em class="overflow-hidden">
+                  <%= image_tag 'course1.jpg' %>
+                </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+              </a>
+            </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="overflow-hidden">
+                    <%= image_tag 'course1.jpg' %>
+                  </em>
+                    <span>
+                      <strong>多肉植栽&花藝小特餐</strong>
+                      <i>2014/2/15 10:00 - 12:30</i>
+                      <br/>
+                      <i>開課老師：漢那老師</i>
+                    </span>
+                </a>
+              </li>
+            </ul>
+          </div><!--/row-->
+          <!-- End Recent Works -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<section id="asideMenu" class="aside-menu">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            <i class="icon-shopping-cart">
+              <span style="margin-left:10px;"><%= t('header.navigation.cart') %></span>
+            </i>
+          </div>
+          <div class="actions">
+            <button id="btnHideAsideMenu" class="btn btn-close pull-right" type="button" title="Hide sidebar">
+              <i class="icon-remove"></i>
+            </button>
+          </div>
+        </div>
+        <% if @menu_orders %>
+          <div class="box-content">
+            <div class="row">
+              <div class="col-md-12">
+                <h4 class="side-section-title">
+                  你的購物清單
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="margin-bottom-20">
+            <% @menu_orders.order_products.each do |order_product| %>
+              <div class="search-blocks search-blocks-colored side-menu-block">
+                <div class="col-md-6 search-img">
+                  <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
+                </div>
+                <div class="col-md-6">
+                  <h4>
+                    <% order_product.product.product_translates.where(locale_id: session[:locale_id]).first do |product_translate| %>
+                      <%= product_translate.name %>
+                    <% end %>
+                  </h4>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="box-content">
+            <div class="row">
+              <div class="col-md-12 margin-bottom-10">
+                <%= link_to '編輯購物車', cart_path, class: 'btn btn-default btn-block btn-lg hover-effect' %>
+              </div>
+              <div class="col-md-12">
+                <%= link_to '結帳', new_order_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect', style: 'color:#FFF;' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

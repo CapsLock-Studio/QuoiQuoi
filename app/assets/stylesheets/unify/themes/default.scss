@@ -911,3 +911,62 @@ ul.blog-tags a:hover {
   -moz-transition: left 0.1s linear;
   -o-transition: left 0.1s linear;
   transition: left 0.1s linear; }
+
+.fuelux .wizard {
+  border-radius: 0px;
+  box-shadow: none;
+  background-color: transparent;
+  border: medium none;
+}
+
+.fuelux .wizard ul li {
+  background-color: #DDD;
+  margin-right: 30px;
+  padding: 0px 20px;
+  color: #424242;
+  font-family: Montserrat;
+  font-size: 20px;
+  position: relative;
+  border-radius: 0px !important;
+}
+
+.fuelux .wizard ul li:before {
+  content: "";
+  width: 30px;
+  height: 4px;
+  background-color: #DDD;
+  display: block;
+  position: absolute;
+  top: 50%;
+  margin-top: -2px;
+  left: -30px;
+}
+
+.fuelux .wizard ul li.active {
+  color: #FFF;
+}
+
+.fuelux .wizard ul li:first-child:before {
+  display: none;
+}
+
+.fuelux .wizard ul li.complete {
+  background-color: #49BF67;
+  color: #FFF;
+}
+
+.fuelux .wizard ul li.complete:before {
+  background-color: #49BF67;
+}
+
+.fuelux .wizard ul li.complete:hover {
+  background-color: #3EB05B;
+}
+.fuelux .wizard ul li.complete:hover {
+  cursor: pointer;
+  background: none repeat scroll 0% 0% #E7EFF8;
+}
+
+.fuelux .wizard ul li.active {
+  background-color: #F8A326;
+}

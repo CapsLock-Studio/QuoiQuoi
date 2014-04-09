@@ -9,8 +9,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to(root_path, class: 'navbar-brand') do %>
-        <h2 id="logo-header" style="line-height:0;">TKU<span class="color-red">I</span>M</h2>
+      <%= link_to(root_path, class: 'navbar-brand', style: 'margin-top:-25px;') do %>
+        <h2 id="logo-header">
+          <%= image_tag 'logo.jpg', id: 'logo-header', height: '60px', style: 'height:60px;' %>
+        </h2>
       <% end %>
     </div>
 
@@ -22,7 +24,7 @@
             <i class="glyphicon glyphicon-home"></i>
           <% end %>
         <% end %>
-        <%= nav_item(products_path, {rule: /#{:products}.*/}) do %>
+        <%= nav_item(products_path, {rule: /#{:products}.*|#{order_custom_items_path}.*|#{order_products_path}.*/}) do %>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
             <%= t('header.navigation.shop') %>
             <i class="icon-angle-down"></i>
@@ -32,10 +34,7 @@
               <%= link_to t('header.navigation.handmadebag'), products_path %>
             </li>
             <li>
-              <%= link_to t('header.navigation.custom_handmadebag'), products_path %>
-            </li>
-            <li>
-              <%= link_to t('header.navigation.order_request'), products_path %>
+              <%= link_to t('header.navigation.order_request'), new_order_custom_items_path %>
             </li>
             <% @product_types.each do |product_type| %>
               <li>
@@ -44,22 +43,29 @@
             <% end %>
           </ul>
         <% end %>
-        <%= nav_item(news_index_path) do %>
-          <%= link_to t('header.navigation.report_remittance'), news_index_path %>
+        <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>
+          <%= link_to t('header.navigation.class'), courses_path(month: Date.today.month) %>
         <% end %>
-        <%= nav_item(courses_path) do %>
-          <%= link_to t('header.navigation.class'), courses_path %>
+        <%= nav_item(nil, {rule: /#{reports_path}/}) do %>
+          <%= link_to t('header.navigation.report_remittance'), new_report_path %>
         <% end %>
-        <li>
-          <%= link_to t('header.navigation.requirement'), root_path(anchor: 'information') %>
-        </li>
-        <li>
-          <%= link_to t('header.navigation.rent'), root_path(anchor: 'registration') %>
-        </li>
-        <li>
-          <%= link_to t('header.navigation.contact'), root_path(anchor: 'sponsor') %>
-        </li>
+        <%= nav_item(requirements_path) do %>
+          <%= link_to t('header.navigation.requirement'), requirements_path %>
+        <% end %>
+        <%= nav_item(rents_path) do %>
+          <%= link_to t('header.navigation.rent'), rents_path %>
+        <% end %>
+        <%= nav_item(contacts_path) do %>
+          <%= link_to t('header.navigation.contact'), contacts_path %>
+        <% end %>
         <li class="hidden-sm"><a class="search"><i class="icon-search search-btn"></i></a></li>
+        <li class="hidden-sm">
+          <a href="#" class="aside-menu-switch dropdown-toggle dropdown-form-toggle" title="Open sidebar">
+            <i class="icon-shopping-cart">
+              <strong style="margin-left:5px;"><%= t('header.navigation.cart') %></strong>
+            </i>
+          </a>
+        </li>
       </ul>
       <div class="search-open">
         <div class="input-group">

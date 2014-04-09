@@ -2,6 +2,21 @@
 // require all js in admin folder
 //= require_tree ./admin
 
+var replaceYoutubeBlock = function(){
+    $('.youtube-link').on('change', function(){
+        convertPreview($(this).val(), $(this).parent('div').find('.youtube-block'));
+    }).each(function(){
+            convertPreview($(this).val(), $(this).parent('div').find('.youtube-block'));
+        });
+
+    function convertPreview(link, youtubeBlock) {
+        if (link.match(/[https|http]+:\/\/www.youtube.com\//)) {
+//            var youtubeBlock = $(element).parent('div').find('.youtube-block');
+            $(youtubeBlock).html('<iframe style="width:100%;height:' + $(youtubeBlock).height() + 'px;" src="' + link.replace(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '//www.youtube.com/embed/$1') + '" frameborder="0" allowfullscreen></iframe>');
+        }
+    }
+};
+
 $('.nested-field').each(function(){
     $(this).nestedFields({
         afterInsert: function(item) {
@@ -50,3 +65,35 @@ $('body').on('change', '.file-input-wrapper input[type=file]', function(){
         fileReader.readAsDataURL(this.files[0]);
     }
 });
+
+var slideSort = $('#slide-sortable');
+if (slideSort.length > 0) {
+    slideSort.sortable({
+        placeholder: 'ui-state-highlight'
+    });
+
+    slideSort.on('sortupdate', function(event, ui){
+        $('.sort-item').each(function(index){
+            $(this).val(index + 1);
+        });
+    });
+}
+
+var broadcastSortable = $('#broadcast-sortable');
+if (broadcastSortable.length > 0) {
+    broadcastSortable.sortable({
+        placeholder: 'ui-state-highlight'
+    });
+
+    broadcastSortable.on('sortupdate', function(event, ui){
+        $('.sort-item').each(function(index){
+            $(this).val(index + 1);
+        });
+    });
+}
+
+$('.append-youtube').on('click', function(){
+    replaceYoutubeBlock();
+});
+
+replaceYoutubeBlock();

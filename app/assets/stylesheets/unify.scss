@@ -1,5 +1,8 @@
 @import 'unify/bootstrap/bootstrap';
 @import 'unify/plugins/plugins';
+
+@import 'flatty/plugins/fullcalendar/fullcalendar';
+
 @import 'unify/jquery/jquery_ui';
 
 @import 'unify/responsive';
@@ -14,6 +17,7 @@
 @import 'unify/themes/default';
 @import 'unify/themes/light';
 @import 'unify/themes/headers/header1-light';
+@import 'unify/asside_menu';
 
 .breadcrumb > li:last-child {
   color: #E67E22;
@@ -41,4 +45,159 @@
   text-decoration: none;
   background-color: #F5F5F5;
   color: #262626;
+}
+
+.contact {
+  font-size: 20px;
+}
+
+.contact li:hover span, .contact li:hover i {
+  color: #E67E22;
+}
+
+.da-slider {
+//  height: 500px;
+}
+
+.modal-dialog {
+  width: 800px !important;
+}
+
+.show-calendar {
+  padding: 3px;
+}
+
+.fc-view .fc-event:hover {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.one-page .one-page-inner {
+  padding: 10px;
+  min-height: 0;
+}
+
+.one-page .btn-u, .one-page .btn {
+  margin-bottom: 0;
+}
+
+.one-page a.one-page-btn {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.footer {
+  color: #333;
+  background: none repeat scroll 0% 0% #FAFAFA;
+}
+
+.footer h2, .footer h3, .footer h4 {
+  color: #585F69;
+}
+
+.copyright {
+  background: none repeat scroll 0% 0% #585F69;
+}
+
+.top ul.loginbar > li > a, .top ul.loginbar > li > a:hover {
+  font-size: 13px;
+}
+
+.recommend .bx-wrapper .bx-controls-direction a {
+  top: -30px;
+}
+
+.recommend h4 i {
+  color: #585F69;
+}
+
+.header .navbar .nav > li > a.search {
+  background: none repeat scroll 0% 0% rgb(255, 255, 255) !important;
+  border-bottom: none;
+}
+
+.aside-menu-switch i {
+  color: #e67e22;
+}
+
+.header .navbar .nav > li > a.aside-menu-switch:hover {
+  border-bottom: 2px solid #e67e22;
+}
+
+.news p {
+//  background: image_url('unify/plugins/parallax-slider/bg-text.png') repeat scroll 0% 0% transparent;
+//  padding: 5px 20px;
+  font-style: normal;
+  color: #FFF;
+//  display: inline-block;
+  position: absolute;
+  top: 90px;
+  left: 130px;
+}
+
+.tp-caption a.btn-glassy:hover {
+  color: #000;
+  border-color: #000;
+}
+
+.tp-caption a.btn-glassy {
+  background: rgba(255, 255, 255, 0.2);
+  color: #666;
+  font-weight: bold;
+  border-color: #999;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+#fullScreenSliderWrapper {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+}
+
+#flexHome h4 {
+  margin-bottom: 11px;
+  font-weight: 300;
+  line-height: 1em;
+  text-transform: uppercase;
+  padding: 0px;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  background: none repeat scroll 0% 0% transparent;
+  color: #95A5A6;
+}
+
+#flexHome h4:hover {
+  color: #585F69;
+}
+
+.preload {
+  display: none;
+}
+
+.selectpicker .label {
+  margin-left: 10px;
+}
+
+hr.hr-normal {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.header .navbar-brand {
+  padding: 0 10px 0 0;
+}
+
+.order-button {
+  background: #EEE;
+}
+
+.side-menu-block {
+  background: #262626;
+  margin-bottom: 5px;
+  padding: 10px 0;
 }

@@ -12,39 +12,72 @@
     <%= form_for([:admin, @product], html: { class: 'form validate-form', multipart: true }) do |f| %>
       <fieldset>
         <div class="row">
-          <div class="col-sm-6 nested-field">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="box image-preview-box">
-                  <%= image_tag f.object.image.url(:large), class: 'img-responsive' %>
-                  <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+          <div class="col-sm-6">
+            <div class="nested-field">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="box image-preview-box">
+                    <%= image_tag f.object.image.url(:large), class: 'img-responsive' %>
+                    <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+                  </div>
+                  <a href="#" class="add btn btn-u pull-right">
+                    新增圖片
+                  </a>
                 </div>
-                <a href="#" class="add btn btn-u pull-right">
-                  新增圖片
-                </a>
+              </div>
+              <div class="row">
+                <div class="items">
+                  <%= f.nested_fields_for :product_images do |builder| %>
+                    <div class="col-sm-4 item">
+                      <div class="box image-preview-box">
+                        <div class="box-header">
+                          <div class="actions">
+                            <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                            </a>
+
+                            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                            </a>
+                          </div>
+                        </div>
+                        <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
+                        <%= builder.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+                        <%= builder.hidden_field :id %>
+                        <%= builder.hidden_field :_destroy %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="items">
-                <%= f.nested_fields_for :product_images do |builder| %>
-                  <div class="col-sm-4 item">
-                    <div class="box image-preview-box">
-                      <div class="box-header">
-                        <div class="actions">
-                          <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
-                          </a>
-
-                          <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                          </a>
+            <div class="nested-field">
+              <div class="row">
+                <div class="col-sm-12">
+                  <a href="#" class="add btn btn-u pull-right append-youtube">
+                    新增Youtube影片
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="items">
+                  <%= f.nested_fields_for :product_youtubes do |builder| %>
+                    <div class="col-sm-12 item">
+                      <div class="box">
+                        <div class="box-header">
+                          <div class="actions">
+                            <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+                            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                          </div>
                         </div>
+                        <div class="youtube-block">
+                          <%= image_tag asset_path('system/youtube.gif'), class: 'img-responsive' %>
+                        </div>
+                        <%= builder.text_field :link, class: 'form-control youtube-link', placeholder: 'https://' %>
+                        <%= builder.hidden_field :id %>
+                        <%= builder.hidden_field :_destroy %>
                       </div>
-                      <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
-                      <%= builder.file_field :image, title: '選擇圖片', class: 'btn-block' %>
-                      <%= builder.hidden_field :id %>
-                      <%= builder.hidden_field :_destroy %>
                     </div>
-                  </div>
-                <% end %>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>

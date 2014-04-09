@@ -3,3 +3,7 @@
 @import 'flatty/jquery/jquery_ui';
 @import 'flatty/light-theme';
 @import 'flatty/theme-colors';
+
+.ui-state-highlight {
+  border: dashed 3px;
+}
