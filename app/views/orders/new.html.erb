@@ -1,0 +1,233 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.handmadebag') %>
+<div class="container">
+  <div class="row">
+    <%= render 'products/side_navigation' %>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="fuelux">
+            <div class="wizard">
+              <ul class="steps">
+                <li class="active" data-target="#step1">
+                  <span class="step">1</span>
+                </li>
+                <li data-target="#step2">
+                  <span class="step">2</span>
+                </li>
+                <li data-target="#step3">
+                  <span class="step">3</span>
+                </li>
+                <li data-target="#step4">
+                  <span class="step">4</span>
+                </li>
+                <li data-target="#step5">
+                  <span class="step">5</span>
+                </li>
+              </ul>
+              <div class="actions">
+                <button type="button" class="btn btn-mini btn-prev">
+                  <i class="icon-arrow-left"></i>
+                  <%= t('order_request.prev') %>
+                </button>
+                <button type="button" class="btn btn-mini btn-next" data-last="<%= t('order_request.finish') %>">
+                  <%= t('order_request.next') %>
+                  <i class="icon-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="step-content">
+              <hr class="hr-normal">
+              <div class="step-pane active" id="step1">
+                <div class="panel panel-grey margin-bottom-40">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="icon-exclamation"></i>
+                      訂購須知
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>包包種類</th>
+                        <th>價目參考</th>
+                        <th>備註</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>
+                          <p>
+                            拖特包<br/>
+                            媽媽包<br/>
+                            特殊包款
+                          </p>
+                        </td>
+                        <td>
+                          <p>
+                            迷妳拖特20、25cm - 980元(1380元)<br/>
+                            小拖特30、35cm - 1480元(1980元)<br/>
+                            中、大拖特40、50cm - 1780元(2580元)<br/>
+                            媽媽包40 ~45cm - 2280元(2980元)<br/>
+                            媽媽包48以上 - 2580元(3280元)<br/>
+                          </p>
+                          <small>
+                            *(括號)內的價格為高價布料/全包素布一律以日本進口八號帆布製作，所以均屬高價布哦<br/>
+                            *以上cm為包包開口一面平放最寬處的寬度<br/>
+                            *特殊包款則另行報價<br/>
+                            *拖特包一律為磁扣開口，內裏兩個開放式 口袋<br/>
+                            *媽媽包部份為拉鍊開口、內裏6~8八個內袋，表布1~4個外袋(會依需求及設計方式決定袋子的多寡)<br/>
+                          </small>
+                        </td>
+                        <td>
+                          <ul>
+                            <li>原則上使用日本布製作表布</li>
+                            <li>特殊難以製作的包款會另外報價</li>
+                            <li>加活動式肩揹帶加價300元、固定式加價150元</li>
+                            <li>拉鍊內袋加價100元</li>
+                            <li>加購開口拉鍊或綁巾則加價200元</li>
+                            <li>皮革提(揹)帶另外報價</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          相機包
+                        </td>
+                        <td>
+                          <p>
+                            類單眼、拍立得相機包1280元<br/>
+                            小單眼相機包(單鏡)1480元<br/>
+                            小單眼、相機包(雙鏡)1880元<br/>
+                            大單眼相機包(單鏡)1680元<br/>
+                            大單眼相機包(雙鏡)2080元
+                          </p>
+                          <small>
+                            *基本配備：內裏加魔鬼粘電池袋、固定式長揹帶<br/>
+                            *均為1~2顆磁扣開口
+                          </small>
+                        </td>
+                        <td>
+                          <ul>
+                            <li>加做束口或拉鍊加價200元</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          其他類
+                        </td>
+                        <td>
+                          <p>
+                            悠遊卡套/識別証套  580元(無透明夾)<br/>
+                            手機套、化妝包、零錢包、筆袋(捲)、鑰匙包、筆捲、餐具包680元<br/>
+                            媽媽(寶寶)手冊、書衣  780元<br/>
+                            拉鍊式媽媽手冊包1480元<br/>
+                            平板電腦包880元<br/>
+                            雙層零錢包880元<br/>
+                            護照套980元<br/>
+                            皮夾類1880元<br/>
+                            後揹包及特殊設計包款均一價為2980元
+                          </p>
+                        </td>
+                        <td></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="step-pane" id="step2">
+                <div class="panel panel-grey margin-bottom-60">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="icon-magic"></i>
+                      定製需求
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <form class="form" role="form">
+                      <div class="form-group">
+                        <label for="exampleInputEmail2">包款、大小</label>
+                        <input class="form-control" id="exampleInputEmail2" placeholder="例如 : 拖特包開口寬25cm" type="email">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="step-pane" id="step3">
+                <div class="panel panel-grey margin-bottom-60">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="icon-magic"></i>
+                      定製需求
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <form class="form" role="form">
+                      <div class="form-group">
+                        <label for="exampleInputEmail2">
+                          風格
+                        </label>
+                        <input class="form-control" id="exampleInputEmail2" placeholder="法國風、中國風、日系雜貨、簡約風..." type="email">
+                        <span class="label label-success">
+                          可貼上喜歡包包的網址或照片讓bella參考喲
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="step-pane" id="step4">
+                <div class="panel panel-grey margin-bottom-60">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="icon-magic"></i>
+                      定製需求
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <form class="form" role="form">
+                      <div class="form-group">
+                        <label for="exampleInputEmail2">
+                          布款
+                        </label>
+                        <input class="form-control" id="exampleInputEmail2" placeholder="法國風、中國風、日系雜貨、簡約風..." type="email">
+                        <span class="label label-success">
+                          可貼上喜歡包包的網址或照片讓bella參考喲
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="step-pane" id="step5">
+                <div class="panel panel-grey margin-bottom-60">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="icon-magic"></i>
+                      定製需求
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <form class="form" role="form">
+                      <div class="form-group">
+                        <label for="exampleInputEmail2">
+                          其他需求
+                        </label>
+                        <input class="form-control" id="exampleInputEmail2" placeholder="法國風、中國風、日系雜貨、簡約風..." type="email">
+                        <span class="label label-success">
+                          可貼上喜歡包包的網址或照片讓bella參考喲
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

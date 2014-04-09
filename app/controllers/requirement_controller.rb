@@ -1,2 +1,0 @@
-class RequirementController < ApplicationController
-end

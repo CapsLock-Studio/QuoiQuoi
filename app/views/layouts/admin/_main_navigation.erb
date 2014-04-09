@@ -42,20 +42,20 @@
         <% end %>
       <% end %>
 
-      <%= nav_item_with_resource(admin_course_types_path, {rule: /#{'about others'}/}, Admin::CourseType) do %>
-        <%= link_to(admin_course_types_path) do %>
+      <%= nav_item_with_resource(admin_slide_positions_path, {rule: /#{admin_slide_positions_path}.*/}, Admin::SlidePosition) do %>
+        <%= link_to(admin_slide_positions_path) do %>
           <i class="icon-anchor"></i>
-          <span>課程種類管理</span>
+          <span>輪播文字位置管理</span>
         <% end %>
       <% end %>
 
-      <%= nav_item_with_resource(admin_products_path, {rule: /#{admin_products_path}.*||#{admin_other_products_path}.*/}, Admin::Product) do %>
+      <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*)/}, Admin::Product) do %>
         <a class="dropdown-collapse" href="#">
           <i class="icon-inbox"></i>
           <span>購物車管理</span>
           <i class="icon-angle-down angle-down"></i>
         </a>
-        <ul class="nav nav-stacked">
+        <ul class="nav in">
           <%= nav_item_with_resource(admin_products_path, {rule: /#{admin_products_path}.*/}, Admin::Product) do %>
             <%= link_to(admin_products_path) do %>
               <i class="icon-shopping-cart"></i>
@@ -66,6 +66,28 @@
             <%= link_to(admin_other_products_path) do %>
               <i class="icon-shopping-cart"></i>
               <span>其他商品管理</span>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_slides_path, {rule: /#{admin_slides_path}.*/}, Admin::Slide) do %>
+        <a class="dropdown-collapse" href="#">
+          <i class="icon-home"></i>
+          <span>首頁管理</span>
+          <i class="icon-angle-down angle-down"></i>
+        </a>
+        <ul class="nav in">
+          <%= nav_item_with_resource(admin_slides_path, {rule: /#{admin_slides_path}.*/}, Admin::Slide) do %>
+            <%= link_to(admin_slides_path) do %>
+              <i class="icon-picture"></i>
+              <span>輪播管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_broadcasts_path, {rule: /#{admin_broadcasts_path}.*/}, Admin::Broadcast) do %>
+            <%= link_to(admin_broadcasts_path) do %>
+              <i class="icon-bullhorn"></i>
+              <span>快訊管理</span>
             <% end %>
           <% end %>
         </ul>
@@ -84,7 +106,7 @@
           <span>訂單管理</span>
           <i class="icon-angle-down angle-down"></i>
         </a>
-        <ul class="nav nav-stacked">
+        <ul class="nav in">
           <%= nav_item_with_resource(admin_order_path(1), nil, Admin::Order) do %>
             <%= link_to(admin_order_path(1)) do %>
               <i class="icon-check"></i>

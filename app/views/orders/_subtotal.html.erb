@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <div class="glyphicon-saved glyphicon"></div>
+      小計
+    </div>
+    <div class="actions">
+      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content">
+    <h4 class="margin-bottom-30">
+      <strong>
+        <span style="color:#666;">總金額</span>
+              <span class="pull-right">
+                <%= number_to_currency(@subtotal.inject{|sum, element| sum + element}) %>
+              </span>
+      </strong>
+    </h4>
+    <div class="row">
+      <div class="col-md-12 margin-bottom-10">
+        <%= link_to '使用Paypal付費', nil, class: 'btn btn-block btn-default btn-lg hover-effect' %>
+        <%= link_to '匯款付費', nil, class: 'btn btn-block btn-u-default btn-lg hover-effect', style: 'color:#FFF;' %>
+      </div>
+      <div class="col-md-12">
+        <%= link_to nil do %>
+          <i class="icon-angle-left"></i>
+          繼續逛逛
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

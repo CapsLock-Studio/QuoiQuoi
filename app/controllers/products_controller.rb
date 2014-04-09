@@ -18,6 +18,10 @@ class ProductsController < ApplicationController
   def show
     set_breadcrumbs
     add_breadcrumb @product.product_type_id.nil? ? I18n.t('header.navigation.handmadebag') : @product.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
+
+    @product_custom_types = ProductCustomType.select(:id, :multi)
+
+    @order_product = OrderProduct.new(product_id: @product.id)
   end
 
   # GET /products/new

@@ -61,7 +61,6 @@ class Admin::OtherProductsController < AdminController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-
   end
 
   private

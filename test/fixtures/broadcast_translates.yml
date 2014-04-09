@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  broadcast_id: 
+  notification: MyString
+
+two:
+  broadcast_id: 
+  notification: MyString

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image: 
+  order_custom_item_id: 
+
+two:
+  image: 
+  order_custom_item_id: 

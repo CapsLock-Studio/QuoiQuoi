@@ -26,15 +26,12 @@ var Index = function () {
 
         //Revolution Slider
         initRevolutionSlider: function () {
-			var tpj=jQuery;
-			tpj.noConflict();
+            $(document).ready(function() {
 
-			tpj(document).ready(function() {
+				if ($.fn.cssOriginal!=undefined)
+                    $.fn.css = $.fn.cssOriginal;
 
-				if (tpj.fn.cssOriginal!=undefined)
-					tpj.fn.css = tpj.fn.cssOriginal;
-
-					var api = tpj('.fullwidthbanner').revolution(
+					var api = $('.fullwidthbanner').revolution(
 						{
 							delay:9000,
 							startwidth:960,
@@ -91,28 +88,33 @@ var Index = function () {
 							api.bind("revolution.slide.onloaded",function (e) {
 
 
-								jQuery('.tparrows').each(function() {
+                                $('.tparrows').each(function() {
 									var arrows=jQuery(this);
 
 									var timer = setInterval(function() {
 
-										if (arrows.css('opacity') == 1 && !jQuery('.tp-simpleresponsive').hasClass("mouseisover"))
+										if (arrows.css('opacity') == 1 && !$('.tp-simpleresponsive').hasClass("mouseisover"))
 										  arrows.fadeOut(300);
 									},3000);
-								})
+								});
 
-								jQuery('.tp-simpleresponsive, .tparrows').hover(function() {
-									jQuery('.tp-simpleresponsive').addClass("mouseisover");
-									jQuery('body').find('.tparrows').each(function() {
-										jQuery(this).fadeIn(300);
+                                $('.tp-simpleresponsive, .tparrows').hover(function() {
+                                    $('.tp-simpleresponsive').addClass("mouseisover");
+                                    $('body').find('.tparrows').each(function() {
+                                        $(this).fadeIn(300);
 									});
 								}, function() {
-									if (!jQuery(this).hasClass("tparrows"))
-										jQuery('.tp-simpleresponsive').removeClass("mouseisover");
-								})
+									if (!$(this).hasClass("tparrows"))
+                                        $('.tp-simpleresponsive').removeClass("mouseisover");
+								});
 							});
 						// END OF THE SECTION, HIDE MY ARROWS SEPERATLY FROM THE BULLETS
 
+                $('.fullwidthbanner-container ul').hover(function(){
+                    api.revpause();
+                }, function(){
+                    api.revresume();
+                });
 			});
         }
 

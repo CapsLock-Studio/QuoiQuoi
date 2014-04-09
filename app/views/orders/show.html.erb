@@ -1,0 +1,90 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.cart') %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="title">
+                <div class="icon-list"></div>
+                你的購物清單
+              </div>
+              <div class="actions">
+                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+              </div>
+            </div>
+            <div class="box-content">
+              <% @order.order_products.each_with_index do |order_product, index| %>
+                <div class="col-md-12 margin-bottom-30">
+                  <div class="row">
+                    <div class="col-md-7">
+                      <%= link_to order_product.product do %>
+                        <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
+                      <% end %>
+                    </div>
+                    <div class="col-md-5">
+                      <h5 style="color:#666;" class="margin-bottom-30">
+                        <strong>
+                          <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                          <span class="pull-right">
+                        <% @subtotal[index] = order_product.product.price %>
+                        <%= number_to_currency(order_product.product.price) %>
+                      </span>
+                        </strong>
+                      </h5>
+                      <div class="headline">
+                    <span class="color-green">
+                      你選擇的搭配
+                    </span>
+                      </div>
+                      <% order_product.order_product_custom_items.each do |order_product_custom_item| %>
+                        <h6>
+                          <%= order_product_custom_item.product_custom_item.product_custom_item_translates.where(locale_id: session[:locale_id]).first.name %>
+                          <span class="pull-right">
+                            <% @subtotal[index] += order_product_custom_item.product_custom_item.price %>
+                            <%= number_to_currency(order_product_custom_item.product_custom_item.price) %>
+                          </span>
+                        </h6>
+                      <% end %>
+                      <hr/>
+                      <h5 class="margin-bottom-20">
+                        <span style="color:#666;">單品小計</span>
+                        <strong class="pull-right">
+                          <%= number_to_currency(@subtotal[index]) %>
+                        </strong>
+                      </h5>
+                      <a href="#" class="btn btn-default pull-right hover-effect">
+                        刪除
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <hr/>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="title">
+                <div class="icon-pencil"></div>
+                你的訂製手工包
+              </div>
+              <div class="actions">
+                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+              </div>
+            </div>
+            <div class="box-content">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <%= render 'subtotal' %>
+    </div>
+  </div>
+</div>

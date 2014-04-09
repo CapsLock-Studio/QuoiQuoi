@@ -1,36 +1,71 @@
 
 <!--=== Slider ===-->
-<div class="slider-inner">
-  <div id="da-slider" class="da-slider" style="background-image:url(<%= asset_path 'unify/plugins/parallax-slider/bg.jpg' %>)">
-    <div class="da-slide">
-      <h2><i>CLEAN &amp; FRESH</i> <br /> <i>FULLY RESPONSIVE</i> <br /> <i>DESIGN</i></h2>
-      <p><i>Lorem ipsum dolor amet</i> <br /> <i>tempor incididunt ut</i> <br /> <i>veniam omnis </i></p>
-      <div class="da-img">
-        <%= image_tag 'unify/plugins/parallax-slider/1.png' %>
-      </div>
-    </div>
-    <div class="da-slide">
-      <h2><i>RESPONSIVE VIDEO</i> <br /> <i>SUPPORT AND</i> <br /> <i>MANY MORE</i></h2>
-      <p><i>Lorem ipsum dolor amet</i> <br /> <i>tempor incididunt ut</i></p>
-      <div class="da-img">
-        <iframe src="http://player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-      </div>
-    </div>
-    <div class="da-slide">
-      <h2><i>USING BEST WEB</i> <br /> <i>SOLUTIONS WITH</i> <br /> <i>HTML5/CSS3</i></h2>
-      <p><i>Lorem ipsum dolor amet</i> <br /> <i>tempor incididunt ut</i> <br /> <i>veniam omnis </i></p>
-      <div class="da-img">
-        <%= image_tag 'unify/plugins/parallax-slider/html5andcss3.png' %>
-      </div>
-    </div>
-    <div class="da-arrows">
-      <span class="da-arrows-prev"></span>
-      <span class="da-arrows-next"></span>
-    </div>
-  </div><!--/da-slider-->
-</div><!--/slider-->
+<%= render 'slider' %>
 <!--=== End Slider ===-->
 
+<div class="one-page">
+  <div class="one-page-inner">
+    <div class="container">
+      <!--<div class="row">-->
+      <!--<div class="col-md-8 col-md-offset-2">-->
+      <!--<span style="text-align:center">布知道工作室精緻手工包</span>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div class="row">
+        <!--<div class="col-md-3 md-margin-bottom-20">-->
+          <!--<%= link_to(orders_path, class: 'btn btn-block hover-effect order-button') do %>-->
+            <!--<i class="icon-ok"></i>-->
+            <!--<span>訂製手工包</span>-->
+          <!--<% end %>-->
+        <!--</div>-->
+        <div class="col-md-12">
+          <div class="flexHome">
+            <div id="flexHome">
+              <ul class="slides">
+                <% @broadcasts.each do |broadcast| %>
+                  <li>
+                    <%= link_to broadcast.link do %>
+                      <h4 class="hover-effect">
+                        <i class="icon-bullhorn"></i>
+                        <%= broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first.notification %>
+                      </h4>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
-
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Recent Works -->
+      <div class="margin-bottom-20 recommend">
+        <h4>
+          <i class="icon-thumbs-up">
+            推薦給您
+          </i>
+        </h4>
+        <ul id="list" class="bxslider1 recent-work">
+          <% @products.each do |product| %>
+            <li>
+              <div class="view view-tenth">
+                <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+                <div class="mask">
+                  <h2>Portfolio Item</h2>
+                  <p>At vero eos et accusamus et iusto odio dignissimos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+                  <a href="portfolio_item.html" class="info">Read More</a>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div><!--/row-->
+      <!-- End Recent Works -->
+    </div>
+  </div>
 </div>

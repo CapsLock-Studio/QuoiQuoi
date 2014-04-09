@@ -4,246 +4,47 @@
     <%= render 'side_navigation' %>
     <div class="col-md-9">
       <div class="row">
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
+        <% @courses.each do |course| %>
+          <% course.course_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+            <% unless translate.name.blank? %>
+              <div class="col-md-4 col-sm-6">
+                <div class="thumbnails thumbnail-style">
+                  <%= link_to(course.image.url(:large), class: 'thumbnail fancybox-button zoomer', data: {rel: 'fancybox-button'},
+                              title: translate.name) do %>
+                  <span class="overlay-zoom">
+                    <%= image_tag course.image.url(:medium), class: 'img-responsive' %>
+                    <div class="zoom-icon"></div>
                   </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
+                  <% end %>
+                  <div class="caption">
+                    <h4>
+                      <%= translate.name %>
+                    </h4>
+                    <ul class="list-unstyled">
+                      <li>
+                        <strong>
+                          <%= "#{t('starting_time')}：#{course.time.strftime('%Y/%m/%d %H:%M')} - #{(course.time + course.length.hours).strftime('%H:%M')}" %>
+                        </strong>
+                      </li>
+                      <li>
+                        <strong>
+                          <%= "#{t('teacher')}：#{translate.teacher}" %>
+                        </strong>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="w-footer">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <%= link_to t('view_detail'), course_path(1), class: 'btn btn-default pull-right' %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="thumbnails thumbnail-style">
-            <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'test2.png' %>">
-              <span class="overlay-zoom">
-                <%= image_tag 'test2.png', class: 'img-responsive' %>
-                <div class="zoom-icon"></div>
-              </span>
-            </a>
-            <div class="caption">
-              <h4>多肉植栽&花藝小特餐</h4>
-              2014/2/15 10:00~12:30
-            </div>
-            <div class="w-footer">
-              <div class="row">
-                <div class="col-sm-12">
-                  <span class="price">
-                    <%= number_to_currency(1144) %>
-                  </span>
-                  <%= link_to t('view_detail'), nil, class: 'btn btn-default pull-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <% end %>
+          <% end %>
+        <% end %>
       </div>
       <div class="row">
         <div class="col-md-12" style="border-top: 1px solid #F1F1F1;">

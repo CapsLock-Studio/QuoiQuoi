@@ -35,9 +35,22 @@ en:
       requirement: 'REQUIREMENT'
       rent: 'TO RENT'
       contact: 'CONTACTS'
+      cart: 'CART'
   footer:
     login: 'Login Admin'
   view_detail: 'View Detail'
-  category: 'Category'
-  search_product: 'Search Products'
-  search_for_product: 'Search for Products'
+  starting_time: 'Starting Time'
+  teacher: 'Teacher'
+  product:
+    choose_custom_item: 'Choose your '
+    configure_your_handmadebag: 'CONFIGURE YOUR HANDMADE BAG'
+    origin: 'Origin '
+    custom_handmadebag: 'Custom this bag'
+  order_request:
+    prev: 'Prev'
+    next: 'Next'
+    finish: 'Finish'
+  actions:
+    delete: 'Delete'
+    edit: 'Edit'
+    add: 'Add'
