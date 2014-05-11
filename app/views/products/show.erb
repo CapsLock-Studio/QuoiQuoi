@@ -49,56 +49,16 @@
                       <%= translate.name %>
                     </strong>
                   </h3>
-                  <p>
-                    <%= translate.description %>
-                  </p>
+                  <%= simple_format(translate.description) %>
                 </div>
                 <div class="col-md-12 margin-bottom-10">
                   <div class="header">
-                    <span class="color-green"><%= t('product.configure_your_handmadebag') %></span>
+                    <span class="color-green"><%= t('price') %></span>
                   </div>
                 </div>
-                <% @product_custom_types.each_with_index do |product_custom_type, index| %>
-                  <div class="col-md-12 margin-bottom-10 select-parent">
-                    <% custom_items = product_custom_type.product_custom_items.where(product_id: @order_product.product.id) %>
-                    <% if custom_items.length > 0 %>
-                      <% custom_items.each do |custom_item| %>
-                        <%= image_tag custom_item.image.url(:medium), class: 'preload' %>
-                      <% end %>
-                      <%= fields_for "order_product[order_product_custom_items_attributes][#{index}]" do |builder| %>
-                        <% product_custom_type.product_custom_type_translates.where(locale_id: session[:locale_id]).each do |type_translate| %>
-                          <% if product_custom_type.multi? %>
-                            <%= builder.label :product_custom_item_id, type_translate.name %>
-                            <%= builder.select :product_custom_item_id, options_for_select(custom_items.map do |product_custom_item|
-                              [
-                                  '',
-                                  product_custom_item.id,
-                                  data: {content: "<span class='options' data-image='#{image_path product_custom_item.image.url(:medium)}'>#{product_custom_item.product_custom_item_translates.where(locale_id: session[:locale_id]).first.name}<span class='label label-default'>#{number_to_currency(product_custom_item.price)}</span></span>",
-                                         price: product_custom_item.price,
-                                         workday: product_custom_item.workday}
-                              ]
-                            end), {}, {include_blank: false, class: 'selectpicker', data: {width: '100%'}, multiple: 'multiple', title: "#{t('product.choose_custom_item')}#{type_translate.name}"} %>
-                          <% else %>
-                            <%= builder.label :product_custom_item_id, type_translate.name %>
-                            <%= builder.select :product_custom_item_id, options_for_select(custom_items.map do |product_custom_item|
-                              [
-                                  '',
-                                  product_custom_item.id,
-                                  data: {content: "<span class='options' data-image='#{image_path product_custom_item.image.url(:medium)}'>#{product_custom_item.product_custom_item_translates.where(locale_id: session[:locale_id]).first.name}<span class='label label-default'>#{number_to_currency(product_custom_item.price)}</span></span>",
-                                         price: product_custom_item.price,
-                                         workday: product_custom_item.workday}
-                              ]
-                            end.prepend(["#{t('product.origin')}#{type_translate.name}", nil, data: {price: 0, workday: 0}])), {}, {include_blank: false, class: 'selectpicker', data: {width: '100%'}} %>
-                          <% end %>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
                 <div class="col-md-12 margin-bottom-50">
                   <h4 class="margin-bottom-20">
                     <strong style="color:#666;" id="product-price" data-price="<%= @order_product.product.price %>"><%= number_to_currency(@order_product.product.price) %></strong>
-                    <small>需要的工作天大約為 10 天</small>
                   </h4>
                   <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
                     <i class="icon-shopping-cart"></i>
@@ -107,10 +67,10 @@
                 </div>
                 <div class="col-md-12">
                   <h5>覺得這個包很棒，不過想要特別的修改嗎？</h5>
-                  <a href="" class="btn btn-u-lg btn-default btn-block hover-effect one-page-btn">
+                  <%= link_to new_product_order_custom_items_path(@product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
                     <i class="icon-edit"></i>
                     <span>提出你的需求</span>
-                  </a>
+                  <% end %>
                 </div>
               </div>
             <% end %>

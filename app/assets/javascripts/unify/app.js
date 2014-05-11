@@ -184,7 +184,7 @@ var App = function () {
                 slideWidth: 360,
                 slideMargin: 10
             });            
-        },
+        }
 
     };
 

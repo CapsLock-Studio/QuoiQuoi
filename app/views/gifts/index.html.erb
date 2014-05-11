@@ -1,0 +1,39 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.handmadebag') %>
+<div class="container">
+  <div class="row">
+    <%= render 'products/side_navigation' %>
+    <div class="col-md-9">
+      <div class="row">
+        <% @gifts.each do |gift| %>
+          <% gift.gift_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+            <% unless translate.name.blank? %>
+              <div class="col-md-4 col-sm-6">
+                <div class="thumbnails thumbnail-style">
+                  <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path gift.image.url(:large) %>">
+                    <span class="overlay-zoom">
+                      <%= image_tag gift.image.url(:medium), class: 'img-responsive' %>
+                      <div class="zoom-icon"></div>
+                    </span>
+                  </a>
+                  <div class="caption">
+                    <h4><%= translate.name %></h4>
+                  </div>
+                  <div class="w-footer">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <span class="price">
+                          <%= number_to_currency(gift.quota) %>
+                        </span>
+                        <%= link_to t('view_detail'), gift_path(gift), class: 'btn btn-default pull-right hover-effect' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

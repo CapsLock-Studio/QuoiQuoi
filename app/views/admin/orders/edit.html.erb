@@ -1,0 +1,37 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="page-header">
+        <h1 class="pull-left">
+          <i class="icon-truck"></i>
+          待出貨訂單內容
+        </h1>
+        <div class="pull-right">
+          <ul class="breadcrumb">
+            <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-7">
+      <%= render 'order_detail', order: @order %>
+    </div>
+    <div class="col-sm-5">
+      <%= render 'form' %>
+    </div>
+  </div>
+  <% if @order.paid? && @order.payment.completed? && !@order.delivered? && !@order.closed? %>
+    <div class="row form-actions">
+      <div class="col-sm-12">
+        <div class="pull-right">
+          <%= link_to(admin_order_path(@order), class: 'btn btn-primary btn-lg', method: :put) do %>
+            <i class="icon-save"></i>
+            確認已出貨
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

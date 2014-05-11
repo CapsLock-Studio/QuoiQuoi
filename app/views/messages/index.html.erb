@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:none;">
+        <div class="reg-header" style="margin-bottom:0">
+          <div class="text-center">
+            <h2><i class="icon-comments"></i>訊息匣</h2>
+            <p></p>
+          </div>
+        </div>
+        <ul class="list-unstyled list-hover list-striped">
+          <% @messages.each do |message| %>
+            <li>
+              <div class="row" style="padding:10px">
+                <div class="col-xs-10">
+                  <%= truncate(message.content, size: 20) %>
+                </div>
+                <div class="col-xs-2 text-center">
+                  <%= link_to '詳細', message_path(message) %>
+                  <% if message.admin? && !message.read? %>
+                    <span class="label label-success">新訊息</span>
+                  <% end %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <hr/>
+        <%= link_to '寫新的訊息', new_message_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' %>
+        <%= link_to orders_path do %>
+          <i class="icon-angle-left"></i>
+          回到我的帳戶
+        <% end %>
+      </div>
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>

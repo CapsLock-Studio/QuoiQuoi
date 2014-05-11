@@ -34,13 +34,16 @@
               <%= link_to t('header.navigation.handmadebag'), products_path %>
             </li>
             <li>
-              <%= link_to t('header.navigation.order_request'), new_order_custom_items_path %>
+              <%= link_to t('header.navigation.order_request'), new_order_custom_item_path %>
             </li>
             <% @product_types.each do |product_type| %>
               <li>
                 <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase, product_type_products_path(product_type) %>
               </li>
             <% end %>
+            <li>
+              <%= link_to t('gift'), gifts_path %>
+            </li>
           </ul>
         <% end %>
         <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>

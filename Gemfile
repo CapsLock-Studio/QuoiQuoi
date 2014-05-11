@@ -37,6 +37,7 @@ gem 'cancan'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 gem 'auto-facebook', '~> 0.42'
 gem 'breadcrumbs_on_rails'
 gem 'paperclip', '~> 4.1'
@@ -44,6 +45,8 @@ gem 'awesome_nested_fields'
 # gem 'will_paginate', '~> 3.0'
 gem 'kaminari'
 #gem 'kaminari-bootstrap', '~> 3.0.1'
+
+gem 'paypal-express'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

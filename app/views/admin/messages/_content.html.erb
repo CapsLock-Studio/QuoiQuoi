@@ -1,0 +1,24 @@
+<%= form_for @message, html: {class: 'form validate-form'} do |f| %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            消息詳細
+          </div>
+          <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="form-group">
+            <%= f.label :content, '訊息內容' %>
+            <div class="controls">
+              <%= f.text_area :content, class: 'autosize form-control', disabled: 'disabled', rows: 6 %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

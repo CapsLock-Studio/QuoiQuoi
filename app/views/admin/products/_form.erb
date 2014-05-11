@@ -13,7 +13,7 @@
       <fieldset>
         <div class="row">
           <div class="col-sm-6">
-            <div class="nested-field">
+            <div class="nested-field" style="margin-bottom:10px;">
               <div class="row">
                 <div class="col-sm-12">
                   <div class="box image-preview-box">
@@ -129,34 +129,14 @@
             <% end %>
           </div>
         </div>
-        <div class="col-sm-12">
-          <div class="box nested-field">
-            <div class="box-header">
-              <div class="title">
-                <i class="icon-edit"></i>
-                手工包克製化項目
-              </div>
-              <div class="actions">
-                <a class="add btn">新增客製化項目</a>
-              </div>
-            </div>
-            <div class="box-padding">
-              <div class="row">
-                <div class="items">
-                  <%= render 'custom_item', f: f %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="row form-actions">
           <div class="col-sm-12">
             <div class="pull-right">
+              <%= link_to '取消', admin_products_path, class: 'btn btn-lg' %>
               <%= f.button(class: 'btn btn-primary btn-lg') do %>
                 <i class="icon-save"></i>
                 儲存
               <% end %>
-              <%= link_to '取消', admin_products_path, class: 'btn btn-lg' %>
             </div>
           </div>
         </div>

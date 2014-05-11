@@ -1,0 +1,43 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-picture"></i>
+      <span>場地照片管理(圖片)</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <div class="btn-toolbar">
+          <%= link_to '新增場地照片', new_admin_rent_info_image_path, class: 'btn btn-info' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <% @rent_info_images.each do |rent_info_images| %>
+          <div class="col-sm-3">
+            <div class="box image-preview-box">
+              <div class="box-header box-header-small">
+                <div class="actions">
+                  <%= link_to(admin_rent_info_image_path(rent_info_images), class: 'btn btn-xs btn-link', method: :delete) do %>
+                    <i class="icon-remove"></i>
+                  <% end %>
+                  <%= link_to(edit_admin_rent_info_image_path(rent_info_images), class: 'btn btn-xs btn-link') do %>
+                    <i class="icon-pencil"></i>
+                  <% end %>
+                </div>
+              </div>
+              <%= image_tag rent_info_images.image.url(:medium), class: 'img-responsive' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <%= paginate @rent_info_images %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

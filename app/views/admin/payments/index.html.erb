@@ -1,0 +1,83 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-credit-card"></i>
+      <span>交易記錄</span>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">交易記錄列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                <tr>
+                  <th>付款記錄編號</th>
+                  <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                  <th>款項</th>
+                  <th>付款金額</th>
+                  <th>付款方式</th>
+                  <th>付款日期</th>
+                  <th>狀態</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @payments.each do |payment| %>
+                  <tr>
+                    <td>
+                      <%= payment.id %>
+                    </td>
+                    <td>
+                      <%= link_to payment.user_id, admin_user_path(payment.user_id) %>
+                    </td>
+                    <td>
+                      <% if payment.order %>
+                        訂單
+                      <% elsif payment.registration %>
+                        課程
+                      <% elsif payment.user_gift %>
+                        禮品券
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(payment.amount) %>
+                    </td>
+                    <td>
+                      <% if payment.wait? %>
+                        匯款
+                      <% else %>
+                        Paypal
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= payment.pay_time.strftime('%Y/%m/%d') if payment.pay_time %>
+                    </td>
+                    <td>
+                      <%= render 'status', payment: payment %>
+                    </td>
+                    <td class="text-right">
+                      <%= link_to(admin_payment_path(payment), class: 'btn btn-md') do %>
+                        <i class="icon-eye-open"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

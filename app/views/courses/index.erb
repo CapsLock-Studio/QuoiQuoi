@@ -36,7 +36,7 @@
                   <div class="w-footer">
                     <div class="row">
                       <div class="col-sm-12">
-                        <%= link_to t('view_detail'), course_path(1), class: 'btn btn-default pull-right' %>
+                        <%= link_to t('view_detail'), course_path(course, month: course.time.strftime('%m').to_i), class: 'btn btn-default pull-right' %>
                       </div>
                     </div>
                   </div>

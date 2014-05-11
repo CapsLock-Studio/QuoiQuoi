@@ -1,0 +1,25 @@
+<div class="carousel slide carousel-v1 margin-bottom-40" id="myCarousel-1">
+  <div class="carousel-inner">
+    <% @rent_intros.each_with_index do |rent_intro, index| %>
+      <% rent_intro.rent_intro_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+        <div class="item <%= 'active' if index == 0 %>">
+          <%= link_to rent_intro.image.url(:large), target: '_blank' do %>
+            <%= image_tag rent_intro.image.url(:medium), class: 'img-responsive', style: 'width:100%;' %>
+          <% end %>
+          <div class="carousel-caption">
+            <p><%= translate.description %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="carousel-arrow">
+    <a data-slide="prev" href="#myCarousel-1" class="left carousel-control">
+      <i class="icon-angle-left"></i>
+    </a>
+    <a data-slide="next" href="#myCarousel-1" class="right carousel-control">
+      <i class="icon-angle-right"></i>
+    </a>
+  </div>
+</div>

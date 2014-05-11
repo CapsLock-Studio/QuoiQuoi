@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rent_info_id: 
+  locale_id: 
+  title: MyString
+  content: MyText
+
+two:
+  rent_info_id: 
+  locale_id: 
+  title: MyString
+  content: MyText

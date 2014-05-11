@@ -1,0 +1,7 @@
+<% if order_custom_item.accept.blank? || order_custom_item.accept_time.blank? %>
+  <label class="label label-danger">待確認</label>
+<% elsif !order_custom_item.accept.blank? && !order_custom_item.accept_time.blank? && !order_custom_item.order %>
+  <label class="label label-success">已接受</label>
+<% elsif order_custom_item.order %>
+  <label class="label label-default">已下單</label>
+<% end %>

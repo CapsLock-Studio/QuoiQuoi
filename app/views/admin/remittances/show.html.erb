@@ -1,0 +1,89 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-credit-card"></i>
+      <span>匯款資訊管理</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <% if @remittance %>
+          <%= link_to '修改匯款資訊', edit_admin_remittances_path, class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to '新增匯款資訊', new_admin_remittances_path, class: 'btn btn-info' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            <i class="icon-info"></i>
+            匯款資訊
+          </div>
+          <div class="actions">
+            <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-padding">
+          <% if @remittance %>
+            <div class="row">
+              <% @remittance.remittance_translates.each do |translate| %>
+                <div class="col-sm-6">
+                  <div class="box">
+                    <div class="box-header">
+                      <div class="title">
+                        <%= translate.locale.name %>
+                      </div>
+                      <div class="actions">
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                      </div>
+                    </div>
+                    <div class="box-content">
+                      <div class="form-group">
+                        <label>收款人姓名</label>
+                        <div class="controls">
+                          <%= text_field_tag :name, translate.name, class: 'form-control', disabled: 'disabled' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>銀行代碼(國內: Short Code / 國外: Swift Code)</label>
+                        <div class="controls">
+                          <%= text_field_tag :code, translate.code, class: 'form-control', disabled: 'disabled' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>收款帳戶全部號碼(Full A/C No.)</label>
+                        <div class="controls">
+                          <%= text_field_tag :account, translate.account, class: 'form-control', disabled: 'disabled' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>銀行名稱</label>
+                        <div class="controls">
+                          <%= text_field_tag :bank_name, translate.bank_name, class: 'form-control', disabled: 'disabled' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>銀行地址</label>
+                        <div class="controls">
+                          <%= text_field_tag :bank_address, translate.bank_address, class: 'form-control', disabled: 'disabled' %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="alert alert-info alert-dismissable">
+              <a class="close" data-dismiss="alert" href="#">×</a>
+              目前沒有設定匯款資訊，請按下 <%= link_to '新增', new_admin_remittances_path %> 設定匯款資訊
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

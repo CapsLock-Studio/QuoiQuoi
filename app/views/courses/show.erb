@@ -4,44 +4,30 @@
     <%= render 'side_navigation' %>
     <div class="col-md-9">
       <div class="row margin-bottom-60">
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-sm-12">
-              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course1.jpg' %>">
-                <span class="overlay-zoom">
-                  <%= image_tag 'course1.jpg', class: 'img-responsive' %>
-                  <div class="zoom-icon"></div>
-                </span>
-              </a>
-            </div>
-            <div class="col-sm-4" style="margin-top:15px;">
-              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course2.jpg' %>">
-                <span class="overlay-zoom">
-                  <%= image_tag 'course2.jpg', class: 'img-responsive' %>
-                  <div class="zoom-icon"></div>
-                </span>
-              </a>
-            </div>
-            <div class="col-sm-4" style="margin-top:15px;">
-              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course3.jpg' %>">
-                <span class="overlay-zoom">
-                  <%= image_tag 'course3.jpg', class: 'img-responsive' %>
-                  <div class="zoom-icon"></div>
-                </span>
-              </a>
-            </div>
-            <div class="col-sm-4" style="margin-top:15px;">
-              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path 'course4.jpg' %>">
-                <span class="overlay-zoom">
-                  <%= image_tag 'course4.jpg', class: 'img-responsive' %>
-                  <div class="zoom-icon"></div>
-                </span>
-              </a>
+        <% @course.course_translates.where(locale_id: session[:locale_id]).each do |course_translate| %>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="<%= course_translate.name %>" href="<%= asset_path @course.image.url(:large) %>">
+                  <span class="overlay-zoom">
+                    <%= image_tag @course.image.url(:medium), class: 'img-responsive' %>
+                    <div class="zoom-icon"></div>
+                  </span>
+                </a>
+              </div>
+              <% @course.course_images.each do |course_image| %>
+                <div class="col-sm-4" style="margin-top:15px;">
+                  <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="<%= course_translate.name %>" href="<%= asset_path course_image.image.url(:large) %>">
+                  <span class="overlay-zoom">
+                    <%= image_tag course_image.image.url(:medium), class: 'img-responsive' %>
+                    <div class="zoom-icon"></div>
+                  </span>
+                  </a>
+                </div>
+              <% end %>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <%= form_for :registration do %>
+          <div class="col-md-6">
             <div class="row">
               <div class="col-md-12 margin-bottom-50">
                 <ul class="social-icons pull-right">
@@ -51,166 +37,76 @@
                 </ul>
                 <h3 style="color:#666;">
                   <strong>
-                    多肉植栽&花藝小特餐
+                    <%= course_translate.name %>
                   </strong>
                 </h3>
                 <ul class="list-unstyled">
                   <li>
-                    <strong>開課時間：2014/2/15 10:00 - 12:30</strong>
+                    <strong>開課時間: <%= "#{@course.time.strftime('%Y/%m/%d %H:%M')} - #{(@course.time + @course.length.hours).strftime('%H:%M')}" %></strong>
                   </li>
                   <li>
-                    <strong>開課老師：漢那老師</strong>
+                    <strong>開課老師: <%= course_translate.teacher %></strong>
+                  </li>
+                  <li>
+                    <strong>報名完成人數: <%= @total_attendance %></strong>
+                  </li>
+                  <li>
+                    <strong>最多報名人數: <%= @course.popular %></strong>
                   </li>
                 </ul>
-                <p>
-                  多肉植物小星球的漢娜老師要為我們帶來不一樣的花藝課程<br/>
-                  兩艘小船滿載著鮮花和多肉<br/>
-                  為情人節特別訂製的手作花藝課<br/>
-                  可以兩人一同報名課程<br/>
-                  當然，好朋友一起來也可以<br/>
-                  <br/>
-                  莓果小船是莓果球型花類（品種依時節不同）<br/>
-                  <br/>
-                  放置2週以上，也可以再製成乾燥花<br/>
-                  多肉小船是藤蔓之類的多肉（品種依時節不同）<br/>
-                  可以長期種植
-                </p>
+                <%= simple_format(course_translate.description) %>
               </div>
               <div class="col-md-12">
                 <h4 class="margin-bottom-20">
-                  <strong style="color:#666;">$ 3,000</strong>
-                  <small>包含材料一份、學費、場地費用、工具借用</small>
+                  <strong style="color:#666;"><%= number_to_currency(@course.price) %></strong>
+                  <small><%= course_translate.note %></small>
                 </h4>
-                <a href="#" class="btn btn-block btn-u">報名課程</a>
+                <% if @course.time > Time.now + 5.hours %>
+                  <% if @registration.id %>
+                    <%= link_to registrations_path, class: 'btn btn-default btn-lg btn-block hover-effect one-page-btn' do %>
+                      <span>已報名課程</span>
+                    <% end %>
+                  <% else %>
+                    <%= link_to new_registration_path(course_id: @course.id), class: 'btn btn-default btn-lg btn-block hover-effect one-page-btn' do %>
+                      <i class="icon-edit"></i>
+                      <span>報名課程</span>
+                    <% end %>
+                  <% end %>
+                <% end %>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
       <div class="row">
         <div class="col-md-12">
           <!-- Recent Works -->
           <div class="headline">
-            <h2>其他課程</h2>
+            <h2>近期課程</h2>
           </div>
           <div class="margin-bottom-40">
             <ul id="list" class="bxslider recent-work">
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
+              <% @recent_courses.each do |recent_course| %>
+                <li>
+                  <%= link_to course_path(recent_course) do %>
+                    <em class="overflow-hidden">
+                      <%= image_tag recent_course.image.url(:thumb) %>
+                    </em>
                     <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
+                      <% recent_course.course_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+                        <strong>
+                            <%= translate.name %>
+                        </strong>
+                        <i>
+                          <%= "#{recent_course.time.strftime('%Y/%m/%d %H:%M')} - #{(recent_course.time + recent_course.length.hours).strftime('%Y/%m/%d %H:%M')}" %>
+                        </i>
+                        <br/>
+                        <i>開課老師：<%= translate.teacher %></i>
+                      <% end %>
                     </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li><li>
-              <a href="#">
-                <em class="overflow-hidden">
-                  <%= image_tag 'course1.jpg' %>
-                </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-              </a>
-            </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'course1.jpg' %>
-                  </em>
-                    <span>
-                      <strong>多肉植栽&花藝小特餐</strong>
-                      <i>2014/2/15 10:00 - 12:30</i>
-                      <br/>
-                      <i>開課老師：漢那老師</i>
-                    </span>
-                </a>
-              </li>
+                  <% end %>
+                </li>
+              <% end %>
             </ul>
           </div><!--/row-->
           <!-- End Recent Works -->

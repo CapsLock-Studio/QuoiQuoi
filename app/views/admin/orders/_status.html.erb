@@ -1,0 +1,29 @@
+<% if order.closed? %>
+  <label class="label label-default">
+    交易完成
+  </label>
+<% elsif order.paid? %>
+  <% if order.payment.completed? %>
+    <% if order.delivered? %>
+      <label class="label label-primary">
+        等待收貨
+      </label>
+    <% else %>
+      <label class="label label-danger">
+        等待配送
+      </label>
+    <% end %>
+  <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
+    <label class="label label-contrast">
+      等待匯款
+    </label>
+  <% else %>
+    <label class="label label-danger">
+      等待確認
+    </label>
+  <% end %>
+<% else %>
+  <label class="label label-warning">
+    等待付款
+  </label>
+<% end %>

@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="title">
+          訂製要求
+        </div>
+        <div class="actions">
+          <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+        </div>
+      </div>
+      <div class="box-content">
+        <% if @order_custom_item.product %>
+          <div class="form-group">
+            <label>修改現貨</label>
+            <div class="controls">
+              <%= text_field_tag :name, @order_custom_item.product.product_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - '), class: 'form-control', disabled: 'disabled' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="controls">
+              <%= link_to product_path(@order_custom_item.product), target: '_blank' do %>
+                <%= image_tag @order_custom_item.product.image(:medium), class: 'img-responsive' %>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="form-group">
+            <label>設計</label>
+            <div class="controls">
+              <%= text_field_tag :design, @order_custom_item.design, class: 'form-control', disabled: 'disabled' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>風格</label>
+            <div class="controls">
+              <%= text_field_tag :style, @order_custom_item.style, class: 'form-control', disabled: 'disabled' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>布料</label>
+            <div class="controls">
+              <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
+                <%= link_to(order_custom_item_material.material.image(:large), target: '_blank') do %>
+                  <%= image_tag order_custom_item_material.material.image(:thumb) %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <div class="form-group">
+          <label>要求敘述</label>
+          <div class="controls">
+            <%= text_area_tag :description, @order_custom_item.description, class: 'form-control', disabled: 'disabled', rows: 3 %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>客戶給的概念圖</label>
+          <div class="controls">
+            <% if @order_custom_item.order_custom_item_images.length > 0 %>
+              <% @order_custom_item.order_custom_item_images.each do |order_custom_item_image| %>
+                <%= link_to(order_custom_item_image.image.url(:large), target: '_blank') do %>
+                  <%= image_tag order_custom_item_image.image.url(:thumb) %>
+                <% end %>
+              <% end %>
+            <% else %>
+              <h4 class="text-center">
+                <i class="icon-exclamation"></i>&nbsp;<span>沒有上傳圖片</span>
+              </h4>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

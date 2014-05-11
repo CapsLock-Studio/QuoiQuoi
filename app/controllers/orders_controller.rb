@@ -1,44 +1,121 @@
 class OrdersController < ApplicationController
-  before_action :set_order, except: [:index, :new]
+  before_action :set_order, except: [:index, :new, :close_index]
+  before_action :authenticate_user!
 
   def index
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('order_in_trading'), :orders_path
 
+    @orders = Order.where(closed: false, checkout: true, user_id: current_user.id, canceled: false)
   end
 
   def new
-    set_breadcrumbs
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb I18n.t('header.navigation.cart'), :cart_path
+    add_breadcrumb I18n.t('check_out')
 
-    add_breadcrumb I18n.t('header.navigation.order_request')
+    @subtotal = 0
+    @order = order_in_cart
   end
 
   # GET /orders/1
   def show
-    respond_to do |format|
-      case @order.verified
-        when true
-          format.html {render 'status'}
-        when false
-          # wait web holder check paid
-          format.html {render 'vertify'}
-        else
-          @subtotal = []
-          format.html {render 'show'}
-      end
-    end
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('order_in_trading'), :orders_path
+    add_breadcrumb '訂單詳細'
   end
 
   # PUT/PATCH /orders/1
   def update
+    # summary subtotal
+    subtotal = 0
 
+    @order.order_products.each do |order_product|
+      subtotal += order_product.product.price
+    end
+    @order.order_custom_items do |order_custom_item|
+      subtotal += order_custom_item.price
+    end
+
+    respond_to do |format|
+      if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now}))
+        format.html {redirect_to pay_order_path(@order)}
+      else
+        format.html {render json: @order.errors}
+      end
+    end
+  end
+
+  def destroy
+  end
+
+  def cancel
+    respond_to do |format|
+      if (!@order.payment || !@order.payment.completed?) && @order.update_attributes({canceled: true, canceled_time: Time.now})
+        format.html {redirect_to action: :index}
+      else
+        format.html {render json: @order.errors}
+      end
+    end
+  end
+
+  # GET /orders/close
+  def close_index
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('closed_order')
+    @orders = Order.where(closed: true)
+
+    respond_to do |format|
+      format.html {render action: :index}
+    end
+  end
+
+  # GET /orders/1/close
+  def close_show
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('closed_order'), :close_orders_path
+    add_breadcrumb '訂單詳細'
+
+    respond_to do |format|
+      format.html {render action: :show}
+    end
+  end
+
+  # PUT/PATCH /orders/1/close
+  def close
+    if @order.paid? && @order.delivered?
+      respond_to do |format|
+        if @order.update_attributes({closed: true, closed_time: Time.now})
+          format.html {redirect_to close_order_path(@order)}
+        else
+          format.html {render json: @order.errors}
+        end
+      end
+    else
+      respond_to do |format|
+        format.html {render action: :show}
+      end
+    end
+  end
+
+  # GET /orders/1/pay
+  def pay_show
+    if @order.payment && @order.payment.completed?
+      redirect_to order_path(@order)
+    elsif @order.payment
+      @order.payment.destroy
+      @payment = @order.build_payment
+    else
+      @payment = @order.build_payment
+    end
   end
 
   private
-    def set_breadcrumbs
-      add_breadcrumb I18n.t('header.navigation.home'), :root_path
-      add_breadcrumb I18n.t('header.navigation.shop'), :products_path
+    def set_order
+      @order = Order.where(id: params[:id], user_id: current_user.id).first
     end
 
-    def set_order
-      @order = Order.find(params[:id])
+    def order_params
+      params.require(:order).permit(:name, :address, :phone, :zip_code)
     end
 end

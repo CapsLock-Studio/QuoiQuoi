@@ -24,8 +24,8 @@
                         <span class="price">
                           <%= number_to_currency(product.price) %>
                         </span>
-                        <%= link_to t('view_detail'),
-                                    product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'btn btn-default pull-right' %>
+                        <%= link_to t('product_detail'),
+                                    product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'btn btn-default pull-right hover-effect' %>
                       </div>
                     </div>
                   </div>

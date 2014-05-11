@@ -1,0 +1,10 @@
+<% @rent_infos.each do |rent_info| %>
+  <div class="col-md-12 margin-bottom-40">
+    <% rent_info.rent_info_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+      <div class="headline">
+        <h3><%= translate.title.gsub(/{/, '<small>').gsub(/}/, '</small>').html_safe %></h3>
+      </div>
+      <%= simple_format(translate.content) %>
+    <% end %>
+  </div>
+<% end %>

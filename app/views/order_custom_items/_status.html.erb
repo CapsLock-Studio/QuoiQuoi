@@ -1,0 +1,9 @@
+<% if order_custom_item.accept.blank? || order_custom_item.price.blank? %>
+  等待回應
+<% elsif order_custom_item.accept? && !order_custom_item.order %>
+  接受訂製
+<% elsif !order_custom_item.accept? && !order_custom_item.order %>
+  不接受訂製
+<% else %>
+  已下單
+<% end %>

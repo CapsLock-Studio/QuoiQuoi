@@ -1,0 +1,234 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container">
+  <div class="row">
+    <%= render 'user/side_navigation' %>
+    <div class="col-md-9">
+      <div class="row margin-bottom-40">
+        <div class="col-md-12">
+          <h4 class="margin-bottom-30">
+            訂製要求編號:
+            <strong class="text-muted"><%= @order_custom_item.id %></strong>
+          </h4>
+        </div>
+        <div class="col-md-12 text-center text-muted">
+          <ul class="list-unstyled step">
+            <li class="col-xs-3 step-active">
+              <span>
+                <i class="icon-edit-sign icon-round"></i>
+              </span>
+              <h4>送出要求</h4>
+              <p><%= @order_custom_item.created_at.strftime('%Y/%m/%d %H:%M') %></p>
+            </li>
+            <li class="col-xs-3 step-active">
+              <% if @order_custom_item.accept? && !@order_custom_item.price.blank? %>
+                <span>
+                  <i class="icon-check icon-round"></i>
+                </span>
+                <h4>接受訂製</h4>
+                <p><%= @order_custom_item.accept_time.strftime('%Y/%m/%d %H:%M') %></p>
+              <% elsif @order_custom_item.accept && !@order_custom_item.accept %>
+                <span>
+                  <i class="icon-remove icon-round"></i>
+                </span>
+                <h4>
+                  不接受訂製
+                </h4>
+                <p><%= @order_custom_item.accept_time.strftime('%Y/%m/%d %H:%M') %></p>
+              <% else %>
+                <span>
+                  <i class="icon-ellipsis-horizontal icon-round"></i>
+                </span>
+                <h4>
+                  等待回應
+                </h4>
+              <% end %>
+            </li>
+            <li class="col-xs-3 <%= 'step-active' if @order_custom_item.order %>">
+              <span>
+                <i class="icon-shopping-cart icon-round"></i>
+              </span>
+              <% if @order_custom_item.order %>
+                <h4>已下單</h4>
+              <% elsif @order_custom_item.accept? && !@order_custom_item.accept_time.blank? %>
+                <h4>加入訂單結算</h4>
+                <%= link_to '加入購物車', order_custom_item_path(@order_custom_item), class: 'btn btn-u btn-u-xs btn-u-orange hover-effect', method: :put %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <% if @order_custom_item.accept? %>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h5>設計師回應</h5>
+          </div>
+          <div class="col-md-12 margin-bottom-40">
+            <h4 class="row">
+              <span class="col-md-2 col-xs-3 text-right color-orange">
+                報價
+              </span>
+              <span class="col-md-10 col-xs-9">
+                <strong class="text-muted"><%= number_to_currency(@order_custom_item.price) %></strong>
+              </span>
+            </h4>
+            <div class="row">
+              <div class="col-md-2 col-xs-3 text-right">
+                估計工作天數
+              </div>
+              <div class="col-md-10 col-xs-9">
+                <%= @order_custom_item.workday %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-xs-3 text-right">
+                估計完成日期
+              </div>
+              <div class="col-md-10 col-xs-9">
+                <%= @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d') %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-xs-3 text-right">
+                訊息
+              </div>
+              <div class="col-md-10 col-xs-9">
+                <%= (@order_custom_item.response.blank?)? t('no_message') : simple_format(@order_custom_item.response) %>
+              </div>
+            </div>
+            <% if @order_custom_item.image.exists? %>
+              <div class="row">
+                <div class="col-md-2 col-xs-3 text-right">
+                  設計草稿
+                </div>
+                <div class="col-md-6 col-xs-9">
+                  <a href="<%= asset_path @order_custom_item.image.url(:large) %>" target="_blank">
+                    <%= image_tag @order_custom_item.image.url(:medium), class: 'img-responsive' %>
+                  </a>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="col-md-12">
+          <h5>聯絡資訊</h5>
+        </div>
+        <div class="col-md-12 margin-bottom-40">
+          <div class="row">
+            <div class="col-md-2 col-xs-3 text-right">
+              姓名
+            </div>
+            <div class="col-md-10 col-xs-9">
+              <%= @order_custom_item.name %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 col-xs-3 text-right">
+              聯絡電話
+            </div>
+            <div class="col-md-10 col-xs-9">
+              <%= @order_custom_item.phone.gsub(/\d{4}$/, '****') %>
+            </div>
+          </div>
+          <% unless @order_custom_item.line.blank? %>
+            <div class="row">
+              <div class="col-md-2 col-xs-3 text-right">
+                Line
+              </div>
+              <div class="col-md-10 col-xs-9 text-left">
+                <%= @order_custom_item.line %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <span class="text-muted">訂製需求</span>
+            </div>
+            <div class="box-content box-no-padding" style="border:0;">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-bordered text-left table-padding-20" style="margin-bottom:0;">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <% if @order_custom_item.product %>
+                      <tr>
+                        <td class="col-xs-4">現有商品修改</td>
+                        <td>
+                          <%= link_to product_path(@order_custom_item.product), target: '_blank' do %>
+                            <div class="text-muted">
+                              <%= @order_custom_item.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                            </div>
+                            <%= image_tag @order_custom_item.product.image.url(:thumb), class: 'img-responsive' %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% else %>
+                      <tr>
+                        <td class="col-xs-4">包款、大小</td>
+                        <td><%= @order_custom_item.design %></td>
+                      </tr>
+                      <tr>
+                        <td class="col-xs-4">風格</td>
+                        <td><%= @order_custom_item.style %></td>
+                      </tr>
+                    <% end %>
+                    <tr>
+                      <td class="col-xs-4">布料</td>
+                      <td>
+                        <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
+                          <%= image_tag order_custom_item_material.material.image.url(:thumb) %>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col-xs-4">需求敘述</td>
+                      <td>
+                        <%= simple_format(@order_custom_item.description) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col-xs-4">您給我們的概念圖</td>
+                      <td>
+                        <% @order_custom_item.order_custom_item_images do |order_custom_item_image| %>
+                          <%= order_custom_item_image.image.url(:thumb) %>
+                        <% end %>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% if @order_custom_item.accept? %>
+          <div class="col-md-12">
+            <h4 class="text-right color-orange">
+              報價金額 :
+              <strong class="text-muted">
+                <%= number_to_currency(@order_custom_item.price) %>
+              </strong>
+            </h4>
+          </div>
+        <% end %>
+        <hr/>
+        <div class="col-sm-4 col-sm-offset-4">
+          <% if @order_custom_item.accept.blank? || @order_custom_item.accept_time.blank? %>
+            <%= link_to '取消訂製要求', cancel_order_custom_item_path(@order_custom_item), method: :put %>
+          <% end %>
+          <% if @order_custom_item.accept? && !@order_custom_item.accept_time.blank? && !@order_custom_item.order %>
+            <%= link_to '加入購物車', order_custom_item_path(@order_custom_item), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', method: :put %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

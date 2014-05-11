@@ -1,13 +1,43 @@
 class OrderCustomItemsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_order_custom_item, except: [:index, :new, :create]
 
-  # GET /order_custom_items/1
+  # GET /order_custom_items
   def index
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('my_order_request'), :order_custom_items_path
 
+    @order_custom_items = OrderCustomItem.where(canceled: false)
+  end
+
+  def show
+    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('my_order_request'), :order_custom_items_path
+    add_breadcrumb t('order_request_detail')
+  end
+
+  # GET /order_custom_items/material
+  def material
+    respond_to do |format|
+      @materials = Material.all.page(params[:page]).per(16)
+      format.html {render 'material', layout: false}
+    end
   end
 
   # GET /order_custom_items/new
   def new
+    add_breadcrumb t('header.navigation.home'), root_path
+    add_breadcrumb t('header.navigation.order_request')
 
+    respond_to do |format|
+      @materials = Material.all.page(params[:page]).per(16)
+
+      format.html do
+        @order_custom_item = OrderCustomItem.new(product_id: params[:product_id] ||= nil)
+      end
+
+      format.json {}
+    end
   end
 
   # GET /order_custom_items/1/edit
@@ -17,16 +47,62 @@ class OrderCustomItemsController < ApplicationController
 
   # POST /order_custom_items
   def create
-
+    respond_to do |format|
+      #format.html {render json: order_custom_item_params}
+      @order_custom_item = OrderCustomItem.new(order_custom_item_params.merge({user_id: current_user.id}))
+      if @order_custom_item.save
+        format.html {redirect_to order_custom_item_path(@order_custom_item)}
+      else
+        format.html {render json: @order_custom_item.errors}
+      end
+    end
   end
 
   # PUT/PATCH /order_custom_items/1
   def update
-
+    respond_to do |format|
+      if @order_custom_item.accept? && !@order_custom_item.price.blank?
+        if @order_custom_item.update_attribute(:order_id, order_in_cart.id)
+          format.html {redirect_to cart_path}
+        else
+          format.html {render json: @order_custom_item.errors}
+        end
+      else
+        format.html {render json: 'you can not modify this order_custom_item'}
+      end
+    end
   end
 
   # DELETE /order_custom_items/1
   def destroy
-
+    respond_to do |format|
+      if @order_custom_item.update_attribute(:order_id, '')
+        format.html {redirect_to cart_pa}
+      else
+        format.html {render json: @order_custom_item.errors}
+      end
+    end
   end
+
+  def cancel
+    respond_to do |format|
+      if @order_custom_item.update_attributes({canceled: true, canceled_time: Time.now})
+        format.html {redirect_to action: :index}
+      else
+        format.html {render json: @order_custom_item.errors}
+      end
+    end
+  end
+
+  private
+    def order_custom_item_params
+      params.require(:order_custom_item).permit(:id, :name, :product_id, :order_id, :design, :style, :material_id,
+                                                :description, :line, :phone, :image,
+                                                order_custom_item_images_attributes: [:id, :order_custom_item_id, :image],
+                                                order_custom_item_materials_attributes: [:id, :order_custom_item_id, :material_id])
+    end
+
+    def set_order_custom_item
+      @order_custom_item = OrderCustomItem.where(id: params[:id], user_id: current_user.id).first
+    end
 end

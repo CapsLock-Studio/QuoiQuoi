@@ -1,0 +1,74 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-check"></i>
+      <span>待確認匯款交易記錄</span>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">已回報匯款交易記錄列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                <tr>
+                  <th>訂單編號</th>
+                  <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                  <th>應付價格</th>
+                  <th>已匯款金額</th>
+                  <th>匯款帳號末五碼</th>
+                  <th>匯款時間</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @payments.each do |payment| %>
+                  <tr>
+                    <td>
+                      <%= payment.order.id %>
+                    </td>
+                    <td>
+                      <%= link_to payment.user.id, admin_user_path(payment.user.id) %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(payment.order.subtotal) %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(payment.amount) %>
+                    </td>
+                    <td>
+                      <%= payment.identifier %>
+                    </td>
+                    <td>
+                      <%= payment.pay_time.strftime('%Y/%m/%d') %>
+                    </td>
+                    <td>
+                      <div class='text-right'>
+                        <%= link_to(edit_admin_payment_path(payment), class: 'btn btn-md') do %>
+                          <i class='icon-pencil'></i>
+                        <% end %>
+                        <%= link_to(admin_payment_path(payment), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                          <i class='icon-remove'></i>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

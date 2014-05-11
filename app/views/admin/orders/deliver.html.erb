@@ -1,0 +1,93 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-truck"></i>
+      <span>待出貨訂單</span>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">待出貨訂單列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                <tr>
+                  <th>訂單編號</th>
+                  <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                  <th>收件者</th>
+                  <th>付款完成時間</th>
+                  <th>狀態</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @orders.each do |order| %>
+                  <tr>
+                    <td>
+                      <%= order.id %>
+                    </td>
+                    <td>
+                      <%= link_to order.user.id, admin_user_path(order.user.id), target: '_blank' %>
+                    </td>
+                    <td>
+                      <%= order.name %>
+                    </td>
+                    <td>
+                      <%= order.payment.pay_time.strftime('%Y/%m/%d %H:%M') if order.paid? && order.payment.completed? %>
+                    </td>
+                    <td>
+                      <% if order.closed? %>
+                        <label class="label label-default">
+                          交易完成
+                        </label>
+                      <% elsif order.paid? %>
+                        <% if order.payment.completed? %>
+                          <% if order.delivered? %>
+                            <label class="label label-primary">
+                              等待收貨
+                            </label>
+                          <% else %>
+                            <label class="label label-danger">
+                              等待配送
+                            </label>
+                          <% end %>
+                        <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
+                          <label class="label label-contrast">
+                            等待匯款
+                          </label>
+                        <% else %>
+                          <label class="label label-danger">
+                            等待確認
+                          </label>
+                        <% end %>
+                      <% else %>
+                        <label class="label label-warning">
+                          等待付款
+                        </label>
+                      <% end %>
+                    </td>
+                    <td class="text-right">
+                      <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
+                        <i class="icon-pencil"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

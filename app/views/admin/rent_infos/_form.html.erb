@@ -1,0 +1,65 @@
+<%= form_for [:admin, @rent_info], html: {class: 'form validate-form'} do |f| %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            場地租借資訊
+          </div>
+          <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="row">
+            <%= f.fields_for :rent_info_translates do |builder| %>
+              <div class="col-sm-6">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="title">
+                      <%= @rent_info.rent_info_translates[builder.index].locale.name %>
+                      <small style="margin-left:10px;">
+                        <span class="label label-success">可留空</span>
+                      </small>
+                    </div>
+                    <div class="actions">
+                      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="form-group">
+                      <%= builder.label :title, '資訊標題' %>
+                      <span class="label label-primary">如備註訊息請用 {文字字串} 的方式包裹 ex: 場地租借辦法/收費{非上課課程類}</span>
+                      <div class="controls">
+                        <%= builder.text_field :title, class: 'form-control',
+                                               placeholder: '請輸入標題' %>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <%= builder.label :content, '資訊內容' %>
+                      <div class="controls">
+                        <%= builder.text_area :content, class: 'form-control autosize', rows: 6, placeholder: '請填入介紹用資訊內容' %>
+                      </div>
+                    </div>
+                    <%= builder.hidden_field :locale_id %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row form-actions">
+    <div class="col-sm-12">
+      <div class="pull-right">
+        <%= link_to '取消', admin_rent_infos_path, class: 'btn btn-lg' %>
+        <%= f.button(class: 'btn btn-primary btn-lg') do %>
+          <i class="icon-save"></i>
+          儲存
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

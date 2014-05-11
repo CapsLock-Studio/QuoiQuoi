@@ -39,6 +39,12 @@ module ApplicationHelper
     end
   end
 
+  def is_in(name = nil)
+    if name
+      controller_name.to_sym == name
+    end
+  end
+
   def lang_nav_item(language, &block)
     options ||= {}
     options[:class] = 'active' if I18n.locale == language.to_sym

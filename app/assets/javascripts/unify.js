@@ -26,3 +26,4 @@
 //= require unify/pages/index
 
 //= require flatty/plugins/bootbox/bootbox.min.js
+//= require jquery.nested-fields.min

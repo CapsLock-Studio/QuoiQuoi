@@ -5,10 +5,6 @@ class Product < ActiveRecord::Base
   has_many :locales, through: :product_translates
   accepts_nested_attributes_for :product_translates, allow_destroy: true
 
-  has_many :product_custom_items
-  has_many :locales, through: :product_custom_item_translates
-  accepts_nested_attributes_for :product_custom_items, allow_destroy: true
-
   has_many :product_images
   accepts_nested_attributes_for :product_images, allow_destroy: true
 

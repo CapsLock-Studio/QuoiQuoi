@@ -3,71 +3,47 @@
   <div class="row">
     <div class="col-md-8">
       <div class="row">
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header">
-              <div class="title">
-                <div class="icon-list"></div>
-                你的購物清單
-              </div>
-              <div class="actions">
-                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-              </div>
-            </div>
-            <div class="box-content">
-              <% @order.order_products.each_with_index do |order_product, index| %>
-                <div class="col-md-12 margin-bottom-30">
-                  <div class="row">
-                    <div class="col-md-7">
-                      <%= link_to_with_product_type order_product.product do %>
-                        <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
-                      <% end %>
-                    </div>
-                    <div class="col-md-5">
-                      <h5 style="color:#666;" class="margin-bottom-30">
-                        <strong>
-                          <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
-                          <span class="pull-right">
-                        <% @subtotal[index] = order_product.product.price %>
-                            <%= number_to_currency(order_product.product.price) %>
-                      </span>
-                        </strong>
-                      </h5>
-                      <% if order_product.order_product_custom_items.length > 0 %>
-                        <%= render 'user_custom_items', custom_items: order_product.order_product_custom_items, index: index %>
-                      <% end %>
-                      <hr/>
-                      <h5 class="margin-bottom-20">
-                        <span style="color:#666;">單品小計</span>
-                        <strong class="pull-right">
-                          <%= number_to_currency(@subtotal[index]) %>
-                        </strong>
-                      </h5>
-                      <%= link_to t('actions.delete'), order_product, method: :delete, class: 'btn btn-default pull-right hover-effect' %>
-                    </div>
-                  </div>
+        <% if @order.order_products.length > 0 %>
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header">
+                <div class="title">
+                  <div class="icon-list"></div>
+                  <%= t('products') %>
                 </div>
-                <hr/>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header">
-              <div class="title">
-                <div class="icon-pencil"></div>
-                你的訂製手工包
+                <div class="actions">
+                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                </div>
               </div>
-              <div class="actions">
-                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+              <div class="box-content">
+                <% @order.order_products.each do |order_product| %>
+                  <%= render 'order_product', order_product: order_product %>
+                  <hr/>
+                <% end %>
               </div>
             </div>
-            <div class="box-content">
-
+          </div>
+        <% end %>
+        <% if @order.order_custom_items.length > 0 %>
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header">
+                <div class="title">
+                  <div class="icon-pencil"></div>
+                  量身訂製手工包
+                </div>
+                <div class="actions">
+                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                </div>
+              </div>
+              <div class="box-content">
+                <% @order.order_custom_items.each do |order_custom_item| %>
+                  <%= render 'order_custom_item', order_custom_item: order_custom_item %>
+                <% end %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
     <div class="col-md-4">
@@ -86,16 +62,16 @@
             <strong>
               <span style="color:#666;">總金額</span>
               <span class="pull-right">
-                <%= number_to_currency(@subtotal.inject{|sum, element| sum + element}) %>
+                <%= number_to_currency(@subtotal) %>
               </span>
             </strong>
           </h4>
           <div class="row">
             <div class="col-md-12 margin-bottom-10">
-              <%= link_to '結帳', nil, class: 'btn btn-block btn-u-orange btn-lg hover-effect', style: 'color:#FFF;' %>
+              <%= link_to '結算', new_order_path, class: 'btn btn-block btn-u-orange btn-lg hover-effect', style: 'color:#FFF;' %>
             </div>
             <div class="col-md-12">
-              <%= link_to nil do %>
+              <%= link_to products_path do %>
                 <i class="icon-angle-left"></i>
                 繼續逛逛
               <% end %>

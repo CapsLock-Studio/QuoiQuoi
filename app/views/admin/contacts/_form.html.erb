@@ -1,0 +1,81 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      聯絡資訊
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content">
+    <%= form_for(@contact, url: admin_contacts_path, html: { class: 'form validate-form' }) do |f| %>
+      <div class="row">
+        <%= f.fields_for :contact_translates do |builder| %>
+          <div class="col-sm-6">
+            <div class="box">
+              <div class="box-header">
+                <div class="title">
+                  <%= @contact.contact_translates[builder.index].locale.name %>
+                  <small style="margin-left:10px;">
+                    <span class="label label-danger">不可留空</span>
+                  </small>
+                </div>
+                <div class="actions">
+                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                </div>
+              </div>
+              <div class="box-content">
+                <div class="form-group">
+                  <%= builder.label :email, 'Email' %>
+                  <div class="controls">
+                    <%= builder.text_field :email, class: 'form-control',
+                                           placeholder: '請輸入Email', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= builder.label :mobile, '手機' %>
+                  <div class="controls">
+                    <%= builder.text_field :mobile, class: 'form-control', placeholder: '請輸入手機號碼',
+                                           data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= builder.label :phone, '電話' %>
+                  <div class="controls">
+                    <%= builder.text_field :phone, class: 'form-control', placeholder: '請輸入電話號碼',
+                                           data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= builder.label :address, '地址' %>
+                  <div class="controls">
+                    <%= builder.text_area :address, class: 'form-control', placeholder: '請輸入店鋪位置', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= builder.label :business_hour, '營業時間' %>
+                  <div class="controls">
+                    <%= builder.text_area :business_hour, class: 'form-control autosize', rows: 3, placeholder: '請輸入營業時間', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <%= builder.hidden_field :locale_id %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="row form-actions">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <%= link_to '取消', admin_contacts_path, class: 'btn btn-lg' %>
+            <%= f.button(class: 'btn btn-primary btn-lg') do %>
+              <i class="icon-save"></i>
+              儲存
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

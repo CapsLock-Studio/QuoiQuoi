@@ -1,5 +1,7 @@
-# Main navigation handling
-$(document).ready ->
+# JS plugins initializations
+$(document).on 'page:change', ->
+
+  # Main navigation handling
   nav_toggler = $("header .toggle-nav")
   nav = $("#main-nav")
   content = $("#content")
@@ -47,12 +49,9 @@ $(document).ready ->
     body.addClass("main-nav-opened").removeClass("main-nav-closed")
     nav_open = true
 
-@nav_open = ->
-  return $("body").hasClass("main-nav-opened") || $("#main-nav").width() > 50
+  # Main navigation handling
 
 
-# JS plugins initializations
-$(document).on 'page:change', ->
   setTimeAgo()
   setScrollable()
   setSortable($(".sortable"))
@@ -304,3 +303,6 @@ $(document).on 'page:change', ->
         success: (e) ->
           e.closest(".form-group").removeClass("has-error")
 # --------------------------------------------------------------------------------------------------------------------
+
+@nav_open = ->
+  return $("body").hasClass("main-nav-opened") || $("#main-nav").width() > 50

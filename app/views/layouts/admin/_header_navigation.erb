@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
 
   <!-- application logo -->
-  <%= link_to(current_user, class: 'navbar-brand') do %>
+  <%= link_to(nil, class: 'navbar-brand') do %>
     <!-- application logo visible on large screens -->
     <%= image_tag 'flatty/logo.svg', class: 'logo', alt: 'Flatty', width: 81, height: 21 %>
     <!-- application logo visible on small screens -->
@@ -126,7 +126,7 @@
   <form action="search_results.html" class="navbar-form navbar-right hidden-xs" method="get">
     <button class="btn btn-link icon-search" name="button" type="submit"></button>
     <div class="form-group">
-      <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text">
+      <input value="" class="form-control" placeholder="查詢用戶..." autocomplete="off" id="q_header" name="q" type="text">
     </div>
   </form>
 </nav>

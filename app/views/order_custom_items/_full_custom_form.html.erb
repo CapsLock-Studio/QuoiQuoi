@@ -1,0 +1,329 @@
+<%= form_for @order_custom_item, html: {class: 'form validate-form'} do |f| %>
+  <div class="col-md-12">
+    <div class="fuelux">
+      <div class="wizard">
+        <ul class="steps">
+          <li class="active hover-effect" data-target="#step1">
+            <span class="step">1</span>
+          </li>
+          <li class="hover-effect" data-target="#step2">
+            <span class="step">2</span>
+          </li>
+          <li class="hover-effect" data-target="#step3">
+            <span class="step">3</span>
+          </li>
+          <li class="hover-effect" data-target="#step4">
+            <span class="step">4</span>
+          </li>
+          <li class="hover-effect" data-target="#step5">
+            <span class="step">5</span>
+          </li>
+        </ul>
+        <div class="actions">
+          <button type="button" class="btn btn-mini btn-prev" disabled="disabled">
+            <i class="icon-arrow-left"></i>
+            <%= t('order_request.prev') %>
+          </button>
+          <button type="button" class="btn btn-mini btn-next">
+            <%= t('order_request.next') %>
+            <i class="icon-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="step-content">
+        <hr class="hr-normal">
+        <div class="step-pane active" id="step1">
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <h4>
+                <i class="icon-exclamation"></i>
+                訂購須知
+              </h4>
+            </div>
+            <div class="box-content box-no-padding" style="border:0;">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-bordered table-padding-20" style="margin-bottom:0;">
+                    <thead>
+                    <tr>
+                      <th>包包種類</th>
+                      <th>價目參考</th>
+                      <th>備註</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>
+                        <p>
+                          拖特包<br/>
+                          媽媽包<br/>
+                          特殊包款
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          迷妳拖特20、25cm - 980元(1380元)<br/>
+                          小拖特30、35cm - 1480元(1980元)<br/>
+                          中、大拖特40、50cm - 1780元(2580元)<br/>
+                          媽媽包40 ~45cm - 2280元(2980元)<br/>
+                          媽媽包48以上 - 2580元(3280元)<br/>
+                        </p>
+                        <small>
+                          *(括號)內的價格為高價布料/全包素布一律以日本進口八號帆布製作，所以均屬高價布哦<br/>
+                          *以上cm為包包開口一面平放最寬處的寬度<br/>
+                          *特殊包款則另行報價<br/>
+                          *拖特包一律為磁扣開口，內裏兩個開放式 口袋<br/>
+                          *媽媽包部份為拉鍊開口、內裏6~8八個內袋，表布1~4個外袋(會依需求及設計方式決定袋子的多寡)<br/>
+                        </small>
+                      </td>
+                      <td>
+                        <ul>
+                          <li>原則上使用日本布製作表布</li>
+                          <li>特殊難以製作的包款會另外報價</li>
+                          <li>加活動式肩揹帶加價300元、固定式加價150元</li>
+                          <li>拉鍊內袋加價100元</li>
+                          <li>加購開口拉鍊或綁巾則加價200元</li>
+                          <li>皮革提(揹)帶另外報價</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        相機包
+                      </td>
+                      <td>
+                        <p>
+                          類單眼、拍立得相機包1280元<br/>
+                          小單眼相機包(單鏡)1480元<br/>
+                          小單眼、相機包(雙鏡)1880元<br/>
+                          大單眼相機包(單鏡)1680元<br/>
+                          大單眼相機包(雙鏡)2080元
+                        </p>
+                        <small>
+                          *基本配備：內裏加魔鬼粘電池袋、固定式長揹帶<br/>
+                          *均為1~2顆磁扣開口
+                        </small>
+                      </td>
+                      <td>
+                        <ul>
+                          <li>加做束口或拉鍊加價200元</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        其他類
+                      </td>
+                      <td>
+                        <p>
+                          悠遊卡套/識別証套  580元(無透明夾)<br/>
+                          手機套、化妝包、零錢包、筆袋(捲)、鑰匙包、筆捲、餐具包680元<br/>
+                          媽媽(寶寶)手冊、書衣  780元<br/>
+                          拉鍊式媽媽手冊包1480元<br/>
+                          平板電腦包880元<br/>
+                          雙層零錢包880元<br/>
+                          護照套980元<br/>
+                          皮夾類1880元<br/>
+                          後揹包及特殊設計包款均一價為2980元
+                        </p>
+                      </td>
+                      <td></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-pane" id="step2">
+          <h4>您的需求 <small class="text-muted">先簡單的給我們一個方向</small></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-content">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <%= f.label :design do %>
+                        包款、大小
+                        <span class="color-red">*</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-3">
+                      <%= f.text_field :design, placeholder: '例如: 拖特包開口寬25cm', class: 'form-control', data: {'rule-required' => true} %>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <%= f.label :style do %>
+                        風格
+                        <span class="color-red">*</span>
+                        <span class="text-muted">可貼上喜歡包包的網址或照片讓bella參考喲</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-6">
+                      <%= f.text_field :style, placeholder: '法國風、中國風、日系雜貨、簡約風...', class: 'form-control', data: {'rule-required' => true} %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-pane" id="step3">
+          <h4>您的需求 <small class="text-muted"><%= t('chose_your_material') %></small></h4>
+          <div class="row">
+            <div class="items">
+              <%= f.nested_fields_for :order_custom_item_materials, class: 'material-id' do |builder| %>
+                <%= builder.hidden_field :material_id, class: 'material_id' %>
+              <% end %>
+            </div>
+            <div class="col-md-12">
+              <div class="box select-boxes">
+                <div class="box-content">
+                  <div class="row">
+                    <div class="col-md-12 select-box-paginate">
+                      <%= paginate @materials %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <% @materials.each do |material| %>
+                      <div class="col-xs-3">
+                        <div class="box image-preview-box select-box">
+                          <div class="box-header box-header-small" style="cursor:pointer" data-material_id="<%= material.id %>">
+                            <div class="title">
+                              <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
+                            </div>
+                            <div class="actions">
+                              <a href="#" class="btn btn-xs btn-link">
+                                <i class="icon-ok"></i>
+                              </a>
+                            </div>
+                          </div>
+                          <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
+                            <span class="overlay-zoom">
+                              <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
+                              <span class="zoom-icon"></span>
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-pane" id="step4">
+          <h4>您的需求 <small class="text-muted">文字敘述一下、或是給我們心目中包包的參考用概念圖</small></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-content">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <%= f.label :description do %>
+                        敘述
+                        <span class="color-red">*</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-7">
+                      <%= f.text_area :description, class: 'form-control', data: {'rule-required' => true}, rows: '3' %>
+                    </div>
+                  </div>
+                  <div class="nested-field">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <a href="#" class="add btn btn-default">
+                          新增概念圖
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="items">
+                        <%= f.nested_fields_for :order_custom_item_images do |builder| %>
+                          <div class="col-sm-6 item">
+                            <div class="box image-preview-box">
+                              <div class="box-header">
+                                <div class="actions">
+                                  <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                                  </a>
+                                </div>
+                              </div>
+                              <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
+                              <%= builder.file_field :image, title: '選擇圖片', class: 'btn btn-default btn-block' %>
+                              <%= builder.hidden_field :id %>
+                              <%= builder.hidden_field :_destroy %>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-pane" id="step5">
+          <h4>聯絡資訊 <small class="text-muted">請填寫正確的聯絡資訊，將會有設計師與你討論細節</small></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box">
+                    <div class="box-content">
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :name do %>
+                            聯絡人姓名
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :phone do %>
+                            聯絡電話
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-phoneNL' => true} %>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :line do %>
+                            Line帳號
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :line, value: current_user.line, class: 'form-control' %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="text-muted">提出訂製要求後，需要請您等待一段時間，我們將替您評估是否接受訂製要求</label>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+              <%= f.button class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', type: 'submit' do %>
+                <i class="icon-edit"></i>
+                提出訂單要求
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
