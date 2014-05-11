@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_product_types
   before_action :set_side_menu_orders
+  before_action :set_contact
+  before_action :set_article_types
 
   def layout_by_resource
     if devise_controller? && resource_name == :admin
@@ -38,7 +40,7 @@ class ApplicationController < ActionController::Base
       # if current user has guest_user_id means just logged in from guest
       # so we need to store the actions when user was guest done to current user
       if session[:guest_user_id]
-        store_actions_to_current_user
+        store_actions_to_current_user(session[:guest_user_id], current_user.id)
 
         # discard guest identity
         guest_user.destroy
@@ -78,9 +80,36 @@ class ApplicationController < ActionController::Base
     @product_types = ProductType.all
   end
 
+  def set_contact
+    begin
+      @contact = Contact.find(1).contact_translates.where(locale_id: session[:locale_id]).first
+    rescue ActiveRecord::RecordNotFound
+      @contact = nil
+    end
+  end
+
+  def set_article_types
+    @article_types = ArticleType.all
+  end
+
   private
-    def store_actions_to_current_user
-      user_not_closed_order.update_attributes(user_id: current_user.id)
+    def store_actions_to_current_user(guest_user_id, current_user_id)
+      source_order = Order.where(user_id: guest_user_id, checkout: false).first
+      target_order = Order.where(user_id: current_user_id, checkout: false).first
+      if source_order
+        if target_order
+          order_products = source_order.order_products
+          if order_products.length > 0
+            order_products.update_all(order_id: target_order.id)
+          end
+          order_custom_items = source_order.order_custom_items
+          if order_custom_items.length > 0
+            order_custom_items.update_all(order_id: target_order.id)
+          end
+        else
+          source_order.update_attributes(user_id: current_user.id)
+        end
+      end
     end
 
     def create_guest_user

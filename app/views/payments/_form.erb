@@ -1,0 +1,53 @@
+<%= form_for @payment, html: {class: 'form'} do |f| %>
+  <div class="box-content box-no-padding" style="border:0;">
+    <div class="responsive-table">
+      <div class="scrollable-area">
+        <table class="table text-center table-padding-20" style="margin-bottom:0;">
+          <thead>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <h4><%= t('online_payment') %></h4>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <%= f.radio_button :wait, false, checked: true %>
+                  <%= image_tag 'paypal.png', class: 'img-responsive' %>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4><%= t('offline_payment') %></h4>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <%= f.radio_button :wait, true %>
+                  <strong class="pull-left" style="font-size:20px;margin-left:10px;">郵局匯款</strong>
+                </label>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <%= f.hidden_field :order_id %>
+      <%= f.hidden_field :registration_id %>
+      <%= f.hidden_field :user_gift_id %>
+      <%= f.button t('payment'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+      <%= link_to orders_path do %>
+        <i class="icon-angle-left"></i>
+        回到我的帳戶
+      <% end %>
+    </div>
+  </div>
+<% end %>

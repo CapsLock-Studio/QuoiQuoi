@@ -1,0 +1,15 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container">
+  <div class="row">
+    <%= render 'user/side_navigation' %>
+    <div class="col-md-9">
+      <% @orders.each do |order| %>
+        <div class="box">
+          <div class="box-content">
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

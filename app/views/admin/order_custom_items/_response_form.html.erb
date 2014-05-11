@@ -1,0 +1,88 @@
+<%= form_for @order_custom_item, url: admin_order_custom_item_path(@order_custom_item), html: {class: 'form validate-form'} do |f| %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            回應訂單
+          </div>
+          <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>估價</label>
+                <div class="controls">
+                  <%= f.text_field :price, class: 'form-control', data: {'rule-required' => true, 'rule-number' => true}, placeholder: '請填入價格' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>估計工作天數&nbsp;&nbsp;<span class="label label-danger">可在接受訂單後填寫、修改</span></label>
+                <div class="controls">
+                  <%= f.text_field :workday, class: 'form-control', data: {'rule-number' => true}, placeholder: '請填入估計的工作天數' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>估計完成日期&nbsp;&nbsp;<span class="label label-danger">可在接受訂單後填寫、修改</span></label>
+                <div class="datepicker input-group">
+                  <%= f.text_field :estimate_complete_time, class: 'form-control', value: @order_custom_item.estimate_complete_time.blank?? '' : @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d'),
+                                   placeholder: '請輸入日期(年/月/日) ',
+                                   data: {'rule-date' => true, format: 'yyyy/MM/dd'} %>
+                  <span class="input-group-addon">
+                  <span class="icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></span>
+                </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>回應</label>
+                <div class="controls">
+                  <%= f.text_area :response, class: 'form-control', rows: 3 %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>給客戶參考用的草稿圖&nbsp;&nbsp;<span class="label label-primary">可選</span></label>
+                <div class="box image-preview-box">
+                  <%= image_tag f.object.image.url(:large), class: 'img-responsive' %>
+                  <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-actions">
+            <div class="col-sm-12">
+              <div class="pull-right">
+                <% if @order_custom_item.accept.blank? && @order_custom_item.accept_time.blank? %>
+                  <%= link_to '不接受訂製', admin_order_custom_item_path(@order_custom_item), class: 'btn btn-lg', method: :delete %>
+                  <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                    <i class="icon-save"></i>
+                    接受並儲存
+                  <% end %>
+                <% else %>
+                  <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                    <i class="icon-save"></i>
+                    儲存
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

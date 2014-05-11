@@ -1,0 +1,180 @@
+<%= form_for @order_custom_item, html: {class: 'form validate-form'} do |f| %>
+  <div class="col-md-12">
+    <div class="fuelux">
+      <div class="wizard">
+        <ul class="steps">
+          <li class="active hover-effect" data-target="#step1">
+            <span class="step">1</span>
+          </li>
+          <li class="hover-effect" data-target="#step2">
+            <span class="step">2</span>
+          </li>
+          <li class="hover-effect" data-target="#step3">
+            <span class="step">3</span>
+          </li>
+        </ul>
+        <div class="actions">
+          <button type="button" class="btn btn-mini btn-prev" disabled="disabled">
+            <i class="icon-arrow-left"></i>
+            <%= t('order_request.prev') %>
+          </button>
+          <button type="button" class="btn btn-mini btn-next">
+            <%= t('order_request.next') %>
+            <i class="icon-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="step-content">
+        <hr class="hr-normal">
+        <div class="step-pane active" id="step1">
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <h4>
+                <i class="icon-exclamation"></i>
+                確認 <small>你選擇的是客製化修改這個包包嗎？</small>
+              </h4>
+            </div>
+            <div class="box-content box-no-padding" style="border:0;">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-bordered table-padding-20" style="margin-bottom:0;">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <%= image_tag @order_custom_item.product.image.url(:medium), class: 'img-responsive' %>
+                          </div>
+                          <div class="col-xs-6">
+                            <h3 style="color:#666;">
+                              <strong>
+                                <%= @order_custom_item.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                              </strong>
+                            </h3>
+                            <%= simple_format(@order_custom_item.product.product_translates.where(locale_id: session[:locale_id]).first.description) %>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-pane" id="step2">
+          <h4>您的需求 <small class="text-muted">文字敘述一下、或是給我們心目中包包的參考用概念圖</small></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-content">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <%= f.label :description do %>
+                        敘述
+                        <span class="color-red">*</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-7">
+                      <%= f.text_area :description, class: 'form-control', data: {'rule-required' => true}, rows: '3' %>
+                    </div>
+                  </div>
+                  <div class="nested-field">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <a href="#" class="add btn btn-default">
+                          新增概念圖
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="items">
+                        <%= f.nested_fields_for :order_custom_item_images do |builder| %>
+                          <div class="col-sm-6 item">
+                            <div class="box image-preview-box">
+                              <div class="box-header">
+                                <div class="actions">
+                                  <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                                  </a>
+                                </div>
+                              </div>
+                              <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
+                              <%= builder.file_field :image, title: '選擇圖片', class: 'btn btn-default btn-block' %>
+                              <%= builder.hidden_field :id %>
+                              <%= builder.hidden_field :_destroy %>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-pane" id="step3">
+          <h4>聯絡資訊 <small class="text-muted">請填寫正確的聯絡資訊，將會有設計師與你討論細節</small></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box">
+                    <div class="box-content">
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :name do %>
+                            聯絡人姓名
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :phone do %>
+                            聯絡電話
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-phoneNL' => true} %>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :line do %>
+                            Line帳號
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :line, value: current_user.line, class: 'form-control' %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="text-muted">提出訂製要求後，需要請您等待一段時間，我們將替您評估是否接受訂製要求</label>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+              <%= f.hidden_field :product_id %>
+              <%= f.button class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', type: 'submit' do %>
+                <i class="icon-edit"></i>
+                提出訂單要求
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

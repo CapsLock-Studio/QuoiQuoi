@@ -920,7 +920,7 @@ ul.blog-tags a:hover {
 }
 
 .fuelux .wizard ul li {
-  background-color: #DDD;
+  background-color: #F5F5F5;
   margin-right: 30px;
   padding: 0px 20px;
   color: #424242;
@@ -934,7 +934,7 @@ ul.blog-tags a:hover {
   content: "";
   width: 30px;
   height: 4px;
-  background-color: #DDD;
+  background-color: #F5F5F5;
   display: block;
   position: absolute;
   top: 50%;
@@ -951,22 +951,41 @@ ul.blog-tags a:hover {
 }
 
 .fuelux .wizard ul li.complete {
-  background-color: #49BF67;
+  background-color: #DADADA;
   color: #FFF;
 }
 
 .fuelux .wizard ul li.complete:before {
-  background-color: #49BF67;
+  background-color: #DADADA;
 }
 
 .fuelux .wizard ul li.complete:hover {
-  background-color: #3EB05B;
+
 }
 .fuelux .wizard ul li.complete:hover {
   cursor: pointer;
-  background: none repeat scroll 0% 0% #E7EFF8;
+  background: none repeat scroll 0% 0% #F5F5F5;
 }
 
 .fuelux .wizard ul li.active {
   background-color: #F8A326;
+}
+
+.responsive-table {
+  position: relative;
+  overflow: hidden;
+
+  .scrollable-area {
+    width: 100%;
+    overflow: scroll;
+    overflow-y: hidden;
+  }
+
+  table {
+    td {
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
 }

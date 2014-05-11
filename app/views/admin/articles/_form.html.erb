@@ -1,0 +1,46 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-user"></i>
+      招募資訊資料
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @article], html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="form-group">
+          <%= f.label :article_type_id, '文章種類' %>
+          <%= f.select :article_type_id, options_for_select(ArticleType.all.collect{|article_type| [article_type.article_type_translates.all.each.collect{|translate| translate.name}.join(' - '), article_type.id]}), {}, {class: 'form-control'} %>
+        </div>
+        <div class="form-group">
+          <%= f.label :title, '文章標題' %>
+          <div class="controls">
+            <%= f.text_field :title, class: 'form-control',
+                                   placeholder: '請輸入文章標題', data: {'rule-required' => true} %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :content, '文章內容' %>
+          <div class="controls">
+            <%= f.text_area :content, class: 'form-control wysihtml5', rows: 10,
+                                   placeholder: '請輸入文章內容', data: {'rule-required' => true} %>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_articles_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

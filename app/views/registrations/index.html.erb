@@ -1,0 +1,87 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container">
+  <div class="row">
+    <%= render 'user/side_navigation' %>
+    <div class="col-md-9">
+      <% if @registrations.length > 0 %>
+        <% @registrations.each do |registration| %>
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <h4>
+                課程名稱: <strong class="text-muted"><%= registration.course.course_translates.where(locale_id: session[:locale_id]).first.name %></strong>
+                <small class="order-time">課程時間: <strong><%= "#{registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(registration.course.time + registration.course.length.hours).strftime('%H:%M')}" %></strong></small>
+              </h4>
+            </div>
+            <div class="box-content box-no-padding" style="border:0;">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td class="text-left col-md-6">
+                        <%= image_tag registration.course.image.url(:thumb) %>
+                      </td>
+                      <td>
+                        <% if registration.closed? %>
+                          課程結束
+                        <% elsif registration.paid? %>
+                          <% if registration.payment.completed? %>
+                            已收取費用
+                          <% elsif registration.payment.amount == 0 %>
+                            等待匯款
+                          <% else %>
+                            等待確認
+                          <% end %>
+                        <% else %>
+                          等待付款
+                        <% end %>
+                      </td>
+                      <td>
+                        <ul class="list-unstyled">
+                          <li><%= number_to_currency(registration.subtotal) %></li>
+                          <li><span class="text-muted"><%= "#{registration.course.price} * #{registration.attendance}" %></span></li>
+                        </ul>
+                      </td>
+                      <td>
+                        <ul class="list-unstyled">
+                          <% if registration.closed? %>
+                            <li>
+                              <%= link_to '課程詳細', course_path(registration.course.time.strftime('%m').to_i) %>
+                            </li>
+                          <% else %>
+                            <% if registration.paid? %>
+                              <% if !registration.payment.completed? && registration.payment.amount == 0 %>
+                                <li>
+                                  <%= link_to '回報', edit_payment_path(registration.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                                </li>
+                              <% end %>
+                            <% else %>
+                              <li>
+                                <%= link_to '付款', pay_registration_path(registration), class: 'btn btn-u btn-u-orange hover-effect' %>
+                              </li>
+                            <% end %>
+                            <li>
+                              <%= link_to '課程詳細', course_path(registration.course, month: registration.course.time.strftime('%m').to_i) %>
+                            </li>
+                          <% end %>
+                        </ul>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <h4 class="text-center">
+          <i class="icon-exclamation"></i>&nbsp;你目前沒有報名的課程
+        </h4>
+      <% end %>
+    </div>
+  </div>
+</div>

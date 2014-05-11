@@ -1,0 +1,115 @@
+<%= render 'layouts/breadcrumbs', title: t('check_out') %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 reg-page">
+      <div class="item">
+        <%= form_for @registration, html: {class: 'form-horizontal validate-form'} do |f| %>
+          <h4>報名資訊 <small class="text-muted">請填寫正確的聯絡資訊，以免遺漏課程更動通知</small></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box">
+                    <div class="box-content">
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :popular do %>
+                            報名人數
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.select :attendance, options_for_select(1..@registration.course.popular{|index| [index, index]}), {}, {class: 'selectpicker refresh-price-source', data: {width: '100%'}} %>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :name do %>
+                            聯絡人姓名
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <%= f.label :phone do %>
+                            聯絡電話
+                            <span class="color-red">*</span>
+                          <% end %>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-phoneNL' => true} %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h4>報名課程</h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <td></td>
+                          <td>名稱</td>
+                          <td>費用</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <%= image_tag @registration.course.image.url(:thumb), class: 'img-responsive' %>
+                            </td>
+                            <td>
+                              <h5>
+                                <%= @registration.course.course_translates.where(locale_id: session[:locale_id]).first.name %>
+                              </h5>
+                            </td>
+                            <td>
+                              <%= number_to_currency(@registration.course.price) %>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 class="text-right color-orange">
+                    總金額 :
+                    <strong class="text-muted refresh-price-target" data-price="<%= @registration.course.price %>">
+                      <%= number_to_currency(@registration.course.price) %>
+                    </strong>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+              <%= f.hidden_field :course_id %>
+              <%= f.button '報名課程', class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+              <%= link_to courses_path do %>
+                <i class="icon-angle-left"></i>
+                繼續逛逛
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

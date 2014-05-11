@@ -2,7 +2,7 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-shopping-cart"></i>
-      <span>手工包管理</span>
+      <span>手作現有商品管理</span>
     </h1>
     <div class="pull-right">
       <div class="btn-group">
@@ -30,7 +30,6 @@
                   <th>商品名稱</th>
                   <th>現存數量</th>
                   <th>價格</th>
-                  <th>可供客製化項目數量</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -49,10 +48,7 @@
                         <%= product.quantity %>
                       </td>
                       <td>
-                        $<%= product.price %>
-                      </td>
-                      <td>
-                        <%= product.product_custom_items.length %>
+                        <%= number_to_currency(product.price) %>
                       </td>
                       <td>
                         <div class='text-right'>

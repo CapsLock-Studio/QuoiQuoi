@@ -1,6 +1,6 @@
 //= require unify/plugins/gmap/gmap.js
 App.init();
-App.initSliders();
+//App.initSliders();
 //Index.initParallaxSlider();
 Index.initRevolutionSlider();
 App.initFancybox();
@@ -24,21 +24,27 @@ var convertPreview = function(link, youtubeBlock) {
     }
 }
 
+$('.refresh-price-source').on('change', function(){
+    var priceTarget = $('.refresh-price-target');
+    priceTarget.text(((parseInt(priceTarget.data('price'), 10) * parseInt($(this).val(), 10)) + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
+});
+
 if ($('#map').length > 0) {
     map = new GMaps({
         div: '#map',
-        lat: 25.173848,
-        lng: 121.447575,
+        lat: 25.1359486,
+        lng: 121.4612855,
+        zoom: 18,
         options: {
             draggable: false,
-            disableDoubleClickZoom: true,
+            disableDoubleClickZoom: false,
             scrollwheel: false
         }
     });
     marker = map.addMarker({
-        lat: 25.173848,
-        lng: 121.447575,
-        title: '淡江大學'
+        lat: 25.1359486,
+        lng: 121.4612855,
+        title: 'QuoiQuoi不知道工作室'
     });
 }
 
@@ -60,6 +66,39 @@ $(".aside-menu-switch, #btnHideAsideMenu, .navbar-toggle-aside-menu").click(func
     }
     return false;
 });
+
+$('body').on('click', function(){
+    if($('.aside-menu-in').length > 0){
+        $(this).removeClass('aside-menu-in');
+    }
+}).on('change', '.file-input-wrapper input[type=file]', function(){
+        if (this.files && this.files[0]) {
+            var image =  $(this).parent().prev('img');
+            if (image.length <= 0) {
+                image = $(this).parent().prev('.crop').find('img');
+            }
+
+            var fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                if (image.parent('.crop').length <= 0) {
+                    image.wrap('<div class="crop"></div>' );
+                    image.parent('.crop').css({
+                        width: image.width() + 'px',
+                        height: image.height() + 'px',
+                        'background-size': 'cover',
+                        'background-position': 'center',
+                        'background-repeat': 'no-repeat'
+                    });
+                }
+                image.css({
+                    display: 'none'
+                }).parent('.crop').css({
+                        'background-image': 'url(' + e.target.result + ')'
+                    });
+            };
+            fileReader.readAsDataURL(this.files[0]);
+        }
+    });;
 
 (function() {
     $('.show-calendar').on('click', function(e){
@@ -154,35 +193,71 @@ $('#flexHome2').flexslider({
     direction: "vertical"
 });
 
-//$('body').on('DOMNodeInserted', '.bootstrap-select', function(e){
-//    if ($(e.target).attr('class') === 'options') {
-//        $('.options').on('hover', function(){
-//            console.log($(this).data('image'));
-//        });
-//    }
-//});
-$('.select-parent').on('click', '.bootstrap-select', function(){
-    var mainImageBlock = $('.main-image');
-    $(this).find('.options').parent('a').hover(function(){
-        mainImageBlock.css({
-           background: 'url(' + $(this).find('.options').data('image') + ')'
-        });
-        mainImageBlock.find('img').stop().animate({
-            opacity: 0
-        }, 300);
-    }, function(){
-        mainImageBlock.find('img').stop().animate({
-            opacity: 1
-        }, 300)
-    });
-});
-
-$('.selectpicker').on('change', function(e){
-    refreshPrice();
-});
-
 $('.youtube-link').each(function(){
     convertPreview($(this).data('link'), this);
 });
 
 $('.wizard').wizard();
+$('.nested-field').each(function(index){
+    $(this).nestedFields({
+        afterInsert: function(item) {
+            if (jQuery().bootstrapFileInput) {
+                $(item).find('input[type=file]').bootstrapFileInput();
+            }
+        }
+    });
+});
+
+var bindSelectBox = function(){
+    $('.select-box .box-header').on('click', function(e){
+
+        var box = $(this).parent('.box');
+        var selectedMaterial = $('.material_id_' + $(this).data('material_id'));
+
+        // if box has active, remove material input else add material input(check by class name)
+        if (box.hasClass('active')) {
+            selectedMaterial.remove();
+            box.removeClass('active');
+        } else if (selectedMaterial.length <= 0) {
+
+            // append material input
+            $($('<div></div>').html($('.template').html().replace(/new_nested_item/g, new Date().getTime())).text()).appendTo('.items')
+                .addClass('material_id_' + $(this).data('material_id'))
+                .val($(this).data('material_id'));
+            box.addClass('active');
+        }
+    });
+
+    $('.select-box-paginate a').on('click', function(e){
+        e.preventDefault();
+        var thisButton = $(this);
+        $.ajax({
+            url: thisButton.attr('href').replace('new', 'material'),
+            type: 'GET',
+            dataType: 'html',
+            success: function(data, textStatus, jqXHR) {
+                var selectedMaterials = [];
+                $('.select-boxes').html(data);
+                $('input.material_id').each(function(index, materialInput){
+                    selectedMaterials.push(parseInt(materialInput.value, 10));
+                });
+
+                console.log(selectedMaterials);
+
+                $('.select-box .box-header').each(function(index, boxHeader){
+                    console.log($(boxHeader).data('material_id'));
+                    if (selectedMaterials.indexOf($(boxHeader).data('material_id')) > -1) {
+                        $(this).parent('.box').addClass('active');
+                    }
+                });
+
+                bindSelectBox();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                window.alert('無法讀取頁面 / Can\'t load page.');
+            }
+        });
+    });
+};
+
+bindSelectBox();

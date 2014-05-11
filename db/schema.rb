@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407141115) do
+ActiveRecord::Schema.define(version: 20140511044227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,32 @@ ActiveRecord::Schema.define(version: 20140407141115) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
+  create_table "article_type_translates", force: true do |t|
+    t.integer  "article_type_id"
+    t.integer  "locale_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "article_type_translates", ["article_type_id"], name: "index_article_type_translates_on_article_type_id", using: :btree
+  add_index "article_type_translates", ["locale_id"], name: "index_article_type_translates_on_locale_id", using: :btree
+
+  create_table "article_types", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "articles", force: true do |t|
+    t.integer  "article_type_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "articles", ["article_type_id"], name: "index_articles_on_article_type_id", using: :btree
+
   create_table "broadcast_translates", force: true do |t|
     t.integer  "broadcast_id"
     t.string   "notification"
@@ -50,6 +76,26 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.datetime "updated_at"
     t.integer  "sort"
     t.string   "link"
+  end
+
+  create_table "contact_translates", force: true do |t|
+    t.integer  "contact_id"
+    t.integer  "locale_id"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "business_hour"
+    t.string   "address"
+  end
+
+  add_index "contact_translates", ["contact_id"], name: "index_contact_translates_on_contact_id", using: :btree
+  add_index "contact_translates", ["locale_id"], name: "index_contact_translates_on_locale_id", using: :btree
+
+  create_table "contacts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "course_images", force: true do |t|
@@ -105,6 +151,51 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.datetime "image_updated_at"
     t.string   "course"
     t.float    "length"
+    t.integer  "popular"
+    t.integer  "attendance"
+  end
+
+  create_table "designer_translates", force: true do |t|
+    t.integer  "designer_id"
+    t.string   "name"
+    t.string   "introduction"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+  end
+
+  add_index "designer_translates", ["designer_id"], name: "index_designer_translates_on_designer_id", using: :btree
+  add_index "designer_translates", ["locale_id"], name: "index_designer_translates_on_locale_id", using: :btree
+
+  create_table "designers", force: true do |t|
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gift_translates", force: true do |t|
+    t.integer  "gift_id"
+    t.integer  "locale_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+  end
+
+  add_index "gift_translates", ["gift_id"], name: "index_gift_translates_on_gift_id", using: :btree
+  add_index "gift_translates", ["locale_id"], name: "index_gift_translates_on_locale_id", using: :btree
+
+  create_table "gifts", force: true do |t|
+    t.integer  "quota"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "locales", force: true do |t|
@@ -119,6 +210,7 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.integer  "material_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "locale_id"
   end
 
   add_index "material_translates", ["material_id"], name: "index_material_translates_on_material_id", using: :btree
@@ -131,6 +223,17 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "messages", force: true do |t|
+    t.integer  "user_id"
+    t.string   "content"
+    t.boolean  "admin",      default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "read",       default: false
+  end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "models", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -162,6 +265,16 @@ ActiveRecord::Schema.define(version: 20140407141115) do
 
   add_index "order_custom_item_images", ["order_custom_item_id"], name: "index_order_custom_item_images_on_order_custom_item_id", using: :btree
 
+  create_table "order_custom_item_materials", force: true do |t|
+    t.integer  "order_custom_item_id"
+    t.integer  "material_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_custom_item_materials", ["material_id"], name: "index_order_custom_item_materials_on_material_id", using: :btree
+  add_index "order_custom_item_materials", ["order_custom_item_id"], name: "index_order_custom_item_materials_on_order_custom_item_id", using: :btree
+
   create_table "order_custom_items", force: true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
@@ -175,6 +288,18 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.datetime "updated_at"
     t.integer  "price"
     t.boolean  "accept"
+    t.string   "name"
+    t.string   "phone"
+    t.string   "line"
+    t.datetime "estimate_complete_time"
+    t.datetime "accept_time"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean  "canceled",               default: false
+    t.datetime "canceled_time"
+    t.integer  "user_id"
   end
 
   add_index "order_custom_items", ["material_id"], name: "index_order_custom_items_on_material_id", using: :btree
@@ -207,15 +332,40 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "closed"
-    t.boolean  "verified"
-    t.integer  "paid"
-    t.datetime "paid_time"
-    t.boolean  "delivered"
-    t.boolean  "checkout"
+    t.boolean  "closed",         default: false
+    t.boolean  "delivered",      default: false
+    t.boolean  "checkout",       default: false
+    t.string   "name"
+    t.string   "address"
+    t.integer  "zip_code"
+    t.string   "phone"
+    t.datetime "checkout_time"
+    t.datetime "closed_time"
+    t.datetime "delivered_time"
+    t.boolean  "canceled",       default: false
+    t.datetime "canceled_time"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "payments", force: true do |t|
+    t.integer  "amount",          default: 0
+    t.string   "token"
+    t.string   "identifier"
+    t.integer  "user_id"
+    t.string   "payer_id"
+    t.boolean  "completed",       default: false
+    t.boolean  "canceled",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "order_id"
+    t.integer  "registration_id"
+    t.datetime "pay_time"
+    t.boolean  "wait"
+    t.integer  "user_gift_id"
+  end
+
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "product_custom_item_translates", force: true do |t|
     t.integer  "locale_id"
@@ -322,13 +472,144 @@ ActiveRecord::Schema.define(version: 20140407141115) do
   create_table "registrations", force: true do |t|
     t.integer  "course_id"
     t.integer  "user_id"
-    t.boolean  "accept"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "closed",      default: false
+    t.datetime "closed_time"
+    t.string   "name"
+    t.string   "phone"
+    t.integer  "attendance",  default: 0
+    t.integer  "subtotal",    default: 0
   end
 
   add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
+
+  create_table "remittance_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.string   "name"
+    t.string   "account"
+    t.string   "bank_name"
+    t.string   "bank_address"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "remittance_id"
+  end
+
+  add_index "remittance_translates", ["locale_id"], name: "index_remittance_translates_on_locale_id", using: :btree
+  add_index "remittance_translates", ["remittance_id"], name: "index remittance_trnaslates on remittance_id", using: :btree
+
+  create_table "remittances", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rent_contact_translates", force: true do |t|
+    t.integer  "rent_contact_id"
+    t.integer  "locale_id"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rent_contact_translates", ["locale_id"], name: "index_rent_contact_translates_on_locale_id", using: :btree
+  add_index "rent_contact_translates", ["rent_contact_id"], name: "index_rent_contact_translates_on_rent_contact_id", using: :btree
+
+  create_table "rent_contacts", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rent_info_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rent_info_translates", force: true do |t|
+    t.integer  "rent_info_id"
+    t.integer  "locale_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rent_info_translates", ["locale_id"], name: "index_rent_info_translates_on_locale_id", using: :btree
+  add_index "rent_info_translates", ["rent_info_id"], name: "index_rent_info_translates_on_rent_info_id", using: :btree
+
+  create_table "rent_infos", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rent_intro_translates", force: true do |t|
+    t.integer  "rent_intro_id"
+    t.integer  "locale_id"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rent_intro_translates", ["locale_id"], name: "index_rent_intro_translates_on_locale_id", using: :btree
+  add_index "rent_intro_translates", ["rent_intro_id"], name: "index_rent_intro_translates_on_rent_intro_id", using: :btree
+
+  create_table "rent_intros", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "requirement_intro_translates", force: true do |t|
+    t.integer  "requirement_intro_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+    t.string   "title"
+  end
+
+  add_index "requirement_intro_translates", ["locale_id"], name: "index_requirement_intro_translates_on_locale_id", using: :btree
+  add_index "requirement_intro_translates", ["requirement_intro_id"], name: "index_requirement_intro_translates_on_requirement_intro_id", using: :btree
+
+  create_table "requirement_intros", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "requirement_translates", force: true do |t|
+    t.integer  "requirement_id"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+    t.string   "title"
+  end
+
+  add_index "requirement_translates", ["locale_id"], name: "index_requirement_translates_on_locale_id", using: :btree
+  add_index "requirement_translates", ["requirement_id"], name: "index_requirement_translates_on_requirement_id", using: :btree
+
+  create_table "requirements", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "ships", force: true do |t|
     t.integer  "order_id"
@@ -374,6 +655,28 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.integer  "slide_position_id"
   end
 
+  create_table "top_products", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "sort"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "top_products", ["product_id"], name: "index_top_products_on_product_id", using: :btree
+
+  create_table "user_gifts", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "gift_id"
+    t.string   "token"
+    t.integer  "used_user_id"
+    t.datetime "used_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_gifts", ["gift_id"], name: "index_user_gifts_on_gift_id", using: :btree
+  add_index "user_gifts", ["user_id"], name: "index_user_gifts_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -392,7 +695,9 @@ ActiveRecord::Schema.define(version: 20140407141115) do
     t.integer  "zip_code"
     t.string   "address"
     t.string   "line"
-    t.integer  "phone"
+    t.string   "phone"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -4,12 +4,15 @@
       <%= link_to t('header.navigation.handmadebag').titleize, products_path %>
     <% end %>
     <%= nav_item(orders_path, {class: 'list-group-item', rule: /#{order_custom_items_path}.*/}) do %>
-      <%= link_to t('header.navigation.order_request').titleize, new_order_custom_items_path %>
+      <%= link_to t('header.navigation.order_request').titleize, new_order_custom_item_path %>
     <% end %>
     <% @product_types.each do |product_type| %>
       <%= nav_item(product_type_products_path(product_type), {class: 'list-group-item', rule: /^\/#{:product_types}\/#{product_type.id}\/#{:products}(\/\d*)?$/}) do %>
         <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name, product_type_products_path(product_type) %>
       <% end %>
+    <% end %>
+    <%= nav_item(gifts_path, {class: 'list-group-item', rule: /#{gifts_path}(\/\d*)?/}) do %>
+      <%= link_to t('gift'), gifts_path %>
     <% end %>
   </ul>
 </div>

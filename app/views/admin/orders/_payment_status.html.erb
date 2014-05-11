@@ -1,0 +1,13 @@
+<% if payment.completed? %>
+  <label class="label label-success">
+    完成
+  </label>
+<% elsif payment.amount == 0 || payment.identifier.blank? || payment.pay_time.blank? %>
+  <label class="label label-primary">
+    等待匯款
+  </label>
+<% else %>
+  <label class="label label-danger">
+    等待確認
+  </label>
+<% end %>

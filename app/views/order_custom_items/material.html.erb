@@ -1,0 +1,31 @@
+<div class="box-content">
+  <div class="row">
+    <div class="col-md-12 select-box-paginate">
+      <%= paginate @materials %>
+    </div>
+  </div>
+  <div class="row">
+    <% @materials.each do |material| %>
+      <div class="col-xs-3">
+        <div class="box image-preview-box select-box">
+          <div class="box-header box-header-small" style="cursor:pointer" data-material_id="<%= material.id %>">
+            <div class="title">
+              <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
+            </div>
+            <div class="actions">
+              <a href="#" class="btn btn-xs btn-link">
+                <i class="icon-ok"></i>
+              </a>
+            </div>
+          </div>
+          <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
+            <span class="overlay-zoom">
+              <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
+              <span class="zoom-icon"></span>
+            </span>
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

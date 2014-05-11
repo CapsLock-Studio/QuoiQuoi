@@ -1,0 +1,84 @@
+<%= render 'layouts/breadcrumbs', title: t('header.navigation.handmadebag') %>
+<div class="container">
+  <div class="row">
+    <%= render 'products/side_navigation' %>
+    <div class="col-md-9">
+      <div class="row margin-bottom-40">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path @user_gift.gift.image.url(:large) %>">
+                <span class="overlay-zoom main-image">
+                  <%= image_tag @user_gift.gift.image.url(:medium), class: 'img-responsive' %>
+                  <div class="zoom-icon"></div>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form_for @user_gift do |f| %>
+            <%= f.hidden_field :gift_id %>
+            <% @user_gift.gift.gift_translates.select([:name, :description]).where(locale_id: session[:locale_id]).each do |translate| %>
+              <div class="row">
+                <div class="col-md-12 margin-bottom-50">
+                  <ul class="social-icons pull-right">
+                    <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
+                    <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
+                    <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
+                  </ul>
+                  <h3 style="color:#666;">
+                    <strong>
+                      <%= translate.name %>
+                    </strong>
+                  </h3>
+                  <%= simple_format(translate.description) %>
+                </div>
+                <div class="col-md-12 margin-bottom-10">
+                  <div class="header">
+                    <span class="color-green"><%= t('price') %></span>
+                  </div>
+                </div>
+                <div class="col-md-12 margin-bottom-50">
+                  <h4 class="margin-bottom-20">
+                    <strong style="color:#666;" id="product-price" data-price="<%= @user_gift.gift.quota %>"><%= number_to_currency(@user_gift.gift.quota) %></strong>
+                  </h4>
+                  <%= f.button class: 'btn btn-lg btn-default btn-block hover-effect one-page-btn', type: 'submit' do %>
+                    <i class="icon-gift"></i>
+                    <span>購買</span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Recent Works -->
+          <div class="headline">
+            <h2>其他額度禮品券</h2>
+          </div>
+          <div class="margin-bottom-40">
+            <ul id="list" class="bxslider recent-work">
+              <% @gifts.each do |gift| %>
+                <li>
+                  <%= link_to gift_path(gift) do %>
+                    <em class="overflow-hidden">
+                      <%= image_tag gift.image.url(:thumb) %>
+                    </em>
+                    <span>
+                      <strong><%= gift.gift_translates.where(locale_id: session[:locale_id]).first.name %></strong>
+                      <i><%= number_to_currency(gift.quota) %></i>
+                    </span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div><!--/row-->
+          <!-- End Recent Works -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

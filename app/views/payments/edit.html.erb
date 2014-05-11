@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 reg-page col-md-offset-2" style="margin-top:40px;">
+      <div class="item">
+        <%= form_for @payment, html: {class: 'form-horizontal validate-form'} do |f| %>
+          <h4><%= t('report_remittance').upcase %></h4>
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <%= render 'remittance' %>
+            </div>
+            <div class="box-content">
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <%= f.label :amount do %>
+                    <%= t('remitted_amount') %>
+                    <span class="color-red">*</span>
+                  <% end %>
+                </div>
+                <div class="controls col-md-8">
+                  <%= f.text_field :amount, class: 'form-control', data: {'rule-required' => true, 'rule-number' => true} %>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <%= f.label :identifier do %>
+                    <%= t('your_account') %>
+                    <span class="color-red">*</span>
+                  <% end %>
+                </div>
+                <div class="controls col-md-8">
+                  <%= f.text_field :identifier, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '5', 'rule-maxlength' => '5'} %>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <%= f.label :pay_time do %>
+                    <%= t('remitted_date') %>
+                    <span class="color-red">*</span>
+                  <% end %>
+                </div>
+                <div class="controls col-md-12">
+                  <div class="datepicker input-group" id="datepicker">
+                    <%= f.text_field :pay_time, class: 'form-control', data: {'rule-required' => true, 'rule-date' => true, 'format' => 'yyyy/MM/dd'} %>
+                    <span class="input-group-addon">
+                      <span data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <%= f.button t('report'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+              <%= link_to orders_path do %>
+                <i class="icon-angle-left"></i>
+                回到我的帳戶
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

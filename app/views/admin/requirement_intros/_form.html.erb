@@ -1,0 +1,70 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      介紹
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content">
+    <%= form_for(@requirement_intro, url: admin_requirement_intros_path, html: { class: 'form validate-form' }) do |f| %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="box image-preview-box">
+            <%= image_tag f.object.image.url(:large), class: 'img-responsive' %>
+            <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <%= f.fields_for :requirement_intro_translates do |builder| %>
+          <div class="col-sm-6">
+            <div class="box">
+              <div class="box-header">
+                <div class="title">
+                  <%= @requirement_intro.requirement_intro_translates[builder.index].locale.name %>
+                  <small style="margin-left:10px;">
+                    <span class="label label-danger">不可留空</span>
+                  </small>
+                </div>
+                <div class="actions">
+                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                </div>
+              </div>
+              <div class="box-content">
+                <div class="form-group">
+                  <%= builder.label :title, '介紹標題' %>
+                  <div class="controls">
+                    <%= builder.text_field :title, class: 'form-control',
+                                          placeholder: '請輸入介紹標題', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= builder.label :content, '介紹內容' %>
+                  <div class="controls">
+                    <%= builder.text_area :content, class: 'form-control autosize', rows: 6,
+                                           placeholder: '請輸入介紹內容', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <%= builder.hidden_field :locale_id %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="row form-actions">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <%= link_to '取消', admin_requirement_intros_path, class: 'btn btn-lg' %>
+            <%= f.button(class: 'btn btn-primary btn-lg') do %>
+              <i class="icon-save"></i>
+              儲存
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

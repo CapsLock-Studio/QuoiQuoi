@@ -1,0 +1,110 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-comment-alt"></i>
+      <span>訊息管理</span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+        <li style="margin-left: 20px;">
+          <% if @user %>
+            <%= link_to '新增訊息', new_admin_user_message_path(@user), class: 'btn btn-info' %>
+          <% else %>
+            <%= link_to '新增訊息', new_admin_message_path, class: 'btn btn-info' %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">
+            <span>訊息列表</span>
+            <% if @user %>
+              <small style="color: #eee">
+                <%= link_to "用戶id: #{@user.id}", admin_user_path(@user), target: '_blank', style: 'color: #eee' %>
+              </small>
+            <% end %>
+          </div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <% if @user %>
+                  <thead>
+                  <tr>
+                    <th>訊息內容</th>
+                    <th>狀態</th>
+                    <th></th>
+                  </tr>
+                  <tbody>
+                  <% @user.messages.each do |message| %>
+                    <tr>
+                      <td>
+                        <%= truncate(message.content) %>
+                      </td>
+                      <td>
+                        <% if message.read? %>
+                          <label class="label label-success"><%= '客戶' if message.admin? %>已讀</label>
+                        <% else %>
+                          <label class="label label-warning"><%= '客戶' if message.admin? %>未讀</label>
+                        <% end %>
+                      </td>
+                      <td>
+                        <div class="text-right">
+                          <%= link_to(admin_message_path(message), class: 'btn btn-md') do %>
+                            <i class="icon-reply"></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                <% else %>
+                  <thead>
+                  <tr>
+                    <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                    <th>最後一則訊息內容</th>
+                    <th>未讀訊息數</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @users.each do |user| %>
+                    <tr>
+                      <td>
+                        <%= link_to user.id, user_path(user), target: '_blank' %>
+                      </td>
+                      <td>
+                        <%= truncate(user.messages.last.content) %>
+                      </td>
+                      <td>
+                        <%= user.messages.where(admin: false, read: false).length %>
+                      </td>
+                      <td>
+                        <div class='text-right'>
+                          <%= link_to(admin_user_messages_path(user), class: 'btn btn-md') do %>
+                            查看用戶訊息
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

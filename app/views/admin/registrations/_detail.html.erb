@@ -1,0 +1,55 @@
+<div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+  <div class="box-header sea-blue-background">
+    <div class="title">課程詳細內容</div>
+    <div class="actions">
+      <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-no-padding">
+    <div class="responsive-table">
+      <div class="scrollable-table">
+        <table class="data-table table table-striped" style="margin-bottom:0;">
+          <thead>
+          <tr>
+            <th></th>
+            <th>名稱</th>
+            <th>時間</th>
+            <th>報名/報名完成/上限人數</th>
+            <th>單人費用</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <%= image_tag registration.course.image.url(:thumb), class: 'img-responsive' %>
+            </td>
+            <td>
+              <strong><%= registration.course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %></strong>
+            </td>
+            <td>
+              <%= "#{registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(registration.course.time + registration.course.length.hours).strftime('%H:%M')}" %>
+            </td>
+            <td>
+              <%= "#{registration.attendance}/#{@total_attendance}/#{registration.course.popular}" %>
+            </td>
+            <td>
+              <%= number_to_currency(registration.course.price) %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h4 class="text-right">
+      總金額 :
+      <strong class="text-muted">
+        <%= number_to_currency(registration.subtotal) %>
+      </strong>
+    </h4>
+  </div>
+</div>

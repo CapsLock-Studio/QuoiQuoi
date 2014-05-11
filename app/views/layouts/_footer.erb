@@ -3,49 +3,22 @@
     <div class="col-md-3 md-margin-bottom-40">
       <!-- About -->
       <div class="headline">
-        <h2>聯絡我們</h2>
+        <h2><%= t('header.navigation.contact') %></h2>
       </div>
-      <address class="md-margin-bottom-40">
-        台灣新北市淡水區英專路151號 <br>
-        商管大樓 B1111 <br>
-        Phone: (02) 26215656 - 2645 or 2648 <br>
-        Fax: (02) 26209737 <br>
-        Email: <a href="mailto:tlmx@oa.tku.edu.tw" class="">tlmx@oa.tku.edu.tw</a>
-      </address>
+      <%= render 'contacts/infos' %>
     </div>
 
-    <div class="col-md-3">
-      <!-- Quick Links -->
-      <div class="headline">
-        <h2>快速連結</h2>
+    <% @article_types.each do |type| %>
+      <div class="col-md-3">
+        <div class="headline">
+          <h2><%= type.article_type_translates.where(locale_id: session[:locale_id]).first.name %></h2>
+        </div>
       </div>
-      <a href="http://www.im.tku.edu.tw">
-        <h4>
-          Facebook
-        </h4>
-      </a>
-      <a href="http://www.im.tku.edu.tw">
-        <h4>
-          Blog
-        </h4>
-      </a>
-    </div>
-
-    <div class="col-md-3">
-      <div class="headline">
-        <h2>活動記錄</h2>
-      </div>
-    </div>
+    <% end %>
 
     <div class="col-md-3">
       <div class="headline">
         <h2>口碑</h2>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="headline">
-        <h2>旅遊景點</h2>
       </div>
     </div>
   </div><!--/row-->

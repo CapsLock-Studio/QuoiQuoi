@@ -7,6 +7,16 @@ class Admin::CoursesController < AdminController
   # GET /admin/courses
   def index
     @courses = Course.all
+
+    @total_registration = 0
+    @total_attendance = 0
+    Payment.where(completed: true).where.not(registration_id: '').each do |payment|
+      @total_attendance += payment.registration.attendance
+    end
+
+    Registration.all.each do |registration|
+      @total_registration += registration.attendance
+    end
   end
 
   # GET /admin/courses/new
@@ -64,7 +74,7 @@ class Admin::CoursesController < AdminController
     end
 
     def course_params
-      params.require(:course).permit(:id, :image, :price, :time, :length,
+      params.require(:course).permit(:id, :image, :price, :time, :length, :popular, :attendance,
                                      course_images_attributes: [:_destroy, :id, :course_id, :image],
                                      course_translates_attributes: [:_destroy, :id, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
     end

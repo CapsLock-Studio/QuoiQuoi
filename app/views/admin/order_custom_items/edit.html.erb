@@ -1,0 +1,33 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="page-header">
+        <h1 class="pull-left">
+          <i class="icon-flag"></i>
+           訂製要求詳細內容
+          <small><%= render 'status', order_custom_item: @order_custom_item %></small>
+        </h1>
+        <div class="pull-right">
+          <ul class="breadcrumb">
+            <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= render 'contact' %>
+        </div>
+        <div class="col-sm-12">
+          <%= render 'requirement' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <%= render 'response_form' %>
+    </div>
+  </div>
+</div>

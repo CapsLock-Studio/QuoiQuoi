@@ -391,12 +391,20 @@ i.icon-bg-blue,
 i.icon-bg-green,
 i.icon-bg-yellow,
 i.icon-bg-orange,
+i.icon-bg-sea-blue,
+i.icon-bg-dark-orange,
 i.icon-bg-default {
    color: #fff;
    border: none;
    background: #666;
 }
 
+i.icon-bg-sea-blue {
+  background: #3D579D;
+}
+i.icon-bg-dark-orange {
+  background: #D34836;
+}
 i.icon-bg-blue {
    background: #3498db;
 }

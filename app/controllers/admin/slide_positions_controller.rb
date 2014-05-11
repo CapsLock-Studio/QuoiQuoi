@@ -1,4 +1,6 @@
 class Admin::SlidePositionsController < AdminController
+  authorize_resource
+
   before_action :set_slide_position, except: [:index, :new, :create]
 
   add_breadcrumb '首頁', :admin_root_path

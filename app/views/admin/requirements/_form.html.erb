@@ -1,0 +1,67 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-user"></i>
+      招募資訊資料
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @requirement], html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <%= f.fields_for :requirement_translates do |builder| %>
+                <div class="col-sm-6">
+                  <div class="box">
+                    <div class="box-header">
+                      <div class="title">
+                        <%= @requirement.requirement_translates[builder.index].locale.name %>
+                        <small style="margin-left:10px;">
+                          <span class="label label-danger">不可留空</span>
+                        </small>
+                      </div>
+                      <div class="actions">
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                      </div>
+                    </div>
+                    <div class="box-content">
+                      <div class="form-group">
+                        <%= builder.label :title, '職稱' %>
+                        <div class="controls">
+                          <%= builder.text_field :title, class: 'form-control',
+                                                 placeholder: '請輸入招募職稱', data: {'rule-required' => true} %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= builder.label :description, '敘述' %>
+                        <div class="controls">
+                          <%= builder.text_area :description, class: 'form-control', placeholder: '請輸入招募內容敘述', data: {'rule-required' => true} %>
+                        </div>
+                      </div>
+                      <%= builder.hidden_field :locale_id %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_requirements_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

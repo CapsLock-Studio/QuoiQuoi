@@ -1,0 +1,75 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-user"></i>
+      設計師資料
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @designer], html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="nested-field" style="margin-bottom:10px;">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="box image-preview-box">
+                    <%= image_tag f.object.photo.url(:large), class: 'img-responsive' %>
+                    <%= f.file_field :photo, title: '選擇照片', class: 'btn-block' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-sm-offset-1">
+            <%= f.fields_for :designer_translates do |builder| %>
+              <div class="box">
+                <div class="box-header">
+                  <div class="title">
+                    <%= @designer.designer_translates[builder.index].locale.name %>
+                    <small style="margin-left:10px;">
+                      <span class="label label-success">可留空</span>
+                    </small>
+                  </div>
+                  <div class="actions">
+                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="form-group">
+                    <%= builder.label :name, '設計師名字' %>
+                    <div class="controls">
+                      <%= builder.text_field :name, class: 'form-control',
+                                             placeholder: '請輸入名字' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= builder.label :introduction, '設計師介紹' %>
+                    <div class="controls">
+                      <%= builder.text_area :introduction, class: 'form-control', placeholder: '請輸入介紹內容' %>
+                    </div>
+                  </div>
+                  <%= builder.hidden_field :locale_id %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_designers_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

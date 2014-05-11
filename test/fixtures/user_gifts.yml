@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  gift_id: 
+  token: MyString
+  used_user_id: 1
+  used_time: 2014-05-04 04:01:07
+
+two:
+  user_id: 
+  gift_id: 
+  token: MyString
+  used_user_id: 1
+  used_time: 2014-05-04 04:01:07

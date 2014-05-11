@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  locale_id: 
+  name: MyString
+  account: MyString
+  bank_name: MyString
+  bank_address: MyString
+  code: MyString
+
+two:
+  locale_id: 
+  name: MyString
+  account: MyString
+  bank_name: MyString
+  bank_address: MyString
+  code: MyString

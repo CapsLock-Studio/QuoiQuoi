@@ -1,0 +1,88 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container">
+  <div class="row">
+    <%= render 'user/side_navigation' %>
+    <div class="col-md-9">
+      <% @orders.each do |order| %>
+        <div class="box">
+          <div class="box-header box-header-small grey-background">
+            <h4>
+              訂單編號: <strong class="text-muted"><%= order.id %></strong>
+              <small class="order-time">建立時間: <strong><%= order.checkout_time.strftime('%Y/%m/%d %H:%M') %></strong></small>
+            </h4>
+          </div>
+          <div class="box-content box-no-padding" style="border:0;">
+            <div class="responsive-table">
+              <div class="scrollable-area">
+                <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
+                  <thead>
+
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="text-left col-md-6">
+                      <% order.order_products.each do |order_product| %>
+                        <%= image_tag order_product.product.image.url(:thumb) %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if order.closed? %>
+                        交易完成
+                      <% elsif order.paid? %>
+                        <% if order.payment.completed? %>
+                          <% if order.delivered? %>
+                            等待收貨
+                          <% else %>
+                            等待配送
+                          <% end %>
+                        <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
+                          等待匯款
+                        <% else %>
+                          等待確認
+                        <% end %>
+                      <% else %>
+                        等待付款
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(order.subtotal) %>
+                    </td>
+                    <td>
+                      <ul class="list-unstyled">
+                        <% if order.closed? %>
+                          <li>
+                            <%= link_to '訂單詳細', close_order_path(order) %>
+                          </li>
+                        <% else %>
+                          <% if order.paid? %>
+                            <% if !order.payment.completed? && (order.payment.amount == 0 || order.payment.identifier.blank?) %>
+                              <li>
+                                <%= link_to '回報', edit_payment_path(order.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                              </li>
+                            <% elsif order.delivered? %>
+                              <li>
+                                <%= link_to '收貨', close_order_path(order), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
+                              </li>
+                            <% end %>
+                          <% else %>
+                            <li>
+                              <%= link_to '付款', pay_order_path(order), class: 'btn btn-u btn-u-orange hover-effect' %>
+                            </li>
+                          <% end %>
+                          <li>
+                            <%= link_to '訂單詳細', order_path(order) %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

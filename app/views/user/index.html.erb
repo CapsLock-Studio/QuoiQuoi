@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:none;">
+        <div class="reg-header">
+          <div class="text-center">
+            <h2><i class="icon-info"></i>個人帳戶資訊</h2>
+            <p>您可以在這邊設定常用聯絡資訊，方便您使用布知道網路商店</p>
+          </div>
+        </div>
+
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="text-muted col-xs-2 control-label">信箱</label>
+            <div class="col-xs-10">
+              <label class="form-control" style="border-color:#FEFEFE;">
+                <%= current_user.email %>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-muted col-xs-2 control-label">姓名</label>
+            <div class="col-xs-10">
+              <label class="form-control">
+                <% if current_user.name.blank? %>
+                  <span class="text-muted">尚未設定常用聯絡資訊</span>
+                <% else %>
+                  <%= current_user.name %>
+                <% end %>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-muted col-xs-2 control-label">電話</label>
+            <div class="controls col-xs-10">
+              <label class="form-control">
+                <% if current_user.phone.blank? %>
+                  <span class="text-muted">尚未設定常用聯絡資訊</span>
+                <% else %>
+                  <%= current_user.phone.gsub(/\d{4}$/, '****') %>
+                <% end %>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-muted col-xs-2 control-label">住址</label>
+            <div class="col-xs-10">
+              <label class="form-control">
+                <% if current_user.address.blank? %>
+                  <span class="text-muted">尚未設定常用聯絡資訊</span>
+                <% else %>
+                  <%= current_user.address %>
+                <% end %>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-muted col-xs-2 control-label">Line</label>
+            <div class="col-xs-10">
+              <label class="form-control">
+                <% if current_user.line.blank? %>
+                  <span class="text-muted">尚未設定常用聯絡資訊</span>
+                <% else %>
+                  <%= current_user.line.gsub(/\d{4}$/, '****') %>
+                <% end %>
+              </label>
+            </div>
+          </div>
+          <%= link_to '設定常用聯絡資訊', edit_user_path, class: 'btn btn-default btn-lg hover-effect btn-block' %>
+          <%= link_to orders_path do %>
+            <i class="icon-angle-left"></i>
+            回到我的帳戶
+          <% end %>
+        </form>
+      </div>
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>

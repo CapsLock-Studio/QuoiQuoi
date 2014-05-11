@@ -14,10 +14,49 @@
     </li>
     <li class="devider"></li>
     <li>
-      <%= link_to(new_user_session_path) do %>
-        <i class="icon-signin"></i>
-        <%= t('header.top.login') %>
-      <% end %>
+      <a href="https://www.facebook.com/">
+        <i class="icon-facebook"></i>
+      </a>
     </li>
+    <li class="devider"></li>
+    <li>
+      <a href="https://www.facebook.com/">
+        <i class="icon-google-plus"></i>
+      </a>
+    </li>
+    <li class="devider"></li>
+    <li>
+      <a href="https://www.facebook.com/">
+        <i class="icon-twitter"></i>
+      </a>
+    </li>
+    <li class="devider"></li>
+    <li>
+      <a href="https://www.facebook.com/">
+        Blog
+      </a>
+    </li>
+    <li class="devider"></li>
+    <% if user_signed_in? %>
+      <li>
+        <%= link_to(orders_path) do %>
+          <%= t('header.top.user') %>
+        <% end %>
+      </li>
+      <li class="devider"></li>
+      <li>
+        <%= link_to(destroy_user_session_path, method: :delete) do %>
+          <i class="icon-signout"></i>
+          <%= t('header.top.signout') %>
+        <% end %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to(new_user_session_path) do %>
+          <i class="icon-signin"></i>
+          <%= t('header.top.signin') %>
+        <% end %>
+      </li>
+    <% end %>
   </ul>
 </div>

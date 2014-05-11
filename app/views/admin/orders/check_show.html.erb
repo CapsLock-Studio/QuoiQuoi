@@ -1,0 +1,48 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="page-header">
+        <h1 class="pull-left">
+          <i class="icon-check"></i>
+          詳細待確認匯款訂單<small><%= render 'payment_status', payment: @payment %></small>
+        </h1>
+        <div class="pull-right">
+          <ul class="breadcrumb">
+            <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-6">
+          <%= render 'contact', order: @payment.order %>
+        </div>
+        <div class="col-sm-6">
+          <%= render 'admin/payments/form' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <%= render 'admin/orders/order_detail', order: @payment.order %>
+    </div>
+  </div>
+  <% unless @payment.completed? %>
+    <div class="row form-actions">
+      <div class="col-sm-12">
+        <div class="pull-right">
+          <%= link_to(uncheck_admin_payment_path(@payment), class: 'btn btn-default btn-lg', method: :put) do %>
+            <i class="icon-remove"></i>
+            匯款資訊有誤
+          <% end %>
+          <%= link_to(admin_payment_path(@payment), class: 'btn btn-primary btn-lg', method: :put) do %>
+            <i class="icon-save"></i>
+            確認已匯款
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

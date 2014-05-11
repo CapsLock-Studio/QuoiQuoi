@@ -1,0 +1,19 @@
+<% if registration.payment %>
+  <% if !registration.payment.completed? && (registration.payment.identifier.blank? || registration.payment.pay_time.blank?) %>
+    <label class="label label-contrast">
+      等待匯款
+    </label>
+  <% elsif !registration.payment.completed? && (registration.amount != 0 || !registration.payment.identifier.blank? || !registration.payment.pay_time.blank?) %>
+    <label class="label label-danger">
+      等待確認
+    </label>
+  <% else %>
+    <label class="label label-default">
+      完成報名
+    </label>
+  <% end %>
+<% else %>
+  <label class="label label-warning">
+    等待付款
+  </label>
+<% end %>

@@ -1,18 +1,76 @@
-<h2>Sign up</h2>
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:0;">
+        <div class="reg-header">
+          <h2>註冊</h2>
+          <p>已經有帳號了嗎? 按下 <span style="font-size:16px;"><%= link_to '登入', new_user_session_path, class: 'color-green' %></span> 或是使用下面的社群帳號登入帳號</p>
+          <ul class="list-inline style-icons text-center">
+            <li>
+              <%= link_to user_omniauth_authorize_path(:google_oauth2) do %>
+                <i class="icon-google-plus icon-round icon-round-sm icon-bg-dark-orange hover-effect icon-hover"></i>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to user_omniauth_authorize_path(:facebook) do %>
+                <i class="icon-facebook icon-round icon-round-sm icon-bg-sea-blue hover-effect icon-hover"></i>
+              <% end %>
+            </li>
+            <li><a href="#"><i class="icon-twitter icon-round icon-round-sm icon-bg-blue hover-effect icon-hover"></i></a></li>
+          </ul>
+        </div>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'validate-form' }) do |f| %>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group">
+                <div class="controls">
+                  <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                    <%= f.text_field :name, class: 'form-control', 'placeholder' => '姓名', data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls">
+                  <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                    <%= f.email_field :email, class: 'form-control', 'placeholder' => '電子信箱', data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls">
+                  <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="icon-lock"></i></span>
+                    <%= f.password_field :password, class: 'form-control', 'placeholder' => '密碼', data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls">
+                  <div class="input-group margin-bottom-30">
+                    <span class="input-group-addon"><i class="icon-key"></i></span>
+                    <%= f.password_field :password_confirmation, class: 'form-control', 'placeholder' => '確認密碼', data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+          <hr>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-<%= render "users/shared/links" %>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <%= f.button '註冊', class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+              <%= link_to '登入', new_user_session_path, class: 'pull-left' %>
+              <a href="#" class="pull-right">忘記密碼?</a>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>

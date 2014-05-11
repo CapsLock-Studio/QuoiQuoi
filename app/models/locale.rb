@@ -4,6 +4,11 @@ class Locale < ActiveRecord::Base
 
   has_many :product_translates
   accepts_nested_attributes_for :product_translates, allow_destroy: true
-  has_many :product_custom_item_translates
-  has_many :product_custom_type_translates
+  has_many :material_translates
+  has_many :designer_translates
+  accepts_nested_attributes_for :designer_translates, allow_destroy: true
+  has_many :course_translates
+  accepts_nested_attributes_for :course_translates, allow_destroy: true
+  has_many :rent_intro_translates
+  accepts_nested_attributes_for :rent_intro_translates, allow_destroy: true
 end

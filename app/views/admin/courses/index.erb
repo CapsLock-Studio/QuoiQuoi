@@ -29,6 +29,7 @@
                   <th></th>
                   <th>商品名稱</th>
                   <th>價格</th>
+                  <th>狀態 <label class="label label-success">報名人數/繳費完成人數/課程人數上限</label></th>
                   <th></th>
                 </tr>
                 </thead>
@@ -44,7 +45,10 @@
                         <%= course.course_translates.collect{|translate| translate.name.blank?? 'No Translate' : translate.name}.join(' - ') %>
                       </td>
                       <td>
-                        $<%= course.price %>
+                        <%= number_to_currency(course.price) %>
+                      </td>
+                      <td>
+                        <%= "#{@total_registration}/#{@total_attendance}/#{course.popular}" %>
                       </td>
                       <td>
                         <div class='text-right'>

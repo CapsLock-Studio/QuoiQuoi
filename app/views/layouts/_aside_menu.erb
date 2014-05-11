@@ -1,3 +1,4 @@
+<% subtotal = 0 %>
 <section id="asideMenu" class="aside-menu">
   <div class="row">
     <div class="col-md-12">
@@ -14,7 +15,7 @@
             </button>
           </div>
         </div>
-        <% if @menu_orders %>
+        <% if @menu_orders && (@menu_orders.order_products.length > 0 || @menu_orders.order_custom_items.length > 0) %>
           <div class="box-content">
             <div class="row">
               <div class="col-md-12">
@@ -24,29 +25,47 @@
               </div>
             </div>
           </div>
-          <div class="margin-bottom-20">
+          <div>
             <% @menu_orders.order_products.each do |order_product| %>
+              <% subtotal += order_product.product.price %>
               <div class="search-blocks search-blocks-colored side-menu-block">
                 <div class="col-md-6 search-img">
                   <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
                 </div>
                 <div class="col-md-6">
+                  <%= link_to(order_product_path(order_product), class: 'btn pull-right', method: :delete) do %>
+                    <i class="icon-remove"></i>
+                  <% end %>
                   <h4>
-                    <% order_product.product.product_translates.where(locale_id: session[:locale_id]).first do |product_translate| %>
-                      <%= product_translate.name %>
-                    <% end %>
+                    <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
                   </h4>
+                  <h5 class="text-muted"><%= number_to_currency(order_product.product.price) %></h5>
+                </div>
+              </div>
+            <% end %>
+            <% @menu_orders.order_custom_items.each do|order_custom_item| %>
+              <% subtotal += order_custom_item.price %>
+              <div class="search-blocks search-blocks-colored side-menu-block">
+                <div class="col-md-6 search-img">
+                  <%= image_tag order_custom_item.image.url(:medium), class: 'img-responsive' %>
+                </div>
+                <div class="col-md-6">
+                  <%= link_to(order_custom_item_path(order_custom_item), class: 'pull-right', method: :delete) do %>
+                    <i class="icon-remove"></i>
+                  <% end %>
+                  <h4><%= t('original_bag') %></h4>
+                  <h5 class="text-muted"><%= number_to_currency(order_custom_item.price) %></h5>
                 </div>
               </div>
             <% end %>
           </div>
           <div class="box-content">
             <div class="row">
-              <div class="col-md-12 margin-bottom-10">
-                <%= link_to '編輯購物車', cart_path, class: 'btn btn-default btn-block btn-lg hover-effect' %>
-              </div>
               <div class="col-md-12">
-                <%= link_to '結帳', new_order_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect', style: 'color:#FFF;' %>
+                <h4 class="text-right margin-bottom-20">
+                  總金額: <%= number_to_currency(subtotal) %>
+                </h4>
+                <%= link_to '去結算', cart_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect', style: 'color:#FFF;' %>
               </div>
             </div>
           </div>

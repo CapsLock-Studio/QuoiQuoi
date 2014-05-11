@@ -1,0 +1,14 @@
+development: &sandbox # change to your own
+  username: ts01364362-facilitator_api1.gmail.com
+  password: 1397502174
+  signature: AYBefPhbDnZk6tOapRnI.pVOd6S4AziFTPMc9LMxo67-Zepa37FCW3KL
+  sandbox: true
+
+test:
+  <<: *sandbox
+
+production: &production
+  username: SET_YOUR_OWN
+  password: SET_YOUR_OWN
+  signature: SET_YOUR_OWN
+  sandbox: false
