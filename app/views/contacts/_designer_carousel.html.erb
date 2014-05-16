@@ -1,0 +1,27 @@
+<div class="carousel slide testimonials testimonials-v1" id="testimonials-1">
+  <div class="carousel-inner">
+    <% @designers.each_with_index do |designer, index| %>
+      <div class="item <%= 'active' if index == 0 %>">
+        <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+          <%= simple_format(translate.message) %>
+          <div class="testimonial-info">
+            <%= image_tag designer.avatar.url(:medium) %>
+            <span class="testimonial-author">
+              <%= translate.name %>
+              <em><%= translate.position %></em>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="carousel-arrow">
+    <a data-slide="prev" href="#testimonials-1" class="left carousel-control">
+      <i class="icon-angle-left"></i>
+    </a>
+    <a data-slide="next" href="#testimonials-1" class="right carousel-control">
+      <i class="icon-angle-right"></i>
+    </a>
+  </div>
+</div>

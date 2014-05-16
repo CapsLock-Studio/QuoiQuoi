@@ -6,6 +6,8 @@ class Order < ActiveRecord::Base
   has_one :payment
   accepts_nested_attributes_for :order_products
 
+  belongs_to :shipping_fee
+
   has_many :order_custom_items
   accepts_nested_attributes_for :order_custom_items
 

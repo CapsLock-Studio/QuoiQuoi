@@ -1,0 +1,85 @@
+<%= form_tag sort_admin_contact_youtube_slides_path, method: :put do %>
+  <div class="col-xs-12">
+    <div class="page-header page-header-with-buttons">
+      <h1 class="pull-left">
+        <i class="icon-youtube"></i>
+        <span>影片管理</span>
+      </h1>
+      <div class="pull-right">
+        <div class="btn-group">
+          <div class="btn-toolbar">
+            <%= submit_tag '儲存順序', class: 'btn' %>
+            <%= link_to '新增影片', new_admin_contact_youtube_slide_path, class: 'btn btn-info' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <% if !params[:sorted].nil? and params[:sorted] %>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Successed!</strong> 修改影片順序成功
+          </div>
+        <% end %>
+        <% if !params[:sorted].nil? and !params[:sorted] %>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Failed!</strong> 修改影片順序失敗，請聯絡程式維護者
+          </div>
+        <% end %>
+        <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+          <div class="box-header sea-blue-background">
+            <div class="title">影片列表</div>
+            <div class="actions">
+              <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+              <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+            </div>
+          </div>
+          <div class="box-content box-no-padding">
+            <div class="responsive-table">
+              <div class="scrollable-table sortable-container">
+                <table class="table" style="margin-bottom:0;">
+                  <thead>
+                  <tr>
+                    <th>影片</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody id="slide-sortable" data-sortable-axis="y" data-sortable-connect=".sortable">
+                  <% @contact_youtube_slides.each do |contact_youtube_slide| %>
+                    <tr>
+                      <%= fields_for 'contact_youtube_slides[]', contact_youtube_slide do |f| %>
+                        <%= f.hidden_field :sort, class: 'sort-item' %>
+                        <%= f.hidden_field :id %>
+                      <% end %>
+                      <td>
+                        <div class="col-md-4 youtube-link" style="margin-top:20px;" data-link="<%= contact_youtube_slide.youtube %>">
+                          <div class="youtube-block">
+                            <%= image_tag asset_path('system/youtube.gif'), class: 'img-responsive' %>
+                          </div>
+                          <%= hidden_field_tag 'youtube-link', contact_youtube_slide.youtube, class: 'youtube-link' %>
+                        </div>
+                      </td>
+                      <td>
+                        <div class='text-right'>
+                          <%= link_to(edit_admin_contact_youtube_slide_path(contact_youtube_slide), class: 'btn btn-md') do %>
+                            <i class='icon-pencil'></i>
+                          <% end %>
+                          <%= link_to(admin_contact_youtube_slide_path(contact_youtube_slide), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                            <i class='icon-remove'></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

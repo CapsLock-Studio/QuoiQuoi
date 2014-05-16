@@ -51,6 +51,6 @@ class Admin::ContactsController < AdminController
     end
 
     def contact_params
-      params.require(:contact).permit(:id, contact_translates_attributes: [:id, :locale_id, :contact_id, :email, :mobile, :phone, :address, :business_hour])
+      params.require(:contact).permit(:id, contact_translates_attributes: [:id, :locale_id, :contact_id, :email, :mobile, :phone, :address, :business_hour, :introduction])
     end
 end

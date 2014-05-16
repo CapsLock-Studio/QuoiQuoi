@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      影片
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @contact_youtube_slide], html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="row">
+          <div class="col-sm-12 nested-field">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="youtube-block">
+                  <%= image_tag asset_path('system/youtube.gif'), class: 'img-responsive' %>
+                </div>
+                <%= f.text_field :youtube, class: 'form-control youtube-link', placeholder: 'https://' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_contact_youtube_slides_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 class Admin::ArticlesController < AdminController
   authorize_resource
   before_action :set_article, except: [:index, :new, :create]
+  before_action :delete_blank_article, except: [:update]
 
   add_breadcrumb '首頁', :admin_root_path
   add_breadcrumb '文章管理', :admin_articles_path
@@ -22,6 +23,7 @@ class Admin::ArticlesController < AdminController
     add_breadcrumb '新增文章'
 
     @article = Article.new
+    @article.save
   end
 
   # GET /admin/articles/1/edit
@@ -76,5 +78,9 @@ class Admin::ArticlesController < AdminController
 
   def article_params
     params.require(:article).permit(:id, :article_type_id, :title, :content)
+  end
+
+  def delete_blank_article
+    Article.where(article_type_id: [nil, '']).destroy_all
   end
 end

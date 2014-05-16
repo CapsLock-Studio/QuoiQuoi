@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      輪播
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @contact_image_slide], html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="row">
+          <div class="col-sm-12 nested-field">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box image-preview-box">
+                  <%= image_tag f.object.image.url(:medium), class: 'img-responsive', style: 'width:100%;' %>
+                  <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_contact_image_slides_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

@@ -32,7 +32,13 @@ class Admin::DesignersController < AdminController
   end
 
   def update
-
+    respond_to do |format|
+      if @designer.update_attributes(designer_params)
+        format.html {redirect_to action: :index}
+      else
+        format.html {render action: :edit}
+      end
+    end
   end
 
   def destroy
@@ -51,6 +57,6 @@ class Admin::DesignersController < AdminController
     end
 
     def designer_params
-      params.require(:designer).permit(:id, :photo, designer_translates_attributes: [:id, :designer_id, :_destroy, :name, :introduction, :locale_id])
+      params.require(:designer).permit(:id, :photo, :avatar, :facebook, :twitter, :google_plus, :linkedin, designer_translates_attributes: [:id, :designer_id, :_destroy, :position, :name, :message, :introduction, :locale_id])
     end
 end

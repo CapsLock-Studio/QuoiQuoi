@@ -1,81 +1,102 @@
 <%= render 'layouts/breadcrumbs', title: t('header.navigation.contact') %>
-<!-- Google Map -->
-<div id="map" class="map margin-bottom-40" style="margin-top:-40px;"></div>
-<!---/map-->
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <%= render 'contacts/form' %>
-    </div>
-    <div class="col-md-6">
-      <div class="row margin-bottom-20">
-        <div class="carousel slide testimonials testimonials-v1" id="testimonials-1">
-          <div class="carousel-inner">
-            <% @designers.each_with_index do |designer, index| %>
-              <div class="item <%= 'active' if index == 0 %>">
-                <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
-                  <%= simple_format(translate.introduction) %>
-                  <div class="testimonial-info">
-                    <%= image_tag designer.photo.url(:medium) %>
-                    <span class="testimonial-author">
-                    <%= translate.name %>
-                    <em><%= t('position_designer') %></em>
-                  </span>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <div class="carousel-arrow">
-            <a data-slide="prev" href="#testimonials-1" class="left carousel-control">
-              <i class="icon-angle-left"></i>
-            </a>
-            <a data-slide="next" href="#testimonials-1" class="right carousel-control">
-              <i class="icon-angle-right"></i>
-            </a>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-12">
+          <%= render 'carousel' %>
+          <div class="title-box">
+            <%= simple_format(@contact.introduction) %>
           </div>
         </div>
-      </div>
-      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <ul id="list" class="bxslider recent-work">
+              <% @designers.each do |designer| %>
+                <li>
+                  <div class="col-xs-3">
+                    <div class="thumbnail-style">
+                      <%= image_tag designer.photo.url(:medium), class: 'img-responsive' %>
+                      <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+                        <h3><a><%= translate.name %></a> <small><%= translate.position %></small></h3>
+                        <%= simple_format translate.introduction %>
+                        <div class="text-right">
+                          <ul class="list-unstyled list-inline team-socail">
+                            <% unless designer.facebook.blank? %>
+                              <li>
+                                <%= link_to designer.facebook do %>
+                                  <i class="icon-facebook"></i>
+                                <% end %>
+                              </li>
+                            <% end %>
+                            <% unless designer.twitter.blank? %>
+                              <li>
+                                <%= link_to designer.twitter do %>
+                                  <i class="icon-twitter"></i>
+                                <% end %>
+                              </li>
+                            <% end %>
+                            <% unless designer.google_plus.blank? %>
+                              <li>
+                                <%= link_to designer.google_plus do %>
+                                  <i class="icon-google-plus"></i>
+                                <% end %>
+                              </li>
+                            <% end %>
+                            <% unless designer.linkedin.blank? %>
+                              <li>
+                                <%= link_to designer.linkedin do %>
+                                  <i class="icon-linkedin"></i>
+                                <% end %>
+                              </li>
+                            <% end %>
+                          </ul>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <hr/>
+        <div class="col-md-12">
+          <%= render 'youtube' %>
+        </div>
         <div class="col-md-6">
+          <%= render 'contacts/form' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col-md-12 margin-bottom-40">
+          <%= render 'designer_carousel' %>
+        </div>
+        <div class="col-md-12 margin-bottom-40">
           <!-- Contacts -->
           <div class="headline">
             <h2><%= t('header.navigation.contact') %></h2>
           </div>
-          <ul class="list-unstyled who">
-            <li>
-              <a href="#">
-                <i class="icon-home"></i>
-                <span><%= @contact.address %></span>
-              </a>
-            </li>
-            <li>
-              <%= mail_to @contact.email do %>
-                <i class="icon-envelope-alt"></i>
-                <span><%= @contact.email %></span>
-              <% end %>
-            </li>
-            <li>
-              <a href="#">
-                <i class="icon-mobile-phone" style="padding:0 3px;"></i>
-                <span><%= @contact.mobile %></span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="icon-phone"></i>
-                <span><%= @contact.phone %></span>
-              </a>
-            </li>
-          </ul>
+          <%= render 'contacts/infos' %>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12 margin-bottom-40">
           <!-- Business Hours -->
           <div class="headline">
             <h2><%= t('business_hours') %></h2>
           </div>
           <%= simple_format(@contact.business_hour) %>
+        </div>
+        <div class="col-md-12 margin-bottom-40">
+          <div class="headline">
+            <h2>交通資訊</h2>
+          </div>
+          <%= image_tag asset_path('location_info.jpg'), class: 'img-responsive' %>
+          <!-- Google Map -->
+          <div id="map" class="map"></div>
+          <!---/map-->
         </div>
       </div>
     </div>

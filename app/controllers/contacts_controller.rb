@@ -4,5 +4,7 @@ class ContactsController < ApplicationController
     add_breadcrumb t('header.navigation.contact')
 
     @designers = Designer.all
+    @contact_image_slides = ContactImageSlide.all
+    @contact_youtube_slides = ContactYoutubeSlide.all
   end
 end
