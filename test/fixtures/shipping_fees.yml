@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country: MyString
+  fee: 1
+  free_condition: 1
+
+two:
+  country: MyString
+  fee: 1
+  free_condition: 1

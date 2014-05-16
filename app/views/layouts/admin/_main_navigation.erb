@@ -174,13 +174,6 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(admin_remittances_path, {rule: /#{admin_remittances_path}.*/}, Admin::Remittance) do %>
-        <%= link_to(admin_remittances_path) do %>
-          <i class="icon-credit-card"></i>
-          <span>匯款資訊管理</span>
-        <% end %>
-      <% end %>
-
       <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*)/}, Admin::Product) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:products) %>" href="#">
           <i class="icon-shopping-cart"></i>
@@ -292,17 +285,38 @@
         </ul>
       <% end %>
 
+      <%= nav_item_with_resource('#', {rule: /#{admin_contacts_path}.*|#{admin_contact_image_slides_path}.*|#{admin_contact_youtube_slides_path}.*/}, Admin::Contact) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:contacts) or is_in(:contact_image_slides) or is_in(:contact_youtube_slides) %>" href="#">
+          <i class="icon-group"></i>
+          <span>聯絡我們管理</span>
+          <i class="icon-angle-down"></i>
+        </a>
+        <ul class="nav <%= 'in' if is_in(:contacts) or is_in(:contact_image_slides) or is_in(:contact_youtube_slides) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_contact_image_slides_path}.*/}, Admin::ContactImageSlide) do  %>
+            <%= link_to admin_contact_image_slides_path do %>
+              <i class="icon-picture"></i>
+              <span>圖片輪播管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_contact_youtube_slides_path}.*/}, Admin::ContactYoutubeSlide) do %>
+            <%= link_to admin_contact_youtube_slides_path do %>
+              <i class="icon-youtube"></i>
+              <span>影片管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_contacts_path}.*/}, Admin::Contact) do %>
+            <%= link_to admin_contacts_path do %>
+              <i class="icon-info"></i>
+              <span>店家聯絡資訊管理</span>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
       <%= nav_item_with_resource(nil, {rule: /#{admin_articles_path}.*/}, Admin::Article) do %>
         <%= link_to admin_articles_path do %>
           <i class="icon-book"></i>
           <span>文章管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_contacts_path}.*/}, Admin::Contact) do %>
-        <%= link_to admin_contacts_path do %>
-          <i class="icon-info"></i>
-          <span>店家聯絡資訊管理</span>
         <% end %>
       <% end %>
 
@@ -316,7 +330,21 @@
       <%= nav_item_with_resource(admin_designers_path, {rule: /#{admin_designers_path}.*/}, Admin::Designer) do %>
         <%= link_to(admin_designers_path) do %>
           <i class="icon-user"></i>
-          <span>設計師資料管理</span>
+          <span>設計師介紹資料管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_remittances_path, {rule: /#{admin_remittances_path}.*/}, Admin::Remittance) do %>
+        <%= link_to(admin_remittances_path) do %>
+          <i class="icon-credit-card"></i>
+          <span>匯款資訊管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_remittances_path, {rule: /#{admin_shipping_fees_path}.*/}, Admin::ShippingFee) do %>
+        <%= link_to(admin_shipping_fees_path) do %>
+          <i class="icon-globe"></i>
+          <span>運費資訊管理</span>
         <% end %>
       <% end %>
 

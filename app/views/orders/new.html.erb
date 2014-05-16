@@ -11,6 +11,18 @@
                 <div class="box-content">
                   <div class="form-group row">
                     <div class="col-md-12">
+                      <%= f.label :area do %>
+                        區域
+                        <span class="color-red">*</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-3">
+                      <%= f.select :shipping_fee, options_for_select(ShippingFee.all.order(:id).collect{|fee| [fee.area, fee.id, {data: {fee: fee.fee}}]}), {}, {class: 'form-control'} %>
+                      <small class="text-muted"><%= t('free_shipping_fee') %></small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
                       <%= f.label :name do %>
                         收件者姓名
                         <span class="color-red">*</span>

@@ -32,9 +32,14 @@ class AdminAbility
       can :manage, Admin::RentIntro
       can :manage, Admin::RentInfoImage
       can :manage, Admin::Contact
+      can :manage, Admin::ContactImageSlide
+      can :manage, Admin::ContactYoutubeSlide
       can :manage, Admin::Requirement
       can :manage, Admin::RequirementIntro
       can :manage, Admin::Article
+      can :manage, Admin::ArticleImage
+      can :manage, Admin::Remittance
+      can :manage, Admin::ShippingFee
     end
 
     # for development

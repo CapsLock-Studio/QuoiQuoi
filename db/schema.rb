@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140511044227) do
+ActiveRecord::Schema.define(version: 20140516151603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 20140511044227) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "article_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "article_id"
+  end
+
+  add_index "article_images", ["article_id"], name: "index_article_images_on_article_id", using: :btree
 
   create_table "article_type_translates", force: true do |t|
     t.integer  "article_type_id"
@@ -78,6 +90,27 @@ ActiveRecord::Schema.define(version: 20140511044227) do
     t.string   "link"
   end
 
+  create_table "contact_image_slides", force: true do |t|
+    t.integer  "sort"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contact_slides", force: true do |t|
+    t.integer  "sort"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "youtube"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contact_translates", force: true do |t|
     t.integer  "contact_id"
     t.integer  "locale_id"
@@ -88,10 +121,18 @@ ActiveRecord::Schema.define(version: 20140511044227) do
     t.datetime "updated_at"
     t.string   "business_hour"
     t.string   "address"
+    t.text     "introduction"
   end
 
   add_index "contact_translates", ["contact_id"], name: "index_contact_translates_on_contact_id", using: :btree
   add_index "contact_translates", ["locale_id"], name: "index_contact_translates_on_locale_id", using: :btree
+
+  create_table "contact_youtube_slides", force: true do |t|
+    t.integer  "sort"
+    t.string   "youtube"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contacts", force: true do |t|
     t.datetime "created_at"
@@ -162,6 +203,8 @@ ActiveRecord::Schema.define(version: 20140511044227) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "locale_id"
+    t.string   "message"
+    t.string   "position"
   end
 
   add_index "designer_translates", ["designer_id"], name: "index_designer_translates_on_designer_id", using: :btree
@@ -174,6 +217,14 @@ ActiveRecord::Schema.define(version: 20140511044227) do
     t.datetime "photo_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.string   "google_plus"
+    t.string   "linkedin"
   end
 
   create_table "gift_translates", force: true do |t|
@@ -332,9 +383,9 @@ ActiveRecord::Schema.define(version: 20140511044227) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "closed",         default: false
-    t.boolean  "delivered",      default: false
-    t.boolean  "checkout",       default: false
+    t.boolean  "closed",          default: false
+    t.boolean  "delivered",       default: false
+    t.boolean  "checkout",        default: false
     t.string   "name"
     t.string   "address"
     t.integer  "zip_code"
@@ -342,10 +393,12 @@ ActiveRecord::Schema.define(version: 20140511044227) do
     t.datetime "checkout_time"
     t.datetime "closed_time"
     t.datetime "delivered_time"
-    t.boolean  "canceled",       default: false
+    t.boolean  "canceled",        default: false
     t.datetime "canceled_time"
+    t.integer  "shipping_fee_id"
   end
 
+  add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "payments", force: true do |t|
@@ -607,6 +660,14 @@ ActiveRecord::Schema.define(version: 20140511044227) do
   add_index "requirement_translates", ["requirement_id"], name: "index_requirement_translates_on_requirement_id", using: :btree
 
   create_table "requirements", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shipping_fees", force: true do |t|
+    t.string   "area"
+    t.integer  "fee"
+    t.integer  "free_condition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

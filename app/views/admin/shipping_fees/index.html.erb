@@ -1,0 +1,71 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-globe"></i>
+      <span>地區運費資訊管理</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增區域運費資訊', new_admin_shipping_fee_path, class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">地區運費列表&nbsp;<label class="label label-danger">客戶下單預設第一項選定</label></div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                <tr>
+                  <th>編號</th>
+                  <th>地區</th>
+                  <th>運費</th>
+                  <th>免運費條件金額</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @shipping_fees.each do |shipping_fee| %>
+                  <tr>
+                    <td>
+                      <%= shipping_fee.id %>
+                    </td>
+                    <td>
+                      <%= shipping_fee.area %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(shipping_fee.fee) %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(shipping_fee.free_condition) %>
+                    </td>
+                    <td>
+                      <div class='text-right'>
+                        <%= link_to(edit_admin_shipping_fee_path(shipping_fee), class: 'btn btn-md') do %>
+                          <i class='icon-pencil'></i>
+                        <% end %>
+                        <%= link_to(admin_shipping_fee_path(shipping_fee), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                          <i class='icon-remove'></i>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

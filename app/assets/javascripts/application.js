@@ -34,9 +34,9 @@ if ($('#map').length > 0) {
         div: '#map',
         lat: 25.1359486,
         lng: 121.4612855,
-        zoom: 18,
+        zoom: 17,
         options: {
-            draggable: false,
+            draggable: true,
             disableDoubleClickZoom: false,
             scrollwheel: false
         }

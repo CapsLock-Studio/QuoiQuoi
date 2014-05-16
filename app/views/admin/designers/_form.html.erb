@@ -15,10 +15,48 @@
           <div class="col-sm-5">
             <div class="nested-field" style="margin-bottom:10px;">
               <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-4">
+                  <div class="box image-preview-box">
+                    <%= image_tag f.object.avatar.url(:large), class: 'img-responsive' %>
+                    <%= f.file_field :avatar, title: '選擇大頭照', class: 'btn-block' %>
+                  </div>
+                </div>
+                <div class="col-sm-8">
                   <div class="box image-preview-box">
                     <%= image_tag f.object.photo.url(:large), class: 'img-responsive' %>
                     <%= f.file_field :photo, title: '選擇照片', class: 'btn-block' %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="box">
+                    <div class="box-content">
+                      <div class="form-group">
+                        <%= f.label :facebook, 'FB' %><label class="label label-warning">可留空</label>
+                        <div class="controls">
+                          <%= f.text_field :facebook, class: 'form-control', placeholder: 'FB連結' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :twitter, 'Twitter' %><label class="label label-warning">可留空</label>
+                        <div class="controls">
+                          <%= f.text_field :twitter, class: 'form-control', placeholder: '推特連結' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :google_plus, 'GooglePlus' %>&nbsp;<label class="label label-warning">可留空</label>
+                        <div class="controls">
+                          <%= f.text_field :google_plus, class: 'form-control', placeholder: 'GooglePlus連結' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :linkedin, 'Linkedin' %><label class="label label-warning">可留空</label>
+                        <div class="controls">
+                          <%= f.text_field :linkedin, class: 'form-control', placeholder: 'Linkedin連結' %>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -47,9 +85,22 @@
                     </div>
                   </div>
                   <div class="form-group">
+                    <%= builder.label :position, '設計師職稱' %>
+                    <div class="controls">
+                      <%= builder.text_field :position, class: 'form-control',
+                                             placeholder: '請輸入職稱' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= builder.label :message, '設計師留言' %>
+                    <div class="controls">
+                      <%= builder.text_area :message, class: 'form-control', placeholder: '請輸入想說的話' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <%= builder.label :introduction, '設計師介紹' %>
                     <div class="controls">
-                      <%= builder.text_area :introduction, class: 'form-control', placeholder: '請輸入介紹內容' %>
+                      <%= builder.text_area :introduction, class: 'form-control', placeholder: '請輸入介紹內容', rows: 4 %>
                     </div>
                   </div>
                   <%= builder.hidden_field :locale_id %>

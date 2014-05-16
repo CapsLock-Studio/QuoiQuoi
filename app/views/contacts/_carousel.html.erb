@@ -1,0 +1,20 @@
+<div class="carousel slide carousel-v1" id="myCarousel-1">
+  <div class="carousel-inner">
+    <% @contact_image_slides.each_with_index do |contact_image_slides, index| %>
+      <div class="item <%= 'active' if index == 0 %>">
+        <%= link_to contact_image_slides.image.url(:large), target: '_blank' do %>
+          <%= image_tag contact_image_slides.image.url(:medium), class: 'img-responsive', style: 'width:100%;' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="carousel-arrow">
+    <a data-slide="prev" href="#myCarousel-1" class="left carousel-control">
+      <i class="icon-angle-left"></i>
+    </a>
+    <a data-slide="next" href="#myCarousel-1" class="right carousel-control">
+      <i class="icon-angle-right"></i>
+    </a>
+  </div>
+</div>

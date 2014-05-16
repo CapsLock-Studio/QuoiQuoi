@@ -177,7 +177,7 @@ $(document).on 'page:change', ->
 
   # --------------------------------------------------------------------------------------------------------------------
   # setting bootstrap file input
-  $('input[type=file]').bootstrapFileInput() if jQuery().bootstrapFileInput
+  $('input:file:not(.nowrap)').bootstrapFileInput() if jQuery().bootstrapFileInput
   # --------------------------------------------------------------------------------------------------------------------
 
   # --------------------------------------------------------------------------------------------------------------------
@@ -306,3 +306,21 @@ $(document).on 'page:change', ->
 
 @nav_open = ->
   return $("body").hasClass("main-nav-opened") || $("#main-nav").width() > 50
+
+
+window.locale = {
+  fileupload: {
+    errors: {
+      maxFileSize: "檔案太大",
+      minFileSize: "檔案太小",
+      acceptFileTypes: "不支援的檔案類型",
+      maxNumberOfFiles: "最多上傳檔案數量",
+      uploadedBytes: "已上傳大小",
+      emptyResult: "上傳檔案為空"
+    },
+    error: "Error",
+    start: "開始",
+    cancel: "取消",
+    destroy: "刪除"
+  }
+}
