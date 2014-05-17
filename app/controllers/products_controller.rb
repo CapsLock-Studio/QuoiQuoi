@@ -25,6 +25,7 @@ class ProductsController < ApplicationController
     add_breadcrumb t('product_detail')
 
     @order_product = OrderProduct.new(product_id: @product.id)
+    @other_products = Product.where(product_type_id: @product.product_type_id).order(created_at: :desc).limit(8)
   end
 
   # GET /products/new

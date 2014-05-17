@@ -67,7 +67,10 @@
               </label>
             </div>
           </div>
-          <%= link_to '設定常用聯絡資訊', edit_user_path, class: 'btn btn-default btn-lg hover-effect btn-block' %>
+          <%= link_to '設定常用聯絡資訊', edit_user_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' %>
+          <% unless current_user.provider %>
+            <%= link_to '設定密碼', password_path, class: 'btn btn-default btn-lg hover-effect btn-block' %>
+          <% end %>
           <%= link_to orders_path do %>
             <i class="icon-angle-left"></i>
             回到我的帳戶

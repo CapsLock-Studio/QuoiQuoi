@@ -17,7 +17,9 @@
                       <% end %>
                     </div>
                     <div class="controls col-md-3">
-                      <%= f.select :shipping_fee, options_for_select(ShippingFee.all.order(:id).collect{|fee| [fee.area, fee.id, {data: {fee: fee.fee}}]}), {}, {class: 'form-control'} %>
+                      <%= f.select :shipping_fee_id, options_for_select(ShippingFee.all.order(:id).collect{|fee|
+                        [fee.area, fee.id, {data: {fee: fee.fee, 'free-condition' => fee.free_condition}}]
+                      }), {}, {class: 'form-control shipping-fee'} %>
                       <small class="text-muted"><%= t('free_shipping_fee') %></small>
                     </div>
                   </div>
@@ -126,11 +128,12 @@
               <div class="row">
                 <div class="col-md-12">
                   <h4 class="text-right color-orange">
-                    總金額 :
-                    <strong class="text-muted">
+                    總金額:
+                    <strong class="text-muted subtotal" data-price="<%= @subtotal %>">
                       <%= number_to_currency(@subtotal) %>
                     </strong>
                   </h4>
+                  <span class="text-muted pull-right">(運費: <span class="shipping-fee-subtotal">$0.00</span>)</span>
                 </div>
               </div>
             </div>

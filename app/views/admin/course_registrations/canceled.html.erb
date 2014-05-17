@@ -2,19 +2,14 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-book"></i>
-      <span>文章管理</span>
+      <span>已取消課程管理</span>
     </h1>
-    <div class="pull-right">
-      <div class="btn-group">
-        <%= link_to '新增文章', new_admin_article_path, class: 'btn btn-info' %>
-      </div>
-    </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
         <div class="box-header sea-blue-background">
-          <div class="title">文章列表</div>
+          <div class="title">所有已取消課程列表</div>
           <div class="actions">
             <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
@@ -26,41 +21,37 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th>編號</th>
-                  <th>文章種類</th>
-                  <th>標題</th>
-                  <th>內文</th>
-                  <th>文章建立日期</th>
+                  <th></th>
+                  <th>課程編號</th>
+                  <th>課程名稱</th>
+                  <th>繳費完成人數</th>
+                  <th>課程時間</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @articles.each do |article| %>
+                <% @courses.each do |course| %>
                   <tr>
                     <td>
-                      <%= article.id %>
+                      <%= image_tag course.image.url(:thumb) %>
                     </td>
                     <td>
-                      <%= article.article_type.article_type_translates.collect{|translate| translate.name}.join(' - ') %>
+                      <%= course.id %>
                     </td>
                     <td>
-                      <%= truncate(article.title, length: 20) %>
+                      <%= course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %>
                     </td>
                     <td>
-                      <%= truncate(article.content, length: 30) %>
+                      <%= @total_attendance %>
                     </td>
                     <td>
-                      <%= article.created_at.strftime('%Y/%m/%d %H:%M') %>
+                      <%= course.time.strftime('%Y/%m/%d %H:%M') %>
                     </td>
-                    <td>
-                      <div class='text-right'>
-                        <%= link_to(edit_admin_article_path(article), class: 'btn btn-md') do %>
-                          <i class='icon-pencil'></i>
-                        <% end %>
-                        <%= link_to(admin_article_path(article), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
-                          <i class='icon-remove'></i>
-                        <% end %>
-                      </div>
+                    <td class="text-right">
+                      <%= link_to(canceled_admin_course_registration_path(course), class: 'btn btn-md') do %>
+                        <i class="icon-eye-open"></i>
+                        查看所有報名人
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>

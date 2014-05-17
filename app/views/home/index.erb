@@ -56,9 +56,15 @@
               <div class="view view-tenth">
                 <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
                 <div class="mask">
-                  <h2>Portfolio Item</h2>
-                  <p>At vero eos et accusamus et iusto odio dignissimos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-                  <a href="portfolio_item.html" class="info">Read More</a>
+                  <% product.product_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+                    <h2><%= translate.name %></h2>
+                    <%= simple_format(truncate(translate.description, length: 30)) %>
+                  <% end %>
+                  <%= link_to_with_product_type product do %>
+                    <span class="info">
+                      <%= t('view_detail') %>
+                    </span>
+                  <% end %>
                 </div>
               </div>
             </li>

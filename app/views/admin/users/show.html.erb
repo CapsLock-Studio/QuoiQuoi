@@ -1,0 +1,70 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-user"></i>
+      <span>用戶管理管理</span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            <i class="icon-info"></i>
+            聯絡資訊
+          </div>
+          <div class="actions">
+            <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-padding">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="box">
+                <div class="box-header">
+                  <div class="title">
+                    <%= @user.email %>
+                  </div>
+                  <div class="actions">
+                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="form-group">
+                    <label>Email</label>
+                    <div class="controls">
+                      <%= text_field_tag :email, @user.email, class: 'form-control', disabled: 'disabled' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>常用姓名</label>
+                    <div class="controls">
+                      <%= text_field_tag :name, @user.name, class: 'form-control', disabled: 'disabled' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>常用電話</label>
+                    <div class="controls">
+                      <%= text_field_tag :phone, @user.phone, class: 'form-control', disabled: 'disabled' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>帳號類型</label>
+                    <div class="controls">
+                      <%= text_field_tag :provider, @user.provider.blank?? '一般帳號' : @user.provider, class: 'form-control', disabled: 'disabled' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@
             <ul id="list" class="bxslider recent-work">
               <% @designers.each do |designer| %>
                 <li>
-                  <div class="col-xs-3">
+                  <div class="col-xs-4">
                     <div class="thumbnail-style">
                       <%= image_tag designer.photo.url(:medium), class: 'img-responsive' %>
                       <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>

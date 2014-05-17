@@ -20,7 +20,27 @@ QuoiQuoi::Application.routes.draw do
     resources :products
     resources :product_types
     resources :courses
-    resources :course_types
+    resources :course_registrations do
+      member do
+        put :cancel, action: :cancel_one
+        patch :cancel, action: :cancel_one
+        put :return
+        patch :return
+
+        get :canceled, action: :canceled_show
+        put :canceled, action: :canceled_return
+        patch :canceled, action: :canceled_return
+
+        get :closed, action: :closed_show
+      end
+
+      collection do
+        get :canceled
+        get :closed
+      end
+
+
+    end
     resources :other_products
     resources :designers
     resources :rent_infos
@@ -115,6 +135,8 @@ QuoiQuoi::Application.routes.draw do
   get 'user' => 'user#index'
   get 'user/edit' => 'user#edit', as: :edit_user
   get 'password' => 'user#password'
+  put 'update_password' => 'user#update_password'
+  patch 'update_password' => 'user#update_password'
   put 'user' => 'user#update'
   patch 'user' => 'user#update'
 
@@ -193,4 +215,5 @@ QuoiQuoi::Application.routes.draw do
     end
   end
 
+  resources :articles
 end

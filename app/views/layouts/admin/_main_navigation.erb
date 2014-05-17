@@ -56,6 +56,13 @@
         <% end %>
       <% end %>
 
+      <%= nav_item_with_resource(nil, {rule: /#{admin_users_path}(\/\d+)?(?!\/messages)$/}, Admin) do %>
+        <%= link_to(admin_users_path) do %>
+          <i class="icon-user"></i>
+          <span>用戶管理</span>
+        <% end %>
+      <% end %>
+
       <%= nav_item_with_resource('#', nil, Admin::Order) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:orders) %>" href="#">
           <i class="icon-file-text"></i>
@@ -153,16 +160,34 @@
       <% end %>
 
       <%= nav_item_with_resource('#', nil, Admin::Registration) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:registrations) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>" href="#">
           <i class="icon-check"></i>
           <span>報名課程管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:registrations) %>">
-          <%= nav_item_with_resource(check_admin_registrations_path, {rule: /#{admin_registrations_path}(\/\d+)?\/check/}, Admin::Registration) do %>
+        <ul class="nav <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_registrations_path}(\/\d+)?\/check/}, Admin::Registration) do %>
             <%= link_to(check_admin_registrations_path) do %>
               <i class="icon-check"></i>
               <span>待確認報名課程匯款</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?(?!\/canceled)$/}, Admin::Registration) do %>
+            <%= link_to(admin_course_registrations_path) do %>
+              <i class="icon-book"></i>
+              <span>課程管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/canceled/}, Admin::Registration) do %>
+            <%= link_to(canceled_admin_course_registrations_path) do %>
+              <i class="icon-book"></i>
+              <span>已取消課程管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/closed/}, Admin::Registration) do %>
+            <%= link_to(closed_admin_course_registrations_path) do %>
+              <i class="icon-book"></i>
+              <span>已關閉課程管理</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(admin_registrations_path, {rule: /#{admin_registrations_path}(\/\d+)?(?!\/check)/}, Admin::Registration) do %>
@@ -323,7 +348,7 @@
       <%= nav_item_with_resource(admin_courses_path, {rule: /#{admin_courses_path}.*/}, Admin::Course) do %>
         <%= link_to(admin_courses_path) do %>
           <i class="icon-book"></i>
-          <span>課程管理</span>
+          <span>開設課程管理</span>
         <% end %>
       <% end %>
 

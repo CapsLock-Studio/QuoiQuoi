@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516151603) do
+ActiveRecord::Schema.define(version: 20140516210234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,10 @@ ActiveRecord::Schema.define(version: 20140516151603) do
     t.float    "length"
     t.integer  "popular"
     t.integer  "attendance"
+    t.boolean  "canceled",           default: false
+    t.datetime "canceled_time"
+    t.boolean  "closed",             default: false
+    t.datetime "closed_time"
   end
 
   create_table "designer_translates", force: true do |t|
@@ -527,12 +531,16 @@ ActiveRecord::Schema.define(version: 20140516151603) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "closed",      default: false
+    t.boolean  "closed",        default: false
     t.datetime "closed_time"
     t.string   "name"
     t.string   "phone"
-    t.integer  "attendance",  default: 0
-    t.integer  "subtotal",    default: 0
+    t.integer  "attendance",    default: 0
+    t.integer  "subtotal",      default: 0
+    t.boolean  "returned",      default: false
+    t.datetime "returned_time"
+    t.boolean  "canceled",      default: false
+    t.datetime "canceled_time"
   end
 
   add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree
