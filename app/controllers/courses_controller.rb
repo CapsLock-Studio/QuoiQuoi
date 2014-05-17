@@ -1,6 +1,5 @@
 class CoursesController < ApplicationController
   before_action :set_course, except: [:index]
-  before_action :set_total_attendance, only: [:show]
 
   # GET /course
   def index
@@ -32,11 +31,11 @@ class CoursesController < ApplicationController
 
     add_breadcrumb '當月課程'
 
-    @registration = Registration.where(user_id: current_or_guest_user.id, course_id: @course.id).first
-    @recent_courses = Course.where('time > ?', Time.now).where.not(id: @course.id).order(:time).limit(8)
+    @registration = Registration.all.where(user_id: current_or_guest_user.id, course_id: @course.id).first
+    @recent_courses = Course.all.where('time > ?', Time.now).where.not(id: @course.id).order(:time).limit(8)
 
     unless @registration
-      @registration = @course.registration.build
+      @registration = @course.registrations.build
     end
   end
 
@@ -48,12 +47,5 @@ class CoursesController < ApplicationController
 
     def set_course
       @course = Course.find(params[:id])
-    end
-
-    def set_total_attendance
-      @total_attendance = 0
-      Payment.where(completed: true).where.not(registration_id: '').each do |payment|
-        @total_attendance += payment.registration.attendance
-      end
     end
 end
