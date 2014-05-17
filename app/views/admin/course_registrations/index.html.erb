@@ -1,0 +1,77 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-book"></i>
+      <span>課程管理</span>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header sea-blue-background">
+          <div class="title">所有課程列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>課程編號</th>
+                  <th>課程名稱</th>
+                  <th>報名人數</th>
+                  <th>繳費完成人數</th>
+                  <th>課程人數上限</th>
+                  <th>課程時間</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @courses.each do |course| %>
+                  <tr>
+                    <td>
+                      <%= image_tag course.image.url(:thumb) %>
+                    </td>
+                    <td>
+                      <%= course.id %>
+                    </td>
+                    <td>
+                      <%= course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %>
+                    </td>
+                    <td>
+                      <%= @total_registration %>
+                    </td>
+                    <td>
+                      <%= @total_attendance %>
+                    </td>
+                    <td>
+                      <%= course.popular %>
+                    </td>
+                    <td>
+                      <%= course.time.strftime('%Y/%m/%d %H:%M') %>
+                    </td>
+                    <td class="text-right">
+                      <%= link_to(admin_course_registration_path(course), class: 'btn btn-md') do %>
+                        <i class="icon-eye-open"></i>
+                        查看所有報名人
+                      <% end %>
+                      <%= link_to(admin_course_registration_path(course), class: 'btn btn-md- btn-danger', method: :put, data: {confirm: '確定要取消課程嗎?'}) do %>
+                        <i class="icon-remove"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,22 @@
 <div class="col-xs-12">
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
-      <i class="icon-book"></i>
-      <span>文章管理</span>
+      <i class="icon-user"></i>
+      <span>用戶管理</span>
     </h1>
     <div class="pull-right">
-      <div class="btn-group">
-        <%= link_to '新增文章', new_admin_article_path, class: 'btn btn-info' %>
-      </div>
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
         <div class="box-header sea-blue-background">
-          <div class="title">文章列表</div>
+          <div class="title">
+            <span>用戶列表</span>
+          </div>
           <div class="actions">
             <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
@@ -26,39 +28,36 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th>編號</th>
-                  <th>文章種類</th>
-                  <th>標題</th>
-                  <th>內文</th>
-                  <th>文章建立日期</th>
+                  <th>用戶id</th>
+                  <th>Email</th>
+                  <th>常用聯絡姓名</th>
+                  <th>常用聯絡電話</th>
+                  <th>常用聯絡line</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @articles.each do |article| %>
+                <% @users.each do |user| %>
                   <tr>
                     <td>
-                      <%= article.id %>
+                      <%= user.id %>
                     </td>
                     <td>
-                      <%= article.article_type.article_type_translates.collect{|translate| translate.name}.join(' - ') %>
+                      <%= mail_to user.email %>
                     </td>
                     <td>
-                      <%= truncate(article.title, length: 20) %>
+                      <%= user.name.blank?? '未設定' : user.name %>
                     </td>
                     <td>
-                      <%= truncate(article.content, length: 30) %>
+                      <%= user.phone.blank?? '未設定' : user.phone %>
                     </td>
                     <td>
-                      <%= article.created_at.strftime('%Y/%m/%d %H:%M') %>
+                      <%= user.line.blank?? '未設定' : user.line %>
                     </td>
                     <td>
-                      <div class='text-right'>
-                        <%= link_to(edit_admin_article_path(article), class: 'btn btn-md') do %>
-                          <i class='icon-pencil'></i>
-                        <% end %>
-                        <%= link_to(admin_article_path(article), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
-                          <i class='icon-remove'></i>
+                      <div class="text-right">
+                        <%= link_to(admin_user_path(user), class: 'btn btn-md') do %>
+                          <i class="icon-eye-open"></i>
                         <% end %>
                       </div>
                     </td>

@@ -7,8 +7,12 @@
   top: 0px;
   background: none repeat scroll 0% 0% #222;
   border-left: 1px solid #333;
+  opacity: 0;
+  transition: all 300ms;
 }
-
+.aside-menu-in .aside-menu {
+  opacity: 1;
+}
 .aside-menu .form-search {
   margin: 0px;
   padding: 0px;

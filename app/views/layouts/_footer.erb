@@ -13,12 +13,21 @@
         <div class="headline">
           <h2><%= type.article_type_translates.where(locale_id: session[:locale_id]).first.name %></h2>
         </div>
+        <table class="table table-stripped">
+          <% type.articles.order(created_at: :desc).limit(10).each do |article| %>
+            <tr>
+              <td>
+                <%= link_to truncate(article.title, length: 18), article_path(article.id) %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
       </div>
     <% end %>
 
     <div class="col-md-3">
       <div class="headline">
-        <h2>口碑</h2>
+        <h2>旅遊景點</h2>
       </div>
     </div>
   </div><!--/row-->

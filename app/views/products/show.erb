@@ -85,94 +85,21 @@
           </div>
           <div class="margin-bottom-40">
             <ul id="list" class="bxslider recent-work">
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
+              <% @other_products.each do |product| %>
+                <li>
+                  <%= link_to_with_product_type product do %>
+                    <em class="overflow-hidden">
+                      <%= image_tag product.image.url(:medium), style: 'width:100%;' %>
+                    </em>
                     <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
+                        <strong>
+                          <%= product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                        </strong>
+                        <i><%= number_to_currency(product.price) %></i>
                     </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="overflow-hidden">
-                    <%= image_tag 'test2.png' %>
-                  </em>
-                    <span>
-                        <strong>手工包包手工包包</strong>
-                        <i>$3,000.00</i>
-                    </span>
-                </a>
-              </li>
+                  <% end %>
+                </li>
+              <% end %>
             </ul>
           </div><!--/row-->
           <!-- End Recent Works -->

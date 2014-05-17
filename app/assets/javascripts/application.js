@@ -261,3 +261,23 @@ var bindSelectBox = function(){
 };
 
 bindSelectBox();
+
+$('.shipping-fee').on('change', function(){
+    var freeCondition = $(this).find(':selected').data('free-condition');
+    var fee = parseInt($(this).find(':selected').data('fee'), 10);
+    var subtotalElement = $('.subtotal');
+    var subtotalFeeElement = $('.shipping-fee-subtotal');
+    var subtotal = parseInt(subtotalElement.data('price'), 10);
+
+    // 先設定運費加總額
+    subtotalFeeElement.text('$' + (fee + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
+    subtotalElement.text('$' + (fee + subtotal + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
+    if (freeCondition != null) {
+
+        // 結帳金額大於免運費條件免運費
+        if (subtotal > freeCondition) {
+            subtotalFeeElement.text('$0.00');
+            subtotalElement.text('$' + (subtotal + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
+        }
+    }
+});
