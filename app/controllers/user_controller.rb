@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  before_action :authenticate_user!
+
   def index
 
   end
@@ -18,16 +20,17 @@ class UserController < ApplicationController
   end
 
   def password
+    @user = current_user
     if current_user.provider
       render json: ''
     end
   end
 
   def update_password
+    @user = User.find(current_user.id)
     if current_user.provider
       render json: ''
     else
-      @user = User.find(current_user.id)
       if @user.update_with_password(password_params)
         # Sign in the user by passing validation in case his password changed
         sign_in @user, :bypass => true

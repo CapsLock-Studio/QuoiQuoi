@@ -13,6 +13,7 @@ class AdminAbility
       can :manage, Admin::ProductType
       can :manage, Admin::SlidePosition
       can :manage, Admin::ArticleType
+      can :manage, Admin::Area
     else admin.role == 'author'
       can :manage, Admin
       can :manage, Admin::Product
@@ -40,6 +41,8 @@ class AdminAbility
       can :manage, Admin::ArticleImage
       can :manage, Admin::Remittance
       can :manage, Admin::ShippingFee
+      can :manage, Admin::TravelInformation
+      can :manage, Admin::TravelPhoto
     end
 
     # for development

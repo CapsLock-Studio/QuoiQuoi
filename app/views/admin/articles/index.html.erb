@@ -41,7 +41,7 @@
                       <%= article.id %>
                     </td>
                     <td>
-                      <%= article.article_type.article_type_translates.collect{|translate| translate.name}.join(' - ') %>
+                      <%= article.article_type.name %>
                     </td>
                     <td>
                       <%= truncate(article.title, length: 20) %>

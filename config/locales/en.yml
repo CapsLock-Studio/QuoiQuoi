@@ -20,6 +20,19 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: ' Email has been taken.'
+            password:
+              too_short: 'Password is too short.'
+            password_confirmation:
+              confirmation: 'Password confirm failed.'
+            current_password:
+              invalid: 'Current password confirm failed.'
   header:
     top:
       language: '語言'
@@ -90,3 +103,8 @@ en:
   position_designer: 'Designer'
   free_shipping_fee: ''
   article: 'ARTICLE'
+  validate_email: 'Please enter a valid email address.'
+  validate_required: 'This field is required.'
+  validate_number: 'Please enter a valid number'
+  validate_minlength: 'Please enter at least {0} characters.'
+  validate_maxlength: 'Please enter no more than {0} characters.'

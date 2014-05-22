@@ -323,3 +323,28 @@ li.step-active {
     display: inline;
   }
 }
+
+.headline {
+  border-bottom: 1px solid #E4E9F0;
+}
+
+.list-unstyled.who li a{
+  color: #585F69;
+}
+
+.list-unstyled.article{
+  li {
+    margin-top: 0px;
+    margin-bottom: 4px;
+    padding-bottom: 2px;
+
+    a:hover {
+      text-decoration: none;
+      color: #585F69;
+    }
+  }
+
+  li:not(:last-child) {
+    border-bottom: 1px #E4E9F0 solid;
+  }
+}

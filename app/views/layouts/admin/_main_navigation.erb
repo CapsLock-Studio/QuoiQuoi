@@ -42,6 +42,13 @@
         <% end %>
       <% end %>
 
+      <%= nav_item_with_resource(nil, {rule: /#{admin_areas_path}.*/}, Admin::Area) do %>
+        <%= link_to(admin_areas_path) do %>
+          <i class="icon-anchor"></i>
+          <span>旅遊景點地區管理</span>
+        <% end %>
+      <% end %>
+
       <%= nav_item_with_resource(admin_slide_positions_path, {rule: /#{admin_slide_positions_path}.*/}, Admin::SlidePosition) do %>
         <%= link_to(admin_slide_positions_path) do %>
           <i class="icon-anchor"></i>
@@ -342,6 +349,13 @@
         <%= link_to admin_articles_path do %>
           <i class="icon-book"></i>
           <span>文章管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(nil, {rule: /#{admin_travel_information_index_path}.*/}, Admin::TravelInformation) do %>
+        <%= link_to admin_travel_information_index_path do %>
+          <i class="icon-globe"></i>
+          <span>旅遊景點管理</span>
         <% end %>
       <% end %>
 

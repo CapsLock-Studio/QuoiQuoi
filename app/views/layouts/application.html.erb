@@ -36,5 +36,12 @@
 </div>
 
 <%= javascript_include_tag 'application', data: { 'turbolinks-track' => true } %>
+<script>
+  $.validator.messages.email = '<%= t('validate_email') %>';
+  $.validator.messages.required = '<%= t('validate_required') %>';
+  $.validator.messages.number = '<%= t('validate_number') %>';
+  $.validator.messages.minlength = '<%= t('validate_minlength') %>';
+  $.validator.messages.maxlength = '<%= t('validate_maxlength') %>';
+</script>
 </body>
 </html>
