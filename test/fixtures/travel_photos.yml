@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  travel_information_id: 
+  photo: 
+
+two:
+  travel_information_id: 
+  photo: 

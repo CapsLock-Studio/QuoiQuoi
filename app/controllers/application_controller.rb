@@ -89,7 +89,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_article_types
-    @article_types = ArticleType.all
+    @article_types = ArticleType.where(locale_id: session[:locale_id])
   end
 
   private

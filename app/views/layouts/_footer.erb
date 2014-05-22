@@ -11,17 +11,15 @@
     <% @article_types.each do |type| %>
       <div class="col-md-3">
         <div class="headline">
-          <h2><%= type.article_type_translates.where(locale_id: session[:locale_id]).first.name %></h2>
+          <h2><%= type.name %></h2>
         </div>
-        <table class="table table-stripped">
+        <ul class="list-unstyled article">
           <% type.articles.order(created_at: :desc).limit(10).each do |article| %>
-            <tr>
-              <td>
-                <%= link_to truncate(article.title, length: 18), article_path(article.id) %>
-              </td>
-            </tr>
+            <li>
+              <%= link_to truncate(article.title, length: 18), article_path(article.id) %>
+            </li>
           <% end %>
-        </table>
+        </ul>
       </div>
     <% end %>
 

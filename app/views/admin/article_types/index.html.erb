@@ -26,6 +26,8 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
+                  <th>編號</th>
+                  <th>語系</th>
                   <th>名稱</th>
                   <th></th>
                 </tr>
@@ -34,7 +36,13 @@
                 <% @article_types.each do |article_type| %>
                   <tr>
                     <td>
-                      <%= article_type.article_type_translates.reject{|translate| translate.blank?}.collect{|translate| translate.name }.join(' - ') %>
+                      <%= article_type.id %>
+                    </td>
+                    <td>
+                      <%= article_type.locale.name %>
+                    </td>
+                    <td>
+                      <%= article_type.name %>
                     </td>
                     <td>
                       <div class='text-right'>

@@ -302,6 +302,18 @@ jQuery.validator.addMethod("postalcodeNL", function(value, element) {
     return this.optional(element) || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(value);
 }, "Please specify a valid postal code");
 
+// 手機號碼驗證
+jQuery.validator.addMethod("mobileTW", function(value, element) {
+    var length = value.length;
+    return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1}))+\d{8})$/.test(value));
+}, "請正確填寫您的手機號碼");
+
+// 電話號碼驗證
+jQuery.validator.addMethod("phoneTW", function(value, element) {
+    var tel = /^(\d{3,4}-?)?\d{7,9}$/g;
+    return this.optional(element) || (tel.test(value));
+}, "請正確填寫您的電話號碼");
+
 /*
  * Dutch bank account numbers (not 'giro' numbers) have 9 digits
  * and pass the '11 check'.

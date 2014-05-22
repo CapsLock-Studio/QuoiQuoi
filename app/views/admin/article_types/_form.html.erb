@@ -13,34 +13,15 @@
       <fieldset>
         <div class="row">
           <div class="col-sm-12">
-            <div class="row">
-              <%= f.fields_for :article_type_translates do |builder| %>
-                <div class="col-sm-6">
-                  <div class="box">
-                    <div class="box-header">
-                      <div class="title">
-                        <%= @article_type.article_type_translates[builder.index].locale.name %>
-                        <small style="margin-left:10px;">
-                          <span class="label label-danger">不可留空</span>
-                        </small>
-                      </div>
-                      <div class="actions">
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-                      </div>
-                    </div>
-                    <div class="box-content">
-                      <div class="form-group">
-                        <%= builder.label :name, '名稱' %>
-                        <div class="controls">
-                          <%= builder.text_field :name, class: 'form-control',
-                                                 placeholder: '請輸入文章種類名稱', data: {'rule-required' => true} %>
-                        </div>
-                      </div>
-                      <%= builder.hidden_field :locale_id %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
+            <div class="form-group">
+              <%= f.label :locale_id, '語系' %>
+              <%= f.select :locale_id, options_for_select(Locale.all.each.collect{|locale| [locale.name, locale.id]}, selected: @article_type.locale_id), {}, {class: 'form-control'} %>
+            </div>
+            <div class="form-group">
+              <%= f.label :name, '文章類型名稱' %>
+              <div class="controls">
+                <%= f.text_field :name, class: 'form-control', placeholder: '請輸入文章類型名稱' %>
+              </div>
             </div>
           </div>
         </div>

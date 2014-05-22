@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ArticleTypeTranslateTest < ActiveSupport::TestCase
+class Admin::AreasControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end

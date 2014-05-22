@@ -22,9 +22,6 @@ class Admin::ArticleTypesController < AdminController
     add_breadcrumb '新增文章種類'
 
     @article_type = ArticleType.new
-    Locale.all.each do |locale|
-      @article_type.article_type_translates.build(locale_id: locale.id)
-    end
   end
 
   # GET /admin/article_types/1/edit
@@ -78,6 +75,6 @@ class Admin::ArticleTypesController < AdminController
   end
 
   def article_type_params
-    params.require(:article_type).permit(:id, article_type_translates_attributes: [:id, :name, :locale_id])
+    params.require(:article_type).permit(:id, :locale_id, :name)
   end
 end

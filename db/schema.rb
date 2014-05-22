@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516210234) do
+ActiveRecord::Schema.define(version: 20140521100400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,26 @@ ActiveRecord::Schema.define(version: 20140516210234) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "area_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.integer  "area_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "area_translates", ["area_id"], name: "index_area_translates_on_area_id", using: :btree
+  add_index "area_translates", ["locale_id"], name: "index_area_translates_on_locale_id", using: :btree
+
+  create_table "areas", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "locale_id"
+  end
+
+  add_index "areas", ["locale_id"], name: "index_areas_on_locale_id", using: :btree
 
   create_table "article_images", force: true do |t|
     t.string   "image_file_name"
@@ -61,7 +81,11 @@ ActiveRecord::Schema.define(version: 20140516210234) do
   create_table "article_types", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "locale_id"
   end
+
+  add_index "article_types", ["locale_id"], name: "index_article_types_on_locale_id", using: :btree
 
   create_table "articles", force: true do |t|
     t.integer  "article_type_id"
@@ -732,6 +756,28 @@ ActiveRecord::Schema.define(version: 20140516210234) do
   end
 
   add_index "top_products", ["product_id"], name: "index_top_products_on_product_id", using: :btree
+
+  create_table "travel_informations", force: true do |t|
+    t.integer  "area_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "travel_informations", ["area_id"], name: "index_travel_informations_on_area_id", using: :btree
+
+  create_table "travel_photos", force: true do |t|
+    t.integer  "travel_information_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "travel_photos", ["travel_information_id"], name: "index_travel_photos_on_travel_information_id", using: :btree
 
   create_table "user_gifts", force: true do |t|
     t.integer  "user_id"

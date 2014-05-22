@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  area_id: 
+  title: MyString
+  content: MyText
+
+two:
+  area_id: 
+  title: MyString
+  content: MyText

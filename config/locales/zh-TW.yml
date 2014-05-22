@@ -20,6 +20,34 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 zh-TW:
+  devise:
+    confirmations:
+      confirmed: '您的帳號確認完成'
+      send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
+      send_paranoid_instructions: 'If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
+    failure:
+      already_authenticated: '您已經登入了'
+      inactive: '帳號未啟用'
+      invalid: '錯誤的帳號或密碼'
+      last_attempt: '您只剩下最後一次嘗試機會, 錯誤將鎖定帳號'
+      locked: '您的帳號已被鎖定'
+      not_found_in_database: '錯誤的帳號或密碼'
+      timeout: '你的認證已過期, 請重新登入繼續動作'
+      unauthenticated: '您需要登入才能繼續動作'
+      unconfirmed: '您需要先確認帳號才能繼續動作'
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: ' Email已被註冊'
+            password:
+              too_short: '密碼太短'
+            password_confirmation:
+              confirmation: '密碼確認錯誤'
+            current_password:
+              invalid: '舊密碼確認失敗'
   header:
     top:
       language: 'LANGUAGE'
@@ -91,3 +119,9 @@ zh-TW:
   position_designer: '設計師'
   free_shipping_fee: '國內滿4,000免運費'
   article: '文章'
+  validate_email: '請輸入正確的Email位置'
+  validate_required: '此欄位不可留空'
+  validate_phone: ''
+  validate_number: '請輸入正確的數字'
+  validate_minlength: '請輸入最少{0}個數字'
+  validate_maxlength: '請輸入最多{0}個數字'

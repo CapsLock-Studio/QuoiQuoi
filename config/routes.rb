@@ -38,9 +38,14 @@ QuoiQuoi::Application.routes.draw do
         get :canceled
         get :closed
       end
-
-
     end
+
+    resources :travel_information do
+      resources :travel_photos
+    end
+    resources :travel_photos
+    resources :areas
+
     resources :other_products
     resources :designers
     resources :rent_infos
@@ -132,13 +137,15 @@ QuoiQuoi::Application.routes.draw do
   root to: 'home#index'
   get 'cart' => 'cart#index'
 
-  get 'user' => 'user#index'
-  get 'user/edit' => 'user#edit', as: :edit_user
-  get 'password' => 'user#password'
-  put 'update_password' => 'user#update_password'
-  patch 'update_password' => 'user#update_password'
-  put 'user' => 'user#update'
-  patch 'user' => 'user#update'
+  devise_scope :user do
+    get 'user' => 'user#index'
+    get 'user/edit' => 'user#edit', as: :edit_user
+    get 'password' => 'user#password'
+    put 'update_password' => 'user#update_password'
+    patch 'update_password' => 'user#update_password'
+    put 'user' => 'user#update'
+    patch 'user' => 'user#update'
+  end
 
   resource :home do
     get 'style1' => 'home#style1'
