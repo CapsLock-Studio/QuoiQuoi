@@ -1,0 +1,24 @@
+<table class="table table-bordered table-padding-20" style="margin-bottom:0;">
+  <thead>
+  <tr>
+    <th>包包種類</th>
+    <th>價目參考</th>
+    <th>備註</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @order_information.each do |order_information| %>
+    <tr>
+      <td>
+        <%= simple_format(order_information.bag_type) %>
+      </td>
+      <td>
+        <%= simple_format(order_information.reference) %>
+      </td>
+      <td>
+        <%= simple_format(order_information.note) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -127,13 +127,14 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
+                  <% shipping_fee = ShippingFee.first %>
                   <h4 class="text-right color-orange">
                     總金額:
                     <strong class="text-muted subtotal" data-price="<%= @subtotal %>">
-                      <%= number_to_currency(@subtotal) %>
+                      <%= (@subtotal > shipping_fee.free_condition)? number_to_currency(@subtotal) : number_to_currency(@subtotal + shipping_fee.fee) %>
                     </strong>
                   </h4>
-                  <span class="text-muted pull-right">(運費: <span class="shipping-fee-subtotal">$0.00</span>)</span>
+                  <span class="text-muted pull-right">(運費: <span class="shipping-fee-subtotal"><%= (@subtotal > shipping_fee.free_condition)? number_to_currency(0) : number_to_currency(shipping_fee.fee) %></span>)</span>
                 </div>
               </div>
             </div>

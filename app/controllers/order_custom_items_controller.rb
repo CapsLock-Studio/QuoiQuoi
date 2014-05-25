@@ -34,6 +34,7 @@ class OrderCustomItemsController < ApplicationController
 
       format.html do
         @order_custom_item = OrderCustomItem.new(product_id: params[:product_id] ||= nil)
+        @order_information = OrderInformation.where(locale_id: session[:locale_id])
       end
 
       format.json {}

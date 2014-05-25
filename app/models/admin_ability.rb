@@ -43,6 +43,7 @@ class AdminAbility
       can :manage, Admin::ShippingFee
       can :manage, Admin::TravelInformation
       can :manage, Admin::TravelPhoto
+      can :manage, Admin::OrderInformation
     end
 
     # for development

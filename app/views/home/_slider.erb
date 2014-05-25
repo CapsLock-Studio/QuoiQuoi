@@ -20,14 +20,16 @@
               <%= description.gsub(/{/, '<span style="color:#E67E22">').gsub(/}/, '</span>').html_safe %>
             </div>
           <% end %>
-          <div class="caption large_text sfr"
-               data-x="<%= slide.slide_position.position %>"
-               data-y="<%= 200 + 40 * descriptions.length %>"
-               data-speed="300"
-               data-start="<%= (800 + 300 * (descriptions.length - 1)) %>"
-               data-easing="easeOutExpo">
-            <%= link_to '來瞧瞧', slide.link, class: 'btn btn-glassy btn-default btn-lg', target: '_blank' %>
-          </div>
+          <% unless slide.link.blank? %>
+            <div class="caption large_text sfr"
+                 data-x="<%= slide.slide_position.position %>"
+                 data-y="<%= 200 + 40 * descriptions.length %>"
+                 data-speed="300"
+                 data-start="<%= (800 + 300 * (descriptions.length - 1)) %>"
+                 data-easing="easeOutExpo">
+              <%= link_to '來瞧瞧', slide.link, class: 'btn btn-glassy btn-default btn-lg', target: '_blank' %>
+            </div>
+          <% end %>
         <% end %>
       </li>
       <% end %>

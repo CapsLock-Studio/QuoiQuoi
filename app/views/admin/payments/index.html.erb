@@ -38,7 +38,11 @@
                       <%= payment.id %>
                     </td>
                     <td>
-                      <%= link_to payment.user_id, admin_user_path(payment.user_id) %>
+                      <% if payment.user %>
+                        <%= link_to payment.user_id, admin_user_path(payment.user_id) %>
+                      <% else %>
+                        -
+                      <% end %>
                     </td>
                     <td>
                       <% if payment.order %>

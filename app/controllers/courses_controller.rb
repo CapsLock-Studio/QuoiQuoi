@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
           redirect_to courses_path(month: Date.today.month)
         end
         # show previous one month courses
-        @courses = Course.where('time > ?', 1.month.ago).by_month(params[:month]).page(params[:page]).per(12)
+        @courses = Course.where(canceled: false).where('time > ?', 1.month.ago).by_month(params[:month]).page(params[:page]).per(12)
       end
 
       format.json do
@@ -31,8 +31,8 @@ class CoursesController < ApplicationController
 
     add_breadcrumb '當月課程'
 
-    @registration = Registration.all.where(user_id: current_or_guest_user.id, course_id: @course.id).first
-    @recent_courses = Course.all.where('time > ?', Time.now).where.not(id: @course.id).order(:time).limit(8)
+    @registration = Registration.all.where(user_id: (current_user)? current_user.id : nil, course_id: @course.id).first
+    @recent_courses = Course.all.where('time > ?', Time.now).where(canceled: false).where.not(id: @course.id).order(:time).limit(8)
 
     unless @registration
       @registration = @course.registrations.build
@@ -46,6 +46,10 @@ class CoursesController < ApplicationController
     end
 
     def set_course
-      @course = Course.find(params[:id])
+      begin
+        @course = Course.where(id: params[:id], canceled: false).first
+      rescue ActiveRecord::RecordNotFound
+        redirect_to action: :index
+      end
     end
 end

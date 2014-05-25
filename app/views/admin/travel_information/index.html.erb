@@ -2,7 +2,7 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-book"></i>
-      <span>文章管理</span>
+      <span>旅遊景點管理</span>
     </h1>
     <div class="pull-right">
       <div class="btn-group">
@@ -14,9 +14,45 @@
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
         <div class="box-header sea-blue-background">
-          <div class="title">文章列表</div>
+          <div class="title">查詢條件</div>
           <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <%= form_tag admin_travel_information_index_path, method: :get, html: {class: 'form'} do %>
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>旅遊地區</h4>
+                <div class="row">
+                  <% Area.all.each do |area| %>
+                    <div class="col-sm-2">
+                      <label class="label label-success"><%= area.name %></label>
+                      <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                        <%= check_box_tag 'area_filter[]', area.id, @area_filter.include?(area.id) %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <div class="col-sm-4 text-right pull-right">
+                    <div class="btn-toolbar">
+                      <button type="submit" class="btn btn-inverse">
+                        <i class="icon-search"></i>
+                        查詢
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="title"></div>
+          <div class="actions">
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
           </div>
         </div>
@@ -27,7 +63,7 @@
                 <thead>
                 <tr>
                   <th>編號</th>
-                  <th>文章種類</th>
+                  <th>旅遊地區</th>
                   <th>標題</th>
                   <th>內文</th>
                   <th>文章建立日期</th>
@@ -41,13 +77,13 @@
                       <%= travel_information.id %>
                     </td>
                     <td>
-                      <%= travel_information.area.name %>
+                      <label class="label label-success"><%= travel_information.area.name %></label>
                     </td>
                     <td>
                       <%= truncate(travel_information.title, length: 20) %>
                     </td>
                     <td>
-                      <%= truncate(travel_information.content, length: 30) %>
+                      <%= truncate(strip_tags(travel_information.content), length: 30) %>
                     </td>
                     <td>
                       <%= travel_information.created_at.strftime('%Y/%m/%d %H:%M') %>

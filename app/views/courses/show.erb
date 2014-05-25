@@ -59,7 +59,7 @@
                   <small><%= course_translate.note %></small>
                 </h4>
                 <% if @course.time > Time.now + 5.hours %>
-                  <% if @registration.id %>
+                  <% if current_user && @registration.id %>
                     <%= link_to registrations_path, class: 'btn btn-default btn-lg btn-block hover-effect one-page-btn' do %>
                       <span>已報名課程</span>
                     <% end %>
@@ -85,7 +85,7 @@
             <ul id="list" class="bxslider recent-work">
               <% @recent_courses.each do |recent_course| %>
                 <li>
-                  <%= link_to course_path(recent_course) do %>
+                  <%= link_to course_path(recent_course, month: recent_course.time.strftime('%m').to_i) do %>
                     <em class="overflow-hidden">
                       <%= image_tag recent_course.image.url(:thumb) %>
                     </em>

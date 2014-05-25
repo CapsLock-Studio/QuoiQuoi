@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2>感謝您訂購QuoiQuoi - 布知道工作室的商品</h2>
+<p>
+  <strong>親愛的客戶: </strong><br/>
+  非常感謝你訂購我我們的商品, 以下是你的訂單詳細訊息:
+</p>
+<table>
+  <thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    <th>
+      價格
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @order.order_products.each_with_index do |order_product, index| %>
+    <tr>
+      <td>
+        <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
+      </td>
+      <td>
+        <h5>
+          <%= order_product.product.product_translates.where(locale_id: @locale_id).first.name %>
+        </h5>
+      </td>
+      <td>
+        <%= number_to_currency(order_product.product.price) %>
+      </td>
+    </tr>
+  <% end %>
+  <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
+    <tr>
+      <td>
+        <%= image_tag "#{@domain}#{order_custom_item.product.image.url(:thumb)}", class: 'img-responsive' %>
+      </td>
+      <td>
+        <h5>
+          <%= t('original_bag') %>
+        </h5>
+      </td>
+      <td>
+        <%= number_to_currency(order_custom_item.price) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<h3>總金額: <%= number_to_currency(@order.subtotal) %></h3>
+</body>
+</html>

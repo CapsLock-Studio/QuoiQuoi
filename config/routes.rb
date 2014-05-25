@@ -22,6 +22,7 @@ QuoiQuoi::Application.routes.draw do
     resources :courses
     resources :course_registrations do
       member do
+        get :cancel, action: :cancel_form
         put :cancel, action: :cancel_one
         patch :cancel, action: :cancel_one
         put :return
@@ -108,7 +109,10 @@ QuoiQuoi::Application.routes.draw do
       end
     end
 
-    resources :locales
+    resources :locales do
+      resources :order_information
+    end
+    resources :order_information
     resources :slides do
       put 'sort', on: :collection
     end
@@ -219,8 +223,12 @@ QuoiQuoi::Application.routes.draw do
       get :success
       get :cancel
       post :notify
+      get :show
     end
   end
 
   resources :articles
+  resources :areas do
+    resources :travel_information
+  end
 end

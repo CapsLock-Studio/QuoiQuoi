@@ -12,11 +12,58 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+      <div class="alert alert-info alert-dismissable">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        課程取消後需要將所有已報名學員全數退費後才會關閉
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="box">
         <div class="box-header sea-blue-background">
-          <div class="title">所有報名人列表</div>
+          <div class="title">
+            查詢條件
+          </div>
           <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <%= form_tag closed_admin_course_registration_path(params[:id]), method: :get, html: {class: 'form'} do %>
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>顯示狀態</h4>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <label class="label label-success">付款完成</label>
+                    <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                      <%= check_box_tag 'search_filter[]', 'completed', @search_filter.include?('completed') %>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="label label-warning">尚未付款完成</label>
+                    <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                      <%= check_box_tag 'search_filter[]', 'not_completed', @search_filter.include?('not_completed') %>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 text-right pull-right">
+                    <div class="btn-toolbar">
+                      <button type="submit" class="btn btn-inverse">
+                        <i class="icon-search"></i>
+                        查詢
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="actions">
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
           </div>
         </div>
@@ -33,13 +80,13 @@
                   <th>費用</th>
                   <th>Email</th>
                   <th>電話</th>
-                  <th>Line</th>
                   <th>狀態</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @course.registrations.each do |registration| %>
+
+                <% @registrations.reject{|registration| registration.nil?}.each do |registration| %>
                   <tr>
                     <td>
                       <%= registration.course.id %>
@@ -48,22 +95,23 @@
                       <%= registration.id %>
                     </td>
                     <td>
-                      <%= link_to(registration.user_id, admin_user_path(registration.user_id), target: '_blank') %>
+                      <% if registration.user %>
+                        <%= link_to(registration.user_id, admin_user_path(registration.user_id), target: '_blank') %>
+                      <% else %>
+                        -
+                      <% end %>
                     </td>
                     <td>
-                      <%= registration.user.name %>
+                      <%= registration.name %>
                     </td>
                     <td>
                       <%= number_to_currency(registration.subtotal) %>
                     </td>
                     <td>
-                      <%= registration.user.email %>
+                      <%= registration.email %>
                     </td>
                     <td>
-                      <%= registration.user.phone %>
-                    </td>
-                    <td>
-                      <%= registration.user.line %>
+                      <%= registration.phone %>
                     </td>
                     <td>
                       <% if registration.returned? %>
@@ -81,8 +129,9 @@
                     <td class="text-right">
                       <% if registration.payment && registration.payment.completed? %>
                         <% unless registration.returned? %>
-                          <%= link_to(canceled_admin_course_registration_path(registration), class: 'btn btn-md- btn-warning', method: :put, data: {confirm: '確定報名金額已退還?'}) do %>
+                          <%= link_to(canceled_admin_course_registration_path(registration), class: 'btn btn-warning', method: :put, data: {confirm: '確定報名金額已退還?'}) do %>
                             <i class="icon-file-alt"></i>
+                            確認已退還報名金
                           <% end %>
                         <% end %>
                       <% end %>

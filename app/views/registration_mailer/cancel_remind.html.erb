@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2>感謝您報名QuoiQuoi - 布知道工作室的課程，您的報名已經取消</h2>
+<p>
+  <strong>親愛的客戶: </strong><br/>
+  <%= simple_format(@registration.reason) %><br/>
+  <br/>
+</p>
+<% if @registration.payment && @registration.payment.completed? %>
+  <h2>因您已經付款完成，我們需要您的退款資訊方可將報名金額退還，還請您回覆信件告知退款所需資訊(匯款帳號、姓名、分行...)</h2>
+<% end %>
+<table class="table">
+  <thead>
+  <tr>
+    <td></td>
+    <td>名稱</td>
+    <td>課程時間</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <%= image_tag "#{@domain}#{@registration.course.image.url(:thumb)}" %>
+    </td>
+    <td>
+      <h5>
+        <%= @registration.course.course_translates.where(locale_id: @locale_id).first.name %>
+      </h5>
+    </td>
+    <td>
+      <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

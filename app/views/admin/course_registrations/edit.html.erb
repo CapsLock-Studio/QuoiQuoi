@@ -1,0 +1,104 @@
+<div class="col-sm-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-book"></i>
+      <span>取消課程</span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-warning alert-dismissable">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        系統將同時寄信告知學員課程取消<br/>
+        若是學員已繳費將會要求 <strong>回覆退款所需資訊</strong> , <strong>請在退還款項後於系統回報</strong>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="row">
+        <%= form_tag admin_course_registration_path(@course), method: :put do %>
+          <div class="col-sm-6">
+            <div class="box">
+              <div class="box-header">
+                <div class="title">
+                  回覆表單
+                </div>
+                <div class="actions">
+                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                </div>
+              </div>
+              <div class="box-content">
+                <div class="form-group">
+                  <%= label_tag :reason, '回覆訊息' %>
+                  <div class="controls">
+                    <%= text_area_tag 'registration[reason]', '', class: 'form-control autoize', rows: 6 %>
+                  </div>
+                </div>
+                <div class="row form-actions">
+                  <div class="col-sm-12">
+                    <div class="pull-right">
+                      <%= link_to '取消', admin_course_registrations_path, class: 'btn btn-lg' %>
+                      <button class="btn btn-primary btn-lg" name="button" type="submit">
+                        <i class="icon-save"></i>
+                        儲存
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-sm-6">
+          <div class="box">
+            <div class="box-header">
+              <div class="title">
+                信件內容如下
+              </div>
+              <div class="actions">
+                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+              </div>
+            </div>
+            <div class="box-content">
+              <h2>感謝您報名QuoiQuoi - 布知道工作室的課程</h2>
+              <p>
+                <strong>親愛的客戶: </strong><br/>
+                [[ <label class="label label-success">您回復的訊息內容</label> ]]<br/>
+                <br/>
+              </p>
+              <h2>因您已經付款完成，我們需要您的退款資訊方可將報名金額退還，還請您回覆信件告知退款所需資訊(匯款帳號、姓名、分行...)</h2>
+              <table class="table">
+                <thead>
+                <tr>
+                  <td></td>
+                  <td>名稱</td>
+                  <td>課程時間</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    <%= image_tag @course.image.url(:thumb) %>
+                  </td>
+                  <td>
+                    <h5>
+                      <%= @course.course_translates.where(locale_id: @locale.id).first.name %>
+                    </h5>
+                  </td>
+                  <td>
+                    <%= "#{@course.time.strftime('%Y/%m/%d %H:%M')} - #{(@course.time + @course.length.hours).strftime('%H:%M')}" %>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
