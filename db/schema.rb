@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521100400) do
+ActiveRecord::Schema.define(version: 20140524190735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,14 @@ ActiveRecord::Schema.define(version: 20140521100400) do
     t.string   "link"
   end
 
+  create_table "commemts", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "messsage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contact_image_slides", force: true do |t|
     t.integer  "sort"
     t.string   "image_file_name"
@@ -180,7 +188,7 @@ ActiveRecord::Schema.define(version: 20140521100400) do
     t.integer  "locale_id"
     t.string   "name"
     t.string   "teacher"
-    t.string   "description"
+    t.text     "description"
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -385,6 +393,15 @@ ActiveRecord::Schema.define(version: 20140521100400) do
   add_index "order_custom_items", ["order_id"], name: "index_order_custom_items_on_order_id", using: :btree
   add_index "order_custom_items", ["product_id"], name: "index_order_custom_items_on_product_id", using: :btree
 
+  create_table "order_informations", force: true do |t|
+    t.string   "bag_type"
+    t.text     "reference"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+  end
+
   create_table "order_product_custom_items", force: true do |t|
     t.integer  "order_product_id"
     t.integer  "product_custom_item_id"
@@ -507,7 +524,7 @@ ActiveRecord::Schema.define(version: 20140521100400) do
   create_table "product_translates", force: true do |t|
     t.integer  "locale_id"
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
@@ -565,6 +582,8 @@ ActiveRecord::Schema.define(version: 20140521100400) do
     t.datetime "returned_time"
     t.boolean  "canceled",      default: false
     t.datetime "canceled_time"
+    t.string   "email"
+    t.text     "reason"
   end
 
   add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree
@@ -695,6 +714,16 @@ ActiveRecord::Schema.define(version: 20140521100400) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "shipping_fees", force: true do |t|
     t.string   "area"

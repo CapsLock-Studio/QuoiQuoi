@@ -1,8 +1,79 @@
-<%= render 'layouts/breadcrumbs', title: t('header.navigation.report_remittance') %>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      testst
+    <!--Reg Block-->
+    <div class="col-md-8 col-md-offset-2" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:none;">
+        <div class="reg-header">
+          <div class="text-center">
+            <h2><i class="icon-info"></i>匯款回報</h2>
+            <p>請在此輸入您的信箱地址，搜尋你的課程報名記錄</p>
+          </div>
+        </div>
+        <div class="row margin-bottom-40">
+          <%= form_tag reports_path, class: 'form-horizontal validate-form', method: :get do %>
+            <div class="input-group col-md-8 col-md-offset-2">
+              <%= text_field_tag 'email', params[:email], class: 'form-control', placeholder: '請輸入您報名時填寫的聯絡Email' %>
+              <span class="input-group-btn">
+              <button type="submit" class="btn-u">
+                <i class="icon-search"></i>
+              </button>
+            </span>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <% if params[:email] %>
+              <% if @registrations.length > 0 %>
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th>課程名稱</th>
+                    <th>需繳報名費金額</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @registrations.each do |registration| %>
+                    <tr>
+                      <td>
+                        <%= image_tag registration.course.image.url(:thumb), class: 'img-responsive' %>
+                      </td>
+                      <td>
+                        <%= registration.course.course_translates.where(locale_id: session[:locale_id]).first.name %>
+                      </td>
+                      <td>
+                        <%= number_to_currency(registration.subtotal) %>
+                      </td>
+                      <td>
+                        <% if registration.payment %>
+                          <%= link_to '前往回報', edit_payment_path(registration.payment), class: 'btn btn-default' unless registration.payment.completed? %>
+                          <% if registration.payment.completed? && registration.canceled? %>
+                            <span class="label label-default">已取消</span>
+                          <% end %>
+                          <% if registration.payment.completed? && registration.returned? %>
+                            <span class="label label-inverse">已退款</span>
+                          <% end %>
+                        <% else %>
+                          <%= link_to '選擇付款方式', pay_registration_path(registration), class: 'btn btn-default' %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              <% else %>
+                <h4 class="text-center">
+                  <i class="icon-exclamation"></i>
+                  搜尋沒有結果
+                </h4>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
+    <!--End Reg Block-->
   </div>
 </div>

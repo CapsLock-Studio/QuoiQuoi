@@ -44,9 +44,11 @@
       <%= f.hidden_field :registration_id %>
       <%= f.hidden_field :user_gift_id %>
       <%= f.button t('payment'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
-      <%= link_to orders_path do %>
-        <i class="icon-angle-left"></i>
-        回到我的帳戶
+      <% if current_user %>
+        <%= link_to orders_path do %>
+          <i class="icon-angle-left"></i>
+          回到我的帳戶
+        <% end %>
       <% end %>
     </div>
   </div>

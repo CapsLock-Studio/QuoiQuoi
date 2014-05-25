@@ -22,6 +22,19 @@
                           <%= f.select :attendance, options_for_select(1..@registration.course.popular{|index| [index, index]}), {}, {class: 'selectpicker refresh-price-source', data: {width: '100%'}} %>
                         </div>
                       </div>
+                      <% unless current_user %>
+                        <div class="form-group row">
+                          <div class="col-md-12">
+                            <%= f.label :email do %>
+                              您的信箱
+                              <span class="color-red">*</span>
+                            <% end %>
+                          </div>
+                          <div class="controls col-md-4">
+                            <%= f.text_field :email, class: 'form-control', data: {'rule-required' => true, 'rule-email' => true} %>
+                          </div>
+                        </div>
+                      <% end %>
                       <div class="form-group row">
                         <div class="col-md-12">
                           <%= f.label :name do %>
@@ -30,7 +43,7 @@
                           <% end %>
                         </div>
                         <div class="controls col-md-3">
-                          <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+                          <%= f.text_field :name, value: (current_user.name if current_user), class: 'form-control', data: {'rule-required' => true} %>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -41,7 +54,7 @@
                           <% end %>
                         </div>
                         <div class="controls col-md-3">
-                          <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-phoneNL' => true} %>
+                          <%= f.text_field :phone, value: (current_user.phone if current_user), class: 'form-control', data: {'rule-required' => true} %>
                         </div>
                       </div>
                     </div>

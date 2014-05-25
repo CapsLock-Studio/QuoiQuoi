@@ -1,0 +1,46 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-info"></i>
+      <span>訂購須知管理 (<%= Locale.where(id: params[:locale_id]).first.name %>)</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增條目', new_admin_locale_order_information_path, class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="title"><i class="icon-info"></i>&nbsp;訂購須知</div>
+          <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="col-sm-2">
+                包包種類
+              </th>
+              <th>
+                價格參考
+              </th>
+              <th class="col-sm-3">
+                備註
+              </th>
+              <th class="col-sm-2"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%= render 'order_information_body_rows' %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

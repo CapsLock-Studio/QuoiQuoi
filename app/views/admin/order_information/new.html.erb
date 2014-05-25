@@ -1,0 +1,66 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-info"></i>
+      <span>訂購須知管理 (<%= Locale.where(id: params[:locale_id]).first.name %>)</span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="title"><i class="icon-info"></i>&nbsp;訂購須知</div>
+          <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <%= form_for @order_information, url: admin_order_information_index_path, html: {class: 'form validate-form'} do |f| %>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th class="col-sm-2">
+                  包包種類
+                </th>
+                <th>
+                  價格參考
+                </th>
+                <th class="col-sm-3">
+                  備註
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <%= render 'order_information_body_rows' %>
+              <tr>
+                <td class="col-sm-2">
+                  <%= f.text_area :bag_type, class: 'autosize form-control input-block', data: {'rule-required' => true}, placeholder: '請輸入包包種類' %>
+                </td>
+                <td>
+                  <%= f.text_area :reference, class: 'autosize form-control input-block', data: {'rule-required' => true}, placeholder: '請輸入價目參考' %>
+                </td>
+                <td class="col-sm-3">
+                  <%= f.text_area :note, class: 'autosize form-control input-block', placeholder: '請輸入備註' %>
+                </td>
+                <td class="text-right col-sm-2">
+                  <%= f.hidden_field :locale_id %>
+                  <%= link_to '取消', admin_locale_order_information_index_path(params[:locale_id]), class: 'btn btn-default' %>
+                  <%= f.button class: 'btn btn-primary', type: 'submit' do %>
+                    <i class="icon-save"></i>
+                    儲存
+                  <% end %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,15 +3,17 @@
 # This is in the to-do list to reconstruct next time.
 
 class PaymentsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_payment, only: [:edit, :update]
   rescue_from Paypal::Exception::APIError, with: :paypal_api_error
 
   def create
     respond_to do |format|
-      payment = Payment.new(payment_params.merge({user_id: current_user.id}))
+      payment = Payment.new(payment_params)
       if payment_params[:wait] == 'true'
         payment.save!(validate: false)
+        if payment.registration
+          RegistrationMailer.remittance_remind(payment.registration, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+        end
         format.html {redirect_to edit_payment_path(payment)}
       else
         amount = 0
@@ -38,9 +40,15 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       payment.complete!(params[:PayerID])
       if payment.order
+        OrderMailer.remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
         format.html {redirect_to orders_path}
       elsif payment.registration
-        format.html {redirect_to registrations_path}
+        RegistrationMailer.remind(payment.registration, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+        if payment.registration.user
+          format.html {redirect_to registrations_path}
+        else
+          format.html {render action: :show}
+        end
       elsif payment.user_gift
         format.html {redirect_to user_gifts_path}
       end
@@ -92,9 +100,17 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   private
     def payment_params
-      params.require(:payment).permit(:id, :payment_type, :order_id, :registration_id, :user_gift_id, :wait, :amount, :pay_time, :identifier)
+      if current_user
+        params.require(:payment).permit(:id, :payment_type, :order_id, :registration_id, :user_gift_id, :wait, :amount, :pay_time, :identifier).merge({user_id: current_user.id})
+      else
+        params.require(:payment).permit(:id, :payment_type, :order_id, :registration_id, :user_gift_id, :wait, :amount, :pay_time, :identifier)
+      end
     end
 
     def paypal_api_error(e)
@@ -104,6 +120,6 @@ class PaymentsController < ApplicationController
     end
 
     def set_payment
-      @payment = Payment.where(id: params[:id], user_id: current_user.id, completed: false).first
+      @payment = Payment.where(id: params[:id], user_id: (current_user)? current_user.id : nil, completed: false).first
     end
 end

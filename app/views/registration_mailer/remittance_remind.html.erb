@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2>感謝您報名QuoiQuoi - 布知道工作室的課程</h2>
+<p>
+  <strong>親愛的客戶: </strong><br/>
+  非常感謝你報名我們的課程, 提醒您, 課程在三天內未繳費視為放棄報名, 回報匯款請至 <a href="<%= (@registration.user)? "#{@domain}/registrations" : "#{@domain}/reports" %>">回報</a>
+</p>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td></td>
+    <td>名稱</td>
+    <td>費用</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <%= image_tag "#{@domain}#{@registration.course.image.url(:thumb)}" %>
+    </td>
+    <td>
+      <h5>
+        <%= @registration.course.course_translates.where(locale_id: @locale_id).first.name %>
+      </h5>
+    </td>
+    <td>
+      <%= number_to_currency(@registration.course.price) %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h3>總金額: <%= number_to_currency(@registration.subtotal) %></h3>
+</body>
+</html>

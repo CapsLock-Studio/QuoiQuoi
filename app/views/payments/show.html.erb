@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:0;">
+        <div class="reg-header">
+          <div class="text-center">
+            <h2>付款完成</h2>
+            <p>非常感謝您的愛戴, 希望您也能夠喜歡我們其他的商品與課程, 謝謝!</p>
+          </div>
+        </div>
+        <%= link_to products_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' do %>
+          <i class="icon-shopping-cart"></i>
+          逛商店
+        <% end %>
+        <%= link_to courses_path, class: 'btn btn-default btn-lg hover-effect btn-block' do %>
+          <i class="icon-book"></i>
+          看其他課程
+        <% end %>
+      </div>
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>

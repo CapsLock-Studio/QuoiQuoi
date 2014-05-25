@@ -6,17 +6,14 @@ class Admin::CoursesController < AdminController
 
   # GET /admin/courses
   def index
-    @courses = Course.all
+    @search_filter = params[:search_filter] || %w[not_completed completed]
+    query_condition = []
+    query_condition << 'time < ?' unless @search_filter.include?('not_completed')
+    query_condition << Time.now unless @search_filter.include?('not_completed')
+    query_condition << 'time > ?' unless @search_filter.include?('completed')
+    query_condition << Time.now unless @search_filter.include?('completed')
 
-    @total_registration = 0
-    @total_attendance = 0
-    Payment.where(completed: true).where.not(registration_id: '').each do |payment|
-      @total_attendance += payment.registration.attendance
-    end
-
-    Registration.all.each do |registration|
-      @total_registration += registration.attendance
-    end
+    @courses = Course.where(query_condition).order(time: :desc)
   end
 
   # GET /admin/courses/new

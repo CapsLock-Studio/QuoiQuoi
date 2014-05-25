@@ -27,6 +27,22 @@
       <div class="headline">
         <h2>旅遊景點</h2>
       </div>
+      <ul class="list-unstyled article">
+        <% Area.where(locale_id: session[:locale_id]).each do |area| %>
+          <li>
+            <div class="dropdown">
+              <a data-toggle="dropdown" class="btn-block" href="#"><%= area.name %><i class="icon-angle-down pull-right"></i></a>
+              <ul class="dropdown-menu pull-right">
+                <% area.travel_informations.order(created_at: :desc).limit(5).each do |travel_information| %>
+                  <li>
+                    <%= link_to truncate(travel_information.title, length: 18), area_travel_information_path(area.id, travel_information.id) %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div><!--/row-->
 </div>

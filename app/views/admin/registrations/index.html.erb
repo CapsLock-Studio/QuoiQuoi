@@ -26,6 +26,7 @@
                   <th>報名人數</th>
                   <th>狀態</th>
                   <th>付款方式</th>
+                  <th>建立時間</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -36,7 +37,11 @@
                       <%= registration.id %>
                     </td>
                     <td>
-                      <%= link_to registration.user_id, admin_user_path(registration.user_id), target: '_blank' %>
+                      <% if registration.user %>
+                        <%= link_to registration.user_id, admin_user_path(registration.user_id), target: '_blank' %>
+                      <% else %>
+                        -
+                      <% end %>
                     </td>
                     <td>
                       <%= registration.attendance %>
@@ -52,6 +57,9 @@
                       <% else %>
                         Paypal
                       <% end %>
+                    </td>
+                    <td>
+                      <%= registration.created_at.strftime('%Y/%m/%d %H:%M') %>
                     </td>
                     <td class="text-right">
                       <%= link_to("#{admin_registrations_path}/#{registration.id}", class: 'btn btn-md') do %>

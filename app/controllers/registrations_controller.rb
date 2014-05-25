@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new, :create, :pay_show]
 
   def index
     add_breadcrumb t('header.navigation.home'), :root_path
@@ -25,12 +25,12 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('register')
 
     course = Course.find(params[:course_id])
-    @registration = course.registration.build
+    @registration = course.registrations.build
   end
 
   def create
     respond_to do |format|
-      registration = Registration.new(registration_params.merge({user_id: current_user.id}))
+      registration = Registration.new(registration_params)
       registration.subtotal = registration.attendance * registration.course.price
 
       if registration.save
@@ -54,12 +54,16 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('register'), :registrations_path
     add_breadcrumb t('payment')
 
-    @registration = Registration.where(id: params[:id], user_id: current_user.id).first
+    @registration = Registration.where(id: params[:id], user_id: ((current_user)? current_user.id : nil)).first
     @payment = @registration.build_payment
   end
 
   private
     def registration_params
-      params.require(:registration).permit(:attendance, :name, :phone, :course_id)
+      if current_user
+        params.require(:registration).permit(:attendance, :name, :phone, :course_id).merge({user_id: current_user.id, email: current_user.email})
+      else
+        params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id)
+      end
     end
 end

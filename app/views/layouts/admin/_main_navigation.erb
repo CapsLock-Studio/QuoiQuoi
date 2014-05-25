@@ -235,11 +235,28 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(admin_materials_path, {rule: /#{admin_materials_path}.*/}, Admin::Material) do %>
-        <%= link_to(admin_materials_path) do %>
-          <i class="icon-picture"></i>
-          <span>訂製手工包 - 布料管理</span>
-        <% end %>
+      <%= nav_item_with_resource('#', {rule: /#{admin_materials_path}.*|#{admin_order_information_index_path}/}, Admin::Material) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:materials) or is_in(:order_information) %>" href="#">
+          <i class="icon-heart-empty"></i>
+          <span>訂製手工包管理</span>
+          <i class="icon-angle-down"></i>
+        </a>
+        <ul class="nav <%= 'in' if is_in(:materials) or is_in(:order_information) %>">
+          <%= nav_item_with_resource(admin_materials_path, {rule: /#{admin_materials_path}.*/}, Admin::Material) do %>
+            <%= link_to(admin_materials_path) do %>
+              <i class="icon-picture"></i>
+              <span>布料管理</span>
+            <% end %>
+          <% end %>
+          <% Locale.all.each do |locale| %>
+            <%= nav_item_with_resource(nil, {rule: /#{admin_locale_order_information_index_path(locale)}.*/}, Admin::OrderInformation) do %>
+              <%= link_to(admin_locale_order_information_index_path(locale)) do %>
+                <i class="icon-info"></i>
+                <span>訂購須知管理 (<%= locale.name %>)</span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </ul>
       <% end %>
 
       <%= nav_item_with_resource('#', {rule: /#{admin_slides_path}.*/}, Admin::Slide) do %>

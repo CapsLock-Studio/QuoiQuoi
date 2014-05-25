@@ -7,11 +7,15 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-        <div class="box-header sea-blue-background">
-          <div class="title">所有關閉課程列表</div>
+      <div class="alert alert-info alert-dismissable">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        課程取消後需要將所有已報名學員全數退費後才會關閉
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="box bordered-" style="margin-bottom:0;">
+        <div class="box-header">
           <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
           </div>
         </div>
@@ -48,7 +52,7 @@
                       <%= course.time.strftime('%Y/%m/%d %H:%M') %>
                     </td>
                     <td class="text-right">
-                      <%= link_to(closed_admin_course_registration_path(course), class: 'btn btn-md') do %>
+                      <%= link_to(closed_admin_course_registration_path(course), class: 'btn') do %>
                         <i class="icon-eye-open"></i>
                         查看所有報名人
                       <% end %>

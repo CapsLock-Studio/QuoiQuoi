@@ -4,7 +4,7 @@ class Admin::RegistrationsController < AdminController
   before_action :set_check_payment, only: [:show, :check_show]
 
   def index
-    @registrations = Registration.all
+    @registrations = Registration.all.order(created_at: :desc)
   end
 
   def show

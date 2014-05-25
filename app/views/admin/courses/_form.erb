@@ -77,9 +77,9 @@
               </div>
             </div>
             <div class="form-group">
-              <%= f.label :attendance, '最多報名人數' %>
+              <%= f.label :attendance, '單人最多報名人數' %>
               <div class="controls">
-                <%= f.text_field :attendance, class: 'form-control', placeholder: '請輸入最多報名人數',
+                <%= f.text_field :attendance, class: 'form-control', placeholder: '請輸入單人最多報名人數',
                                  data: {'rule-required' => true, 'rule-number' => true} %>
               </div>
             </div>
@@ -121,7 +121,7 @@
                   <div class="form-group">
                     <%= builder.label :description, '課程敘述' %>
                     <div class="controls">
-                      <%= builder.text_area :description, class: 'form-control', placeholder: '請輸入敘述' %>
+                      <%= builder.text_area :description, class: 'form-control autosize', placeholder: '請輸入敘述' %>
                     </div>
                   </div>
                   <div class="form-group">

@@ -7,11 +7,52 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+      <div class="box">
         <div class="box-header sea-blue-background">
-          <div class="title">所有課程列表</div>
+          <div class="title">
+            查詢條件
+          </div>
           <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <%= form_tag admin_course_registrations_path, method: :get, html: {class: 'form'} do %>
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>顯示狀態</h4>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <label class="label label-warning">課程時間未到</label>
+                    <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                      <%= check_box_tag 'search_filter[]', 'not_completed', @search_filter.include?('not_completed') %>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="label label-success">課程時間已過</label>
+                    <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                      <%= check_box_tag 'search_filter[]', 'completed', @search_filter.include?('completed') %>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 text-right pull-right">
+                    <div class="btn-toolbar">
+                      <button type="submit" class="btn btn-inverse">
+                        <i class="icon-search"></i>
+                        查詢
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="actions">
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
           </div>
         </div>
@@ -22,11 +63,13 @@
                 <thead>
                 <tr>
                   <th></th>
-                  <th>課程編號</th>
+                  <th>編號</th>
                   <th>課程名稱</th>
-                  <th>報名人數</th>
-                  <th>繳費完成人數</th>
-                  <th>課程人數上限</th>
+                  <th>
+                    <label class="label label-default">報名人數</label>&nbsp;
+                    <label class="label label-warning">繳費完成人數</label>&nbsp;
+                    <label class="label label-success">課程人數上限</label>
+                  </th>
                   <th>課程時間</th>
                   <th></th>
                 </tr>
@@ -44,24 +87,33 @@
                       <%= course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %>
                     </td>
                     <td>
-                      <%= @total_registration %>
+                      <label class="label label-default">
+                        <%= course.registrations.collect{|registration| registration.attendance}.inject{|sum, attendance| sum + attendance} || 0 %>
+                      </label>&nbsp;
+                      <label class="label label-warning">
+                        <%= course.registrations.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} || 0 %>
+                      </label>&nbsp;
+                      <label class="label label-success">
+                        <%= course.popular %>
+                      </label>
                     </td>
                     <td>
-                      <%= @total_attendance %>
-                    </td>
-                    <td>
-                      <%= course.popular %>
-                    </td>
-                    <td>
-                      <%= course.time.strftime('%Y/%m/%d %H:%M') %>
+                      <%= course.time.strftime('%Y/%m/%d %H:%M') %><br/>
+                      <% if course.time < Time.now %>
+                        <label class="label label-success">課程時間已過</label>
+                      <% end %>
+                      <% if course.time > Time.now %>
+                        <label class="label label-warning">課程時間未到</label>
+                      <% end %>
                     </td>
                     <td class="text-right">
-                      <%= link_to(admin_course_registration_path(course), class: 'btn btn-md') do %>
+                      <%= link_to(admin_course_registration_path(course), class: 'btn') do %>
                         <i class="icon-eye-open"></i>
                         查看所有報名人
                       <% end %>
-                      <%= link_to(admin_course_registration_path(course), class: 'btn btn-md- btn-danger', method: :put, data: {confirm: '確定要取消課程嗎?'}) do %>
+                      <%= link_to(edit_admin_course_registration_path(course), class: 'btn btn-danger', method: :get, data: {confirm: '確定要取消課程嗎?'}) do %>
                         <i class="icon-remove"></i>
+                        取消課程
                       <% end %>
                     </td>
                   </tr>

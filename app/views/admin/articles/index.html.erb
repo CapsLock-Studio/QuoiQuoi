@@ -14,9 +14,45 @@
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
         <div class="box-header sea-blue-background">
+          <div class="title">查詢條件</div>
+          <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <%= form_tag admin_articles_path, method: :get, html: {class: 'form'} do %>
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>文章種類</h4>
+                <div class="row">
+                  <% ArticleType.all.each do |article_type| %>
+                    <div class="col-sm-2">
+                      <label class="label label-success"><%= article_type.name %></label>
+                      <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                        <%= check_box_tag 'article_type_filter[]', article_type.id, @article_type_filter.include?(article_type.id) %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <div class="col-sm-4 text-right pull-right">
+                    <div class="btn-toolbar">
+                      <button type="submit" class="btn btn-inverse">
+                        <i class="icon-search"></i>
+                        查詢
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
           <div class="title">文章列表</div>
           <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
           </div>
         </div>
@@ -41,13 +77,13 @@
                       <%= article.id %>
                     </td>
                     <td>
-                      <%= article.article_type.name %>
+                      <label class="label label-success"><%= article.article_type.name %></label>
                     </td>
                     <td>
                       <%= truncate(article.title, length: 20) %>
                     </td>
                     <td>
-                      <%= truncate(article.content, length: 30) %>
+                      <%= truncate(strip_tags(article.content), length: 30) %>
                     </td>
                     <td>
                       <%= article.created_at.strftime('%Y/%m/%d %H:%M') %>

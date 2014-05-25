@@ -1,0 +1,17 @@
+<% @current_order_information.each do |order_information| %>
+  <tr>
+    <td class="col-sm-2">
+      <%= simple_format(order_information.bag_type) %>
+    </td>
+    <td>
+      <%= simple_format(order_information.reference) %>
+    </td>
+    <td class="col-sm-3">
+      <%= simple_format(order_information.note) %>
+    </td>
+    <td class="text-right col-sm-2">
+      <%= link_to '修改', edit_admin_locale_order_information_path(order_information.locale_id, order_information), class: 'btn' %>
+      <%= link_to '刪除', admin_locale_order_information_path(order_information.locale_id, order_information), class: 'btn btn-danger', method: :delete %>
+    </td>
+  </tr>
+<% end %>

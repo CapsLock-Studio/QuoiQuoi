@@ -4,21 +4,14 @@ class Admin::CourseRegistrationsController < AdminController
   add_breadcrumb '首頁', :admin_root_path
 
   def index
-    @total_registration = 0
-    @total_attendance = 0
-    Payment.all.where(completed: true).where.not(registration_id: '').each do |payment|
-      unless payment.registration.returned?
-        @total_attendance += payment.registration.attendance
-      end
-    end
+    @search_filter = params[:search_filter] || %w[not_completed completed]
+    query_condition = []
+    query_condition << 'time < ?' unless @search_filter.include?('not_completed')
+    query_condition << Time.now unless @search_filter.include?('not_completed')
+    query_condition << 'time > ?' unless @search_filter.include?('completed')
+    query_condition << Time.now unless @search_filter.include?('completed')
 
-    Registration.all.each do |registration|
-      unless registration.canceled?
-        @total_registration += registration.attendance
-      end
-    end
-
-    @courses = Course.where('canceled = ? AND closed = ? AND time > ?', false, false, Time.now)
+    @courses = Course.where('canceled = ? AND closed = ?', false, false).where(query_condition).order(time: :desc)
   end
 
   def show
@@ -31,17 +24,31 @@ class Admin::CourseRegistrationsController < AdminController
     @course = Course.find(params[:id])
 
     respond_to do |format|
-      if @course.update_attributes({canceled: true, canceled_time: Time.now}) && @course.registrations.update_all({canceled: true, canceled_time: Time.now})
+      if @course.update_attributes({canceled: true, canceled_time: Time.now}) && @course.registrations.where(canceled: false).update_all(cancel_params.merge({canceled: true, canceled_time: Time.now}))
+        @course.registrations.where(canceled: false).each do |registration|
+          RegistrationMailer.cancel_remind(registration, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
+        end
         format.html {redirect_to admin_course_registrations_path}
       end
     end
+  end
+
+  def edit
+    @locale = Locale.where(lang: 'zh-TW').first
+    @course = Course.find(params[:id])
+  end
+
+  def cancel_form
+    @locale = Locale.where(lang: 'zh-TW').first
+    @registration = Registration.find(params[:id])
   end
 
   def cancel_one
     @registration = Registration.find(params[:id])
 
     respond_to do |format|
-      if @registration.update_attributes({canceled: true, canceled_time: Time.now})
+      if @registration.update_attributes(cancel_params.merge({canceled: true, canceled_time: Time.now}))
+        RegistrationMailer.cancel_remind(@registration, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
         format.html {redirect_to admin_course_registration_path(@registration.course)}
       end
     end
@@ -64,7 +71,7 @@ class Admin::CourseRegistrationsController < AdminController
         @total_registration += registration.attendance
       end
     end
-    @courses = Course.where('canceled = ? AND closed = ? AND time > ?', true, false, Time.now)
+    @courses = Course.where('canceled = ? AND closed = ? AND time > ?', true, false, Time.now).order(time: :desc)
   end
 
   def canceled_show
@@ -89,12 +96,34 @@ class Admin::CourseRegistrationsController < AdminController
   end
 
   def closed
-    @courses = Course.where('canceled = ? AND closed = ?', true, true)
+    @courses = Course.where(canceled: true, closed: true).order(time: :desc)
   end
 
   def closed_show
     add_breadcrumb '已關閉課程列表', :closed_admin_course_registrations_path
     add_breadcrumb '課程報名人'
-    @course = Course.find(params[:id])
+
+    @search_filter = (params[:search_filter] || %w[completed not_completed])
+    course = Course.find(params[:id])
+
+    @registrations = []
+
+    course.registrations.each do |registration|
+      if registration.payment && registration.payment.completed?
+        unless @search_filter.include?('completed')
+          registration = nil
+        end
+      else
+        unless @search_filter.include?('not_completed')
+          registration = nil
+        end
+      end
+      @registrations << registration
+    end
   end
+
+  private
+    def cancel_params
+      params.require(:registration).permit(:reason)
+    end
 end

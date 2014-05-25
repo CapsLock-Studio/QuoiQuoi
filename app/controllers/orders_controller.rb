@@ -44,7 +44,6 @@ class OrdersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html {render json: subtotal}
       if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now}))
         format.html {redirect_to pay_order_path(@order)}
       else

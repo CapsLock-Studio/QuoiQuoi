@@ -9,7 +9,8 @@ class Admin::TravelInformationController < AdminController
   # GET /admin/travel_informationss
   # GET /admin/travel_informationss.json
   def index
-    @travel_information = TravelInformation.all
+    @area_filter = (params[:area_filter] || Area.all.each.collect{|each_area| each_area.id}).collect{|filter| filter.to_i}
+    @travel_information = TravelInformation.where(area_id: @area_filter).all
   end
 
   # GET /admin/travel_informationss/1
@@ -77,7 +78,7 @@ class Admin::TravelInformationController < AdminController
   end
 
   def travel_information_params
-    params.require(:travel_information).permit(:id, :travel_information_type_id, :title, :content)
+    params.require(:travel_information).permit(:id, :area_id, :title, :content)
   end
 
   def delete_blank_travel_information

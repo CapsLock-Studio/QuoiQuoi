@@ -9,7 +9,8 @@ class Admin::ArticlesController < AdminController
   # GET /admin/articles
   # GET /admin/articles.json
   def index
-    @articles = Article.all
+    @article_type_filter = (params[:article_type_filter] || ArticleType.all.each.collect{|article_type| article_type.id}).collect{|filter| filter.to_i}
+    @articles = Article.where(article_type_id: @article_type_filter)
   end
 
   # GET /admin/articles/1

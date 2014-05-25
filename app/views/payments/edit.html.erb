@@ -38,7 +38,7 @@
                     <span class="color-red">*</span>
                   <% end %>
                 </div>
-                <div class="controls col-md-12">
+                <div class="controls col-md-6">
                   <div class="datepicker input-group" id="datepicker">
                     <%= f.text_field :pay_time, class: 'form-control', data: {'rule-required' => true, 'rule-date' => true, 'format' => 'yyyy/MM/dd'} %>
                     <span class="input-group-addon">
@@ -53,9 +53,11 @@
           <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
               <%= f.button t('report'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
-              <%= link_to orders_path do %>
-                <i class="icon-angle-left"></i>
-                回到我的帳戶
+              <% if current_user %>
+                <%= link_to orders_path do %>
+                  <i class="icon-angle-left"></i>
+                  回到我的帳戶
+                <% end %>
               <% end %>
             </div>
           </div>
