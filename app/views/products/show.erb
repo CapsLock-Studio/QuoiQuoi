@@ -60,14 +60,21 @@
                   <h4 class="margin-bottom-20">
                     <strong style="color:#666;" id="product-price" data-price="<%= @order_product.product.price %>"><%= number_to_currency(@order_product.product.price) %></strong>
                   </h4>
-                  <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
-                    <i class="icon-shopping-cart"></i>
-                    <span>加到購物車</span>
+                  <% if @order_product.product.quantity > 0 %>
+                    <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
+                      <i class="icon-shopping-cart"></i>
+                      <span>加到購物車</span>
+                    <% end %>
+                  <% else %>
+                    <%= link_to '#', class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;' do %>
+                      <i class="icon-shopping-cart"></i>
+                      <span>目前無存貨</span>
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="col-md-12">
                   <h5>覺得這個包很棒，不過想要特別的修改嗎？</h5>
-                  <%= link_to new_product_order_custom_items_path(@product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
+                  <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
                     <i class="icon-edit"></i>
                     <span>提出你的需求</span>
                   <% end %>

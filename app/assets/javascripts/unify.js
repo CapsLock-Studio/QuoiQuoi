@@ -20,10 +20,15 @@
 
 //= require flatty/plugins/fullcalendar/fullcalendar.min
 
-//= require turbolinks
 //= require unify/theme
 //= require unify/app
 //= require unify/pages/index
 
 //= require flatty/plugins/bootbox/bootbox.min.js
 //= require jquery.nested-fields.min
+
+//= require turbolinks
+
+//$(document).on('page:before-change', function(){
+//    $('body').animate({opacity: 0.3}, 300);
+//});

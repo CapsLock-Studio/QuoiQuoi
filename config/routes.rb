@@ -55,10 +55,10 @@ QuoiQuoi::Application.routes.draw do
     resources :requirements
     resources :shipping_fees
     resource :contacts
-    resources :contact_image_slides do
+    resources :introduce_image_slides do
       put 'sort', on: :collection
     end
-    resources :contact_youtube_slides do
+    resources :introduce_youtubes do
       put 'sort', on: :collection
     end
 
@@ -168,7 +168,7 @@ QuoiQuoi::Application.routes.draw do
   end
   resources :reports
   resource :requirements
-  resource :contacts
+  resource :about, controller: 'about'
   resource :rents
 
   resources :messages

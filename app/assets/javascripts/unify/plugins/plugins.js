@@ -5,10 +5,10 @@
 // require unify/plugins/countdown/jquery.countdown.min.js
 // require unify/plugins/countdown/jquery.countdown-zh-TW.js
 //= require unify/plugins/fancybox/jquery.fancybox.js
-//= require unify/plugins/fancybox/jquery.fancybox-buttons.js
-//= require unify/plugins/fancybox/jquery.fancybox-media.js
-//= require unify/plugins/fancybox/jquery.fancybox-thumbs.js
-//= require unify/plugins/fancybox/jquery.fancybox.pack.js
+// require unify/plugins/fancybox/jquery.fancybox-buttons.js
+// require unify/plugins/fancybox/jquery.fancybox-media.js
+// require unify/plugins/fancybox/jquery.fancybox-thumbs.js
+// require unify/plugins/fancybox/jquery.fancybox.pack.js
 //= require unify/plugins/fancybox/jquery.mousewheel-3.0.6.pack.js
 //= require unify/plugins/flexslider/jquery.flexslider-min.js
 // require unify/plugins/horizontal-parallax/sequence.jquery-min.js
@@ -40,3 +40,4 @@
 // require unify/plugins/stellar/jquery.stellar.js
 //= require unify/plugins/bootstrap-select/bootstrap-select.min.js
 //= require unify/plugins/fuelux/wizard.js
+// require unify/plugins/pace/pace.min.js

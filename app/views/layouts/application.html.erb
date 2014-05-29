@@ -3,40 +3,44 @@
 <head>
   <title>QuoiQuoi</title>
   <%= stylesheet_link_tag    'unify', media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag 'unify', "data-turbolinks-track" => true %>
-  <%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=true' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <%= render 'layouts/aside_menu' %>
 
-<div class="wrapper">
-  <div class="navbar" style="margin-bottom:0;border:0;">
-    <div class="top">
-      <%= render 'layouts/header_top' %>
+<div class="menu-wrapper">
+  <div class="wrapper">
+    <div class="navbar" style="margin-bottom:0;border:0;">
+      <div class="top">
+        <%= render 'layouts/header_top' %>
+      </div>
+      <header class="header">
+        <%= render 'layouts/header_navigation' %>
+      </header>
     </div>
-    <header class="header">
-      <%= render 'layouts/header_navigation' %>
-    </header>
-  </div>
 
-  <%= yield %>
+    <%= yield %>
 
-  <div id="topcontrol">
-    <i class="glyphicon glyphicon-chevron-up"></i>
-  </div>
+    <div id="topcontrol">
+      <i class="glyphicon glyphicon-chevron-up"></i>
+    </div>
 
-  <div class="footer">
-    <%= render 'layouts/footer' %>
-  </div>
+    <div class="footer">
+      <%= render 'layouts/footer' %>
+    </div>
 
-  <div class="copyright">
-    <%= render 'layouts/copyright' %>
+    <div class="copyright">
+      <%= render 'layouts/copyright' %>
+    </div>
   </div>
 </div>
 
-<%= javascript_include_tag 'application', data: { 'turbolinks-track' => true } %>
-<script>
+<%= javascript_include_tag 'unify', data: {'no-turbolink' => ''} %>
+<%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=true', data: {'no-turbolink' => ''} %>
+<%= javascript_include_tag 'unify/plugins/gmap/gmap.js', data: {'no-turbolink' => ''} %>
+<%= javascript_include_tag 'plugins', data: {'no-turbolink' => ''} %>
+<%= javascript_include_tag 'application' %>
+<script data-no-turbolink>
   $.validator.messages.email = '<%= t('validate_email') %>';
   $.validator.messages.required = '<%= t('validate_required') %>';
   $.validator.messages.number = '<%= t('validate_number') %>';

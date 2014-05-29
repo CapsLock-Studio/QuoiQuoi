@@ -13,7 +13,6 @@ class AdminAbility
       can :manage, Admin::ProductType
       can :manage, Admin::SlidePosition
       can :manage, Admin::ArticleType
-      can :manage, Admin::Area
     else admin.role == 'author'
       can :manage, Admin
       can :manage, Admin::Product
@@ -33,8 +32,8 @@ class AdminAbility
       can :manage, Admin::RentIntro
       can :manage, Admin::RentInfoImage
       can :manage, Admin::Contact
-      can :manage, Admin::ContactImageSlide
-      can :manage, Admin::ContactYoutubeSlide
+      can :manage, Admin::IntroduceImageSlide
+      can :manage, Admin::IntroduceYoutube
       can :manage, Admin::Requirement
       can :manage, Admin::RequirementIntro
       can :manage, Admin::Article
@@ -44,6 +43,7 @@ class AdminAbility
       can :manage, Admin::TravelInformation
       can :manage, Admin::TravelPhoto
       can :manage, Admin::OrderInformation
+      can :manage, Admin::Area
     end
 
     # for development

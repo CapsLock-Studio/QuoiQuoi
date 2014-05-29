@@ -4,7 +4,7 @@ class Admin::MaterialsController < AdminController
 
   # GET /admin/materials
   def index
-    @materials = Material.all.page(params[:page]).per(18)
+    @materials = Material.all.order(id: :desc).page(params[:page]).per(16)
     respond_to do |format|
       format.html {}
       format.json {render json: @materials}
