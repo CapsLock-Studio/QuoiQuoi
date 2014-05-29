@@ -16,6 +16,18 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
+        <% if !params[:sorted].nil? and params[:sorted] %>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Successed!</strong> 修改順序成功
+          </div>
+        <% end %>
+        <% if !params[:sorted].nil? and !params[:sorted] %>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Failed!</strong> 修改順序失敗，請聯絡程式維護者
+          </div>
+        <% end %>
         <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
           <div class="box-header sea-blue-background">
             <div class="title">快訊列表</div>

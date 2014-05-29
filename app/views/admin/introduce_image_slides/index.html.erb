@@ -1,0 +1,82 @@
+<%= form_tag sort_admin_introduce_image_slides_path, method: :put do %>
+  <div class="col-xs-12">
+    <div class="page-header page-header-with-buttons">
+      <h1 class="pull-left">
+        <i class="icon-picture"></i>
+        <span>輪播管理</span>
+      </h1>
+      <div class="pull-right">
+        <div class="btn-group">
+          <div class="btn-toolbar">
+            <%= submit_tag '儲存順序', class: 'btn' %>
+            <%= link_to '新增輪播', new_admin_introduce_image_slide_path, class: 'btn btn-info' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <% if !params[:sorted].nil? and params[:sorted] %>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Successed!</strong> 修改輪播順序成功
+          </div>
+        <% end %>
+        <% if !params[:sorted].nil? and !params[:sorted] %>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Failed!</strong> 修改輪播順序失敗，請聯絡程式維護者
+          </div>
+        <% end %>
+        <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+          <div class="box-header sea-blue-background">
+            <div class="title">輪播列表</div>
+            <div class="actions">
+              <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+              <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+            </div>
+          </div>
+          <div class="box-content box-no-padding">
+            <div class="responsive-table">
+              <div class="scrollable-table sortable-container">
+                <table class="table" style="margin-bottom:0;">
+                  <thead>
+                  <tr>
+                    <th>圖片</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody id="slide-sortable" data-sortable-axis="y" data-sortable-connect=".sortable">
+                  <% @introduce_image_slides.each do |introduce_image_slide| %>
+                    <tr>
+                      <%= fields_for 'introduce_image_slides[]', introduce_image_slide do |f| %>
+                        <%= f.hidden_field :sort, class: 'sort-item' %>
+                        <%= f.hidden_field :id %>
+                      <% end %>
+                      <td>
+                        <div class="preview">
+                          <%= image_tag introduce_image_slide.image.url(:medium) %>
+                        </div>
+                      </td>
+                      <td>
+                        <div class='text-right'>
+                          <%= link_to(edit_admin_introduce_image_slide_path(introduce_image_slide), class: 'btn btn-md') do %>
+                            <i class='icon-pencil'></i>
+                          <% end %>
+                          <%= link_to(admin_introduce_image_slide_path(introduce_image_slide), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                            <i class='icon-remove'></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

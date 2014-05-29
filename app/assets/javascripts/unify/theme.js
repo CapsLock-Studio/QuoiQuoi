@@ -65,16 +65,10 @@ this.nav_open = function() {
 
 $(document).on('page:change', function() {
   var touch;
-  setTimeAgo();
   setScrollable();
-  setSortable($(".sortable"));
-  setSelect2();
   setAutoSize();
-  setCharCounter();
   setMaxLength();
   setValidateForm();
-  setStellar();
-  setLocalScroll();
   $('.selectpicker').selectpicker();
   $(".box .box-remove").live("click", function(e) {
     $(this).parents(".box").first().remove();
@@ -218,38 +212,12 @@ this.setMaxLength = function(selector) {
   }
 };
 
-this.setCharCounter = function(selector) {
-  if (selector == null) {
-    selector = $(".char-counter");
-  }
-  if (jQuery().charCount) {
-    return selector.charCount({
-      allowed: selector.data("char-allowed"),
-      warning: selector.data("char-warning"),
-      cssWarning: "text-warning",
-      cssExceeded: "text-error"
-    });
-  }
-};
-
 this.setAutoSize = function(selector) {
   if (selector == null) {
     selector = $(".autosize");
   }
   if (jQuery().autosize) {
     return selector.autosize();
-  }
-};
-
-this.setTimeAgo = function(selector) {
-  if (selector == null) {
-    selector = $(".timeago");
-  }
-  if (jQuery().timeago) {
-    jQuery.timeago.settings.allowFuture = true;
-    jQuery.timeago.settings.refreshMillis = 60000;
-    selector.timeago();
-    return selector.addClass("in");
   }
 };
 
@@ -267,55 +235,33 @@ this.setScrollable = function(selector) {
   }
 };
 
-this.setSortable = function(selector) {
-  if (selector == null) {
-    selector = null;
-  }
-  if (selector) {
-    return selector.sortable({
-      axis: selector.data("sortable-axis"),
-      connectWith: selector.data("sortable-connect")
-    });
-  }
-};
-
-this.setSelect2 = function(selector) {
-  if (selector == null) {
-    selector = $(".select2");
-  }
-  if (jQuery().select2) {
-    return selector.each(function(i, elem) {
-      return $(elem).select2();
-    });
-  }
-};
 
 this.setDataTable = function(selector) {
-  if (jQuery().dataTable) {
-    return selector.each(function(i, elem) {
-      var dt, sdom;
-      if ($(elem).data("pagination-top-bottom") === true) {
-        sdom = "<'row datatables-top'<'col-sm-6'l><'col-sm-6 text-right'pf>r>t<'row datatables-bottom'<'col-sm-6'i><'col-sm-6 text-right'p>>";
-      } else if ($(elem).data("pagination-top") === true) {
-        sdom = "<'row datatables-top'<'col-sm-6'l><'col-sm-6 text-right'pf>r>t<'row datatables-bottom'<'col-sm-6'i><'col-sm-6 text-right'>>";
-      } else {
-        sdom = "<'row datatables-top'<'col-sm-6'l><'col-sm-6 text-right'f>r>t<'row datatables-bottom'<'col-sm-6'i><'col-sm-6 text-right'p>>";
-      }
-      dt = $(elem).dataTable({
-        sDom: sdom,
-        sPaginationType: "bootstrap",
-        "iDisplayLength": $(elem).data("pagination-records") || 10,
-        oLanguage: {
-          sLengthMenu: "_MENU_ records per page"
-        }
-      });
-      if ($(elem).hasClass("data-table-column-filter")) {
-        dt.columnFilter();
-      }
-      dt.closest('.dataTables_wrapper').find('div[id$=_filter] input').css("width", "200px");
-      return dt.closest('.dataTables_wrapper').find('input').addClass("form-control input-sm").attr('placeholder', 'Search');
-    });
-  }
+    if (jQuery().dataTable) {
+        return selector.each(function(i, elem) {
+            var dt, sdom;
+            if ($(elem).data("pagination-top-bottom") === true) {
+                sdom = "<'row datatables-top'<'col-sm-6'l><'col-sm-6 text-right'pf>r>t<'row datatables-bottom'<'col-sm-6'i><'col-sm-6 text-right'p>>";
+            } else if ($(elem).data("pagination-top") === true) {
+                sdom = "<'row datatables-top'<'col-sm-6'l><'col-sm-6 text-right'pf>r>t<'row datatables-bottom'<'col-sm-6'i><'col-sm-6 text-right'>>";
+            } else {
+                sdom = "<'row datatables-top'<'col-sm-6'l><'col-sm-6 text-right'f>r>t<'row datatables-bottom'<'col-sm-6'i><'col-sm-6 text-right'p>>";
+            }
+            dt = $(elem).dataTable({
+                sDom: sdom,
+                sPaginationType: "bootstrap",
+                "iDisplayLength": $(elem).data("pagination-records") || 10,
+                oLanguage: {
+                    sLengthMenu: "_MENU_ records per page"
+                }
+            });
+            if ($(elem).hasClass("data-table-column-filter")) {
+                dt.columnFilter();
+            }
+            dt.closest('.dataTables_wrapper').find('div[id$=_filter] input').css("width", "200px");
+            return dt.closest('.dataTables_wrapper').find('input').addClass("form-control input-sm").attr('placeholder', 'Search');
+        });
+    }
 };
 
 this.setValidateForm = function(selector) {
@@ -338,20 +284,5 @@ this.setValidateForm = function(selector) {
         }
       });
     });
-  }
-};
-
-this.setStellar = function() {
-  if (jQuery().stellar) {
-    return $(window).stellar({
-      horizontalScrolling: false,
-      responsive: true
-    });
-  }
-};
-
-this.setLocalScroll = function() {
-  if (jQuery().localScroll) {
-    return $.localScroll();
   }
 };

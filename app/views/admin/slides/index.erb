@@ -70,7 +70,7 @@
                         <% end %>
                       </td>
                       <td>
-                        <%= slide.slide_position.position %>
+                        <%= slide.slide_position.position if slide.slide_position %>
                       </td>
                       <td>
                         <%= link_to slide.link.blank?? '#' : slide.link, class: "btn btn-default #{slide.link.blank?? 'disabled' : ''}" do %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524190735) do
+ActiveRecord::Schema.define(version: 20140526154614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,16 +122,6 @@ ActiveRecord::Schema.define(version: 20140524190735) do
     t.datetime "updated_at"
   end
 
-  create_table "contact_image_slides", force: true do |t|
-    t.integer  "sort"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "contact_slides", force: true do |t|
     t.integer  "sort"
     t.string   "image_file_name"
@@ -158,13 +148,6 @@ ActiveRecord::Schema.define(version: 20140524190735) do
 
   add_index "contact_translates", ["contact_id"], name: "index_contact_translates_on_contact_id", using: :btree
   add_index "contact_translates", ["locale_id"], name: "index_contact_translates_on_locale_id", using: :btree
-
-  create_table "contact_youtube_slides", force: true do |t|
-    t.integer  "sort"
-    t.string   "youtube"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "contacts", force: true do |t|
     t.datetime "created_at"
@@ -283,6 +266,23 @@ ActiveRecord::Schema.define(version: 20140524190735) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+  end
+
+  create_table "introduce_image_slides", force: true do |t|
+    t.integer  "sort"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "introduce_youtubes", force: true do |t|
+    t.integer  "sort"
+    t.string   "youtube"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "locales", force: true do |t|
@@ -466,11 +466,11 @@ ActiveRecord::Schema.define(version: 20140524190735) do
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "product_custom_item_translates", force: true do |t|
+    t.integer  "product_custom_item_id"
     t.integer  "locale_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "product_custom_item_id"
   end
 
   add_index "product_custom_item_translates", ["locale_id"], name: "index_product_custom_item_translates_on_locale_id", using: :btree
@@ -478,18 +478,14 @@ ActiveRecord::Schema.define(version: 20140524190735) do
 
   create_table "product_custom_items", force: true do |t|
     t.integer  "product_id"
-    t.integer  "product_custom_type_id"
-    t.integer  "price"
-    t.integer  "workday"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "product_custom_items", ["product_custom_type_id"], name: "index_product_custom_items_on_product_custom_type_id", using: :btree
   add_index "product_custom_items", ["product_id"], name: "index_product_custom_items_on_product_id", using: :btree
 
   create_table "product_custom_type_translates", force: true do |t|
