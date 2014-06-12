@@ -1,0 +1,73 @@
+<ul class="nav controls list-inline pull-right">
+  <li class="dropdown light">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-cog"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li>
+        <div class="control-title">
+          <%= t('header.top.language') %>
+        </div>
+        <%= lang_nav_item('zh-TW') do %>
+          <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+        <% end %>
+        <%= lang_nav_item('en') do %>
+          <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
+        <% end %>
+      </li>
+      <li class="divider"></li>
+      <li>
+        <div class="control-title">
+          <%= t('links') %>
+        </div>
+        <a href="https://www.facebook.com/">
+          <i class="fa fa-fw fa-facebook"></i>
+          <%= t('facebook') %>
+        </a>
+        <a href="">
+          <i class="fa fa-fw fa-weibo"></i>
+          <%= t('weibo') %>
+        </a>
+        <a href="https://www.facebook.com/">
+          <i class="fa fa-fw fa-share"></i>
+          Blog
+        </a>
+      </li>
+      <li class="divider"></li>
+      <li>
+        <a href="">
+          <i class="fa fa-fw fa-rss"></i>
+          RSS推播
+        </a>
+      </li>
+      <li class="divider"></li>
+      <% if user_signed_in? %>
+        <li>
+          <%= link_to(orders_path) do %>
+            <i class="fa fa-user fa-fw"></i>
+            <%= t('header.top.user') %>
+          <% end %>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <%= link_to(destroy_user_session_path, method: :delete) do %>
+            <i class="fa fa-sign-out fa-fw"></i>
+            <%= t('header.top.signout') %>
+          <% end %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to(new_user_session_path) do %>
+            <i class="fa fa-sign-in fa-fw"></i>
+            <%= t('header.top.signin') %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+  <li class="dropdown user-menu">
+    <a class="aside-menu-switch" href="#">
+      <i class="fa fa-shopping-cart"></i>
+    </a>
+  </li>
+</ul>

@@ -51,6 +51,9 @@ gem 'resque'
 gem 'resque_mailer'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
+gem 'sqlite3'
+gem 'recaptcha'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

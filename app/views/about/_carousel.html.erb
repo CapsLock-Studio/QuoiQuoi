@@ -1,4 +1,4 @@
-<div class="carousel slide carousel-v1" id="myCarousel-1">
+<div class="carousel slide carousel-v1 carousel-fade" id="carousel-1">
   <div class="carousel-inner">
     <% @introduce_image_slides.each_with_index do |introduce_image_slide, index| %>
       <div class="item <%= 'active' if index == 0 %>">
@@ -10,11 +10,11 @@
   </div>
 
   <div class="carousel-arrow">
-    <a data-slide="prev" href="#myCarousel-1" class="left carousel-control">
-      <i class="icon-angle-left"></i>
+    <a data-slide="prev" href="#carousel-1" class="left carousel-control">
+      <i class="fa fa-angle-left"></i>
     </a>
-    <a data-slide="next" href="#myCarousel-1" class="right carousel-control">
-      <i class="icon-angle-right"></i>
+    <a data-slide="next" href="#carousel-1" class="right carousel-control">
+      <i class="fa fa-angle-right"></i>
     </a>
   </div>
 </div>

@@ -9,10 +9,10 @@ var Index = function () {
             var api = $('.fullwidthbanner').revolution(
                 {
                     delay:9000,
-                    startwidth:960,
+                    startwidth: 960,
                     startheight:500,
 
-                    onHoverStop:"off",						// Stop Banner Timet at Hover on Slide on/off
+                    onHoverStop:"on",						// Stop Banner Timet at Hover on Slide on/off
 
                     thumbWidth:100,							// Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
                     thumbHeight:50,
@@ -50,8 +50,12 @@ var Index = function () {
                     hideAllCaptionAtLilmit:0,				// Hide all The Captions if Width of Browser is less then this value
                     hideSliderAtLimit:0,					// Hide the whole slider, and stop also functions if Width of Browser is less than this value
 
+                    autoHeight: 'off',
 
+                    lazyLoad:"on",
                     fullWidth:"on",
+                    forceFullWidth:"off",
+                    // boxed: 'on',
 
                     shadow:0								//0 = no Shadow, 1,2,3 = 3 Different Art of Shadows -  (No Shadow in Fullwidth Version !)
 
@@ -62,7 +66,7 @@ var Index = function () {
             // YOU CAN REMOVE IT FROM HERE TILL THE END OF THIS SECTION IF YOU DONT NEED THIS !
             api.bind("revolution.slide.onloaded",function (e) {
 
-
+                $(this).css({opacity: 1});
                 $('.tparrows').each(function() {
                     var arrows=jQuery(this);
 
@@ -85,11 +89,11 @@ var Index = function () {
             });
             // END OF THE SECTION, HIDE MY ARROWS SEPERATLY FROM THE BULLETS
 
-            $('.fullwidthbanner-container ul').hover(function(){
-                api.revpause();
-            }, function(){
-                api.revresume();
-            });
+//            $('.fullwidthbanner-container ul').hover(function(){
+//                api.revpause();
+//            }, function(){
+//                api.revresume();
+//            });
         }
 
     };

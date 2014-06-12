@@ -4,7 +4,7 @@ class CreatePayments < ActiveRecord::Migration
       t.integer :amount
       t.string :token
       t.string :identifier
-      t.references :user, index: true
+      t.references :user, show: true
       t.string :payer_id
       t.boolean :completed
       t.boolean :canceled

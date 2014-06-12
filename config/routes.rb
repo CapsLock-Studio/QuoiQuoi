@@ -1,5 +1,4 @@
 QuoiQuoi::Application.routes.draw do
-  get "other_products/Admin"
   devise_for :admin, controller: { sessions: 'admin/sessions' }
 
   as :admin do
@@ -17,7 +16,10 @@ QuoiQuoi::Application.routes.draw do
     end
     resources :article_images
     resources :article_types
-    resources :products
+    resources :products do
+      resources :product_custom_items
+    end
+
     resources :product_types
     resources :courses
     resources :course_registrations do
@@ -54,7 +56,7 @@ QuoiQuoi::Application.routes.draw do
     resources :rent_intros
     resources :requirements
     resources :shipping_fees
-    resource :contacts
+    resource :about_us, controller: 'about_us'
     resources :introduce_image_slides do
       put 'sort', on: :collection
     end
@@ -167,10 +169,10 @@ QuoiQuoi::Application.routes.draw do
     get 'calendar', on: :collection
   end
   resources :reports
-  resource :requirements
+  resource :recruitments
   resource :about, controller: 'about'
   resource :rents
-
+  resource :contacts
   resources :messages
   resources :gifts
   resources :user_gifts do

@@ -1,11 +1,11 @@
 class CreateOrderCustomItems < ActiveRecord::Migration
   def change
     create_table :order_custom_items do |t|
-      t.references :order, index: true
-      t.references :product, index: true
+      t.references :order, show: true
+      t.references :product, show: true
       t.string :design
       t.string :style
-      t.references :material, index: true
+      t.references :material, show: true
       t.string :description
       t.string :response
       t.integer :workday

@@ -1,5 +1,5 @@
-<%= render 'layouts/breadcrumbs', title: t('header.navigation.contact') %>
-<div class="container">
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
   <div class="row">
     <div class="col-md-9">
       <div class="row">
@@ -11,10 +11,10 @@
         </div>
         <div class="col-md-12">
           <div class="row">
-            <ul id="list" class="bxslider recent-work">
+            <ul id="list" class="bxslider">
               <% @designers.each do |designer| %>
                 <li>
-                  <div>
+                  <a>
                     <div class="thumbnail-style">
                       <%= image_tag designer.photo.url(:medium), class: 'img-responsive' %>
                       <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
@@ -54,7 +54,7 @@
                         </div>
                       <% end %>
                     </div>
-                  </div>
+                  </a>
                 </li>
               <% end %>
             </ul>
@@ -65,7 +65,7 @@
           <%= render 'youtube' %>
         </div>
         <div class="col-md-6">
-          <%= render 'about/form' %>
+          <%= render 'contacts/form' %>
         </div>
       </div>
     </div>
@@ -78,7 +78,7 @@
         <div class="col-md-12 margin-bottom-40">
           <!-- Contacts -->
           <div class="headline">
-            <h2><%= t('header.navigation.contact') %></h2>
+            <h2><%= t('contact') %></h2>
           </div>
           <%= render 'about/infos' %>
         </div>
@@ -93,7 +93,9 @@
           <div class="headline">
             <h2>交通資訊</h2>
           </div>
-          <%= image_tag asset_path('location_info.jpg'), class: 'img-responsive' %>
+          <%= link_to asset_path('location_info.png'), target: '_blank' do %>
+            <%= image_tag 'location_info.png', class: 'img-responsive' %>
+          <% end %>
           <!-- Google Map -->
           <div id="map" class="map"></div>
           <!---/map-->

@@ -1,12 +1,13 @@
 <%= render 'layouts/breadcrumbs' %>
-<div class="container">
-  <div class="row">
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-md-9">
+    <div class="col-sm-9">
       <div class="row margin-bottom-40">
-        <div class="col-md-12">
+        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12">
           <h4 class="margin-bottom-30">
-            訂單編號:
+            <%= t('number') %>
             <strong class="text-muted"><%= @order.id %></strong>
           </h4>
         </div>
@@ -14,31 +15,31 @@
           <ul class="list-unstyled step">
             <li class="col-xs-3 step-active">
               <span>
-                <i class="icon-shopping-cart icon-round"></i>
+                <i class="fa fa-shopping-cart icon-round"></i>
               </span>
-              <h4>下單</h4>
+              <h4><%= t('check_out') %></h4>
               <p><%= @order.checkout_time.strftime('%Y/%m/%d %H:%M') %></p>
             </li>
             <li class="col-xs-3 <%= 'step-active' if @order.paid? %>">
               <span>
-                <i class="icon-credit-card icon-round"></i>
+                <i class="fa fa-credit-card icon-round"></i>
               </span>
-              <h4>付款</h4>
+              <h4><%= t('paid') %></h4>
               <p><%= @order.payment.pay_time.strftime('%Y/%m/%d %H:%M') if @order.paid? && @order.payment.completed? %></p>
-              <span class="label label-success"><%= (@order.payment.amount == 0 || @order.payment.identifier.blank?)? '等待匯款' : '等待確認' if @order.paid? && !@order.payment.completed? %></span>
+              <span class="label label-success"><%= (@order.payment.amount == 0 || @order.payment.identifier.blank?)? t('order.wait_remittance') : t('order.wait_confirm') if @order.paid? && !@order.payment.completed? %></span>
             </li>
             <li class="col-xs-3 <%= 'step-active' if @order.paid? && @order.payment.completed? %>">
               <span>
-                <i class="icon-truck icon-round"></i>
+                <i class="fa fa-truck icon-round"></i>
               </span>
-              <h4>配送</h4>
+              <h4><%= t('shipped') %></h4>
               <p><%= @order.delivered_time.strftime('%Y/%m/%d %H:%M') if @order.delivered? %></p>
             </li>
             <li class="col-xs-3 <%= 'step-active' if @order.closed? %>">
               <span>
-                <i class="icon-ok icon-round"></i>
+                <i class="fa fa-check icon-round"></i>
               </span>
-              <h4>交易完成</h4>
+              <h4><%= t('order.completed') %></h4>
               <p><%= @order.closed_time.strftime('%Y/%m/%d %H:%M') if @order.closed? %></p>
             </li>
           </ul>
@@ -47,12 +48,12 @@
       <div class="row margin-bottom-40">
         <% if @order.paid? && !@order.payment.identifier.blank? && !@order.payment.completed? %>
           <div class="col-md-12">
-            <h5>待確認匯款資訊</h5>
+            <h5><%= t('remitted_information') %></h5>
           </div>
           <div class="col-md-12 margin-bottom-40">
             <div class="row">
               <div class="col-md-2 col-xs-3 text-right">
-                匯款金額
+                <%= t('remitted_amount') %>
               </div>
               <div class="col-md-10 col-xs-9">
                 <%= number_to_currency(@order.payment.amount) %>
@@ -60,7 +61,7 @@
             </div>
             <div class="row">
               <div class="col-md-2 col-xs-3 text-right">
-                帳號末五碼
+                <%= t('your_account') %>
               </div>
               <div class="col-md-10 col-xs-9">
                 <%= @order.payment.identifier %>
@@ -68,7 +69,7 @@
             </div>
             <div class="row">
               <div class="col-md-2 col-xs-3 text-right">
-                匯款時間
+                <%= t('remitted_date') %>
               </div>
               <div class="col-md-10 col-xs-9">
                 <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
@@ -77,30 +78,30 @@
           </div>
         <% end %>
         <div class="col-md-12">
-          <h5>配送資訊</h5>
+          <h5><%= t('shipping_information') %></h5>
         </div>
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-2 col-xs-3 text-right">
-              姓名
+            <div class="col-md-2 col-xs-5 text-right">
+              <%= t('name') %>
             </div>
-            <div class="col-md-10 col-xs-9">
+            <div class="col-md-10 col-xs-7">
               <%= @order.name %>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-2 col-xs-3 text-right">
-              聯絡電話
+            <div class="col-md-2 col-xs-5 text-right">
+              <%= t('phone_number') %>
             </div>
-            <div class="col-md-10 col-xs-9">
+            <div class="col-md-10 col-xs-7">
               <%= @order.phone.gsub(/\d{4}$/, '****') %>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-2 col-xs-3 text-right">
-              地址
+            <div class="col-md-2 col-xs-5 text-right">
+              <%= t('address') %>
             </div>
-            <div class="col-md-10 col-xs-9">
+            <div class="col-md-10 col-xs-7">
               <%= @order.address %>
             </div>
           </div>
@@ -110,7 +111,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header box-header-small grey-background">
-              <span class="text-muted">訂單編號: <%= @order.id %></span>
+              <span class="text-muted"><%= t('number') %> <%= @order.id %></span>
             </div>
             <div class="box-content box-no-padding" style="border:0;">
               <div class="responsive-table">
@@ -124,10 +125,10 @@
                       <tr>
                         <td class="text-left col-xs-6">
                           <div class="row">
-                            <div class="col-xs-2">
+                            <div class="col-md-2 col-sm-4 col-xs-8">
                               <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-md-10 col-sm-8 hidden-xs">
                               <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
                             </div>
                           </div>
@@ -148,7 +149,7 @@
       <div class="row">
         <div class="col-md-12">
           <h4 class="text-right color-orange">
-            總金額 :
+            <%= t('subtotal') %>
             <strong class="text-muted">
               <%= number_to_currency(@order.subtotal) %>
             </strong>
@@ -157,19 +158,19 @@
         <% if @order.paid? && (@order.payment.amount == 0 || @order.payment.identifier.blank?) %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to '回報', edit_payment_path(@order.payment), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
-            <%= link_to '取消訂單', cancel_order_path(@order), method: :put %>
+            <%= link_to t('order.advice'), edit_payment_path(@order.payment), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('order.cancel'), cancel_order_path(@order), method: :put %>
           </div>
         <% elsif @order.delivered? && !@order.closed? %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to '收貨', close_order_path(@order), method: :put, class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('order.received'), close_order_path(@order), method: :put, class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
           </div>
         <% elsif !@order.paid? %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('payment'), pay_order_path(@order), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
-            <%= link_to '取消訂單', cancel_order_path(@order), method: :put %>
+            <%= link_to t('pay'), pay_order_path(@order), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('order.cancel'), cancel_order_path(@order), method: :put %>
           </div>
         <% end %>
       </div>

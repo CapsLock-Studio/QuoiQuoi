@@ -1,10 +1,10 @@
-<div class="col-md-3">
+<div class="col-sm-3 col-xs-6 sidebar-offcanvas">
   <ul class="list-group sidebar-nav-v1">
-    <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}(\/\d*)?$/}) do %>
-      <%= link_to t('header.navigation.handmadebag').titleize, products_path %>
+    <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}/}) do %>
+      <%= link_to t('handmadebag').titleize, products_path %>
     <% end %>
-    <%= nav_item(orders_path, {class: 'list-group-item', rule: /#{order_custom_items_path}.*/}) do %>
-      <%= link_to t('header.navigation.order_request').titleize, new_order_custom_item_path %>
+    <%= nav_item(orders_path, {class: 'list-group-item', rule: /^#{order_custom_items_path}.*/}) do %>
+      <%= link_to t('personalize').titleize, new_order_custom_item_path %>
     <% end %>
     <% @product_types.each do |product_type| %>
       <%= nav_item(product_type_products_path(product_type), {class: 'list-group-item', rule: /^\/#{:product_types}\/#{product_type.id}\/#{:products}(\/\d*)?$/}) do %>

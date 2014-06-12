@@ -16,6 +16,7 @@ class AdminAbility
     else admin.role == 'author'
       can :manage, Admin
       can :manage, Admin::Product
+      can :manage, Admin::ProductCustomItem
       can :manage, Admin::Course
       can :manage, Admin::Order
       can :manage, Admin::OrderCustomItem

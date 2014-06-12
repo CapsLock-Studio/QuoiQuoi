@@ -1,7 +1,7 @@
 class CreateRemittanceTranslates < ActiveRecord::Migration
   def change
     create_table :remittance_translates do |t|
-      t.references :locale, index: true
+      t.references :locale, show: true
       t.string :name
       t.string :account
       t.string :bank_name

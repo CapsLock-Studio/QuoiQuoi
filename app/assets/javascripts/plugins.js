@@ -22,44 +22,47 @@ var convertPreview = function(link, youtubeBlock) {
 
 var bindSelectBox = function(){
     $('.select-box .box-header').on('click', function(e){
+        e.preventDefault();
 
         var box = $(this).parent('.box');
-        var selectedMaterial = $('.material_id_' + $(this).data('material_id'));
+        var selectBoxes = $(this).closest('.select-boxes');
+        var selectedBox = selectBoxes.find('.' + selectBoxes.data('name') + '_' + $(this).data('id'));
 
         // if box has active, remove material input else add material input(check by class name)
         if (box.hasClass('active')) {
-            selectedMaterial.remove();
+            selectedBox.remove();
             box.removeClass('active');
-        } else if (selectedMaterial.length <= 0) {
+            box.find('.actions i').removeClass('fa-check-square-o').addClass('fa-square-o');
+        } else if (selectedBox.length <= 0) {
 
             // append material input
-            $($('<div></div>').html($('.template').html().replace(/new_nested_item/g, new Date().getTime())).text()).appendTo('.items')
-                .addClass('material_id_' + $(this).data('material_id'))
-                .val($(this).data('material_id'));
+            $($('<div></div>').html($('.template').html().replace(/new_nested_item/g, new Date().getTime())).text()).appendTo(selectBoxes.find('.items'))
+                .addClass(selectBoxes.data('name') + '_' + $(this).data('id'))
+                .val($(this).data('id'));
             box.addClass('active');
+            box.find('.actions i').removeClass('fa-square-o').addClass('fa-check-square-o');
         }
     });
 
     $('.select-box-paginate a').on('click', function(e){
         e.preventDefault();
         var thisButton = $(this);
+        var selectBoxes = thisButton.closest('.select-boxes');
         $.ajax({
             url: thisButton.attr('href').replace('new', 'material'),
             type: 'GET',
             dataType: 'html',
             success: function(data, textStatus, jqXHR) {
                 var selectedMaterials = [];
-                $('.select-boxes').html(data);
-                $('input.material_id').each(function(index, materialInput){
+                selectBoxes.find('.box-content').html(data);
+                selectBoxes.find('input.' + selectBoxes.data('name')).each(function(index, materialInput){
                     selectedMaterials.push(parseInt(materialInput.value, 10));
                 });
-
                 console.log(selectedMaterials);
-
-                $('.select-box .box-header').each(function(index, boxHeader){
-                    console.log($(boxHeader).data('material_id'));
-                    if (selectedMaterials.indexOf($(boxHeader).data('material_id')) > -1) {
-                        $(this).parent('.box').addClass('active');
+                selectBoxes.find('.box-header').each(function(index, boxHeader){
+                    // console.log($(boxHeader).data('material_id'));
+                    if (selectedMaterials.indexOf($(boxHeader).data('id')) > -1) {
+                        $(this).parent('.box').addClass('active').find('.actions i').removeClass('fa-square-o').addClass('fa-check-square-o');
                     }
                 });
 
@@ -96,13 +99,86 @@ var initChangeFee = function() {
 
 // Aside Menu
 var initAsideMenu = function() {
-    $(".aside-menu-switch, #btnHideAsideMenu, .navbar-toggle-aside-menu").click(function(){
-        var asideMenu = $("#asideMenu");
-        if($('.aside-menu-in').length <= 0){
-            $("body").addClass("aside-menu-in");
-        } else {
-            $("body").removeClass("aside-menu-in");
+    $('.aside-menu-switch, .navbar-toggle-aside-menu').on('click', function(e){
+        if ($(this).attr('href') == '#') {
+            e.preventDefault();
         }
-        return false;
+        $('.wrapper').toggleClass('col-md-pull-3 col-sm-pull-6 col-xs-pull-10 right-0');
+        $('body').toggleClass('aside-menu-in');
+        $('.aside-menu-switch').toggleClass('active');
+    });
+};
+
+var iniCalendarModel = function(){
+
+    setDraggableEvents = function() {
+        return $("#events .external-event").each(function() {
+            var eventObject;
+            eventObject = {
+                title: $.trim($(this).text())
+            };
+            $(this).data("eventObject", eventObject);
+            return $(this).draggable({
+                zIndex: 999,
+                revert: true,
+                revertDuration: 0
+            });
+        });
+    };
+
+    setDraggableEvents();
+
+    var calendar = $(".full-calendar-demo");
+
+    var cal = calendar.fullCalendar({
+        header: {
+            center: "title",
+            left: "basicDay,basicWeek,month",
+            right: "prev,today,next"
+        },
+        buttonText: {
+            prev: "<span class=\"fa fa-chevron-left\"></span>",
+            next: "<span class=\"fa fa-chevron-right\"></span>",
+            today: "今天",
+            basicDay: "日",
+            basicWeek: "週",
+            month: "月"
+        },
+        droppable: false,
+        editable: false,
+        selectable: false,
+        select: function(start, end, allDay) {
+            return bootbox.prompt("Event title", function(title) {
+                if (title !== null) {
+                    cal.fullCalendar("renderEvent", {
+                        title: title,
+                        start: start,
+                        end: end,
+                        allDay: allDay
+                    }, true);
+                    return cal.fullCalendar('unselect');
+                }
+            });
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+
+        },
+        drop: function(date, allDay) {
+
+        },
+        events: calendar.data('url')
+    });
+
+    $('#calendar-modal').on('shown.bs.modal', function(){
+        calendar.fullCalendar('render');
+    });
+
+    return cal;
+};
+
+var initOffcanvas = function(){
+    $('[data-toggle=offcanvas]').on('click', function(e){
+        e.preventDefault();
+        $('.row-offcanvas').toggleClass('active');
     });
 };

@@ -1,0 +1,14 @@
+.mobile-navigation {
+  height: 100%;
+  overflow-y: scroll;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background: #FFF;
+  opacity: 0;
+  transition: all 200ms;
+}
+
+.mobile-navigation-in .mobile-navigation {
+  opacity: 1;
+}

@@ -1,17 +1,17 @@
 <% subtotal = 0 %>
-<section id="asideMenu" class="aside-menu" data-no-turbolink="data-no-turbolink">
+<section id="asideMenu" class="col-md-3 col-sm-6 col-xs-10 aside-menu" data-no-turbolink="data-no-turbolink">
   <div class="row">
     <div class="col-md-12">
       <div class="box">
         <div class="box-header">
           <div class="title">
-            <i class="icon-shopping-cart">
+            <i class="fa fa-shopping-cart">
               <span style="margin-left:10px;"><%= t('header.navigation.cart') %></span>
             </i>
           </div>
           <div class="actions">
-            <button id="btnHideAsideMenu" class="btn btn-close pull-right" type="button" title="Hide sidebar">
-              <i class="icon-remove"></i>
+            <button class="btn btn-close pull-right navbar-toggle-aside-menu" type="button">
+              <i class="fa fa-times"></i>
             </button>
           </div>
         </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-6">
                   <%= link_to(order_product_path(order_product), class: 'btn pull-right', method: :delete) do %>
-                    <i class="icon-remove"></i>
+                    <i class="fa fa-times"></i>
                   <% end %>
                   <h4>
                     <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
@@ -65,7 +65,7 @@
                 <h4 class="text-right margin-bottom-20">
                   總金額: <%= number_to_currency(subtotal) %>
                 </h4>
-                <%= link_to '去結算', cart_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect', style: 'color:#FFF;' %>
+                <%= link_to '去結算', cart_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect navbar-toggle-aside-menu', style: 'color:#FFF;' %>
               </div>
             </div>
           </div>

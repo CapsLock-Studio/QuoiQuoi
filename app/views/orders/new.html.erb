@@ -1,5 +1,5 @@
 <%= render 'layouts/breadcrumbs', title: t('check_out') %>
-<div class="container">
+<div class="container main-container">
   <div class="row">
     <div class="col-md-12 reg-page">
       <div class="item">
@@ -91,7 +91,7 @@
                           <% @subtotal += order_product.product.price %>
                           <tr>
                             <td>
-                              <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
+                              <%= image_tag order_product.product.image.url(:thumb) %>
                             </td>
                             <td>
                               <h5>
@@ -107,7 +107,7 @@
                           <% @subtotal += order_custom_item.price %>
                           <tr>
                             <td>
-                              <%= image_tag order_custom_item.image.url(:thumb), class: 'img-responsive' %>
+                              <%= image_tag order_custom_item.image.url(:thumb) %>
                             </td>
                             <td>
                               <h5>

@@ -1,0 +1,65 @@
+<div class="headline"><h2><%= t('contact_hint') %></h2></div>
+<%= form_for @contact_us, url: contacts_path, html: {class: 'form validate-form'} do |f| %>
+  <% if flash[:message] %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <div class="alert alert-success">
+          <%= flash[:message] %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group">
+        <%= f.label :name do %>
+          <%= t('your_name') %>&nbsp;<span class="text-danger">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.text_field :name, value: flash[:name], class: 'form-control', data: {'rule-required' => true} %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div class="form-group">
+        <%= f.label :email do %>
+          Email&nbsp;<span class="text-danger">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.text_field :email, value: flash[:email], class: 'form-control', data: {'rule-required' => true, 'rule-email' => true} %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="form-group">
+        <%= f.label :content do %>
+          <%= t('message') %>&nbsp;<span class="text-danger">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.text_area :content, value: flash[:content], class: 'form-control', data: {'rule-required' => true}, rows: 8 %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="form-group">
+        <%= f.button type: 'submit', class: 'btn btn-lg btn-default btn-block hover-effect', data: {'rule-required' => true} do %>
+          <i class="fa fa-edit fa-fw"></i>
+          送出訊息
+        <% end %>
+      </div>
+      <%= recaptcha_tags ajax: true %>
+      <div class="has-error text-danger">
+        <%= flash[:recaptcha_error] %>
+      </div>
+    </div>
+  </div>
+<% end %>

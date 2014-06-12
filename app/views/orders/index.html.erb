@@ -1,14 +1,17 @@
 <%= render 'layouts/breadcrumbs' %>
-<div class="container">
-  <div class="row">
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-md-9">
+    <div class="col-sm-9">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+      </div>
       <% @orders.each do |order| %>
         <div class="box">
           <div class="box-header box-header-small grey-background">
             <h4>
-              訂單編號: <strong class="text-muted"><%= order.id %></strong>
-              <small class="order-time">建立時間: <strong><%= order.checkout_time.strftime('%Y/%m/%d %H:%M') %></strong></small>
+              <%= t('number') %> <strong class="text-muted"><%= order.id %></strong>
+              <small class="order-time"><%= t('build_time') %>: <strong><%= order.checkout_time.strftime('%Y/%m/%d %H:%M') %></strong></small>
             </h4>
           </div>
           <div class="box-content box-no-padding" style="border:0;">
@@ -20,28 +23,28 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td class="text-left col-md-6">
+                    <td class="text-left col-md-6 hidden-xs">
                       <% order.order_products.each do |order_product| %>
                         <%= image_tag order_product.product.image.url(:thumb) %>
                       <% end %>
                     </td>
                     <td>
                       <% if order.closed? %>
-                        交易完成
+                        <%= t('order.completed') %>
                       <% elsif order.paid? %>
                         <% if order.payment.completed? %>
                           <% if order.delivered? %>
-                            等待收貨
+                            <%= t('order.wait_receiving') %>
                           <% else %>
-                            等待配送
+                            <%= t('order.wait_shipping') %>
                           <% end %>
                         <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
-                          等待匯款
+                          <%= t('order.wait_remittance') %>
                         <% else %>
-                          等待確認
+                          <%= t('order.wait_confirm') %>
                         <% end %>
                       <% else %>
-                        等待付款
+                        <%= t('order.wait_paying') %>
                       <% end %>
                     </td>
                     <td>
@@ -51,26 +54,26 @@
                       <ul class="list-unstyled">
                         <% if order.closed? %>
                           <li>
-                            <%= link_to '訂單詳細', close_order_path(order) %>
+                            <%= link_to t('detail'), close_order_path(order) %>
                           </li>
                         <% else %>
                           <% if order.paid? %>
                             <% if !order.payment.completed? && (order.payment.amount == 0 || order.payment.identifier.blank?) %>
                               <li>
-                                <%= link_to '回報', edit_payment_path(order.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                                <%= link_to t('order.advice'), edit_payment_path(order.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
                               </li>
                             <% elsif order.delivered? %>
                               <li>
-                                <%= link_to '收貨', close_order_path(order), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
+                                <%= link_to t('order.received'), close_order_path(order), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
                               </li>
                             <% end %>
                           <% else %>
                             <li>
-                              <%= link_to '付款', pay_order_path(order), class: 'btn btn-u btn-u-orange hover-effect' %>
+                              <%= link_to t('pay'), pay_order_path(order), class: 'btn btn-u btn-u-orange hover-effect' %>
                             </li>
                           <% end %>
                           <li>
-                            <%= link_to '訂單詳細', order_path(order) %>
+                            <%= link_to t('detail'), order_path(order) %>
                           </li>
                         <% end %>
                       </ul>

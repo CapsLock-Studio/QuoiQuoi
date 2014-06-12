@@ -1,10 +1,15 @@
-<div class="col-md-3">
-  <ul class="list-group sidebar-nav-v1" data-toggle="tooltip" data-placement="top" title="點選日曆圖示開啟該月份課程表">
+<div class="col-sm-3 col-xs-6 sidebar-offcanvas">
+  <ul class="list-group sidebar-nav-v1" data-toggle="tooltip" data-placement="top" title="<%= t('calendar_hint') %>">
+    <%= nav_item(courses_path, {rule: /month=recent$/,class: 'list-group-item'}) do %>
+      <%= link_to(courses_path(month: 'recent')) do %>
+        <%= t('recent_course') %>
+      <% end %>
+    <% end %>
     <% 12.times do |index| %>
       <%= nav_item(courses_path(month: index + 1), {rule: /month=#{index + 1}$/, class: 'list-group-item'}) do %>
         <%= link_to(courses_path(month: index + 1)) do %>
-          <span><%= index + 1 %>月</span>
-          <i class="icon-calendar pull-right show-calendar" data-url="<%= courses_path(format: :json) %>" data-month="<%= index + 1 %>"></i>
+          <span><%= t("month_#{index + 1}") %></span>
+          <i class="fa fa-calendar pull-right show-calendar hidden-xs" data-month="<%= index + 1 %>"></i>
         <% end %>
       <% end %>
     <% end %>

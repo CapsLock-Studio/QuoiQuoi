@@ -1,8 +1,8 @@
 class CreateContactTranslates < ActiveRecord::Migration
   def change
     create_table :contact_translates do |t|
-      t.references :contact, index: true
-      t.references :locale, index: true
+      t.references :contact, show: true
+      t.references :locale, show: true
       t.string :email
       t.string :phone
       t.string :mobile

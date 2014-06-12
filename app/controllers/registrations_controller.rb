@@ -2,15 +2,15 @@ class RegistrationsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create, :pay_show]
 
   def index
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registrations')
 
     @registrations = Registration.where(closed: false, user_id: current_user.id)
   end
 
   def close_index
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb '已結束課程'
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('course.past')
 
     @registrations = Registration.where(closed: true, user_id: current_user.id)
 
@@ -21,7 +21,7 @@ class RegistrationsController < ApplicationController
 
   # GET /registration
   def new
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
     add_breadcrumb t('register')
 
     course = Course.find(params[:course_id])
@@ -50,7 +50,7 @@ class RegistrationsController < ApplicationController
   end
 
   def pay_show
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
     add_breadcrumb t('register'), :registrations_path
     add_breadcrumb t('payment')
 

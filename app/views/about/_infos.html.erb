@@ -1,21 +1,17 @@
 <% if @contact %>
   <ul class="list-unstyled who">
     <li>
-      <i class="icon-home"></i>
+      <i class="fa fa-home fa-fw"></i>
       <span><%= @contact.address %></span>
     </li>
     <li>
-      <%= mail_to @contact.email, style: 'margin-left: 2px;' do %>
-        <i class="icon-envelope-alt"></i>
+      <%= mail_to @contact.email do %>
+        <i class="fa fa-envelope-o fa-fw"></i>
         <span><%= @contact.email %></span>
       <% end %>
     </li>
     <li>
-      <i class="icon-mobile-phone" style="padding:0 3px;"></i>
-      <span><%= @contact.mobile %></span>
-    </li>
-    <li>
-      <i class="icon-phone"></i>
+      <i class="fa fa-phone fa-fw"></i>
       <span><%= @contact.phone %></span>
     </li>
   </ul>

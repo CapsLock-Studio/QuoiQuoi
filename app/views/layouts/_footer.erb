@@ -3,7 +3,7 @@
     <div class="col-md-3 md-margin-bottom-40">
       <!-- About -->
       <div class="headline">
-        <h2><%= t('header.navigation.contact') %></h2>
+        <h2><%= t('contact') %></h2>
       </div>
       <%= render 'about/infos' %>
     </div>
@@ -31,7 +31,7 @@
         <% Area.where(locale_id: session[:locale_id]).each do |area| %>
           <li>
             <div class="dropdown">
-              <a data-toggle="dropdown" class="btn-block" href="#"><%= area.name %><i class="icon-angle-down pull-right"></i></a>
+              <a data-toggle="dropdown" class="btn-block" href="#"><%= area.name %><i class="fa fa-angle-down fa-fw pull-right"></i></a>
               <ul class="dropdown-menu pull-right">
                 <% area.travel_informations.order(created_at: :desc).limit(5).each do |travel_information| %>
                   <li>

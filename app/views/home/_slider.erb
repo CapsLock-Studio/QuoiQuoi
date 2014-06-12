@@ -1,4 +1,4 @@
-<!--=== Slider ===-->
+
 <div class="fullwidthbanner-container">
   <div class="fullwidthbanner">
     <ul>
@@ -11,7 +11,7 @@
         <% slide.slide_translates.where(locale_id: session[:locale_id]).each do |translate| %>
           <% descriptions = translate.description.split(/\n/) %>
           <% descriptions.each_with_index do |description, index| %>
-            <div class="caption large_text sft"
+            <div class="caption large_text sft hidden-xs"
                  data-x="<%= slide.slide_position.position if slide.slide_position %>"
                  data-y="<%= (190 + 40 * index) %>"
                  data-speed="300"
@@ -21,7 +21,7 @@
             </div>
           <% end %>
           <% unless slide.link.blank? %>
-            <div class="caption large_text sfr"
+            <div class="caption large_text sfr hidden-xs"
                  data-x="<%= slide.slide_position.position %>"
                  data-y="<%= 200 + 40 * descriptions.length %>"
                  data-speed="300"
@@ -38,4 +38,3 @@
     <div class="tp-bannertimer tp-bottom"></div>
   </div>
 </div>
-<!--=== End Slider ===-->
