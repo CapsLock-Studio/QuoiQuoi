@@ -14,6 +14,6 @@ class OrderCustomItem < ActiveRecord::Base
   accepts_nested_attributes_for :order_custom_item_materials
   accepts_nested_attributes_for :order_custom_item_product_custom_items
 
-  has_attached_file :image, styles: {thumb: '100x75#', medium: '500x375#', large: '1000x750#'}, default_url: '/system/none-:style.gif'
+  has_attached_file :image, styles: {thumb: '100x75#', medium: '500x375#', large: '1000x750#'}, default_url: '/assets/none-:style.gif'
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 end
