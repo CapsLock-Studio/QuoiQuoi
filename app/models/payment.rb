@@ -67,7 +67,7 @@ class Payment < ActiveRecord::Base
     if amount > 0
       Paypal::Payment::Request.new(
           currency_code: :TWD,
-          description: 'QuoiQuoi Studio',
+          description: '布知道(QuoiQuoi)工作室',
           quantity: 1,
           amount: amount
       )

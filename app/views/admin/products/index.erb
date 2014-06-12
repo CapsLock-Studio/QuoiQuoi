@@ -26,6 +26,7 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
+                  <th>編號</th>
                   <th></th>
                   <th>商品名稱</th>
                   <th>現存數量</th>
@@ -37,8 +38,11 @@
                   <% @products.each do |product| %>
                     <tr>
                       <td>
-                        <div class="preview" style="width:100px;height:75px;">
-                          <%= image_tag product.image.url(:thumb) %>
+                        <%= product.id %>
+                      </td>
+                      <td>
+                        <div class="preview">
+                          <%= image_tag product.image.url(:thumb), style: 'height:75px;' %>
                         </div>
                       </td>
                       <td>
@@ -52,6 +56,9 @@
                       </td>
                       <td>
                         <div class='text-right'>
+                          <%= link_to(admin_product_product_custom_items_path(product), class: 'btn btn-md') do %>
+                            現貨修改可選項目
+                          <% end %>
                           <%= link_to(edit_admin_product_path(product), class: 'btn btn-md') do %>
                             <i class='icon-pencil'></i>
                           <% end %>

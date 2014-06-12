@@ -1,69 +1,74 @@
 <%= render 'layouts/breadcrumbs' %>
-<div class="container">
-  <div class="row">
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-md-9">
-      <% @order_custom_items.each do |order_custom_item| %>
-        <div class="box">
-          <div class="box-header box-header-small grey-background">
-            <h4>
-              訂製要求編號: <strong class="text-muted"><%= order_custom_item.id %></strong>
-              <small class="order-time">建立時間: <strong><%= order_custom_item.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
-            </h4>
-          </div>
-          <div class="box-content box-no-padding" style="border:0;">
-            <div class="responsive-table">
-              <div class="scrollable-area">
-                <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
-                  <thead>
+    <div class="col-md-9 col-sm-9">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12">
+          <% @order_custom_items.each do |order_custom_item| %>
+            <div class="box">
+              <div class="box-header box-header-small grey-background">
+                <h4>
+                  <%= t('number') %> <strong class="text-muted"><%= order_custom_item.id %></strong>
+                  <br class="visible-xs" /><small class="order-time"><%= t('build_time') %>: <strong><%= order_custom_item.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
+                </h4>
+              </div>
+              <div class="box-content box-no-padding" style="border:0;">
+                <div class="responsive-table">
+                  <div class="scrollable-area">
+                    <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
+                      <thead>
 
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td class="text-left col-md-6">
-                      <% if order_custom_item.product %>
-                        <%= image_tag(order_custom_item.product.image.url(:thumb)) %>
-                      <% end %>
-                      <% order_custom_item.order_custom_item_images.each do |image| %>
-                        <%= image_tag image.image.url(:thumb) %>
-                      <% end %>
-                      <% order_custom_item.order_custom_item_materials.each do |material| %>
-                        <%= image_tag material.material.image.url(:thumb) %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if order_custom_item.product %>
-                        現貨客製化修改
-                      <% else %>
-                        完全客製化
-                      <% end %>
-                    </td>
-                    <td>
-                      <%= render 'status', order_custom_item: order_custom_item %>
-                    </td>
-                    <td>
-                      <%= (order_custom_item.price)? number_to_currency(order_custom_item.price) : '尚未估價' %>
-                    </td>
-                    <td>
-                      <ul class="list-unstyled">
-                        <% if order_custom_item.accept && order_custom_item.price && !order_custom_item.order %>
-                          <li>
-                            <%= link_to '下單', order_custom_item_path(order_custom_item), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
-                          </li>
-                        <% end %>
-                        <li>
-                          <%= link_to '內容詳細', order_custom_item_path(order_custom_item) %>
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td class="text-left col-md-6 hidden-xs">
+                          <% if order_custom_item.product %>
+                            <%= image_tag(order_custom_item.product.image.url(:thumb)) %>
+                          <% end %>
+                          <% order_custom_item.order_custom_item_images.each do |image| %>
+                            <%= image_tag image.image.url(:thumb) %>
+                          <% end %>
+                          <% order_custom_item.order_custom_item_materials.each do |material| %>
+                            <%= image_tag material.material.image.url(:thumb) %>
+                          <% end %>
+                        </td>
+                        <td class="hidden-xs">
+                          <% if order_custom_item.product %>
+                            <%= t('customize') %>
+                          <% else %>
+                            <%= t('personalize_s') %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <%= render 'status', order_custom_item: order_custom_item %>
+                        </td>
+                        <td>
+                          <%= (order_custom_item.price)? number_to_currency(order_custom_item.price) : '-' %>
+                        </td>
+                        <td>
+                          <ul class="list-unstyled">
+                            <% if order_custom_item.accept && order_custom_item.price && !order_custom_item.order %>
+                              <li>
+                                <%= link_to t('buy'), order_custom_item_path(order_custom_item), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
+                              </li>
+                            <% end %>
+                            <li>
+                              <%= link_to t('detail'), order_custom_item_path(order_custom_item) %>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>

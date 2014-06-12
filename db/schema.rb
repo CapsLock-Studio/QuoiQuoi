@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526154614) do
+ActiveRecord::Schema.define(version: 20140612083426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 20140526154614) do
     t.integer  "locale_id"
     t.string   "email"
     t.string   "phone"
-    t.string   "mobile"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "business_hour"
@@ -148,6 +147,14 @@ ActiveRecord::Schema.define(version: 20140526154614) do
 
   add_index "contact_translates", ["contact_id"], name: "index_contact_translates_on_contact_id", using: :btree
   add_index "contact_translates", ["locale_id"], name: "index_contact_translates_on_locale_id", using: :btree
+
+  create_table "contact_us", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contacts", force: true do |t|
     t.datetime "created_at"
@@ -290,6 +297,8 @@ ActiveRecord::Schema.define(version: 20140526154614) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "currency_code"
+    t.string   "money_name"
   end
 
   create_table "material_translates", force: true do |t|
@@ -361,6 +370,16 @@ ActiveRecord::Schema.define(version: 20140526154614) do
 
   add_index "order_custom_item_materials", ["material_id"], name: "index_order_custom_item_materials_on_material_id", using: :btree
   add_index "order_custom_item_materials", ["order_custom_item_id"], name: "index_order_custom_item_materials_on_order_custom_item_id", using: :btree
+
+  create_table "order_custom_item_product_custom_items", force: true do |t|
+    t.integer  "order_custom_item_id"
+    t.integer  "product_custom_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_custom_item_product_custom_items", ["order_custom_item_id"], name: "order_custom_item_on_product_custom_item", using: :btree
+  add_index "order_custom_item_product_custom_items", ["product_custom_item_id"], name: "product_custom_item_order_custom_item", using: :btree
 
   create_table "order_custom_items", force: true do |t|
     t.integer  "order_id"

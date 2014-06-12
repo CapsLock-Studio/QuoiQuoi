@@ -3,15 +3,15 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('order_in_trading'), :orders_path
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('order.in_trading'), :orders_path
 
     @orders = Order.where(closed: false, checkout: true, user_id: current_user.id, canceled: false)
   end
 
   def new
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb I18n.t('header.navigation.cart'), :cart_path
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb I18n.t('cart'), :cart_path
     add_breadcrumb I18n.t('check_out')
 
     @subtotal = 0
@@ -20,9 +20,9 @@ class OrdersController < ApplicationController
 
   # GET /orders/1
   def show
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('order_in_trading'), :orders_path
-    add_breadcrumb '訂單詳細'
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('order.in_trading'), :orders_path
+    add_breadcrumb t('detail')
   end
 
   # PUT/PATCH /orders/1
@@ -76,8 +76,8 @@ class OrdersController < ApplicationController
 
   # GET /orders/close
   def close_index
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('closed_order')
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('order.closed')
     @orders = Order.where(closed: true)
 
     respond_to do |format|
@@ -87,9 +87,9 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/close
   def close_show
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('closed_order'), :close_orders_path
-    add_breadcrumb '訂單詳細'
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('order.closed'), :close_orders_path
+    add_breadcrumb t('detail')
 
     respond_to do |format|
       format.html {render action: :show}

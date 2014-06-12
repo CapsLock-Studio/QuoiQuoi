@@ -1,28 +1,39 @@
-<%= render 'layouts/breadcrumbs', title: t('header.navigation.handmadebag') %>
-<div class="container">
-  <div class="row">
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'side_navigation' %>
-    <div class="col-md-9">
+    <div class="col-sm-9">
       <div class="row margin-bottom-40">
-        <div class="col-md-6">
+        <%= render 'layouts/nav_item' %>
+        <div class="col-sm-6 col-xs-12">
           <div class="row">
-            <div class="col-sm-12">
-              <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path @order_product.product.image.url(:large) %>">
-                <span class="overlay-zoom main-image">
-                  <%= image_tag @order_product.product.image.url(:medium), class: 'img-responsive' %>
-                  <div class="zoom-icon"></div>
-                </span>
-              </a>
-            </div>
-            <% @order_product.product.product_images.each do |product_image| %>
-              <div class="col-sm-4" style="margin-top:15px;">
-                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="Project Title" href="<%= asset_path product_image.image.url(:large) %>">
-                <span class="overlay-zoom">
-                  <%= image_tag product_image.image.url(:medium), class: 'img-responsive' %>
-                  <div class="zoom-icon"></div>
-                </span>
+            <div class="col-xs-12 nopadding">
+              <div class="well-sm" style="margin-top:0;padding-top:0;">
+                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path @order_product.product.image.url(:large) %>">
+                  <span class="overlay-zoom main-image">
+                    <%= image_tag @order_product.product.image.url(:medium), class: 'img-responsive' %>
+                    <div class="zoom-icon"></div>
+                  </span>
                 </a>
               </div>
+            </div>
+            <a href="#" class="col-xs-4 nopadding"
+               data-toggle="preview-change"
+               data-large="<%= asset_path @order_product.product.image.url(:large) %>"
+               data-medium="<%= asset_path @order_product.product.image.url(:medium) %>">
+              <div class="well-sm">
+                <%= image_tag @order_product.product.image.url(:thumb), class: 'img-responsive' %>
+              </div>
+            </a>
+            <% @order_product.product.product_images.each do |product_image| %>
+              <a href="#" class="col-xs-4 nopadding"
+                 data-toggle="preview-change"
+                 data-large="<%= asset_path product_image.image.url(:large) %>"
+                 data-medium="<%= asset_path product_image.image.url(:medium) %>">
+                <div class="well-sm">
+                  <%= image_tag product_image.image.url(:thumb), class: 'img-responsive' %>
+                </div>
+              </a>
             <% end %>
           </div>
           <div class="row">
@@ -33,17 +44,12 @@
             <% end %>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6 col-xs-12">
           <%= form_for @order_product do |f| %>
             <%= f.hidden_field :product_id %>
             <% @order_product.product.product_translates.select([:name, :description]).where(locale_id: session[:locale_id]).each do |translate| %>
               <div class="row">
                 <div class="col-md-12 margin-bottom-50">
-                  <ul class="social-icons pull-right">
-                    <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
-                    <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
-                    <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
-                  </ul>
                   <h3 style="color:#666;">
                     <strong>
                       <%= translate.name %>
@@ -58,26 +64,29 @@
                 </div>
                 <div class="col-md-12 margin-bottom-50">
                   <h4 class="margin-bottom-20">
-                    <strong style="color:#666;" id="product-price" data-price="<%= @order_product.product.price %>"><%= number_to_currency(@order_product.product.price) %></strong>
+                    <strong style="color:#666;" id="product-price" data-price="<%= @order_product.product.price %>"><%= "#{t('money_name')}#{number_to_currency(@order_product.product.price)}" %></strong>
                   </h4>
                   <% if @order_product.product.quantity > 0 %>
                     <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
                       <i class="icon-shopping-cart"></i>
-                      <span>加到購物車</span>
+                      <span><%= t('add_to_cart') %></span>
                     <% end %>
                   <% else %>
                     <%= link_to '#', class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;' do %>
                       <i class="icon-shopping-cart"></i>
-                      <span>目前無存貨</span>
+                      <span><%= t('not_in_stock') %></span>
                     <% end %>
                   <% end %>
                 </div>
-                <div class="col-md-12">
-                  <h5>覺得這個包很棒，不過想要特別的修改嗎？</h5>
+                <div class="col-md-12 margin-bottom-10">
+                  <h5><%= t('customize_hint') %></h5>
                   <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
                     <i class="icon-edit"></i>
-                    <span>提出你的需求</span>
+                    <span><%= t('customize') %></span>
                   <% end %>
+                </div>
+                <div class="col-md-12">
+                  <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@order_product.product.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
                 </div>
               </div>
             <% end %>
@@ -86,30 +95,28 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <!-- Recent Works -->
           <div class="headline">
-            <h2>其他商品</h2>
+            <h2><%= t('product.other_products') %></h2>
           </div>
           <div class="margin-bottom-40">
-            <ul id="list" class="bxslider recent-work">
+            <ul id="list" class="bxslider">
               <% @other_products.each do |product| %>
                 <li>
                   <%= link_to_with_product_type product do %>
                     <em class="overflow-hidden">
-                      <%= image_tag product.image.url(:medium), style: 'width:100%;' %>
+                      <%= image_tag product.image.url(:small), style: 'width:100%;' %>
                     </em>
                     <span>
                         <strong>
                           <%= product.product_translates.where(locale_id: session[:locale_id]).first.name %>
                         </strong>
-                        <i><%= number_to_currency(product.price) %></i>
+                        <i><%= "#{t('money_name')}#{number_to_currency(product.price)}" %></i>
                     </span>
                   <% end %>
                 </li>
               <% end %>
             </ul>
           </div><!--/row-->
-          <!-- End Recent Works -->
         </div>
       </div>
     </div>

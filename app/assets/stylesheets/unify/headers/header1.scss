@@ -1,67 +1,26 @@
 /*Top Bar (login, search etc.)
 ------------------------------------*/
-.top {
-	padding-top: 3px;
-}
-
-.top ul.loginbar {
-	margin: 0;
-	padding: 0;
-	z-index: 9999;
-	position: relative;
-}
-
-.top ul.loginbar > li {
-	display: inline;
-	list-style: none;
-	padding-bottom: 15px;
-  margin: 0 5px;
-}
-
-.top ul.loginbar > li > a, 
-.top ul.loginbar > li > a:hover {
-	color: #7c8082;
-	font-size: 11px;
-	text-transform: uppercase;
-	font-family: 'Open Sans', sans-serif;
-}
-
-.top ul.loginbar li.devider { 
-	top: -1px;
-	padding: 0;
-	font-size: 8px;
-	position: relative;
-	margin: 0 9px 0 5px;
-	font-family: Tahoma;
-	border-right: solid 1px #bbb;
-}
-
-.top ul.loginbar li i.icon-globe { 
-	color: #bbb;
-}
 
 /*Lenguages*/
-.top ul.lenguages {
-	top: 25px;
-	left: -5px;
+.top ul.languages {
+	top: 20px;
 	display: none;
 	padding: 4px 0;
-	padding-left: 0; 
+	z-index: 999;
 	list-style: none;
 	min-width: 100px;
 	position: absolute;
 	background: #f0f0f0;
 }
 
-.top li:hover ul.lenguages {
+.top:hover ul.languages, ul.languages:hover {
 	display: block;
 }
 
-.top ul.lenguages:after {
+.top ul.languages:after {
 	top: -4px;
 	width: 0; 
 	height: 0;
-	left: 8px;
 	content: " "; 
 	display: block; 
 	position: absolute;
@@ -71,29 +30,33 @@
 	border-left-style: inset; /*FF fixes*/
 	border-right-style: inset; /*FF fixes*/
 }
-
-.top ul.lenguages li a {
-	color: #555;
-	display: block;
-	font-size: 10px;
-	padding: 2px 12px;
-	margin-bottom: 1px;
-	text-transform: uppercase; 
-	font-family:'Open Sans', sans-serif;	
+.top ul.languages{
+  li {
+    float:none;
+    a{
+      color: #555;
+      display: block;
+      font-size: 10px;
+      padding: 2px 12px;
+      margin-bottom: 1px;
+      text-transform: uppercase;
+      font-family:'Open Sans', sans-serif;
+    }
+  }
 }
 
-.top ul.lenguages li.active a i {
+.top ul.languages li.active a i {
 	color: #999;
 	float: right;
 	margin-top: 2px;
 }
 
-.top ul.lenguages li a:hover, 
-.top ul.lenguages li.active a {
+.top ul.languages li a:hover,
+.top ul.languages li.active a {
 	background: #fafafa;
 }
 
-.top ul.lenguages li a:hover {
+.top ul.languages li a:hover {
 	text-decoration: none; 
 }
 
@@ -130,10 +93,10 @@
 /*Navbar*/
 .header .navbar-default .navbar-nav > li > a {
 	color: #687074;
-	font-size: 15px;
-	font-weight:400;
-	padding: 9px 20px;
+	font-weight: bolder;
+	padding: 8px 12px;
 	text-transform: uppercase;
+  font-size: 16px;
 }
 
 .header .navbar-default .navbar-nav > .active > a {
@@ -153,21 +116,6 @@
 	margin: 0 !important;
 }
 
-/*Navber Toggle*/
-.navbar-toggle,
-.navbar-default .navbar-toggle:hover, 
-.navbar-default .navbar-toggle:focus {
-	background: #72c02c;
-}
-
-.navbar-toggle:hover {
-	background: #5fb611 !important;
-}
-
-.navbar-default .navbar-toggle {
-	border-color: #5fb611;
-}
-
 .navbar-default .navbar-toggle .icon-bar {
 	background: #fff;
 }
@@ -175,7 +123,7 @@
 /*Serach Box*/
 .header .navbar .search-open {
 	right: 0; 
-	top: 50px; 
+	top: 72px;
 	display: none;
 	padding: 14px; 
 	position: absolute;
@@ -187,7 +135,7 @@
 .header .navbar .nav > li > a.search {
 	color: #aaa;
 	cursor: pointer;
-	padding: 8px 8px 10px;
+	padding: 8px;
 	border-bottom-color: #aaa;
 	background: #f7f7f7 !important;
 }
@@ -225,7 +173,6 @@
 	/*Navbar*/
 	.header .navbar-nav {
 		top: 2px;
-		margin-top: 10px;
 		position: relative;
 	}
 
@@ -307,4 +254,16 @@
 		box-shadow: none;
 		background: none; 
 	}	
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .header .navbar-nav {
+    margin-top: 5px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header .navbar-nav {
+    margin-top: 10px;
+  }
 }

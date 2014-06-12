@@ -4,16 +4,16 @@ class OrderCustomItemsController < ApplicationController
 
   # GET /order_custom_items
   def index
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('my_order_request'), :order_custom_items_path
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('custom_order.my'), :order_custom_items_path
 
-    @order_custom_items = OrderCustomItem.where(canceled: false)
+    @order_custom_items = OrderCustomItem.where(canceled: false, user_id: current_user.id)
   end
 
   def show
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('my_order_request'), :order_custom_items_path
-    add_breadcrumb t('order_request_detail')
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('custom_order.my'), :order_custom_items_path
+    add_breadcrumb t('detail')
   end
 
   # GET /order_custom_items/material
@@ -26,15 +26,21 @@ class OrderCustomItemsController < ApplicationController
 
   # GET /order_custom_items/new
   def new
-    add_breadcrumb t('header.navigation.home'), root_path
-    add_breadcrumb t('header.navigation.order_request')
+    add_breadcrumb t('home'), root_path
+    add_breadcrumb t('personalize')
 
     respond_to do |format|
       @materials = Material.all.page(params[:page]).per(16)
 
+      if params[:product_id]
+        @product_custom_items = ProductCustomItem.where(product_id: params[:product_id]).page(params[:page]).per(16)
+      else
+        @order_information = OrderInformation.where(locale_id: session[:locale_id])
+      end
+
       format.html do
         @order_custom_item = OrderCustomItem.new(product_id: params[:product_id] ||= nil)
-        @order_information = OrderInformation.where(locale_id: session[:locale_id])
+        @order_custom_item.order_custom_item_images.build
       end
 
       format.json {}
@@ -100,7 +106,8 @@ class OrderCustomItemsController < ApplicationController
       params.require(:order_custom_item).permit(:id, :name, :product_id, :order_id, :design, :style, :material_id,
                                                 :description, :line, :phone, :image,
                                                 order_custom_item_images_attributes: [:id, :order_custom_item_id, :image],
-                                                order_custom_item_materials_attributes: [:id, :order_custom_item_id, :material_id])
+                                                order_custom_item_materials_attributes: [:id, :order_custom_item_id, :material_id],
+                                                order_custom_item_product_custom_items_attributes: [:id, :order_custom_item_id, :product_custom_item_id])
     end
 
     def set_order_custom_item

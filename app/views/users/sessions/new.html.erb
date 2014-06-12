@@ -5,20 +5,20 @@
       <div class="reg-page" style="border-top:0;">
         <div class="reg-header">
           <div class="text-center">
-            <h2>登入</h2>
-            <p>沒有帳號嗎? 按下 <span style="font-size:16px;"><%= link_to '註冊', new_user_registration_path, class: 'color-green' %></span> 或是使用下面的社群帳號登入帳號</p>
+            <h2><%= t('signin') %></h2>
+            <p><%= t('signin_hint', signup_link: link_to(new_user_registration_path, class: 'text-muted', style: 'font-size: 16px;'){"<i class=\"fa fa-pencil\">&nbsp;#{t('signup')}</i>".html_safe} ).html_safe %></p>
             <ul class="list-inline style-icons text-center">
               <li>
                 <%= link_to user_omniauth_authorize_path(:google_oauth2) do %>
-                  <i class="icon-google-plus icon-round icon-round-sm icon-bg-dark-orange hover-effect icon-hover"></i>
+                  <i class="fa fa-google-plus icon-round icon-round-md icon-bg-dark-orange hover-effect icon-hover"></i>
                 <% end %>
               </li>
               <li>
                 <%= link_to user_omniauth_authorize_path(:facebook) do %>
-                  <i class="icon-facebook icon-round icon-round-sm icon-bg-sea-blue hover-effect icon-hover"></i>
+                  <i class="fa fa-facebook icon-round icon-round-md icon-bg-sea-blue hover-effect icon-hover"></i>
                 <% end %>
               </li>
-              <li><a href="#"><i class="icon-twitter icon-round icon-round-sm icon-bg-blue hover-effect icon-hover"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter icon-round icon-round-md icon-bg-blue hover-effect icon-hover"></i></a></li>
             </ul>
           </div>
         </div>
@@ -29,16 +29,16 @@
               <div class="form-group">
                 <div class="controls margin-bottom-20">
                   <div class="input-group">
-                    <span class="input-group-addon"><i class="icon-user"></i></span>
-                    <%= f.email_field :email, class: 'form-control', 'placeholder' => '電子信箱', data: { 'rule-required' => 'true' } %>
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <%= f.email_field :email, class: 'form-control', 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="controls margin-bottom-20">
                   <div class="input-group">
-                    <span class="input-group-addon"><i class="icon-lock"></i></span>
-                    <%= f.password_field :password, class: 'form-control', 'placeholder' => '密碼', data: { 'rule-required' => 'true' } %>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                    <%= f.password_field :password, class: 'form-control', 'placeholder' => t('password_placeholder'), data: { 'rule-required' => 'true' } %>
                   </div>
                 </div>
               </div>
@@ -48,9 +48,12 @@
           <hr/>
           <div class="row">
             <div class="col-md-10 col-md-offset-1">
-              <%= f.button '登入', class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
-              <%= link_to '註冊', new_user_registration_path, class: 'pull-left' %>
-              <a href="#" class="pull-right">忘記密碼?</a>
+              <%= f.button t('signin'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+              <%= link_to new_user_registration_path, class: 'pull-left' do %>
+                <i class="fa fa-pencil fa-fw"></i>
+                <%= t('signup') %>
+              <% end %>
+              <a href="#" class="pull-right"><%= t('forget_password') %>?</a>
             </div>
           </div>
         <% end %>

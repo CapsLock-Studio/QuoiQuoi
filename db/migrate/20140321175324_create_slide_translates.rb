@@ -1,8 +1,8 @@
 class CreateSlideTranslates < ActiveRecord::Migration
   def change
     create_table :slide_translates do |t|
-      t.references :locale, index: true
-      t.references :slide, index: true
+      t.references :locale, show: true
+      t.references :slide, show: true
       t.string :title
       t.string :description
 

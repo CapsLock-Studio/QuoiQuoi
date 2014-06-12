@@ -4,25 +4,25 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
 
     @products = Product.where(product_type_id: params[:product_type_id]).page(params[:page]).per(12)
 
     unless @products.first.nil?
-      add_breadcrumb @products.first.product_type_id.nil? ? I18n.t('header.navigation.handmadebag') : @products.first.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
+      add_breadcrumb @products.first.product_type_id.nil? ? I18n.t('handmadebag') : @products.first.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
     end
   end
 
   # GET /products/1
   # GET /products/1.json
   def show
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
     if @product.product_type_id.nil?
-      add_breadcrumb t('header.navigation.handmadebag'), products_path
+      add_breadcrumb t('handmadebag'), products_path
     else
       add_breadcrumb @product.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
     end
-    add_breadcrumb t('product_detail')
+    add_breadcrumb t('detail')
 
     @order_product = OrderProduct.new(product_id: @product.id)
     @other_products = Product.where(product_type_id: @product.product_type_id).order(created_at: :desc).limit(8)

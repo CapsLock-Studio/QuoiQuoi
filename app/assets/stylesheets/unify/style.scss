@@ -9,10 +9,6 @@
 /*Import app.css*/
 @import 'unify/app';
 
-/*Import Google Fonts*/
-@import url(http://fonts.googleapis.com/css?family=Monda:400,700);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
-
 /*Block Headline*/
 .headline {
 	display: block;
@@ -1167,213 +1163,6 @@ ul.blog-tags a:hover i {
 	background: #1abc9c;
 }
 
-/*Tag Boxes
-------------------------------------*/
-.tag-box  {
-	padding: 20px;
-	margin-bottom: 30px;
-}
-
-.tag-box h2 {
-	font-size: 20px;
-	line-height: 25px;
-}
-
-.tag-box p {
-	margin-bottom: 0;
-}
-
-/*Tag Boxes v1*/
-.tag-box-v1 {
-	border: solid 1px #eee;
-	border-top: solid 2px #72c02c;
-}
-
-/*Tag Boxes v2*/
-.tag-box-v2 {
-	background: #fafafa;
-	border: solid 1px #eee;
-	border-left: solid 2px #72c02c;
-}
-
-/*Tag Boxes v3*/
-.tag-box-v3 {
-	border: solid 2px #eee;
-}
-
-/*Tag Boxes v4*/
-.tag-box-v4 {
-	border: dashed 1px #bbb;
-}
-
-/*Tag Boxes v5*/
-.tag-box-v5 {
-	margin: 20px 0;
-	text-align: center;
-	border: dashed 1px #ccc;
-}
-
-.tag-box-v5 span {
-	color: #555;
-	font-size: 28px;
-	margin-bottom: 0;
-}
-
-/*Tag Boxes v6*/
-.tag-box-v6 {
-	background: #fafafa;
-	border: solid 1px #eee; 
-}
-
-/*Tag Boxes v7*/
-.tag-box-v7 {
-	border: solid 1px #eee;
-	border-bottom: solid 2px #72c02c;
-}
-
-/*Panels (Portlets)
-------------------------------------*/
-/*Panel Table*/
-.panel .table {
-    margin-bottom: 0;
-}
-
-/*Panel Blue*/
-.panel-blue {
-   border-color: #3498db;
-}
-
-.panel-blue > .panel-heading {
-   color: #fff;
-   background: #3498db;
-}
-
-/*Panel Red*/
-.panel-red {
-   border-color: #e74c3c;
-}
-
-.panel-red > .panel-heading {
-   color: #fff;
-   background: #e74c3c;
-}
-
-/*Panel Green*/
-.panel-green {
-   border-color: #2ecc71;
-}
-
-.panel-green > .panel-heading {
-   color: #fff;
-   background: #2ecc71;
-}
-
-/*Panel Sea*/
-.panel-sea {
-   border-color: #1abc9c;
-}
-
-.panel-sea > .panel-heading {
-   color: #fff;
-   background: #1abc9c;
-}
-
-/*Panel Orange*/
-.panel-orange {
-   border-color: #e67e22;
-}
-
-.panel-orange > .panel-heading {
-   color: #fff;
-   background: #e67e22;
-}
-
-/*Panel Yellow*/
-.panel-yellow {
-    border-color: #f1c40f;
-}
-
-.panel-yellow > .panel-heading {
-    color: #fff;
-    background: #f1c40f;
-}
-
-/*Panel Grey*/
-.panel-grey {
-   border-color: #95a5a6;
-}
-
-.panel-grey > .panel-heading {
-   color: #fff;
-   background: #95a5a6;
-}
-
-/*Promo Page
-------------------------------------*/
-/*Slider Part*/
-.fullwidthbanner-container.slider-promo {
-	max-height: 460px !important;
-}
-
-.slider-promo-info-bg {
-	padding: 25px 20px 20px;
-	background: image_url('unify/bg-black.png') repeat;
-}
-
-.slider-promo-info span.big-size { 
-	color: #fff;
-	display: block;
-	font-size: 30px;
-	margin-bottom: 25px;
-	text-shadow: 0 !important;
-}
-
-.slider-promo-info p {
-	color: #fff;
-	font-size: 16px;
-	margin-bottom: 0;
-}
-
-/*Promo Box*/
-.promo-box {
-	padding: 20px;
-	margin: 25px 0 20px;
-	text-align: center;
-}
-
-.promo-box i {
-	display: block;
-	font-size: 50px;
-}
-
-.promo-box p {
-	font-size: 14px;
-	margin-bottom: 0;
-}
-
-.promo-box strong,
-.promo-box strong a {
-	color: #555;
-	font-size: 20px;
-	display: block;
-	margin: 20px 0 15px;
-	font-weight: 200; 
-}
-
-.promo-box:hover strong, 
-.promo-box:hover strong a {
-	color: #e74c3c;
-}
-
-/*Promo Service*/
-.promo-service {
-	margin-bottom: 20px;
-}
-
-.promo-service a.btn-u {
-	margin: 0 20px 10px 0;
-}
-
 /*Promo Elements*/
 .title-box {
 	margin: 20px 0;
@@ -1388,58 +1177,6 @@ ul.blog-tags a:hover i {
 	display: block;
 	font-size: 35px;
 	font-weight: 200;
-}
-
-.block-blockquote {
-	margin: 20px 0; 
-	text-align: center;
-	border: dashed 1px #ccc;
-}
-
-.block-blockquote-inner {
-	padding: 15px; 
-}
-
-.block-blockquote p {
-	font-size: 26px;
-	margin-bottom: 0;
-}
-
-/*Info Blocks*/
-.info-blocks {
-	margin-bottom: 15px;
-}
-
-.info-blocks:hover i.icon-info-blocks {
-	color: #72c02c;
-    -webkit-transition:all 0.2s ease-in-out;
-    -moz-transition:all 0.2s ease-in-out;
-    -o-transition:all 0.2s ease-in-out;
-    transition:all 0.2s ease-in-out;	
-}
-
-.info-blocks i.icon-info-blocks {
-	float: left;
-	color: #777;
-	font-size: 40px;
-	margin-top: 5px;
-	min-width: 50px;
-	text-align: center;
-}
-
-.info-blocks .info-blocks-in {
-	padding: 0 10px;
-	overflow: hidden;
-}
-
-.info-blocks .info-blocks-in h3 {
-	color: #555;
-	font-size: 20px;
-	line-height: 28px;
-}
-
-.info-blocks .info-blocks-in p {
-	font-size: 12px;
 }
 
 .recent-activity .comments > li {
@@ -1475,4 +1212,9 @@ ul.blog-tags a:hover i {
 
 #topcontrol {
   opacity:0;
+}
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
 }

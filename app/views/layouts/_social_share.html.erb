@@ -1,0 +1,46 @@
+<h5><%= t('share') %>:</h5>
+<ul class="list-inline">
+  <li>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>"
+       data-original-title="Facebook"
+       class="hover-effect"
+       style="color: #3B5998"
+       target="_blank"
+       title="<%= t('share_this_on_facebook') %>"
+    >
+      <i class="fa fa-facebook fa-lg fa-fw"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://twitter.com/intent/tweet?text=<%= text %> <%= request.original_url %>"
+       title="<%= t('share_this_on_twitter') %>"
+       target="_blank"
+       class="hover-effect text-primary"
+    >
+      <i class="fa fa-twitter fa-lg fa-fw"></i>
+    </a>
+  </li>
+  <li>
+    <a href="//pinterest.com/pin/create/button/?url=<%= image %>&description=<%= text %>"
+       title="<%= t('share_this_on_pinterest') %>"
+       target="_blank"
+       class="hover-effect text-danger"
+    >
+      <i class="fa fa-pinterest fa-lg fa-fw"></i>
+    </a>
+  </li>
+  <li>
+    <a href=""
+       class="hover-effect text-primary"
+    >
+      <i class="fa fa-tencent-weibo fa-lg fa-fw"></i>
+    </a>
+  </li>
+  <li>
+    <a href=""
+       class="hover-effect text-danger"
+    >
+      <i class="fa fa-weibo fa-lg fa-fw"></i>
+    </a>
+  </li>
+</ul>

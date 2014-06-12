@@ -1,31 +1,27 @@
-<div class="box-content">
-  <div class="row">
-    <div class="col-md-12 select-box-paginate">
-      <%= paginate @materials %>
-    </div>
+<div class="row">
+  <div class="col-md-12 select-box-paginate">
+    <%= paginate @materials %>
   </div>
-  <div class="row">
-    <% @materials.each do |material| %>
-      <div class="col-xs-3">
-        <div class="box image-preview-box select-box">
-          <div class="box-header box-header-small" style="cursor:pointer" data-material_id="<%= material.id %>">
-            <div class="title">
-              <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
-            </div>
-            <div class="actions">
-              <a href="#" class="btn btn-xs btn-link">
-                <i class="icon-ok"></i>
-              </a>
-            </div>
+</div>
+<div class="row">
+  <% @materials.each do |material| %>
+    <div class="col-sm-3 col-xs-6">
+      <div class="box image-preview-box select-box">
+        <div class="box-header box-header-small" style="cursor:pointer" data-id="<%= material.id %>">
+          <div class="title">
+            <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
           </div>
-          <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
-            <span class="overlay-zoom">
-              <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
-              <span class="zoom-icon"></span>
-            </span>
-          </a>
+          <div class="actions">
+            <i class="fa fa-square-o fa-2x text-muted"></i>
+          </div>
         </div>
+        <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
+                            <span class="overlay-zoom">
+                              <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
+                              <span class="zoom-icon"></span>
+                            </span>
+        </a>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

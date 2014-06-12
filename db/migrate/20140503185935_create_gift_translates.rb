@@ -1,8 +1,8 @@
 class CreateGiftTranslates < ActiveRecord::Migration
   def change
     create_table :gift_translates do |t|
-      t.references :gift, index: true
-      t.references :locale, index: true
+      t.references :gift, show: true
+      t.references :locale, show: true
       t.string :name
 
       t.timestamps

@@ -1,9 +1,9 @@
 <% if order_custom_item.accept.blank? || order_custom_item.price.blank? %>
-  等待回應
+  <%= t('order_request.waiting') %>
 <% elsif order_custom_item.accept? && !order_custom_item.order %>
-  接受訂製
+  <%= t('order_request.accept') %>
 <% elsif !order_custom_item.accept? && !order_custom_item.order %>
-  不接受訂製
+  <%= t('order_request.decline') %>
 <% else %>
-  已下單
+  <%= t('in_cart') %>
 <% end %>

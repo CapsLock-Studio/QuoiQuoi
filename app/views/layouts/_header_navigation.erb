@@ -1,83 +1,30 @@
-
 <nav class="navbar navbar-default" role="navigation">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header" style="overflow: hidden;padding-left: 16px;padding-top:3px;">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to(root_path, class: 'navbar-brand', style: 'margin-top:-10px;') do %>
-        <h2 id="logo-header" style="margin-bottom:-10px;">
-          <%= image_tag 'logo.png', id: 'logo-header', height: '60px', style: 'height:60px;' %>
-        </h2>
-      <% end %>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div style="height: 1px;" class="navbar-collapse navbar-responsive-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <%= nav_item(root_path) do %>
-          <%= link_to(root_path) do %>
-            <i class="glyphicon glyphicon-home"></i>
-          <% end %>
+    <div class="row">
+      <div class="col-xs-12 visible-xs">
+        <%= link_to(root_path, class: 'btn btn-link btn-block') do %>
+          <%= image_tag 'logo.png', id: 'logo-header' %>
         <% end %>
-        <%= nav_item(products_path, {rule: /#{:products}.*|#{order_custom_items_path}.*|#{order_products_path}.*/}) do %>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
-            <%= t('header.navigation.shop') %>
-            <i class="icon-angle-down"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <%= link_to t('header.navigation.handmadebag'), products_path %>
-            </li>
-            <li>
-              <%= link_to t('header.navigation.order_request'), new_order_custom_item_path %>
-            </li>
-            <% @product_types.each do |product_type| %>
-              <li>
-                <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase, product_type_products_path(product_type) %>
-              </li>
-            <% end %>
-            <li>
-              <%= link_to t('gift'), gifts_path %>
-            </li>
-          </ul>
-        <% end %>
-        <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>
-          <%= link_to t('header.navigation.class'), courses_path(month: Date.today.month) %>
-        <% end %>
-        <%= nav_item(nil, {rule: /#{reports_path}/}) do %>
-          <%= link_to t('header.navigation.report_remittance'), reports_path %>
-        <% end %>
-        <%= nav_item(requirements_path) do %>
-          <%= link_to t('header.navigation.requirement'), requirements_path %>
-        <% end %>
-        <%= nav_item(rents_path) do %>
-          <%= link_to t('header.navigation.rent'), rents_path %>
-        <% end %>
-        <%= nav_item(about_path) do %>
-          <%= link_to t('header.navigation.about_us'), about_path %>
-        <% end %>
-        <li class="hidden-sm"><a class="search"><i class="icon-search search-btn"></i></a></li>
-        <li class="hidden-sm">
-          <a href="#" class="aside-menu-switch dropdown-toggle dropdown-form-toggle" title="Open sidebar">
-            <i class="icon-shopping-cart">
-              <strong style="margin-left:5px;"><%= t('header.navigation.cart') %></strong>
-            </i>
-          </a>
-        </li>
-      </ul>
-      <div class="search-open">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" />
-          <span class="input-group-btn">
-            <button class="btn-u" type="button">Go</button>
-          </span>
-        </div><!-- /input-group -->
       </div>
-    </div><!-- /navbar-collapse -->
+      <div class="col-xs-3 col-sm-3">
+        <div class="navbar-header pull-left">
+              <span class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse" style="margin-top:0;border:none;color:#FFF;">
+                <i class="fa fa-bars"></i>
+              </span>
+        </div>
+      </div>
+      <div class="col-xs-9 pull-right visible-xs">
+        <div class="">
+          <%= render 'layouts/controls' %>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <%= link_to(root_path, class: 'navbar-brand btn btn-link hidden-xs') do %>
+          <%= image_tag 'logo.png', id: 'logo-header' %>
+        <% end %>
+        <%= render 'layouts/nav_navigation' %>
+      </div>
+    </div>
   </div>
 </nav>

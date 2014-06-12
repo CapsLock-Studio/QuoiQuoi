@@ -5,19 +5,15 @@
 	color: #787d80;
 }
 
-/*Navber Toggle*/
-.navbar-toggle,
-.navbar-default .navbar-toggle:hover, 
-.navbar-default .navbar-toggle:focus {
-	background: #787d80;
+.navbar-toggle {
+  transition: background-color 0.3s ease 0s, opacity 0.3s ease 0s, bottom 0.3s ease 0s;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #7c8082;
+  padding: 10px 15px;
 }
 
-.navbar-toggle:hover {
-	background: #7f8c8d !important;
-}
-
-.navbar-default .navbar-toggle {
-	border-color: #7f8c8d;
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 /*Serach Box*/

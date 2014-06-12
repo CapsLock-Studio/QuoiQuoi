@@ -1,0 +1,64 @@
+<ul class="top-navigation list-unstyled pull-right">
+  <li>
+    <div class="top">
+      <a href="#">
+        <i class="fa fa-globe"></i>
+        <%= t('language') %>
+      </a>
+      <ul class="languages">
+        <%= lang_nav_item('zh-TW') do %>
+          <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+        <% end %>
+        <%= lang_nav_item('en') do %>
+          <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
+        <% end %>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <div>
+      <a class="btn btn-xs" href="https://www.facebook.com/">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a class="btn btn-xs" href="">
+        <i class="fa fa-weibo"></i>
+      </a>
+      <a href="https://www.facebook.com/">
+        Blog
+      </a>
+    </div>
+  </li>
+  <li>
+    <div>
+      <a class="btn btn-xs">
+        <i class="fa fa-rss"></i>
+      </a>
+    </div>
+  </li>
+  <% if user_signed_in? %>
+    <li>
+      <div>
+        <%= link_to(orders_path) do %>
+          <%= t('control_panel') %>
+        <% end %>
+      </div>
+    </li>
+    <li>
+      <div>
+        <%= link_to(destroy_user_session_path, method: :delete) do %>
+          <i class="fa fa-sign-out"></i>
+          <%= t('signout') %>
+        <% end %>
+      </div>
+    </li>
+  <% else %>
+    <li>
+      <div>
+        <%= link_to(new_user_session_path) do %>
+          <i class="fa fa-sign-in"></i>
+          <%= t('signin') %>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>

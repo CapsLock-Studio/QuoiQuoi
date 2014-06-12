@@ -17,7 +17,7 @@
             <!--<span>訂製手工包</span>-->
           <!--<% end %>-->
         <!--</div>-->
-        <div class="col-md-12">
+        <div class="col-md-12 hidden-xs">
           <div class="flexHome">
             <div id="flexHome">
               <ul class="slides">
@@ -25,7 +25,7 @@
                   <li>
                     <%= link_to broadcast.link do %>
                       <h4 class="hover-effect">
-                        <i class="icon-bullhorn"></i>
+                        <i class="fa fa-bullhorn fa-fw"></i>
                         <%= broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first.notification %>
                       </h4>
                     <% end %>
@@ -41,36 +41,34 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <h4>
+      <i class="fa fa-thumbs-up" style="margin-left:15px;">
+        推薦給您
+      </i>
+    </h4>
+    <div class="col-md-12 hidden-xs hidden-sm">
       <!-- Recent Works -->
       <div class="margin-bottom-20 recommend">
-        <h4>
-          <i class="icon-thumbs-up">
-            推薦給您
-          </i>
-        </h4>
-        <ul id="list" class="bxslider1 recent-work">
+        <ul id="list" class="bxslider1">
           <% @products.each do |product| %>
             <li>
-              <div class="view view-tenth">
+              <%= link_to_with_product_type product do %>
                 <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
-                <div class="mask">
-                  <% product.product_translates.where(locale_id: session[:locale_id]).each do |translate| %>
-                    <h2><%= translate.name %></h2>
-                    <%= simple_format(truncate(translate.description, length: 30)) %>
-                  <% end %>
-                  <%= link_to_with_product_type product do %>
-                    <span class="info">
-                      <%= t('view_detail') %>
-                    </span>
-                  <% end %>
-                </div>
-              </div>
+              <% end %>
             </li>
           <% end %>
         </ul>
       </div><!--/row-->
       <!-- End Recent Works -->
     </div>
+    <% @products.each do |product| %>
+      <div class="col-sm-6 col-xs-12 hidden-md hidden-lg">
+        <div class="well-sm">
+          <%= link_to_with_product_type product do %>
+            <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

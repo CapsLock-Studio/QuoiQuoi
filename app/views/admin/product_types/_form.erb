@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <div class="form-group">
       <%= f.fields_for :product_type_translates do |builder| %>
-        <%= builder.label :name, "其他商品種類#{@product_type.product_type_translates[builder.index].locale.name}名稱" %>
+        <%= builder.label :name, "其他商品種類#{@product_type.product_type_translates[builder.show].locale.name}名稱" %>
         <div class="controls">
           <%= builder.text_field :name, class: 'form-control', placeholder: "請輸入其他商品種類#{@product_type.product_type_translates[builder.index].locale.name}名稱", data: { 'rule-required' => true } %>
         </div>

@@ -1,8 +1,8 @@
 class CreateRegistrations < ActiveRecord::Migration
   def change
     create_table :registrations do |t|
-      t.references :course, index: true
-      t.references :user, index: true
+      t.references :course, show: true
+      t.references :user, show: true
       t.boolean :accept
 
       t.timestamps

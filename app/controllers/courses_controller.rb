@@ -6,16 +6,18 @@ class CoursesController < ApplicationController
     set_breadcrumbs
 
     respond_to do |format|
+      @courses = Course.where(canceled: false).where('time > ?', Time.now)
       format.html do
-        if params[:month].blank?
-          redirect_to courses_path(month: Date.today.month)
+        # not show any past courses
+        if params[:month] && params[:month] != 'recent'
+          @courses = @courses.by_month(params[:month])
+        else
+          @courses = @courses.where('time <= ?', Time.now + 2.months)
         end
-        # show previous one month courses
-        @courses = Course.where(canceled: false).where('time > ?', 1.month.ago).by_month(params[:month]).page(params[:page]).per(12)
+        @courses = @courses.page(params[:page]).per(12)
       end
 
       format.json do
-        @courses = Course.all
       end
     end
 
@@ -29,7 +31,7 @@ class CoursesController < ApplicationController
   def show
     set_breadcrumbs
 
-    add_breadcrumb '當月課程'
+    add_breadcrumb t('detail')
 
     @registration = Registration.all.where(user_id: (current_user)? current_user.id : nil, course_id: @course.id).first
     @recent_courses = Course.all.where('time > ?', Time.now).where(canceled: false).where.not(id: @course.id).order(:time).limit(8)
@@ -41,8 +43,8 @@ class CoursesController < ApplicationController
 
   private
     def set_breadcrumbs
-      add_breadcrumb I18n.t('header.navigation.home'), :root_path
-      add_breadcrumb I18n.t('header.navigation.class'), :courses_path
+      add_breadcrumb I18n.t('home'), :root_path
+      add_breadcrumb I18n.t('course.title'), :courses_path
     end
 
     def set_course

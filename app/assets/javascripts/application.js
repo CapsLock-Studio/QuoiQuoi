@@ -1,11 +1,76 @@
 (function() {
-    initAsideMenu();
-
-    $('body').on('click', function(){
-        if($('.aside-menu-in').length > 0){
-            $(this).removeClass('aside-menu-in');
+    var App = function () {
+        function handleBootstrap() {
+            $('.carousel').carousel({
+                interval: 15000,
+                pause: 'hover'
+            });
+            $('.tooltips').tooltip();
+            $('.popovers').popover();
         }
-    }).on('change', '.file-input-wrapper input[type=file]', function(){
+
+        function handleSearch() {
+            $('.search').click(function () {
+                var searchOpen = $('.search-open');
+                var searchBtn = $('.search-btn');
+                if(searchBtn.hasClass('fa-search')){
+                    searchOpen.fadeIn(500);
+                    searchBtn.removeClass('fa-search').addClass('fa-times');
+                } else {
+                    searchOpen.fadeOut(500);
+                    searchBtn.addClass('fa-search').removeClass('fa-times');
+                }
+            });
+        }
+
+        return {
+            init: function () {
+                handleBootstrap();
+                handleSearch();
+            },
+
+            initFancybox: function () {
+                $(".fancybox-button").fancybox({
+                    groupAttr: 'data-rel',
+                    prevEffect: 'none',
+                    nextEffect: 'none',
+                    closeBtn: true,
+                    helpers: {
+                        title: {
+                            type: 'inside'
+                        }
+                    }
+                });
+            },
+
+            initBxSlider: function () {
+                $('.bxslider').bxSlider({
+                    minSlides: 4,
+                    maxSlides: 4,
+                    slideWidth: 360,
+                    slideMargin: 10
+                });
+
+                $('.bxslider1').bxSlider({
+                    minSlides: 3,
+                    maxSlides: 3,
+                    slideWidth: 360,
+                    slideMargin: 10
+                });
+
+                $('.bxslider2').bxSlider({
+                    minSlides: 2,
+                    maxSlides: 2,
+                    slideWidth: 360,
+                    slideMargin: 10
+                });
+            }
+
+        };
+
+    }();
+
+    $('body').on('change', '.file-input-wrapper input[type=file]', function(){
             if (this.files && this.files[0]) {
                 var image =  $(this).parent().prev('img');
                 if (image.length <= 0) {
@@ -39,81 +104,23 @@
     App.initFancybox();
     App.initBxSlider();
 
+    initAsideMenu();
     bindSelectBox();
     initChangeFee();
+    initOffcanvas();
+    scrolltotop.init();
+    var calendar = iniCalendarModel();
 
     $('.show-calendar').on('click', function(e) {
-        var dataSource = $(this).data('url');
         var dataParameter = $(this).data('month');
+        var CurrentDate = new Date();
+        var CurrentYear = CurrentDate.getFullYear();
 
         e.preventDefault();
-        bootbox.dialog({
-            message: "<div class='row' style='margin-top:20px;'><div class='box'><div class='box-content'><div class='full-calendar-demo'></div></div></div></div>",
-        }).on('shown.bs.modal', function(innerEvent){
-                var CurrentDate = new Date();
-                var CurrentYear = CurrentDate.getFullYear();
 
-                setDraggableEvents = function() {
-                    return $("#events .external-event").each(function() {
-                        var eventObject;
-                        eventObject = {
-                            title: $.trim($(this).text())
-                        };
-                        $(this).data("eventObject", eventObject);
-                        return $(this).draggable({
-                            zIndex: 999,
-                            revert: true,
-                            revertDuration: 0
-                        });
-                    });
-                };
+        calendar.fullCalendar('gotoDate', CurrentYear, dataParameter - 1);
 
-                setDraggableEvents();
-
-                var calendar = $(".full-calendar-demo");
-
-                var cal = calendar.fullCalendar({
-                    header: {
-                        center: "title",
-                        left: "basicDay,basicWeek,month",
-                        right: "prev,today,next"
-                    },
-                    buttonText: {
-                        prev: "<span class=\"icon-chevron-left\"></span>",
-                        next: "<span class=\"icon-chevron-right\"></span>",
-                        today: "今天",
-                        basicDay: "日",
-                        basicWeek: "週",
-                        month: "月"
-                    },
-                    droppable: false,
-                    editable: false,
-                    selectable: false,
-                    select: function(start, end, allDay) {
-                        return bootbox.prompt("Event title", function(title) {
-                            if (title !== null) {
-                                cal.fullCalendar("renderEvent", {
-                                    title: title,
-                                    start: start,
-                                    end: end,
-                                    allDay: allDay
-                                }, true);
-                                return cal.fullCalendar('unselect');
-                            }
-                        });
-                    },
-                    eventClick: function(calEvent, jsEvent, view) {
-
-                    },
-                    drop: function(date, allDay) {
-
-                    },
-                    events: dataSource
-                });
-
-                cal.fullCalendar('gotoDate', CurrentYear, dataParameter - 1);
-                console.log(dataSource);
-            });
+        $('#calendar-modal').modal('show');
     });
 
     $('.refresh-price-source').on('change', function(){
@@ -145,14 +152,14 @@
     $('.nested-field').each(function(index){
         $(this).nestedFields({
             afterInsert: function(item) {
-                if (jQuery().bootstrapFileInput) {
+                if ($().bootstrapFileInput) {
                     $(item).find('input[type=file]').bootstrapFileInput();
                 }
             }
         });
     });
 
-    $('[data-toggle="tooltip"]').tooltip('hide').hover(function(e){
+    $('[data-toggle=tooltip]').tooltip('hide').hover(function(e){
         if ($(this).data('shown') == true) {
             $(this).tooltip('destroy');
         } else {
@@ -175,7 +182,7 @@
         marker = map.addMarker({
             lat: 25.1359486,
             lng: 121.4612855,
-            title: 'QuoiQuoi不知道工作室'
+            title: '布知道(QuoiQuoi)工作室'
         });
     }
 })();

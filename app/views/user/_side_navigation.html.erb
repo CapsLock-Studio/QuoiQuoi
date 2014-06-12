@@ -1,35 +1,35 @@
-<div class="col-md-3">
-  <h4 class="text-muted">我的訂單</h4>
+<div class="col-sm-3 col-xs-6 sidebar-offcanvas">
+  <h4 class="text-muted"><%= t('order.my') %></h4>
   <ul class="list-group sidebar-nav-v1 margin-bottom-30">
     <%= nav_item(orders_path, {rule: /#{orders_path}(\/\d+)?(?!\/close)$/, class: 'list-group-item'}) do %>
-      <%= link_to t('order_in_trading'), orders_path %>
+      <%= link_to t('order.in_trading'), orders_path %>
     <% end %>
     <%= nav_item(close_orders_path, {rule: /#{orders_path}(\/\d+)?\/close/, class: 'list-group-item'}) do %>
-      <%= link_to t('closed_order'), close_orders_path %>
+      <%= link_to t('order.closed'), close_orders_path %>
     <% end %>
     <%= nav_item(order_custom_items_path, {rule: /#{order_custom_items_path}.*/, class: 'list-group-item'}) do %>
-      <%= link_to '我的訂製要求', order_custom_items_path %>
+      <%= link_to t('custom_order.my'), order_custom_items_path %>
     <% end %>
   </ul>
-  <h4 class="text-muted">我的課程</h4>
+  <h4 class="text-muted"><%= t('registration.my') %></h4>
   <ul class="list-group sidebar-nav-v1 margin-bottom-30">
     <%= nav_item(registrations_path, {rule: /#{registrations_path}(\/\d+)?(?!\/close)$/, class: 'list-group-item'}) do %>
-      <%= link_to t('register'), registrations_path %>
+      <%= link_to t('registrations'), registrations_path %>
     <% end %>
     <%= nav_item(registrations_path, {rule: /#{registrations_path}(\/\d+)?\/close/, class: 'list-group-item'}) do %>
-      <%= link_to t('closed_course'), close_registrations_path %>
+      <%= link_to t('course.past'), close_registrations_path %>
     <% end %>
   </ul>
-  <h4 class="text-muted">帳戶內容</h4>
+  <h4 class="text-muted"><%= t('account') %></h4>
   <ul class="list-group sidebar-nav-v1 margin-bottom-30">
     <%= nav_item(nil, {rule: /#{messages_path}/, class: 'list-group-item'}) do %>
-      <%= link_to '訊息匣', messages_path %>
+      <%= link_to t('message_box'), messages_path %>
     <% end %>
     <%= nav_item(user_path, {class: 'list-group-item'}) do %>
-      <%= link_to '個人資料管理', user_path %>
+      <%= link_to t('profile_management'), user_path %>
     <% end %>
     <%= nav_item(nil, {rule: /#{user_gifts_path}/, class: 'list-group-item'}) do %>
-      <%= link_to '禮品券管理', user_gifts_path %>
+      <%= link_to t('my_gift'), user_gifts_path %>
     <% end %>
   </ul>
 </div>

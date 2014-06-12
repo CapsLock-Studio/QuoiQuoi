@@ -1,177 +1,223 @@
 <%= form_for @order_custom_item, html: {class: 'form validate-form'} do |f| %>
-  <div class="col-md-12">
-    <div class="fuelux">
-      <div class="wizard">
-        <ul class="steps">
-          <li class="active hover-effect" data-target="#step1">
-            <span class="step">1</span>
-          </li>
-          <li class="hover-effect" data-target="#step2">
-            <span class="step">2</span>
-          </li>
-          <li class="hover-effect" data-target="#step3">
-            <span class="step">3</span>
-          </li>
-          <li class="hover-effect" data-target="#step4">
-            <span class="step">4</span>
-          </li>
-          <li class="hover-effect" data-target="#step5">
-            <span class="step">5</span>
-          </li>
-        </ul>
-        <div class="actions">
-          <button type="button" class="btn btn-mini btn-prev" disabled="disabled">
-            <i class="icon-arrow-left"></i>
-            <%= t('order_request.prev') %>
-          </button>
-          <button type="button" class="btn btn-mini btn-next">
-            <%= t('order_request.next') %>
-            <i class="icon-arrow-right"></i>
-          </button>
+  <div class="fuelux">
+    <div class="wizard">
+      <ul class="steps">
+        <li class="active hover-effect" data-target="#step1">
+          <span class="step">1</span>
+        </li>
+        <li class="hover-effect" data-target="#step2">
+          <span class="step">2</span>
+        </li>
+        <li class="hover-effect" data-target="#step3">
+          <span class="step">3</span>
+        </li>
+        <li class="hover-effect" data-target="#step4">
+          <span class="step">4</span>
+        </li>
+        <li class="hover-effect" data-target="#step5">
+          <span class="step">5</span>
+        </li>
+      </ul>
+      <div class="actions">
+        <button type="button" class="btn btn-mini btn-prev" disabled="disabled">
+          <i class="icon-arrow-left"></i>
+          <%= t('custom_order.prev') %>
+        </button>
+        <button type="button" class="btn btn-mini btn-next">
+          <%= t('custom_order.next') %>
+          <i class="icon-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="step-content">
+      <hr class="hr-normal">
+      <div class="step-pane active" id="step1">
+        <div class="box">
+          <div class="box-header box-header-small grey-background">
+            <h4>
+              <i class="fa fa-exclamation"></i>
+              <%= t('ordering_information') %>
+            </h4>
+          </div>
+          <div class="box-content box-no-padding" style="border:0;">
+            <div class="responsive-table">
+              <div class="scrollable-area">
+                <%= render 'order_information' %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="step-content">
-        <hr class="hr-normal">
-        <div class="step-pane active" id="step1">
-          <div class="box">
-            <div class="box-header box-header-small grey-background">
-              <h4>
-                <i class="icon-exclamation"></i>
-                訂購須知
-              </h4>
-            </div>
-            <div class="box-content box-no-padding" style="border:0;">
-              <div class="responsive-table">
-                <div class="scrollable-area">
-                  <%= render 'order_information' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="step-pane" id="step2">
-          <h4>您的需求 <small class="text-muted">先簡單的給我們一個方向</small></h4>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="box">
-                <div class="box-content">
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <%= f.label :design do %>
-                        包款、大小
-                        <span class="color-red">*</span>
-                      <% end %>
-                    </div>
-                    <div class="controls col-md-3">
-                      <%= f.text_field :design, placeholder: '例如: 拖特包開口寬25cm', class: 'form-control', data: {'rule-required' => true} %>
-                    </div>
+      <div class="step-pane" id="step2">
+        <h4><%= t('design_hint') %></h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-content">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <%= f.label :design do %>
+                      <%= t('design') %>
+                      <span class="color-red">*</span>
+                    <% end %>
                   </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <%= f.label :style do %>
-                        風格
-                        <span class="color-red">*</span>
-                        <span class="text-muted">可貼上喜歡包包的網址或照片讓bella參考喲</span>
-                      <% end %>
-                    </div>
-                    <div class="controls col-md-6">
-                      <%= f.text_field :style, placeholder: '法國風、中國風、日系雜貨、簡約風...', class: 'form-control', data: {'rule-required' => true} %>
-                    </div>
+                  <div class="controls col-md-3">
+                    <%= f.text_field :design, placeholder: t('design_placeholder'), class: 'form-control', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <%= f.label :style do %>
+                      <%= t('style') %>
+                      <span class="color-red">*</span>
+                      <span class="text-muted"><%= t('style_hint') %></span>
+                    <% end %>
+                  </div>
+                  <div class="controls col-md-6">
+                    <%= f.text_field :style, placeholder: t('style_placeholder'), class: 'form-control', data: {'rule-required' => true} %>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="step-pane" id="step3">
-          <h4>您的需求 <small class="text-muted"><%= t('chose_your_material') %></small></h4>
-          <div class="row">
-            <div class="items">
-              <%= f.nested_fields_for :order_custom_item_materials, class: 'material-id' do |builder| %>
-                <%= builder.hidden_field :material_id, class: 'material_id' %>
-              <% end %>
-            </div>
-            <div class="col-md-12">
-              <div class="box select-boxes">
-                <div class="box-content">
-                  <div class="row">
-                    <div class="col-md-12 select-box-paginate">
-                      <%= paginate @materials %>
-                    </div>
+      </div>
+      <div class="step-pane" id="step3">
+        <h4><%= t('chose_your_material') %> <span class="text-danger">*</span></h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box select-boxes" data-name="material_id">
+              <div class="items">
+                <%= f.nested_fields_for :order_custom_item_materials, class: 'material-id' do |builder| %>
+                  <%= builder.hidden_field :material_id, class: 'material_id' %>
+                <% end %>
+              </div>
+              <div class="box-content">
+                <div class="row">
+                  <div class="col-md-12 select-box-paginate">
+                    <%= paginate @materials %>
                   </div>
-                  <div class="row">
-                    <% @materials.each do |material| %>
-                      <div class="col-xs-3">
-                        <div class="box image-preview-box select-box">
-                          <div class="box-header box-header-small" style="cursor:pointer" data-material_id="<%= material.id %>">
-                            <div class="title">
-                              <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
-                            </div>
-                            <div class="actions">
-                              <a href="#" class="btn btn-xs btn-link">
-                                <i class="icon-ok"></i>
-                              </a>
+                </div>
+                <div class="row">
+                  <% @materials.each do |material| %>
+                    <div class="col-sm-3 col-xs-6">
+                      <div class="box image-preview-box select-box">
+                        <div class="box-header box-header-small" style="cursor:pointer" data-id="<%= material.id %>">
+                          <div class="title">
+                            <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
+                          </div>
+                          <div class="actions">
+                            <i class="fa fa-square-o fa-2x text-muted"></i>
+                          </div>
+                        </div>
+                        <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
+                                <span class="overlay-zoom">
+                                  <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
+                                  <span class="zoom-icon"></span>
+                                </span>
+                        </a>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-pane" id="step4">
+        <h4><%= t('description_hint') %></h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-content">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <%= f.label :description do %>
+                      <%= t('description') %>
+                      <span class="color-red">*</span>
+                    <% end %>
+                  </div>
+                  <div class="controls col-md-7">
+                    <%= f.text_area :description, class: 'form-control', data: {'rule-required' => true}, rows: '3' %>
+                  </div>
+                </div>
+                <div class="nested-field">
+                  <div class="items">
+                    <%= f.nested_fields_for :order_custom_item_images do |builder| %>
+                      <div class="item">
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <div class="box">
+                              <div class="box-header nopadding">
+                                <div class="actions">
+                                  <a class="btn remove btn-xs btn-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                                <div class="title">
+                                  <%= builder.file_field :image, title: "<i class=\"fa fa-picture-o fa-fw\"></i>&nbsp;#{t('choose_text')}", class: 'btn btn-default' %>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
-                            <span class="overlay-zoom">
-                              <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
-                              <span class="zoom-icon"></span>
-                            </span>
-                          </a>
                         </div>
                       </div>
                     <% end %>
                   </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <a href="#" class="add btn btn-default">
+                        <i class="fa fa-plus fa-fw"></i>
+                        <%= t('add_text') %>
+                      </a>
+                      <br/>
+                      <small class="text-muted"><%= t('add_hint') %></small>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="step-pane" id="step4">
-          <h4>您的需求 <small class="text-muted">文字敘述一下、或是給我們心目中包包的參考用概念圖</small></h4>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="box">
-                <div class="box-content">
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <%= f.label :description do %>
-                        敘述
-                        <span class="color-red">*</span>
-                      <% end %>
-                    </div>
-                    <div class="controls col-md-7">
-                      <%= f.text_area :description, class: 'form-control', data: {'rule-required' => true}, rows: '3' %>
-                    </div>
-                  </div>
-                  <div class="nested-field">
-                    <div class="row">
+      </div>
+      <div class="step-pane" id="step5">
+        <h4><%= t('your_contact') %> <small class="text-muted"><%= t('your_contact_hint') %></small></h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box">
+                  <div class="box-content">
+                    <div class="form-group row">
                       <div class="col-md-12">
-                        <a href="#" class="add btn btn-default">
-                          新增概念圖
-                        </a>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="items">
-                        <%= f.nested_fields_for :order_custom_item_images do |builder| %>
-                          <div class="col-sm-6 item">
-                            <div class="box image-preview-box">
-                              <div class="box-header">
-                                <div class="actions">
-                                  <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
-                                  </a>
-                                </div>
-                              </div>
-                              <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
-                              <%= builder.file_field :image, title: '選擇圖片', class: 'btn btn-default btn-block' %>
-                              <%= builder.hidden_field :id %>
-                              <%= builder.hidden_field :_destroy %>
-                            </div>
-                          </div>
+                        <%= f.label :name do %>
+                          <%= t('name') %>
+                          <span class="color-red">*</span>
                         <% end %>
                       </div>
+                      <div class="controls col-md-3">
+                        <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <%= f.label :phone do %>
+                          <%= t('phone_number') %>
+                          <span class="color-red">*</span>
+                        <% end %>
+                      </div>
+                      <div class="controls col-md-3">
+                        <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-phoneNL' => true} %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <%= f.label :line do %>
+                          Line
+                        <% end %>
+                      </div>
+                      <div class="controls col-md-3">
+                        <%= f.text_field :line, value: current_user.line, class: 'form-control' %>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -179,61 +225,14 @@
             </div>
           </div>
         </div>
-        <div class="step-pane" id="step5">
-          <h4>聯絡資訊 <small class="text-muted">請填寫正確的聯絡資訊，將會有設計師與你討論細節</small></h4>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="box">
-                    <div class="box-content">
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <%= f.label :name do %>
-                            聯絡人姓名
-                            <span class="color-red">*</span>
-                          <% end %>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <%= f.label :phone do %>
-                            聯絡電話
-                            <span class="color-red">*</span>
-                          <% end %>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-phoneNL' => true} %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <%= f.label :line do %>
-                            Line帳號
-                          <% end %>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= f.text_field :line, value: current_user.line, class: 'form-control' %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <label class="text-muted">提出訂製要求後，需要請您等待一段時間，我們將替您評估是否接受訂製要求</label>
-          <hr/>
-          <div class="row">
-            <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
-              <%= f.button class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', type: 'submit' do %>
-                <i class="icon-edit"></i>
-                提出訂單要求
-              <% end %>
-            </div>
+        <label class="text-muted"><%= t('submit_hint') %></label>
+        <hr/>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+            <%= f.button class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', type: 'submit' do %>
+              <i class="fa fa-edit"></i>
+              <%= t('submit') %>
+            <% end %>
           </div>
         </div>
       </div>

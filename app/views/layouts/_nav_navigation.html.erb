@@ -1,0 +1,84 @@
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div style="height: 1px;" class="navbar-collapse navbar-responsive-collapse collapse">
+  <div class="pull-right hidden-xs">
+    <%= render 'layouts/top_navigation' %>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="visible-xs">
+      <%= form_tag reports_path, class: 'form-horizontal validate-form', method: :get do %>
+        <div class="input-group col-md-8 col-md-offset-2">
+          <%= text_field_tag 'term', params[:term], class: 'form-control', placeholder: '搜尋' %>
+          <span class="input-group-btn">
+              <button type="submit" class="btn btn-default add-on hover-effect">
+                <i class="fa fa-search fa-fw"></i>
+              </button>
+            </span>
+        </div>
+      <% end %>
+    </li>
+    <%= nav_item(root_path, class: 'hidden-xs hidden-sm') do %>
+      <%= link_to(root_path, class: 'btn btn-link') do %>
+        <i class="glyphicon glyphicon-home"></i>
+      <% end %>
+    <% end %>
+    <%= nav_item(products_path, {rule: /#{:products}.*|#{order_custom_items_path}.*|#{order_products_path}.*|#{gifts_path}.*/}) do %>
+      <a href="#" class="btn btn-link" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
+        <%= t('shop') %>
+        <i class="fa fa-angle-down"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <%= link_to t('handmadebag'), products_path, class: 'btn btn-link' %>
+        </li>
+        <li>
+          <%= link_to t('personalize'), new_order_custom_item_path, class: 'btn btn-link' %>
+        </li>
+        <% @product_types.each do |product_type| %>
+          <li>
+            <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name, product_type_products_path(product_type), class: 'btn btn-link' %>
+          </li>
+        <% end %>
+        <li>
+          <%= link_to t('gift'), gifts_path, class: 'btn btn-link' %>
+        </li>
+      </ul>
+    <% end %>
+    <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>
+      <%= link_to t('course.title').upcase, courses_path(month: 'recent'), class: 'btn btn-link' %>
+    <% end %>
+    <%= nav_item(nil, {rule: /#{reports_path}/}) do %>
+      <%= link_to t('report_remittance'), reports_path, class: 'btn btn-link' %>
+    <% end %>
+    <%= nav_item(recruitments_path) do %>
+      <%= link_to t('recruitment'), recruitments_path, class: 'btn btn-link' %>
+    <% end %>
+    <%= nav_item(rents_path) do %>
+      <%= link_to t('rent'), rents_path, class: 'btn btn-link' %>
+    <% end %>
+    <%= nav_item(about_path) do %>
+      <%= link_to t('about_us'), about_path, class: 'btn btn-link' %>
+    <% end %>
+    <li class="hidden-xs hidden-sm">
+      <a class="search btn btn-link">
+        <i class="fa fa-search search-btn fa-fw"></i>
+      </a>
+    </li>
+    <li class="hidden-xs hidden-sm">
+      <a href="#" class="aside-menu-switch dropdown-toggle dropdown-form-toggle btn btn-link" title="Open sidebar">
+        <i class="fa fa-shopping-cart">
+          <strong class="hidden-sm" style="margin-left:5px;"><%= t('cart') %></strong>
+        </i>
+      </a>
+    </li>
+  </ul>
+  <div class="search-open">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="<%= t('search') %>" />
+          <span class="input-group-btn">
+            <button class="btn btn-default hover-effect" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+    </div><!-- /input-group -->
+  </div>
+</div><!-- /navbar-collapse -->

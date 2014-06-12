@@ -13,14 +13,11 @@
 }
 
 body { 
-   color: #333; 
-   font-size: 13px;
-   line-height: 1.6;
+   color: #333;
 }
 
 p, a, li { 
    color: #555;
-   line-height: 1.6; 
 }
 
 a,
@@ -31,7 +28,6 @@ a:active {
 }
 a:hover {
    color: #72c02c;
-   text-decoration: underline;
 }
 
 h1, h2, h3, h4, h5 {
@@ -225,9 +221,9 @@ a.btn-u-lg {
    list-style: none;
    margin-right: 5px;
    margin-bottom: 5px;
-   text-indent: -9999px;
 }
-.social-icons li a, a.social-icon {
+.social-icons li a, a.social-icon,
+.social-icons li div, div.social-icon{
    width: 28px;
    height: 28px;
    display: block;
@@ -239,16 +235,19 @@ a.btn-u-lg {
    -moz-transition: all 0.3s ease-in-out;
    -webkit-transition: all 0.3s ease-in-out;
 }
-.social-icons li:hover a {
+.social-icons li:hover a,
+.social-icons li:hover div{
    background-position: 0 -38px;
 }
 
-.social-icons-color li a {
+.social-icons-color li a,
+.social-icons-color li div{
   opacity: 0.7;
   background-position:0 -38px !important;
 }
 
-.social-icons-color li a:hover {
+.social-icons-color li a:hover,
+.social-icons-color li div:hover{
   opacity: 1;
 }
 
@@ -651,7 +650,11 @@ a.read-more:hover {
 ------------------------------------*/
 /*For Topbar*/
 .fancybox-overlay.fancybox-overlay-fixed {
-   z-index:9999;
+   z-index:999;
+}
+
+.fancybox-mobile {
+  z-index: 9999;
 }
 
 /*FancyBox Hover Effect*/
@@ -724,7 +727,7 @@ a.read-more:hover {
    overflow:hidden;
    position:relative;
    width:100% !important;
-   max-height:500px !important;
+
 }
 
 /*Layer Slider

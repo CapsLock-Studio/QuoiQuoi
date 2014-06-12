@@ -71,9 +71,6 @@ class PaymentsController < ApplicationController
   end
 
   def edit
-    add_breadcrumb t('header.navigation.home'), :root_path
-    add_breadcrumb t('order_in_trading'), :orders_path
-    add_breadcrumb t('report_remittance').upcase
     begin
       @remittance_translate = Remittance.find(1).remittance_translates.where(locale_id: session[:locale_id]).first
     rescue ActiveRecord::RecordNotFound

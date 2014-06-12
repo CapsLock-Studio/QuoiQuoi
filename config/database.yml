@@ -52,9 +52,6 @@ test:
   password: '12364362'
 
 production:
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
   database: QuoiQuoi_production
-  pool: 5
-  username: rails_app
-  password: '12364362'
