@@ -143,15 +143,15 @@ body {
 }
 
 .tp-caption a.btn-glassy:hover {
-  color: #000;
-  border-color: #000;
+  background: rgba(255, 255, 255, 0);
 }
 
 .tp-caption a.btn-glassy {
-  background: rgba(255, 255, 255, 0.2);
-  color: #666;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFF;
+  border-color: #FFF;
   font-weight: bold;
-  border-color: #999;
+  border-width: 3px;
   padding-left: 30px;
   padding-right: 30px;
 }
