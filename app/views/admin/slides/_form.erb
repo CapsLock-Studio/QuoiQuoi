@@ -25,11 +25,11 @@
           <div class="col-sm-12">
             <div class="form-group">
               <label>輪播文字顯示位置</label>
-              <% @slide_positions.each do |slide_position| %>
+              <% @slide_positions.each_with_index do |slide_position, index| %>
                 <div class="checkbox">
                   <%= f.label("#{:slide_position_id}_#{slide_position.id}", class: 'radio radio-inline') do %>
                     <%= image_tag slide_position.image.url(:medium) %>
-                    <%= f.radio_button :slide_position_id, slide_position.id %>
+                    <%= f.radio_button :slide_position_id, slide_position.id, checked: (index == 0)? 'checked' : nil %>
                   <% end %>
                 </div>
               <% end %>

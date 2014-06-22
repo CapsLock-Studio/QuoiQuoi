@@ -7,14 +7,4 @@ class HomeController < ApplicationController
     @products = Product.order(created_at: :desc).limit(6)
     @broadcasts = Broadcast.all.order(:sort)
   end
-
-  # GET /home/style1
-  def style1
-    @slides = Slide.all.order(:sort)
-  end
-
-  # GET /home/style2
-  def style2
-
-  end
 end
