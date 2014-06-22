@@ -3,8 +3,7 @@
   <div class="fullwidthbanner">
     <ul>
       <% @slides.each do |slide| %>
-      <li data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
-
+      <li class="carousel-link" data-target="<%= slide.link %>" data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
         <!-- THE MAIN IMAGE IN THE FOURTH SLIDE -->
         <%= image_tag slide.image.url(:large) %>
 
@@ -27,7 +26,7 @@
                  data-speed="300"
                  data-start="<%= (800 + 300 * (descriptions.length - 1)) %>"
                  data-easing="easeOutExpo">
-              <%= link_to '來瞧瞧', slide.link, class: 'btn btn-glassy btn-default btn-lg', target: '_blank' %>
+              <%= link_to '來瞧瞧', '#', class: 'btn btn-glassy btn-default btn-lg' %>
             </div>
           <% end %>
         <% end %>

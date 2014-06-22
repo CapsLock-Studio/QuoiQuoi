@@ -111,6 +111,10 @@
     scrolltotop.init();
     var calendar = iniCalendarModel();
 
+    $('.carousel-link').on('click', function(e) {
+        window.open($(this).data('target'), '_blank');
+    });
+
     $('.show-calendar').on('click', function(e) {
         var dataParameter = $(this).data('month');
         var CurrentDate = new Date();
