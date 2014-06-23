@@ -39,7 +39,7 @@
           <div class="row">
             <% @order_product.product.product_youtubes.each do |youtube| %>
               <div class="col-md-12 youtube-link" style="margin-top:20px;" data-link="<%= youtube.link %>">
-                <%= image_tag asset_path('system/youtube.gif'), class: 'img-responsive' %>
+                <%= image_tag 'youtube.gif', class: 'img-responsive' %>
               </div>
             <% end %>
           </div>

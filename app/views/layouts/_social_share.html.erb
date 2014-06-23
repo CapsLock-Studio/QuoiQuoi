@@ -30,15 +30,19 @@
     </a>
   </li>
   <li>
-    <a href=""
+    <a href="http://v.t.qq.com/share/share.php?url=<%= request.original_url %>"
        class="hover-effect text-primary"
+       title="<%= t('share_this_on_tencent_weibo') %>"
+       target="_blank"
     >
       <i class="fa fa-tencent-weibo fa-lg fa-fw"></i>
     </a>
   </li>
   <li>
-    <a href=""
+    <a href="http://service.weibo.com/share/share.php?appkey=&url=<%= request.original_url %>"
        class="hover-effect text-danger"
+       title="<%= t('share_this_on_sina_weibo') %>"
+       target="_blank"
     >
       <i class="fa fa-weibo fa-lg fa-fw"></i>
     </a>

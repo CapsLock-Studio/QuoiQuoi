@@ -182,3 +182,10 @@ var initOffcanvas = function(){
         $('.row-offcanvas').toggleClass('active');
     });
 };
+
+var initChangeFocusImageShow = function() {
+    $('[data-toggle="preview-change"]').on('click', function(e){
+        e.preventDefault();
+        $('.fancybox-button').attr('href', $(this).data('large')).find('img').attr('src', $(this).data('medium'));
+    });
+};

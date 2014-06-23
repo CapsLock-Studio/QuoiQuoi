@@ -108,6 +108,7 @@
     bindSelectBox();
     initChangeFee();
     initOffcanvas();
+    initChangeFocusImageShow();
     scrolltotop.init();
     var calendar = iniCalendarModel();
 
