@@ -99,7 +99,11 @@ class PaymentsController < ApplicationController
         if @payment.order
           redirect_uri = order_path(@payment.order_id)
         elsif @payment.registration
-          redirect_uri = registrations_path
+          if payment.registration.user
+            format.html {redirect_to registrations_path}
+          else
+            format.html {render action: :show}
+          end
         elsif @payment.user_gift
           redirect_uri = user_gift_path(@payment.user_gift)
         end
