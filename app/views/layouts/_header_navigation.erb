@@ -3,15 +3,17 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="row">
       <div class="col-xs-12 visible-xs">
-        <%= link_to(root_path, class: 'btn btn-link btn-block') do %>
+        <%= link_to(root_path, class: 'btn btn-link btn-block', style: 'overflow: hidden') do %>
           <%= image_tag 'logo.png', id: 'logo-header' %>
         <% end %>
       </div>
-      <div class="col-xs-3 col-sm-3">
+    </div>
+    <div class="row">
+      <div class="col-xs-3">
         <div class="navbar-header pull-left">
-              <span class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse" style="margin-top:0;border:none;color:#FFF;">
-                <i class="fa fa-bars"></i>
-              </span>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="margin-top:0;border:none;color:#FFF;">
+            <i class="fa fa-bars"></i>
+          </button>
         </div>
       </div>
       <div class="col-xs-9 pull-right visible-xs">
