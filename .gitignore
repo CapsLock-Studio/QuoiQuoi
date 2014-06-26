@@ -17,4 +17,5 @@
 
 .DS_Store
 .idea
-/public/system/*
+public/system/*
+!public/system/placeholder/
