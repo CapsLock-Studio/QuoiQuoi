@@ -11,6 +11,14 @@
             <strong class="text-muted"><%= @order.id %></strong>
           </h4>
         </div>
+        <% unless flash[:message].blank? %>
+          <div class="col-md-12">
+            <div class="alert alert-success text-center">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <%= flash[:message] %>
+            </div>
+          </div>
+        <% end %>
         <div class="col-md-12 text-center text-muted">
           <ul class="list-unstyled step">
             <li class="col-xs-3 step-active">

@@ -1,18 +1,18 @@
 class UserGiftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user_gift, except: [:index]
+  before_action :set_user_gift, except: [:index, :search]
 
   def index
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
     add_breadcrumb t('my_gift'), :user_gifts_path
 
     @user_gifts = UserGift.where(user_id: current_user.id)
   end
 
   def show
-    add_breadcrumb t('header.navigation.home'), :root_path
+    add_breadcrumb t('home'), :root_path
     add_breadcrumb t('my_gift'), :user_gifts_path
-    add_breadcrumb '禮品券詳細'
+    add_breadcrumb t('detail')
 
     if @user_gift.payment && @user_gift.payment.completed? && @user_gift.token.blank?
       @user_gift.token = get_uniqueness_random_string
@@ -62,6 +62,57 @@ class UserGiftsController < ApplicationController
     end
   end
 
+  def search
+    begin
+      set_user_gift_by_token
+    rescue ActiveRecord::RecordNotFound
+      render json: 'test'
+    end
+  end
+
+  def discount
+    set_user_gift_by_token
+    if @user_gift
+      discount_item = nil
+
+      begin
+        unless params[:order_id].blank?
+          discount_item = Order.find(params[:order_id])
+        end
+
+        unless params[:registration_id].blank?
+          discount_item = Registration.find(params[:registration_id])
+        end
+
+        unless discount_item
+          raise ActiveRecord::RecordNotFound
+        end
+
+        discount_item.subtotal -= @user_gift.gift.quota
+
+        if discount_item.subtotal < 0
+          discount_item.subtotal = 0
+        end
+
+        @user_gift.used_time = Time.now
+        @user_gift.used_user_id = current_or_guest_user.id
+
+        discount_item.save!
+        @user_gift.save!
+
+        flash[:message] = t('user_gift.success')
+
+        redirect_to discount_item
+
+      rescue ActiveRecord::RecordNotFound
+        render json: 'Discount item not found, please restart your work.'
+      end
+
+    else
+      render json: 'Gift card not found error', status: 403
+    end
+  end
+
   private
     def user_gift_params
       params.require(:user_gift).permit(:id, :gift_id)
@@ -69,6 +120,10 @@ class UserGiftsController < ApplicationController
 
     def set_user_gift
       @user_gift = UserGift.where(id: params[:id], user_id: current_user.id).first
+    end
+
+    def set_user_gift_by_token
+      @user_gift = UserGift.find_by_token(params[:token])
     end
 
     def get_uniqueness_random_string

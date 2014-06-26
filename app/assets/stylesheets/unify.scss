@@ -595,3 +595,19 @@ a[data-toggle=offcanvas] {
 .carousel-link {
   cursor: pointer;
 }
+
+.gift-search {
+  margin-top: 30px;
+  opacity: 0;
+  height: 0;
+
+  transition: opacity 0.1s ease;
+  -o-transition: opacity 0.1s ease;
+  -moz-transition: opacity 0.1s ease;
+  -webkit-transition: opacity 0.1s ease;
+}
+
+.gift-search.active {
+  height: auto;
+  opacity: 1;
+}

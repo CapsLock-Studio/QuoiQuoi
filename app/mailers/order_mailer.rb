@@ -7,6 +7,13 @@ class OrderMailer < ActionMailer::Base
     @order = order
     @locale_id = locale_id
     @domain = domain
-    mail(to: order.user.email, subject: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)')
+    mail(to: order.user.email, subject: t('mailer.subject_for_order'))
+  end
+
+  def remittance_remind(order, locale_id, domain)
+    @order = order
+    @locale_id = locale_id
+    @domain = domain
+    mail(to: order.user.email, subject: t('mailer.subject_for_order'))
   end
 end

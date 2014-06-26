@@ -34,8 +34,8 @@
           <div class="col-md-12">
             <div class="box select-boxes" data-name="product_custom_item_id">
               <div class="items">
-                <%= f.nested_fields_for :order_custom_item_product_custom_items, class: 'material-id' do |builder| %>
-                  <%= builder.hidden_field :product_custom_item_id, class: 'material_id' %>
+                <%= f.nested_fields_for :order_custom_item_product_custom_items do |builder| %>
+                  <%= builder.hidden_field :product_custom_item_id %>
                 <% end %>
               </div>
               <div class="box-content">
@@ -83,8 +83,8 @@
           <div class="col-md-12">
             <div class="box select-boxes" data-name="material_id">
               <div class="items">
-                <%= f.nested_fields_for :order_custom_item_materials, class: 'material-id' do |builder| %>
-                  <%= builder.hidden_field :material_id, class: 'material_id' %>
+                <%= f.nested_fields_for :order_custom_item_materials do |builder| %>
+                  <%= builder.hidden_field :material_id %>
                 <% end %>
               </div>
               <div class="box-content">
@@ -224,6 +224,7 @@
         <hr/>
         <div class="row">
           <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+            <%= f.hidden_field :product_id %>
             <%= f.button class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', type: 'submit' do %>
               <i class="fa fa-edit"></i>
               <%= t('submit') %>

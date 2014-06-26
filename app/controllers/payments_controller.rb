@@ -9,23 +9,36 @@ class PaymentsController < ApplicationController
   def create
     respond_to do |format|
       payment = Payment.new(payment_params)
-      if payment_params[:wait] == 'true'
+
+      amount = 0
+      if payment.order
+        amount = payment.order.subtotal
+      elsif payment.registration
+        amount = payment.registration.subtotal
+      elsif payment.user_gift
+        amount = payment.user_gift.gift.quota
+      end
+
+      if amount == 0
+        if payment.update_attribute(:completed, true)
+          if payment.order
+            OrderMailer.remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+            format.html {redirect_to order_path(payment.order_id)}
+          elsif payment.registration
+            format.html {redirect_to registrations_path}
+          end
+        else
+          format.html {render json: @payment.errors}
+        end
+      elsif payment_params[:wait] == 'true'
         payment.save!(validate: false)
         if payment.registration
           RegistrationMailer.remittance_remind(payment.registration, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+        elsif payment.order
+          OrderMailer.remittance_remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
         end
         format.html {redirect_to edit_payment_path(payment)}
       else
-        amount = 0
-
-        if payment.order
-          amount = payment.order.subtotal
-        elsif payment.registration
-          amount = payment.registration.subtotal
-        elsif payment.user_gift
-          amount = payment.user_gift.gift.quota
-        end
-
         #format.html {render json: payment}
 
         payment.setup!(amount, success_payments_url, cancel_payments_url)

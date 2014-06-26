@@ -24,6 +24,23 @@
               <% end %>
             </div>
           </div>
+          <div class="form-group">
+            <label>客製化選項</label>
+            <div class="controls">
+              <% @order_custom_item.order_custom_item_product_custom_items.each do |custom_item| %>
+                <ul class="list-unstyled" style="display: inline-block">
+                  <li>
+                    <span>
+                      <%= custom_item.product_custom_item.product_custom_item_translates.where(locale_id: Locale.where(lang: 'zh-TW').first.id).first.name %>
+                    </span>
+                  </li>
+                  <li>
+                    <%= image_tag custom_item.product_custom_item.image.url(:thumb) %>
+                  </li>
+                </ul>
+              <% end %>
+            </div>
+          </div>
         <% else %>
           <div class="form-group">
             <label>設計</label>
@@ -37,17 +54,17 @@
               <%= text_field_tag :style, @order_custom_item.style, class: 'form-control', disabled: 'disabled' %>
             </div>
           </div>
-          <div class="form-group">
-            <label>布料</label>
-            <div class="controls">
-              <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
-                <%= link_to(order_custom_item_material.material.image(:large), target: '_blank') do %>
-                  <%= image_tag order_custom_item_material.material.image(:thumb) %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
         <% end %>
+        <div class="form-group">
+          <label>布料</label>
+          <div class="controls">
+            <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
+              <%= link_to(order_custom_item_material.material.image(:large), target: '_blank') do %>
+                <%= image_tag order_custom_item_material.material.image(:thumb) %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
         <div class="form-group">
           <label>要求敘述</label>
           <div class="controls">

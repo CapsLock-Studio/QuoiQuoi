@@ -39,7 +39,7 @@ class OrderCustomItemsController < ApplicationController
       end
 
       format.html do
-        @order_custom_item = OrderCustomItem.new(product_id: params[:product_id] ||= nil)
+        @order_custom_item = OrderCustomItem.new(product_id: params[:product_id] || nil)
         @order_custom_item.order_custom_item_images.build
       end
 

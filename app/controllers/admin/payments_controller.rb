@@ -29,7 +29,7 @@ class Admin::PaymentsController < AdminController
     respond_to do |format|
       if @payment.update_attribute(:completed, true)
         if @payment.order
-          OrderMailer.remind(@payment.user, @payment.order, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
+          OrderMailer.remind(@payment.order, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
           format.html {redirect_to check_admin_orders_path}
         elsif @payment.registration
           format.html {redirect_to check_admin_registrations_path}

@@ -70,6 +70,8 @@ en:
     decline: 'Decline'
     waiting: 'Responding'
     cancel: 'Cancel order'
+    sketch: 'Design sketch'
+    your: 'You choose these custom items'
 
   registration:
     my: 'My registrations'
@@ -81,11 +83,23 @@ en:
     title: 'Courses'
     canceled: 'Course canceled'
     name: 'Course name'
+    information: 'Course information'
 
   actions:
     delete: 'Delete'
     edit: 'Edit'
     add: 'Add'
+
+  user_gift:
+    success: 'Use gift card success!'
+    danger: 'Use gift card failed, please contact us to find out the reason.'
+    not_found: 'Search not found'
+    oops: 'Oops! this serial used'
+    information: 'Gift card information'
+    quota: 'Quota'
+    serial: 'Serial'
+    confirm: 'I want to use this gift card'
+    sorry: 'Sorry, We can not find gift card by this serial'
 
   product:
     other_products: 'Other products'
@@ -96,6 +110,7 @@ en:
   paypal_description: 'PayPal is the faster, safer way to send money, make an online payment'
   online_payment: 'Online Payment'
   offline_payment: 'Remittance'
+  choose_payment: 'Choose payment'
   registrations: 'Registrations'
   ideation_sketches: 'IDEATION SKETCHED'
   account_name: 'A/C Name'
@@ -106,6 +121,8 @@ en:
   your_account: 'Your last five A/C No.'
   remitted_date: 'Remitted Date'
   remitted_amount: 'Remitted Amount'
+  amount_payable: 'Amount payable'
+  shipping_information: 'Shipping information'
   remitted_information: 'Remitted information'
   report_remittance: 'Remittance advice'
   submit: 'SUBMIT'
@@ -153,6 +170,13 @@ en:
   signin: 'Signin'
   signout: 'Signout'
   signin_hint: 'Have not account? Click the %{signup_link} or click the social buttons belows to sign in.'
+  new_password: 'Forget your password?'
+  new_password_hint: 'Enter your email to send reset password instructions or click the social buttons belows to sign in.'
+  new_password_btn: 'Send me reset password instructions'
+  change_password: 'Change my password'
+  new_password_ingore: "If you didn't request this, please ignore this email."
+  new_password_ingore_content: "Your password won't change until you access the link above and create a new one."
+  new_password_title: 'Someone has requested a link to change your password. You can do this through the link below.'
   signup: 'Sign up'
   user: 'ACCOUNT'
   add_to_cart: 'Add to cart'
@@ -234,3 +258,19 @@ en:
   thanks_text: 'Thanks for your contacts'
   recaptcha_error: 'Recaptcha error'
   back_to_control_panel: 'Back to control panel'
+  remittance: 'Remittance'
+  use_gift_card: 'Use gift card'
+  enter_serial: 'Enter your serial'
+  back_to_payment: 'Back to payment'
+  cancel_and_back_to_payment: 'Cancel and back to payment'
+  used_time: 'Used time'
+  not_used: 'Not used'
+  used: 'Used'
+
+  mailer:
+    subject_for_order: "[quoiquoi.tw] Remind for ordering complete (Please don't reply this mail)"
+    title_for_order: "Thanks for ordering quoiquoi studio's production"
+    remind_for_order: "Thanks for ordering quoiquoi 's production. Mind you, if you don't remittance the ordering, this order will be canceled. If you want to advice remittance please click the %{remittance_link} to do that."
+    thanks_for_order: "Thanks for ordering quoiquoi studio's production. This is your ordering information below"
+    thanks_for_registration: ''
+    dear: 'Dear you'

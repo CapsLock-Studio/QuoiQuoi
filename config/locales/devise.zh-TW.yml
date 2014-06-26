@@ -18,9 +18,9 @@ zh-TW:
       unconfirmed: "You have to confirm your account before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "確認重設密碼"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "重設密碼申請"
       unlock_instructions:
         subject: "Unlock Instructions"
     omniauth_callbacks:
@@ -28,10 +28,10 @@ zh-TW:
       success: "Successfully authenticated from %{kind} account."
     passwords:
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
-      send_instructions: "You will receive an email with instructions about how to reset your password in a few minutes."
-      send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
-      updated: "Your password was changed successfully. You are now signed in."
-      updated_not_active: "Your password was changed successfully."
+      send_instructions: "你將在數分鐘內收到重設密碼的信件"
+      send_paranoid_instructions: "如果你的帳號存在, 將會在幾分鐘內收到內有重設密碼連結的信件"
+      updated: "你的密碼重設成功, 已經成功登入"
+      updated_not_active: "你的密碼重設成功"
     registrations:
       destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."
@@ -52,7 +52,7 @@ zh-TW:
       already_confirmed: "was already confirmed, please try signing in"
       confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
       expired: "has expired, please request a new one"
-      not_found: "not found"
+      not_found: "找不到帳號"
       not_locked: "was not locked"
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
