@@ -186,10 +186,14 @@ zh-TW:
   signin: '登入'
   signout: '登出'
   signin_hint: '沒有帳號嗎? 按下 %{signup_link} 或是使用下面的社群帳號登入帳號'
+  signup_hint: '已經有帳號了嗎? 按下 %{signin_link} 或是使用下面的社群帳號登入帳號'
   new_password: '忘記密碼了嗎?'
   new_password_hint: '輸入你註冊的帳號Email來進行密碼重設, 或是使用下面的社群帳號登入帳號'
   new_password_btn: '讓我重設密碼'
   change_password: '前往重設'
+  change_your_password: '重設你的密碼'
+  change_your_password_hint: '請你輸入新的密碼'
+  change_my_password: '重設密碼'
   new_password_ingore: "如果你不需要重設密碼, 請你無視這封信件"
   new_password_ingore_content: "你的密碼不會因此修改, 除非你按下了修改的連結前往修改密碼"
   new_password_title: '有人使用你的帳號申請了重設密碼, 你可以使用以下連結前往重設'
@@ -246,6 +250,7 @@ zh-TW:
   share_this_on_sina_weibo: '分享到新浪微博'
   share: '分享'
   email_placeholder: '電子信箱'
+  confirm_placeholder: '確認密碼'
   password_placeholder: '密碼'
   forget_password: '忘記密碼'
   share_text: '來自布知道(QuoiQuoi)工作室: '
