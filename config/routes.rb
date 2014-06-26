@@ -178,7 +178,11 @@ QuoiQuoi::Application.routes.draw do
   resources :user_gifts do
     member do
       get :pay, action: :pay_show
+    end
 
+    collection do
+      post :search
+      put :discount
     end
   end
 

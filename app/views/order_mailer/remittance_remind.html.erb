@@ -6,7 +6,8 @@
 <body>
 <h2><%= t('mailer.title_for_order') %></h2>
 <p>
-  <strong><%= t('mailer.thanks_for_order') %>: </strong><br/>
+  <strong><%= t('mailer.dear') %>: </strong><br/>
+  <%= t('mailer.remind_for_order', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>".html_safe) %>
 </p>
 <table>
   <thead>

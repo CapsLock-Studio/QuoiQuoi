@@ -1,9 +1,9 @@
 <% if order_custom_item.accept.blank? || order_custom_item.price.blank? %>
-  <%= t('order_request.waiting') %>
+  <%= t('custom_order.waiting') %>
 <% elsif order_custom_item.accept? && !order_custom_item.order %>
-  <%= t('order_request.accept') %>
+  <%= t('custom_order.accept') %>
 <% elsif !order_custom_item.accept? && !order_custom_item.order %>
-  <%= t('order_request.decline') %>
+  <%= t('custom_order.decline') %>
 <% else %>
   <%= t('in_cart') %>
 <% end %>

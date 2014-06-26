@@ -2,7 +2,7 @@ class Admin::UserGiftsController < AdminController
   authorize_resource
 
   def index
-    @user_gifts = UserGift.all
+    @user_gifts = UserGift.all.order(id: :desc)
   end
 
   def check

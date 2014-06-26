@@ -6,7 +6,7 @@
       <div class="row margin-bottom-40">
         <div class="col-md-12">
           <h4 class="margin-bottom-30">
-            禮品券編號:
+            <%= t('number') %>
             <strong class="text-muted"><%= @user_gift.id %></strong>
           </h4>
         </div>
@@ -14,14 +14,14 @@
           <ul class="list-unstyled step">
             <li class="col-xs-3 step-active">
               <span>
-                <i class="icon-gift icon-round"></i>
+                <i class="fa fa-gift icon-round"></i>
               </span>
-              <h4>購買</h4>
+              <h4><%= t('buy') %></h4>
               <p><%= @user_gift.created_at.strftime('%Y/%m/%d %H:%M') %></p>
             </li>
             <li class="col-xs-3 <%= 'step-active' if @user_gift.payment && @user_gift.payment.completed? %>">
               <span>
-                <i class="icon-credit-card icon-round"></i>
+                <i class="fa fa-credit-card icon-round"></i>
               </span>
               <h4>付款</h4>
               <p><%= @user_gift.payment.pay_time.strftime('%Y/%m/%d %H:%M') if @user_gift.payment && @user_gift.payment.completed? %></p>
@@ -29,7 +29,7 @@
             </li>
             <li class="col-xs-3 <%= 'step-active' unless @user_gift.used_time.blank? %>">
               <span>
-                <i class="icon-ok icon-round"></i>
+                <i class="fa fa-check icon-round"></i>
               </span>
               <h4>使用禮券</h4>
               <p><%= @user_gift.used_time.strftime('%Y/%m/%d %H:%M') unless (@user_gift.used_time.blank?) %></p>

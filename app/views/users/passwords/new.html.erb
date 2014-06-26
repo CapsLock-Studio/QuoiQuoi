@@ -1,12 +1,56 @@
-<h2>Forgot your password?</h2>
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:0;">
+        <div class="reg-header">
+          <div class="text-center">
+            <h2><%= t('new_password') %></h2>
+            <p><%= t('new_password_hint')%></p>
+            <ul class="list-inline style-icons text-center">
+              <li>
+                <%= link_to user_omniauth_authorize_path(:google_oauth2) do %>
+                  <i class="fa fa-google-plus icon-round icon-round-md icon-bg-dark-orange hover-effect icon-hover"></i>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to user_omniauth_authorize_path(:facebook) do %>
+                  <i class="fa fa-facebook icon-round icon-round-md icon-bg-sea-blue hover-effect icon-hover"></i>
+                <% end %>
+              </li>
+              <li><a href="#"><i class="fa fa-twitter icon-round icon-round-md icon-bg-blue hover-effect icon-hover"></i></a></li>
+            </ul>
+          </div>
+        </div>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
-
-<%= render "users/shared/links" %>
+        <%= form_for(resource, :as => resource_name, :url => user_password_path, :html => { :method => :post }) do |f| %>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group">
+                <div class="controls margin-bottom-20">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <%= f.email_field :email, class: 'form-control', autofocus: true, 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <%= render 'layouts/messages' %>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <%= f.button t('new_password_btn'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+              <%= link_to new_user_registration_path, class: 'pull-left' do %>
+                <i class="fa fa-pencil fa-fw"></i>
+                <%= t('signup') %>
+              <% end %>
+              <%= link_to t('signin'), new_user_session_path, class: 'pull-right' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>

@@ -36,7 +36,7 @@ var bindSelectBox = function(){
         } else if (selectedBox.length <= 0) {
 
             // append material input
-            $($('<div></div>').html($('.template').html().replace(/new_nested_item/g, new Date().getTime())).text()).appendTo(selectBoxes.find('.items'))
+            $($('<div></div>').html(selectBoxes.find('.template').html().replace(/new_nested_item/g, new Date().getTime())).text()).appendTo(selectBoxes.find('.items'))
                 .addClass(selectBoxes.data('name') + '_' + $(this).data('id'))
                 .val($(this).data('id'));
             box.addClass('active');
@@ -187,5 +187,12 @@ var initChangeFocusImageShow = function() {
     $('[data-toggle="preview-change"]').on('click', function(e){
         e.preventDefault();
         $('.fancybox-button').attr('href', $(this).data('large')).find('img').attr('src', $(this).data('medium'));
+    });
+};
+
+var initToggleSearchGiftForm = function() {
+    $('[data-toggle="gift-form"]').on('click', function(e){
+        e.preventDefault();
+        $('.gift-search').toggleClass('active');
     });
 };

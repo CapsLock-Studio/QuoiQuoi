@@ -7,8 +7,8 @@
         <div class="box">
           <div class="box-header box-header-small grey-background">
             <h4>
-              禮品券編號: <strong class="text-muted"><%= user_gift.id %></strong>
-              <small class="order-time">建立時間: <strong><%= user_gift.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
+              <%= t('number') %> <strong class="text-muted"><%= user_gift.id %></strong>
+              <small class="order-time"><%= t('build_time') %> <strong><%= user_gift.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
             </h4>
           </div>
           <div class="box-content box-no-padding" style="border:0;">
@@ -28,17 +28,17 @@
                     </td>
                     <td>
                       <% if !user_gift.payment %>
-                        等待付款
+                        <%= t('order.wait_paying') %>
                       <% elsif user_gift.payment.amount == 0 || user_gift.payment.identifier.blank? %>
-                        等待匯款
+                        <%= t('order.wait_remittance') %>
                       <% elsif user_gift.payment.completed? %>
                         <% if user_gift.used_user_id.blank? || user_gift.used_time.blank? %>
-                          尚未兌換
+                          <%= t('not_used') %>
                         <% else %>
-                          已使用
+                          <%= t('used') %>
                         <% end %>
                       <% else %>
-                        等待確認
+                        <%= t('order.wait_confirm') %>
                       <% end %>
                     </td>
                     <td>
@@ -47,12 +47,12 @@
                     <td>
                       <ul class="list-unstyled">
                         <% if !user_gift.payment %>
-                          <%= link_to '付款', pay_user_gift_path(user_gift), class: 'btn btn-u btn-u-orange hover-effect' %>
+                          <%= link_to t('pay'), pay_user_gift_path(user_gift), class: 'btn btn-u btn-u-orange hover-effect' %>
                         <% elsif !user_gift.payment.completed? || user_gift.payment.amount == 0 || user_gift.payment.pay_time.blank? %>
-                          <%= link_to '回報', edit_payment_path(user_gift.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                          <%= link_to t('order.advice'), edit_payment_path(user_gift.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
                         <% end %>
                         <li>
-                          <%= link_to '禮品券詳細', user_gift_path(user_gift) %>
+                          <%= link_to t('detail'), user_gift_path(user_gift) %>
                         </li>
                       </ul>
                     </td>

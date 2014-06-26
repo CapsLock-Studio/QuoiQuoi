@@ -84,6 +84,8 @@ zh-TW:
     decline: '拒絕訂製'
     waiting: '等待回應'
     cancel: '取消要求'
+    sketch: '設計草稿'
+    your: '你選擇的客製化項目'
 
   registration:
     my: '我的課程'
@@ -95,6 +97,7 @@ zh-TW:
     title: '課程'
     canceled: '課程已取消'
     name: '課程名稱'
+    information: '課程資訊'
 
 
   actions:
@@ -105,12 +108,24 @@ zh-TW:
   product:
     other_products: '其他商品'
 
+  user_gift:
+    success: '禮券扣款成功!'
+    danger: '禮券扣款失敗, 請聯絡店家查明原因'
+    not_found: '搜尋沒有結果'
+    oops: 'Oops! 這個序號已經用過囉'
+    information: '禮券資訊'
+    quota: '可抵用額度'
+    serial: '序號'
+    confirm: '確認無誤, 我要使用禮券'
+    sorry: '抱歉, 找不到你的禮券資訊'
+
   check_out: '結算'
   payment: '付款'
 
   paypal_description: 'PayPal 是更快速、安全的跨國線上交易支付平台'
   online_payment: '線上付款'
   offline_payment: '前往匯款'
+  choose_payment: '選擇付款方式'
   registrations: '報名課程'
   closed_course: '已結束課程'
   ideation_sketches: '構思草圖'
@@ -122,6 +137,8 @@ zh-TW:
   your_account: '匯款帳號末五碼'
   remitted_date: '匯款日期'
   remitted_amount: '匯款金額'
+  amount_payable: '應付金額'
+  shipping_information: '配送資訊'
   remitted_information: '匯款資訊'
   report_remittance: '匯款回報'
   submit: '送出'
@@ -169,6 +186,13 @@ zh-TW:
   signin: '登入'
   signout: '登出'
   signin_hint: '沒有帳號嗎? 按下 %{signup_link} 或是使用下面的社群帳號登入帳號'
+  new_password: '忘記密碼了嗎?'
+  new_password_hint: '輸入你註冊的帳號Email來進行密碼重設, 或是使用下面的社群帳號登入帳號'
+  new_password_btn: '讓我重設密碼'
+  change_password: '前往重設'
+  new_password_ingore: "如果你不需要重設密碼, 請你無視這封信件"
+  new_password_ingore_content: "你的密碼不會因此修改, 除非你按下了修改的連結前往修改密碼"
+  new_password_title: '有人使用你的帳號申請了重設密碼, 你可以使用以下連結前往重設'
   signup: '註冊'
   user: '我的帳戶'
   add_to_cart: '加到購物車'
@@ -251,3 +275,19 @@ zh-TW:
   thanks_text: '感謝你的留言，希望您能繼續支持布知道(QuoiQuoi)'
   recaptcha_error: '驗證碼錯誤'
   back_to_control_panel: '回到我的帳戶'
+  remittance: '郵局匯款'
+  use_gift_card: '使用禮券'
+  enter_serial: '輸入你的禮券序號'
+  back_to_payment: '返回付款頁面'
+  cancel_and_back_to_payment: '取消, 返回付款頁面'
+  used_time: '使用日期'
+  not_used: '尚未使用'
+  used: '已使用'
+
+  mailer:
+    subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'
+    title_for_order: '感謝您訂購quoiquoi布知道工作室的商品'
+    remind_for_order: '非常感謝你報名我們的課程, 提醒您, 訂單在三天內未繳費則自動放棄, 回報匯款請至 %{remittance_link} 回報'
+    thanks_for_order: '非常感謝你訂購我我們的商品, 以下是你的訂單詳細訊息'
+    thanks_for_registration: ''
+    dear: '親愛的客戶'

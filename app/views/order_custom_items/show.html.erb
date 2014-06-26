@@ -100,7 +100,7 @@
             <% if @order_custom_item.image.exists? %>
               <div class="row">
                 <div class="col-md-2 col-xs-5 text-right">
-                  設計草稿
+                  <%= t('custom_order.sketch') %>
                 </div>
                 <div class="col-md-6 col-xs-7">
                   <a href="<%= asset_path @order_custom_item.image.url(:large) %>" target="_blank">
@@ -167,7 +167,15 @@
                             <div class="text-muted">
                               <%= @order_custom_item.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
                             </div>
-                            <%= image_tag @order_custom_item.product.image.url(:thumb), class: 'img-responsive' %>
+                            <%= image_tag @order_custom_item.product.image.url(:thumb) %>
+                          <% end %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="col-xs-4"><%= t('custom_order.your') %></td>
+                        <td>
+                          <% @order_custom_item.order_custom_item_product_custom_items.each do |custom_items| %>
+                            <%= image_tag custom_items.product_custom_item.image.url(:thumb) %>
                           <% end %>
                         </td>
                       </tr>
@@ -198,8 +206,8 @@
                     <tr>
                       <td class="col-xs-4"><%= t('your_idea') %></td>
                       <td>
-                        <% @order_custom_item.order_custom_item_images do |order_custom_item_image| %>
-                          <%= order_custom_item_image.image.url(:thumb) %>
+                        <% @order_custom_item.order_custom_item_images.each do |order_custom_item_image| %>
+                          <%= image_tag order_custom_item_image.image.url(:thumb) %>
                         <% end %>
                       </td>
                     </tr>

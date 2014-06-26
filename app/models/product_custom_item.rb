@@ -1,5 +1,6 @@
 class ProductCustomItem < ActiveRecord::Base
   belongs_to :product
+  has_many :order_custom_item_product_custom_items
   has_many :product_custom_item_translates
   accepts_nested_attributes_for :product_custom_item_translates
 

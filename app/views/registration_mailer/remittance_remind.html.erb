@@ -7,7 +7,7 @@
 <h2>感謝您報名QuoiQuoi - 布知道工作室的課程</h2>
 <p>
   <strong>親愛的客戶: </strong><br/>
-  非常感謝你報名我們的課程, 提醒您, 課程在三天內未繳費視為放棄報名, 回報匯款請至 <a href="<%= (@registration.user)? "#{@domain}/registrations" : "#{@domain}/reports" %>">回報</a>
+  非常感謝你報名我們的課程, 提醒您, 課程在三天內未繳費視為放棄報名, 回報匯款請至 <a href="<%= (@registration.user)? "#{@domain}/payments/#{@registration.payment.id}/edit" : "#{@domain}/reports" %>">回報</a>
 </p>
 <table class="table table-hover">
   <thead>

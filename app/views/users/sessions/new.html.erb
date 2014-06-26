@@ -53,7 +53,7 @@
                 <i class="fa fa-pencil fa-fw"></i>
                 <%= t('signup') %>
               <% end %>
-              <a href="#" class="pull-right"><%= t('forget_password') %>?</a>
+              <%= link_to "#{t('forget_password')}?", new_user_password_path, class: 'pull-right' %>
             </div>
           </div>
         <% end %>

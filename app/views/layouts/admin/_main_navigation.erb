@@ -140,20 +140,20 @@
       <%= nav_item_with_resource('#', nil, Admin::UserGift) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
           <i class="icon-gift"></i>
-          <span>禮品券交易管理</span>
+          <span>禮券交易管理</span>
           <i class="icon-angle-down"></i>
         </a>
         <ul class="nav <%= 'in' if is_in(:user_gifts) %>">
           <%= nav_item_with_resource(check_admin_user_gifts_path, {rule: /#{admin_user_gifts_path}(\/\d+)?\/check/}, Admin::UserGift) do %>
             <%= link_to(check_admin_user_gifts_path) do %>
               <i class="icon-check"></i>
-              <span>待確認購買禮品券匯款</span>
+              <span>待確認購買禮券匯款</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(nil, {rule: /#{admin_user_gifts_path}(\/\d+)?(?!\/check)/}, Admin::UserGift) do %>
             <%= link_to(admin_user_gifts_path) do %>
               <i class="icon-flag"></i>
-              <span>禮品券記錄</span>
+              <span>禮券記錄</span>
             <% end %>
           <% end %>
         </ul>

@@ -54,7 +54,7 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('register'), :registrations_path
     add_breadcrumb t('payment')
 
-    @registration = Registration.where(id: params[:id], user_id: ((current_user)? current_user.id : nil)).first
+    @registration = Registration.find(params[:id])
     @payment = @registration.build_payment
   end
 
