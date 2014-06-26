@@ -1,16 +1,47 @@
-<h2>Change your password</h2>
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:0;">
+        <div class="reg-header">
+          <div class="text-center">
+            <h2><%= t('change_your_password') %></h2>
+            <p><%= t('change_your_password_hint')%></p>
+          </div>
+        </div>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
-
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password, :autofocus => true %></div>
-
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Change my password" %></div>
-<% end %>
-
-<%= render "users/shared/links" %>
+        <%= form_for(resource, :as => resource_name, :url => user_password_path, :html => { :method => :put, class: 'validate-form' }) do |f| %>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group">
+                <div class="controls margin-bottom-20">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                    <%= f.password_field :password, class: 'form-control', autofocus: true, 'placeholder' => t('password_placeholder'), data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls margin-bottom-20">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-fw fa-key"></i></span>
+                    <%= f.password_field :password_confirmation, class: 'form-control', 'placeholder' => t('confirm_placeholder'), data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <%= render 'layouts/messages' %>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <%= f.hidden_field :reset_password_token %>
+              <%= f.button t('change_my_password'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>
