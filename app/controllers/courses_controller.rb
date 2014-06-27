@@ -12,9 +12,13 @@ class CoursesController < ApplicationController
         if params[:month] && params[:month] != 'recent'
           @courses = @courses.by_month(params[:month])
         else
-          @courses = @courses.where('time <= ?', Time.now + 2.months)
+
+          # show now to two months after
+          # @courses = @courses.where('time <= ?', Time.now + 2.months)
         end
-        @courses = @courses.page(params[:page]).per(12)
+
+        # make page
+        @courses = @courses.page(params[:page]).per(12).order(:time)
       end
 
       format.json do

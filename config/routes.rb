@@ -141,6 +141,8 @@ QuoiQuoi::Application.routes.draw do
   end
 
   root to: 'home#index'
+
+  get 'rss' => 'home#index', format: 'rss'
   get 'cart' => 'cart#index'
 
   devise_scope :user do
