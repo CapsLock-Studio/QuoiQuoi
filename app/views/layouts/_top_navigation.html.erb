@@ -30,9 +30,9 @@
   </li>
   <li>
     <div>
-      <a class="btn btn-xs">
+      <%= link_to rss_path do %>
         <i class="fa fa-rss"></i>
-      </a>
+      <% end %>
     </div>
   </li>
   <% if user_signed_in? %>

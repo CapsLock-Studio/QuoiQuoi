@@ -78,13 +78,15 @@
                     <% end %>
                   <% end %>
                 </div>
-                <div class="col-md-12 margin-bottom-10">
-                  <h5><%= t('customize_hint') %></h5>
-                  <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
-                    <i class="icon-edit"></i>
-                    <span><%= t('customize') %></span>
-                  <% end %>
-                </div>
+                <% unless @order_product.product.product_type %>
+                  <div class="col-md-12 margin-bottom-10">
+                    <h5><%= t('customize_hint') %></h5>
+                    <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
+                      <i class="icon-edit"></i>
+                      <span><%= t('customize') %></span>
+                    <% end %>
+                  </div>
+                <% end %>
                 <div class="col-md-12">
                   <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@order_product.product.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
                 </div>

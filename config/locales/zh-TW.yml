@@ -119,6 +119,12 @@ zh-TW:
     confirm: '確認無誤, 我要使用禮券'
     sorry: '抱歉, 找不到你的禮券資訊'
 
+  rss:
+    product:
+      title: '我們專注於替每位客戶打造屬於個人的手作包，quoiquoi獨一無二的手作包能完美的陪襯出你的個人特質'
+    course:
+      title: '我們開設的課程能讓你學會如何打造自己的手作品噢!'
+
   check_out: '結算'
   payment: '付款'
 
@@ -202,11 +208,11 @@ zh-TW:
   add_to_cart: '加到購物車'
   buy: '下單'
   detail: '詳細'
-  in_cart: '已下單'
+  in_cart: '在購物車內'
   response_from_designer: '設計師的回應'
   bid: '報價'
-  work_days: '工作天'
-  completed_date: '完成日期'
+  work_days: '大約工作天'
+  completed_date: '預估完成日期'
   message: '訊息'
   your_contact: '你的聯絡資訊'
   name: '姓名'

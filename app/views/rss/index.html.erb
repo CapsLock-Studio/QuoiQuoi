@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:none;">
+        <div class="reg-header" style="margin-bottom:0">
+          <div class="text-center">
+            <h2>
+              <i class="fa fa-rss"></i>
+              RSS訂閱
+            </h2>
+          </div>
+        </div>
+        <%= link_to '手作現有商品', products_path(format: :rss), class: 'btn btn-block btn-default hover-effect' %>
+        <%= link_to '課程', courses_path(format: :rss), class: 'btn btn-block btn-default hover-effect' %>
+      </div>
+    </div>
+  </div>
+</div>

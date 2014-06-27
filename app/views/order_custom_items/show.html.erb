@@ -52,7 +52,7 @@
                 <h4><%= t('in_cart') %></h4>
               <% elsif @order_custom_item.accept? && !@order_custom_item.accept_time.blank? %>
                 <h4><%= t('add_to_cart') %></h4>
-                <%= link_to t('buy'), order_custom_item_path(@order_custom_item), class: 'btn btn-u btn-u-xs btn-u-orange hover-effect', method: :put %>
+                <%= link_to t('add_to_cart'), order_custom_item_path(@order_custom_item), class: 'btn btn-u btn-u-xs btn-u-orange hover-effect', method: :put %>
               <% end %>
             </li>
           </ul>
@@ -78,7 +78,7 @@
                 <%= t('work_days') %>
               </div>
               <div class="col-md-10 col-xs-7">
-                <%= @order_custom_item.workday %>
+                <%= (@order_custom_item.workday)? @order_custom_item.workday : '-' %>
               </div>
             </div>
             <div class="row">
@@ -86,7 +86,7 @@
                 <%= t('completed_date') %>
               </div>
               <div class="col-md-10 col-xs-7">
-                <%= @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d') %>
+                <%= (@order_custom_item.estimate_complete_time)? @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d') : '-' %>
               </div>
             </div>
             <div class="row">

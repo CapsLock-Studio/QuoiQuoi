@@ -4,12 +4,22 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    add_breadcrumb t('home'), :root_path
+    respond_to do |format|
+      format.html do
+        add_breadcrumb t('home'), :root_path
 
-    @products = Product.where(product_type_id: params[:product_type_id]).page(params[:page]).per(12)
+        @products = Product.where(product_type_id: params[:product_type_id]).page(params[:page]).per(12)
 
-    unless @products.first.nil?
-      add_breadcrumb @products.first.product_type_id.nil? ? I18n.t('handmadebag') : @products.first.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
+        unless @products.first.nil?
+          add_breadcrumb @products.first.product_type_id.nil? ? I18n.t('handmadebag') : @products.first.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
+        end
+      end
+
+      format.rss do
+        @products = Product.order(created_at: :desc).limit(50)
+
+        render layout: false
+      end
     end
   end
 
