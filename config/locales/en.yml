@@ -101,6 +101,12 @@ en:
     confirm: 'I want to use this gift card'
     sorry: 'Sorry, We can not find gift card by this serial'
 
+  rss:
+    product:
+      title: 'We are focus in creating personalized handmade bags for every customer. Our handmade bags will let everyone knows your charms'
+    course:
+      title: 'Our courses let you learn how to make your own handmade '
+
   product:
     other_products: 'Other products'
 
@@ -189,8 +195,8 @@ en:
   in_cart: 'In cart'
   response_from_designer: 'Response from designer'
   bid: 'Bid price'
-  work_days: 'work days'
-  completed_date: 'Completed date'
+  work_days: 'About work days'
+  completed_date: 'Estimate completed date'
   message: 'Message'
   your_contact: 'Your contact'
   name: 'Name'

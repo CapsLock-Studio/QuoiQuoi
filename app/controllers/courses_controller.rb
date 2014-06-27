@@ -23,6 +23,10 @@ class CoursesController < ApplicationController
 
       format.json do
       end
+
+      format.rss do
+        @courses = @courses.limit(50)
+      end
     end
 
   end
