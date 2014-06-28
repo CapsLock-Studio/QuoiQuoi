@@ -19,7 +19,7 @@
                     <div class="controls col-md-3">
                       <%= f.select :shipping_fee_id, options_for_select(ShippingFee.all.order(:id).collect{|fee|
                         [fee.area, fee.id, {data: {fee: fee.fee, 'free-condition' => fee.free_condition}}]
-                      }), {}, {class: 'form-control shipping-fee'} %>
+                      }), {}, {class: 'form-control shipping-fee selectpicker'} %>
                       <small class="text-muted"><%= t('free_shipping_fee') %></small>
                     </div>
                   </div>

@@ -5,5 +5,9 @@
 <% elsif !order_custom_item.accept? && !order_custom_item.order %>
   <%= t('custom_order.decline') %>
 <% else %>
-  <%= t('in_cart') %>
+  <% if order_custom_item.order.payment %>
+    <%= t('ordered') %>
+  <% else %>
+    <%= t('in_cart') %>
+  <% end %>
 <% end %>

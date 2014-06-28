@@ -72,7 +72,7 @@
                       <span><%= t('add_to_cart') %></span>
                     <% end %>
                   <% else %>
-                    <%= link_to '#', class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;' do %>
+                    <%= link_to '#', class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;', disabled: 'disabled' do %>
                       <i class="icon-shopping-cart"></i>
                       <span><%= t('not_in_stock') %></span>
                     <% end %>

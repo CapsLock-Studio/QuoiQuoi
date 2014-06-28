@@ -194,6 +194,7 @@ en:
   buy: 'Buy'
   detail: 'Detail'
   in_cart: 'In cart'
+  ordered: 'Ordered'
   response_from_designer: 'Response from designer'
   bid: 'Bid price'
   work_days: 'About work days'
