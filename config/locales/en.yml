@@ -279,6 +279,10 @@ en:
   used_time: 'Used time'
   not_used: 'Not used'
   used: 'Used'
+  completed_payment: 'Completed payment'
+  completed_payment_hint: 'Thanks for shopping on quoiquoi. Hopes you will like our other products and courses.'
+  keep_shopping: 'Keep shopping'
+  other_courses: 'Other courses'
 
   mailer:
     subject_for_order: "[quoiquoi.tw] Remind for ordering complete (Please don't reply this mail)"
