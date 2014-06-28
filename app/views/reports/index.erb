@@ -53,9 +53,12 @@
                             <% if registration.payment.completed? %>
                               <span class="label label-success"><%= t('paid') %></span>
                             <% end %>
-                            <%= link_to t('order.advice'), edit_payment_path(registration.payment), class: 'btn btn-default' unless registration.payment.completed? %>
                             <% if registration.payment.completed? && registration.canceled? %>
                               <span class="label label-default"><%= t('course.canceled') %></span>
+                            <% elsif registration.course.canceled? %>
+                              <span class="label label-default"><%= t('course.canceled') %></span>
+                            <% else %>
+                              <%= link_to t('order.advice'), edit_payment_path(registration.payment), class: 'btn btn-default' unless registration.payment.completed? %>
                             <% end %>
                             <% if registration.payment.completed? && registration.returned? %>
                               <span class="label label-default" style="background-color:#000"><%= t('refunded') %></span>

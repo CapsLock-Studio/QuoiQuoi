@@ -42,11 +42,6 @@
           <div class="col-sm-6 col-xs-12">
             <div class="row">
               <div class="col-md-12 margin-bottom-50">
-                <ul class="social-icons pull-right">
-                  <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
-                  <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
-                  <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
-                </ul>
                 <h3 style="color:#666;">
                   <strong>
                     <%= course_translate.name %>
@@ -62,7 +57,7 @@
                 </ul>
                 <%= simple_format(course_translate.description) %>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 margin-bottom-10">
                 <h4 class="margin-bottom-20">
                   <strong style="color:#666;"><%= "#{t('money_name')}#{number_to_currency(@course.price)}" %></strong>
                   <small><%= course_translate.note %></small>
@@ -83,6 +78,9 @@
                     <% end %>
                   <% end %>
                 <% end %>
+              </div>
+              <div class="col-md-12">
+                <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@course.image.url(:large)}", text: "#{t('share_text')}#{course_translate.name}" %>
               </div>
             </div>
           </div>
