@@ -73,7 +73,7 @@ class Admin::LocalesController < AdminController
 
   private
     def locale_params
-      params.require(:locale).permit(:lang, :name)
+      params.require(:locale).permit(:lang, :name, :currency)
     end
 
     def set_locale

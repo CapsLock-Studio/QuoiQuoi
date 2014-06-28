@@ -28,12 +28,15 @@
                 <tr>
                   <th></th>
                   <th>禮品券名稱</th>
-                  <th>禮品券面額</th>
+                  <th>禮品券額度</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <% @gifts.each do |gift| %>
+                  <% translates = gift.gift_translates.reject{|translate| translate.quota.blank?}.collect do |translate|
+                    {name: translate.name, quota: translate.quota, lang: translate.locale.name, currency: translate.locale.currency}
+                  end %>
                   <tr>
                     <td>
                       <div class="preview" style="width:100px;height:75px;">
@@ -41,10 +44,14 @@
                       </div>
                     </td>
                     <td>
-                      <%= gift.gift_translates.collect{|translate| translate.name.blank?? 'No Translate' : translate.name}.join(' - ') %>
+                      <% translates.each do |translate| %>
+                        <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= translate[:name] %><br/>
+                      <% end %>
                     </td>
                     <td>
-                      <%= number_to_currency(gift.quota) %>
+                      <% translates.each do |translate| %>
+                        <%= number_to_currency(translate[:quota]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                      <% end %>
                     </td>
                     <td>
                       <div class='text-right'>

@@ -83,13 +83,6 @@
           </div>
           <div class="col-sm-6">
             <div class="form-group">
-              <%= f.label :price, '商品價格' %>
-              <div class="controls">
-                <%= f.text_field :price, class: 'form-control', placeholder: '請輸入商品價格',
-                                 data: {'rule-required' => true, 'rule-number' => true} %>
-              </div>
-            </div>
-            <div class="form-group">
               <%= f.label :quantity, '商品現存數量' %>
               <div class="controls">
                 <%= f.text_field :quantity, class: 'form-control', placeholder: '請輸入商品現存數量',
@@ -110,6 +103,13 @@
                   </div>
                 </div>
                 <div class="box-content">
+                  <div class="form-group">
+                    <%= builder.label :price, "價格(#{@product.product_translates[builder.index].locale.currency})" %>
+                    <div class="controls">
+                      <%= builder.text_field :price, class: 'form-control',
+                                             placeholder: '請輸入價格', data: {number: true} %>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <%= builder.label :name, '商品名稱' %>
                     <div class="controls">
