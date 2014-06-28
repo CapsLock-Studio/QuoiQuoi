@@ -210,6 +210,7 @@ zh-TW:
   buy: '下單'
   detail: '詳細'
   in_cart: '在購物車內'
+  ordered: '已下單'
   response_from_designer: '設計師的回應'
   bid: '報價'
   work_days: '大約工作天'

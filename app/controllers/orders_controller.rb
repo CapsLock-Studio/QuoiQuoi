@@ -78,7 +78,7 @@ class OrdersController < ApplicationController
   def close_index
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('order.closed')
-    @orders = Order.where(closed: true)
+    @orders = Order.where(closed: true, user_id: current_user.id)
 
     respond_to do |format|
       format.html {render action: :index}

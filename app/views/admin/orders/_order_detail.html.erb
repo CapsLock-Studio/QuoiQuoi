@@ -31,6 +31,19 @@
               </td>
             </tr>
           <% end %>
+          <% order.order_custom_items.each do |custom_item| %>
+            <tr>
+              <td>
+                <%= image_tag custom_item.image.url(:thumb), class: 'img-responsive' %>
+              </td>
+              <td>
+                <strong><%= t('original_bag') %></strong>
+              </td>
+              <td class="col-xs-1">
+                <%= number_to_currency(custom_item.price) %>
+              </td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
       </div>

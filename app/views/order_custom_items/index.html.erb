@@ -26,6 +26,8 @@
                         <td class="text-left col-md-6 hidden-xs">
                           <% if order_custom_item.product %>
                             <%= image_tag(order_custom_item.product.image.url(:thumb)) %>
+                          <% else %>
+                            <%= image_tag(order_custom_item.image.url(:thumb)) %>
                           <% end %>
                           <% order_custom_item.order_custom_item_images.each do |image| %>
                             <%= image_tag image.image.url(:thumb) %>
