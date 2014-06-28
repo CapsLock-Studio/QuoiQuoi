@@ -8,7 +8,7 @@ class Course < ActiveRecord::Base
   has_many :locales, through: :course_translates
   accepts_nested_attributes_for :course_translates
 
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
 
   has_attached_file :image, styles: {thumb: '100x75#', small: '300x225#', medium: '500x375#', large: '1000x750#'}, default_url: '/system/placeholder/:style.gif'
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
