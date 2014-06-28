@@ -76,6 +76,7 @@ en:
   registration:
     my: 'My registrations'
     you_have_no_registrations: 'You have no registrations.'
+    full: 'Registration is full'
 
   course:
     closed: 'Closed courses'

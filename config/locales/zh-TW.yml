@@ -90,6 +90,7 @@ zh-TW:
   registration:
     my: '我的課程'
     you_have_no_registrations: '你目前沒有報名的課程'
+    full: '報名人數額滿'
 
   course:
     closed: '已關閉課程'
