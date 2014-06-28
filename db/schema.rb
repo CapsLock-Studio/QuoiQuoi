@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140626104537) do
+ActiveRecord::Schema.define(version: 20140628200607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,13 +260,13 @@ ActiveRecord::Schema.define(version: 20140626104537) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
+    t.float    "quota"
   end
 
   add_index "gift_translates", ["gift_id"], name: "index_gift_translates_on_gift_id", using: :btree
   add_index "gift_translates", ["locale_id"], name: "index_gift_translates_on_locale_id", using: :btree
 
   create_table "gifts", force: true do |t|
-    t.integer  "quota"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
@@ -299,6 +299,7 @@ ActiveRecord::Schema.define(version: 20140626104537) do
     t.string   "name"
     t.string   "currency_code"
     t.string   "money_name"
+    t.string   "currency"
   end
 
   create_table "material_translates", force: true do |t|
@@ -543,6 +544,7 @@ ActiveRecord::Schema.define(version: 20140626104537) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
+    t.float    "price"
   end
 
   add_index "product_translates", ["locale_id"], name: "index_product_translates_on_locale_id", using: :btree
@@ -571,7 +573,6 @@ ActiveRecord::Schema.define(version: 20140626104537) do
   add_index "product_youtubes", ["product_id"], name: "index_product_youtubes_on_product_id", using: :btree
 
   create_table "products", force: true do |t|
-    t.integer  "price"
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"

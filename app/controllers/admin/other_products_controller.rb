@@ -22,7 +22,7 @@ class Admin::OtherProductsController < AdminController
     add_breadcrumb '新增商品'
 
     @product = Product.new
-    @locales = Locale.all
+    @locales = Locale.all.order(id: :desc)
     @locales.each do |locale|
       @product.product_translates.build(locale_id: locale.id)
     end
@@ -30,7 +30,7 @@ class Admin::OtherProductsController < AdminController
   end
   # GET /products/1/edit
   def edit
-    @locales = Locale.all
+    @locales = Locale.all.order(id: :desc)
   end
 
   # POST /products
@@ -68,10 +68,7 @@ class Admin::OtherProductsController < AdminController
     @product = Product.find(params[:id])
   end
   def product_params
-    params.require(:product).permit(:id, :price, :quantity, :image, product_translates_attributes: [:id, :name, :description, :locale_id],
-                                    product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image,
-                                                                      product_custom_item_translates_attributes: [:id, :name, :locale_id
-                                                                      ]
-                                    ])
+    params.require(:product).permit(:id, :quantity, :image, product_translates_attributes: [:id, :price, :name, :description, :locale_id],
+                                    product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image])
   end
 end

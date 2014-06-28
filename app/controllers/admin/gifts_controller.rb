@@ -14,7 +14,7 @@ class Admin::GiftsController < AdminController
 
     @gift = Gift.new
 
-    Locale.all.each do |locale|
+    Locale.all.order(id: :desc).each do |locale|
       @gift.gift_translates.build(locale: locale)
     end
   end
@@ -57,7 +57,7 @@ class Admin::GiftsController < AdminController
 
   private
     def gift_params
-      params.require(:gift).permit(:id, :quota, :image, gift_translates_attributes: [:id, :locale_id, :name, :description])
+      params.require(:gift).permit(:id, :quota, :image, gift_translates_attributes: [:id, :locale_id, :quota, :name, :description])
     end
 
     def set_gift

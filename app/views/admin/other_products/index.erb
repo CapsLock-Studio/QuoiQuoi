@@ -36,6 +36,9 @@
                 </thead>
                 <tbody>
                   <% @products.each do |product| %>
+                    <% translates = product.product_translates.reject{|translate| translate.price.blank?}.collect do |translate|
+                      {name: translate.name, price: translate.price, lang: translate.locale.name, currency: translate.locale.currency}
+                    end %>
                     <tr>
                       <td>
                         <div class="preview" style="width:100px;height:75px;">
@@ -46,13 +49,17 @@
                         <%= product.product_translates.collect{|translate| translate.name}.join(' - ') %>
                       </td>
                       <td>
-                        <%= product.product_type.product_type_translates.collect{|translate| translate.name}.join(' - ') %>
+                        <% translates.each do |translate| %>
+                          <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= translate[:name] %><br/>
+                        <% end %>
                       </td>
                       <td>
                         <%= product.quantity %>
                       </td>
                       <td>
-                        $<%= product.price %>
+                        <% translates.each do |translate| %>
+                          <%= number_to_currency(translate[:price]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                        <% end %>
                       </td>
                       <td>
                         <div class='text-right'>

@@ -23,14 +23,20 @@
             <%= f.text_field :name, class: 'form-control', placeholder: '請輸入語系名稱', data: { 'rule-required' => true } %>
           </div>
         </div>
+        <div class="form-group">
+          <%= f.label :currency, '貨幣代碼' %>
+          <div class="controls">
+            <%= f.text_field :currency, class: 'form-control', placeholder: '輸入貨幣代碼', data: {'rule-required' => true} %>
+          </div>
+        </div>
         <div class="form-actions row">
           <div class="col-sm-12">
             <div class="pull-right">
+              <%= link_to '取消', admin_locales_path, class: 'btn btn-lg' %>
               <%= f.button class: 'btn btn-primary btn-lg' do %>
                 <i class="icon-save"></i>
                 儲存
               <% end %>
-              <%= link_to '取消', admin_locales_path, class: 'btn btn-lg' %>
             </div>
           </div>
         </div>
