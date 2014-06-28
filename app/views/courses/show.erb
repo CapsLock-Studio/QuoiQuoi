@@ -68,7 +68,11 @@
                   <small><%= course_translate.note %></small>
                 </h4>
                 <% if @course.time > Time.now + 5.hours %>
-                  <% if current_user && @registration.id %>
+                  <% if @course.popular <= @course.registrations.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} %>
+                    <a href="#" class="btn btn-default btn-lg btn-block hover-effect" disabled="disabled">
+                      <span><%= t('registration.full') %></span>
+                    </a>
+                  <% elsif current_user && @registration.id %>
                     <%= link_to registrations_path, class: 'btn btn-default btn-lg btn-block hover-effect one-page-btn' do %>
                       <span><%= t('had_registered') %></span>
                     <% end %>
