@@ -5,17 +5,17 @@
       <div class="reg-page" style="border-top:0;">
         <div class="reg-header">
           <div class="text-center">
-            <h2>付款完成</h2>
-            <p>非常感謝您的愛戴, 希望您也能夠喜歡我們其他的商品與課程, 謝謝!</p>
+            <h2><%= t('completed_payment') %></h2>
+            <p><%= t('completed_payment_hint') %></p>
           </div>
         </div>
         <%= link_to products_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' do %>
-          <i class="icon-shopping-cart"></i>
-          逛商店
+          <i class="fa fa-shopping-cart"></i>
+          <%= t('keep_shopping') %>
         <% end %>
         <%= link_to courses_path, class: 'btn btn-default btn-lg hover-effect btn-block' do %>
-          <i class="icon-book"></i>
-          看其他課程
+          <i class="fa fa-book"></i>
+          <%= t('other_courses') %>
         <% end %>
       </div>
     </div>

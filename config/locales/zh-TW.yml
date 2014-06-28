@@ -295,6 +295,10 @@ zh-TW:
   used_time: '使用日期'
   not_used: '尚未使用'
   used: '已使用'
+  completed_payment: '付款完成'
+  completed_payment_hint: '非常感謝您的愛戴, 希望您也能夠喜歡我們其他的商品與課程, 謝謝!'
+  keep_shopping: '繼續逛逛商店'
+  other_courses: '看其他課程'
 
   mailer:
     subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'

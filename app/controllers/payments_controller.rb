@@ -60,7 +60,7 @@ class PaymentsController < ApplicationController
         if payment.registration.user
           format.html {redirect_to registrations_path}
         else
-          format.html {render action: :show}
+          format.html {redirect_to action: :show}
         end
       elsif payment.user_gift
         format.html {redirect_to user_gifts_path}
@@ -102,7 +102,7 @@ class PaymentsController < ApplicationController
           if @payment.registration.user
             format.html {redirect_to registrations_path}
           else
-            format.html {render action: :show}
+            format.html {redirect_to action: :show}
           end
         elsif @payment.user_gift
           redirect_uri = user_gift_path(@payment.user_gift)
