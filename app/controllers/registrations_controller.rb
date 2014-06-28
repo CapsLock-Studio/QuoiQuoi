@@ -31,15 +31,20 @@ class RegistrationsController < ApplicationController
   def create
     respond_to do |format|
       course = Course.find(registration_params[:course_id])
-      registration = Registration.new(registration_params)
+      @registration = Registration.new(registration_params)
 
-      if course.popular > (course.registrations.collect{|r| (r.payment && r.payment.completed?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + registration.attendance
-        registration.subtotal = registration.attendance * registration.course.price
+      if course.popular > (course.registrations.collect{|r| (r.payment && r.payment.completed?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
+        if Registration.count(conditions: {email: registration_params[:email]}) <= 0
+          @registration.subtotal = @registration.attendance * @registration.course.price
 
-        if registration.save
-          format.html {redirect_to pay_registration_path(registration)}
+          if @registration.save
+            format.html {redirect_to pay_registration_path(@registration)}
+          else
+            format.html {render json: @registration.errors}
+          end
         else
-          format.html {render json: registration.errors}
+          flash[:message] = t('had_registered')
+          format.html {render action: :new}
         end
       else
         format.html {render json: 'Over registration max attendance.'}
