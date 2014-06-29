@@ -11,6 +11,5 @@ class Locale < ActiveRecord::Base
   accepts_nested_attributes_for :course_translates, allow_destroy: true
   has_many :rent_intro_translates
   accepts_nested_attributes_for :rent_intro_translates, allow_destroy: true
-  has_many :area_translates
-  accepts_nested_attributes_for :area_translates, allow_destroy: true
+
 end

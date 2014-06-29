@@ -26,6 +26,7 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
+                  <th>編號</th>
                   <th></th>
                   <th>禮品券名稱</th>
                   <th>禮品券額度</th>
@@ -38,6 +39,7 @@
                     {name: translate.name, quota: translate.quota, lang: translate.locale.name, currency: translate.locale.currency}
                   end %>
                   <tr>
+                    <td><%= gift.id %></td>
                     <td>
                       <div class="preview" style="width:100px;height:75px;">
                         <%= image_tag gift.image.url(:thumb) %>

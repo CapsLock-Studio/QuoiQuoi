@@ -47,51 +47,50 @@
         <div class="col-sm-6 col-xs-12">
           <%= form_for @order_product do |f| %>
             <%= f.hidden_field :product_id %>
-            <% @order_product.product.product_translates.select([:name, :description]).where(locale_id: session[:locale_id]).each do |translate| %>
-              <div class="row">
-                <div class="col-md-12 margin-bottom-50">
-                  <h3 style="color:#666;">
-                    <strong>
-                      <%= translate.name %>
-                    </strong>
-                  </h3>
-                  <%= simple_format(translate.description) %>
-                </div>
-                <div class="col-md-12 margin-bottom-10">
-                  <div class="header">
-                    <span class="color-green"><%= t('price') %></span>
-                  </div>
-                </div>
-                <div class="col-md-12 margin-bottom-50">
-                  <h4 class="margin-bottom-20">
-                    <strong style="color:#666;" id="product-price" data-price="<%= @order_product.product.price %>"><%= "#{t('money_name')}#{number_to_currency(@order_product.product.price)}" %></strong>
-                  </h4>
-                  <% if @order_product.product.quantity > 0 %>
-                    <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
-                      <i class="icon-shopping-cart"></i>
-                      <span><%= t('add_to_cart') %></span>
-                    <% end %>
-                  <% else %>
-                    <%= link_to '#', class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;', disabled: 'disabled' do %>
-                      <i class="icon-shopping-cart"></i>
-                      <span><%= t('not_in_stock') %></span>
-                    <% end %>
-                  <% end %>
-                </div>
-                <% unless @order_product.product.product_type %>
-                  <div class="col-md-12 margin-bottom-10">
-                    <h5><%= t('customize_hint') %></h5>
-                    <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
-                      <i class="icon-edit"></i>
-                      <span><%= t('customize') %></span>
-                    <% end %>
-                  </div>
-                <% end %>
-                <div class="col-md-12">
-                  <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@order_product.product.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
+            <% translate = @order_product.product.product_translates.select([:name, :description, :price]).where(locale_id: session[:locale_id]).first %>
+            <div class="row">
+              <div class="col-md-12 margin-bottom-50">
+                <h3 style="color:#666;">
+                  <strong>
+                    <%= translate.name %>
+                  </strong>
+                </h3>
+                <%= simple_format(translate.description) %>
+              </div>
+              <div class="col-md-12 margin-bottom-10">
+                <div class="header">
+                  <span class="color-green"><%= t('price') %></span>
                 </div>
               </div>
-            <% end %>
+              <div class="col-md-12 margin-bottom-50">
+                <h4 class="margin-bottom-20">
+                  <strong style="color:#666;" id="product-price" data-price="<%= translate.price %>"><%= number_to_currency(translate.price) %></strong>
+                </h4>
+                <% if @order_product.product.quantity > 0 %>
+                  <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
+                    <i class="icon-shopping-cart"></i>
+                    <span><%= t('add_to_cart') %></span>
+                  <% end %>
+                <% else %>
+                  <%= link_to '#', class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;', disabled: 'disabled' do %>
+                    <i class="icon-shopping-cart"></i>
+                    <span><%= t('not_in_stock') %></span>
+                  <% end %>
+                <% end %>
+              </div>
+              <% unless @order_product.product.product_type %>
+                <div class="col-md-12 margin-bottom-10">
+                  <h5><%= t('customize_hint') %></h5>
+                  <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
+                    <i class="icon-edit"></i>
+                    <span><%= t('customize') %></span>
+                  <% end %>
+                </div>
+              <% end %>
+              <div class="col-md-12">
+                <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@order_product.product.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
+              </div>
+            </div>
           <% end %>
         </div>
       </div>
@@ -103,6 +102,7 @@
           <div class="margin-bottom-40">
             <ul id="list" class="bxslider">
               <% @other_products.each do |product| %>
+              <% translate = product.product_translates.where(locale_id: session[:locale_id]).first %>
                 <li>
                   <%= link_to_with_product_type product do %>
                     <em class="overflow-hidden">
@@ -110,9 +110,9 @@
                     </em>
                     <span>
                         <strong>
-                          <%= product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                          <%= translate.name %>
                         </strong>
-                        <i><%= "#{t('money_name')}#{number_to_currency(product.price)}" %></i>
+                        <i><%= number_to_currency(translate.price) %></i>
                     </span>
                   <% end %>
                 </li>

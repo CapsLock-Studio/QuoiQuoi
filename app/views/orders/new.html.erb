@@ -4,7 +4,7 @@
     <div class="col-md-12 reg-page">
       <div class="item">
         <%= form_for @order, html: {class: 'form-horizontal validate-form'} do |f| %>
-          <h4>配送資訊 <small class="text-muted">請填寫正確的配送資訊，訂單送出後即不可更動</small></h4>
+          <h4><%= t('shipping_information') %> <small class="text-muted"><%= t('shipping_information_hint') %></small></h4>
           <div class="row">
             <div class="col-md-12">
               <div class="box">
@@ -12,7 +12,7 @@
                   <div class="form-group row">
                     <div class="col-md-12">
                       <%= f.label :area do %>
-                        區域
+                        <%= t('area') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
@@ -26,7 +26,7 @@
                   <div class="form-group row">
                     <div class="col-md-12">
                       <%= f.label :name do %>
-                        收件者姓名
+                        <%= t('recipient_name') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
@@ -37,7 +37,7 @@
                   <div class="form-group row">
                     <div class="col-md-12">
                       <%= f.label :zip_code do %>
-                        郵遞區號
+                        <%= t('zip_code') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
@@ -48,7 +48,7 @@
                   <div class="form-group row">
                     <div class="col-md-12">
                       <%= f.label :address do %>
-                        收件地址
+                        <%= t('address') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
@@ -59,19 +59,18 @@
                   <div class="form-group row">
                     <div class="col-md-12">
                       <%= f.label :phone do %>
-                        聯絡電話
-                        <span class="color-red">*</span>
+                        <%= t('phone_number') %>
                       <% end %>
                     </div>
                     <div class="controls col-md-3">
-                      <%= f.text_field :phone, value: current_user.phone, class: 'form-control', data: {'rule-required' => true, 'rule-number' => true} %>
+                      <%= f.text_field :phone, value: current_user.phone, class: 'form-control' %>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <h4>購物車清單</h4>
+          <h4><%= t('products_in_cart') %></h4>
           <div class="row">
             <div class="col-md-12">
               <div class="box">
@@ -82,24 +81,25 @@
                         <thead>
                         <tr>
                           <td></td>
-                          <td>名稱</td>
-                          <td>價格</td>
+                          <td><%= t('name') %></td>
+                          <td><%= t('price') %></td>
                         </tr>
                         </thead>
                         <tbody>
                         <% @order.order_products.each_with_index do |order_product, index| %>
-                          <% @subtotal += order_product.product.price %>
+                          <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
+                          <% @subtotal += translate.price %>
                           <tr>
                             <td>
                               <%= image_tag order_product.product.image.url(:thumb) %>
                             </td>
                             <td>
                               <h5>
-                                <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                                <%= translate.name %>
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(order_product.product.price) %>
+                              <%= number_to_currency(translate.price) %>
                             </td>
                           </tr>
                         <% end %>
@@ -129,12 +129,12 @@
                 <div class="col-md-12">
                   <% shipping_fee = ShippingFee.first %>
                   <h4 class="text-right color-orange">
-                    總金額:
+                    <%= t('total_amount') %>
                     <strong class="text-muted subtotal" data-price="<%= @subtotal %>">
                       <%= (@subtotal > shipping_fee.free_condition)? number_to_currency(@subtotal) : number_to_currency(@subtotal + shipping_fee.fee) %>
                     </strong>
                   </h4>
-                  <span class="text-muted pull-right">(運費: <span class="shipping-fee-subtotal"><%= (@subtotal > shipping_fee.free_condition)? number_to_currency(0) : number_to_currency(shipping_fee.fee) %></span>)</span>
+                  <span class="text-muted pull-right">(<%= t('shipping_fee') %>: <span class="shipping-fee-subtotal"><%= (@subtotal > shipping_fee.free_condition)? number_to_currency(0) : number_to_currency(shipping_fee.fee) %></span>)</span>
                 </div>
               </div>
             </div>
@@ -142,10 +142,10 @@
           <hr/>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-              <%= f.button '提交訂單', class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+              <%= f.button t('submit_order'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
               <%= link_to products_path do %>
                 <i class="fa fa-angle-left"></i>
-                繼續逛逛
+                <%= t('keep_shopping') %>
               <% end %>
             </div>
           </div>
