@@ -53,7 +53,7 @@
       <div class="form-group">
         <%= f.button type: 'submit', class: 'btn btn-lg btn-default btn-block hover-effect', data: {'rule-required' => true} do %>
           <i class="fa fa-edit fa-fw"></i>
-          送出訊息
+          <%= t('submit_message') %>
         <% end %>
       </div>
       <%= recaptcha_tags ajax: true %>
