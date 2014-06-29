@@ -23,6 +23,10 @@ class Admin::ShippingFeesController < AdminController
     add_breadcrumb '新增區域運費資訊'
 
     @shipping_fee = ShippingFee.new
+
+    Locale.all.order(id: :desc).each do |locale|
+      @shipping_fee.shipping_fee_translates.build(locale_id: locale.id)
+    end
   end
 
   # GET /admin/shipping_fees/1/edit
@@ -76,6 +80,6 @@ class Admin::ShippingFeesController < AdminController
   end
 
   def shipping_fee_params
-    params.require(:shipping_fee).permit(:id, :area, :fee, :free_condition)
+    params.require(:shipping_fee).permit(:id, :area, shipping_fee_translates_attributes: [:id, :locale_id, :fee, :free_condition])
   end
 end

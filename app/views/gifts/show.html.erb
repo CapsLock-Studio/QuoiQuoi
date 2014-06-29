@@ -14,40 +14,39 @@
         <div class="col-md-6">
           <%= form_for @user_gift do |f| %>
             <%= f.hidden_field :gift_id %>
-            <% @user_gift.gift.gift_translates.select([:name, :description]).where(locale_id: session[:locale_id]).each do |translate| %>
-              <div class="row">
-                <div class="col-md-12 margin-bottom-50">
-                  <ul class="social-icons pull-right">
-                    <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
-                    <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
-                    <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
-                  </ul>
-                  <h3 style="color:#666;">
-                    <strong>
-                      <%= translate.name %>
-                    </strong>
-                  </h3>
-                  <%= simple_format(translate.description) %>
-                </div>
-                <div class="col-md-12 margin-bottom-10">
-                  <div class="header">
-                    <span class="color-green"><%= t('price') %></span>
-                  </div>
-                </div>
-                <div class="col-md-12 margin-bottom-10">
-                  <h4 class="margin-bottom-20">
-                    <strong style="color:#666;" id="product-price" data-price="<%= @user_gift.gift.quota %>"><%= "#{t('money_name')}#{number_to_currency(@user_gift.gift.quota)}" %></strong>
-                  </h4>
-                  <%= f.button class: 'btn btn-lg btn-default btn-block hover-effect one-page-btn', type: 'submit' do %>
-                    <i class="fa fa-gift"></i>
-                    <span><%= t('add_to_cart') %></span>
-                  <% end %>
-                </div>
-                <div class="col-md-12">
-                  <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@user_gift.gift.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
+            <% translate = @user_gift.gift.gift_translates.select([:quota, :name, :description]).where(locale_id: session[:locale_id]).first %>
+            <div class="row">
+              <div class="col-md-12 margin-bottom-50">
+                <ul class="social-icons pull-right">
+                  <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
+                  <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
+                  <li><a href="#" data-original-title="Google Plus" class="social_googleplus"></a></li>
+                </ul>
+                <h3 style="color:#666;">
+                  <strong>
+                    <%= translate.name %>
+                  </strong>
+                </h3>
+                <%= simple_format(translate.description) %>
+              </div>
+              <div class="col-md-12 margin-bottom-10">
+                <div class="header">
+                  <span class="color-green"><%= t('price') %></span>
                 </div>
               </div>
-            <% end %>
+              <div class="col-md-12 margin-bottom-10">
+                <h4 class="margin-bottom-20">
+                  <strong style="color:#666;" id="product-price" data-price="<%= translate.quota %>"><%= number_to_currency(translate.quota) %></strong>
+                </h4>
+                <%= f.button class: 'btn btn-lg btn-default btn-block hover-effect one-page-btn', type: 'submit' do %>
+                  <i class="fa fa-gift"></i>
+                  <span><%= t('add_to_cart') %></span>
+                <% end %>
+              </div>
+              <div class="col-md-12">
+                <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@user_gift.gift.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
+              </div>
+            </div>
           <% end %>
         </div>
       </div>
@@ -59,14 +58,15 @@
           <div class="margin-bottom-40">
             <ul id="list" class="bxslider">
               <% @gifts.each do |gift| %>
+                <% translate = gift.gift_translates.where(locale_id: session[:locale_id]).first %>
                 <li>
                   <%= link_to gift_path(gift) do %>
                     <em class="overflow-hidden">
                       <%= image_tag gift.image.url(:small), style: 'width: 100%;' %>
                     </em>
                     <span>
-                      <strong><%= gift.gift_translates.where(locale_id: session[:locale_id]).first.name %></strong>
-                      <i><%= "#{t('money_name')}#{number_to_currency(gift.quota)}" %></i>
+                      <strong><%= translate.name %></strong>
+                      <i><%= number_to_currency(translate.quota) %></i>
                     </span>
                   <% end %>
                 </li>

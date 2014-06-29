@@ -5,19 +5,18 @@
     <div class="col-md-9">
       <div class="row">
         <% @gifts.each do |gift| %>
-          <% gift.gift_translates.where(locale_id: session[:locale_id]).each do |translate| %>
-            <% unless translate.name.blank? %>
-              <%= link_to gift_path(gift), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
-                <div class="thumbnails thumbnail-style">
-                  <%= image_tag gift.image.url(:small), class: 'img-responsive' %>
-                  <div class="caption">
-                    <h4 style="margin-top: 10px; margin-bottom: 5px;"><%= translate.name %></h4>
+          <% translate = gift.gift_translates.where(locale_id: session[:locale_id]).first %>
+          <% unless translate.name.blank? %>
+            <%= link_to gift_path(gift), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
+              <div class="thumbnails thumbnail-style">
+                <%= image_tag gift.image.url(:small), class: 'img-responsive' %>
+                <div class="caption">
+                  <h4 style="margin-top: 10px; margin-bottom: 5px;"><%= translate.name %></h4>
                     <span class="price">
-                          <%= "#{t('money_name')}#{number_to_currency(gift.quota)}" %>
-                        </span>
-                  </div>
+                      <%= number_to_currency(translate.quota) %>
+                    </span>
                 </div>
-              <% end %>
+              </div>
             <% end %>
           <% end %>
         <% end %>

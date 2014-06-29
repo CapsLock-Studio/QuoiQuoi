@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140628200607) do
+ActiveRecord::Schema.define(version: 20140629041617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -461,6 +461,7 @@ ActiveRecord::Schema.define(version: 20140628200607) do
     t.boolean  "canceled",        default: false
     t.datetime "canceled_time"
     t.integer  "shipping_fee_id"
+    t.string   "currency"
   end
 
   add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree
@@ -741,10 +742,20 @@ ActiveRecord::Schema.define(version: 20140628200607) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
+  create_table "shipping_fee_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.integer  "shipping_fee_id"
+    t.float    "fee"
+    t.float    "free_condition"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shipping_fee_translates", ["locale_id"], name: "index_shipping_fee_translates_on_locale_id", using: :btree
+  add_index "shipping_fee_translates", ["shipping_fee_id"], name: "index_shipping_fee_translates_on_shipping_fee_id", using: :btree
+
   create_table "shipping_fees", force: true do |t|
     t.string   "area"
-    t.integer  "fee"
-    t.integer  "free_condition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

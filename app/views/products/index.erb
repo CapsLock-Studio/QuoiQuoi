@@ -6,19 +6,18 @@
       <div class="row">
         <%= render 'layouts/nav_item' %>
         <% @products.each do |product| %>
-          <% product.product_translates.where(locale_id: session[:locale_id]).each do |translate| %>
-            <% unless translate.name.blank? %>
-              <%= link_to product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
-                <div class="thumbnails thumbnail-style">
-                  <%= image_tag product.image.url(:small), class: 'img-responsive' %>
-                  <div class="caption">
-                    <h4 style="margin-top: 10px; margin-bottom: 5px;"><%= translate.name %></h4>
+          <% translate = product.product_translates.where(locale_id: session[:locale_id]).first %>
+          <% unless translate.name.blank? %>
+            <%= link_to product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
+              <div class="thumbnails thumbnail-style">
+                <%= image_tag product.image.url(:small), class: 'img-responsive' %>
+                <div class="caption">
+                  <h4 style="margin-top: 10px; margin-bottom: 5px;"><%= translate.name %></h4>
                     <span class="price">
-                          <%= "#{t('money_name')}#{number_to_currency(product.price)}" %>
-                        </span>
-                  </div>
+                      <%= number_to_currency(translate.price) %>
+                    </span>
                 </div>
-              <% end %>
+              </div>
             <% end %>
           <% end %>
         <% end %>

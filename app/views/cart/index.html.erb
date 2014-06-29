@@ -1,4 +1,4 @@
-<%= render 'layouts/breadcrumbs', title: t('header.navigation.cart') %>
+<%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
   <div class="row">
     <div class="col-sm-8">
@@ -36,7 +36,7 @@
               <div class="box-header">
                 <div class="title">
                   <div class="fa fa-pencil"></div>
-                  量身訂製手工包
+                  <%= t('personalize') %>
                 </div>
                 <div class="actions">
                   <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
@@ -64,7 +64,7 @@
         <div class="box-header">
           <div class="title">
             <div class="glyphicon-saved glyphicon"></div>
-            小計
+            <%= t('subtotal') %>
           </div>
           <div class="actions">
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
@@ -73,7 +73,7 @@
         <div class="box-content">
           <h4 class="margin-bottom-30">
             <strong>
-              <span style="color:#666;">總金額</span>
+              <span style="color:#666;"><%= t('total_amount') %></span>
               <span class="pull-right">
                 <%= number_to_currency(@subtotal) %>
               </span>
@@ -81,12 +81,12 @@
           </h4>
           <div class="row">
             <div class="col-md-12 margin-bottom-10">
-              <%= link_to '結算', new_order_path, class: 'btn btn-block btn-u-orange btn-lg hover-effect', style: 'color:#FFF;' %>
+              <%= link_to t('check_out'), new_order_path, class: 'btn btn-block btn-u-orange btn-lg hover-effect', style: 'color:#FFF;' %>
             </div>
             <div class="col-md-12">
               <%= link_to products_path do %>
                 <i class="fa fa-angle-left"></i>
-                繼續逛逛
+                <%= t('keep_shopping') %>
               <% end %>
             </div>
           </div>
