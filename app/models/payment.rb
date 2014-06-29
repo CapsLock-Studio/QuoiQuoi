@@ -8,9 +8,9 @@ class Payment < ActiveRecord::Base
   validates :amount, presence: true
   attr_reader :redirect_uri
 
-  def setup!(amount, success_uri, cancel_uri)
+  def setup!(amount, currency, success_uri, cancel_uri)
     response = client.setup(
-        payment_request(amount),
+        payment_request(amount, currency),
         success_uri,
         cancel_uri,
         pay_on_paypal: true,
@@ -42,7 +42,7 @@ class Payment < ActiveRecord::Base
   end
 
   def complete!(payer_id = nil)
-    response = client.checkout!(self.token, payer_id, payment_request(self.amount))
+    response = client.checkout!(self.token, payer_id, payment_request(self.amount, self.currency))
     self.payer_id = payer_id
     self.identifier = response.payment_info.first.transaction_id
 
@@ -63,10 +63,10 @@ class Payment < ActiveRecord::Base
     flag
   end
 
-  def payment_request(amount)
+  def payment_request(amount, currency)
     if amount > 0
       Paypal::Payment::Request.new(
-          currency_code: :TWD,
+          currency_code: currency,
           description: '布知道(QuoiQuoi)工作室',
           quantity: 1,
           amount: amount

@@ -4,7 +4,7 @@ class OrderProductsController < ApplicationController
     order_product = order_in_cart.order_products.build(order_product_params)
 
     respond_to do |format|
-      if order_product.product.quantity - 1 < 0
+      if order_product.product.quantity - order_product.quantity < 0
         format.html {render json: 'Products are sold out'}
       elsif order_product.save
         format.html {redirect_to cart_path}
@@ -28,6 +28,6 @@ class OrderProductsController < ApplicationController
   private
     def order_product_params
       #params.require(:order_product).permit!
-      params.require(:order_product).permit(:product_id)
+      params.require(:order_product).permit(:product_id, :quantity)
     end
 end

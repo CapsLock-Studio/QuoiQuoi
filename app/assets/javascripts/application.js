@@ -110,6 +110,7 @@
     initOffcanvas();
     initChangeFocusImageShow();
     initToggleSearchGiftForm();
+    initCartCalculate();
     scrolltotop.init();
     var calendar = iniCalendarModel();
 

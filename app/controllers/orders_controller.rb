@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
     subtotal = 0
 
     @order.order_products.each do |order_product|
-      subtotal += ProductTranslate.where(locale_id: session[:locale_id], product_id: order_product.product.id).first.price
+      subtotal += ProductTranslate.where(locale_id: session[:locale_id], product_id: order_product.product_id).first.price * order_product.quantity
     end
     @order.order_custom_items do |order_custom_item|
       subtotal += order_custom_item.price
@@ -53,7 +53,8 @@ class OrdersController < ApplicationController
         end
       end
 
-      if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now, currency: Locale.find(session[:locale_id]).currency}))
+      locale = Locale.find(session[:locale_id])
+      if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now, locale_id: locale.id, currency: locale.currency}))
         format.html {redirect_to pay_order_path(@order)}
       else
         format.html {render json: @order.errors}

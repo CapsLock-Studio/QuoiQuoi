@@ -1,97 +1,132 @@
 <%= render 'layouts/breadcrumbs' %>
-<div class="container main-container">
-  <div class="row">
-    <div class="col-sm-8">
-      <div class="row">
-        <% if @order.order_products.length > 0 %>
-          <div class="col-sm-12">
-            <div class="box">
-              <div class="box-header">
-                <div class="title">
-                  <div class="fa fa-list"></div>
-                  <%= t('products') %>
+<%= form_for @order, url: cart_path, method: :put do |f| %>
+  <div class="container main-container">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="row">
+          <% if @order.order_products.length > 0 %>
+            <div class="col-sm-12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="title">
+                    <div class="fa fa-list"></div>
+                    <%= t('products') %>
+                  </div>
+                  <div class="actions">
+                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                  </div>
                 </div>
-                <div class="actions">
-                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-                </div>
-              </div>
-              <div class="box-content">
-                <div class="row">
-                  <% @order.order_products.each_with_index do |order_product, index| %>
+                <div class="box-content">
+                  <div class="row">
                     <div class="col-md-12">
-                      <% if index != 0 %>
-                        <hr/>
+                      <%= f.fields_for :order_products do |builder| %>
+                        <% translate = ProductTranslate.where(product_id: builder.object.product_id,locale_id: session[:locale_id]).first %>
+                        <% @subtotal += translate.price * builder.object.quantity %>
+
+                        <div class="row product">
+                          <div class="col-md-7">
+                            <%= link_to_with_product_type builder.object.product do %>
+                              <%= image_tag builder.object.product.image.url(:medium), class: 'img-responsive' %>
+                            <% end %>
+                          </div>
+                          <div class="col-md-5">
+                            <h5 style="color:#666;" class="margin-bottom-30">
+                              <%= link_to_with_product_type builder.object.product do %>
+                                <strong>
+                                  <%= translate.name %>
+                                  <span class="pull-right">
+                                    <%= number_to_currency(translate.price) %>
+                                  </span>
+                                </strong>
+                              <% end %>
+                            </h5>
+                            <h5 style="color:#666;">
+                              <strong><%= t('quantity') %></strong>
+                            </h5>
+                            <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price', data: {width: '100%', price: translate.price} %>
+                            <hr/>
+                            <h5 class="margin-bottom-20">
+                              <span style="color:#666;"><%= t('single_subtotal') %></span>
+                              <strong class="pull-right subtotal" data-subtotal="<%= translate.price * builder.object.quantity %>">
+                                <%= number_to_currency(translate.price * builder.object.quantity) %>
+                              </strong>
+                            </h5>
+                            <%= link_to t('actions.delete'), builder.object, method: :delete, class: 'btn btn-default pull-right hover-effect' %>
+                          </div>
+                        </div>
+                        <%= '<hr/>'.html_safe if builder.index == 0 %>
                       <% end %>
-                      <%= render 'order_product', order_product: order_product %>
                     </div>
-                  <% end %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
-        <% if @order.order_custom_items.length > 0 %>
-          <div class="col-sm-12">
-            <div class="box">
-              <div class="box-header">
-                <div class="title">
-                  <div class="fa fa-pencil"></div>
-                  <%= t('personalize') %>
+          <% end %>
+          <% if @order.order_custom_items.length > 0 %>
+            <div class="col-sm-12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="title">
+                    <div class="fa fa-pencil"></div>
+                    <%= t('personalize') %>
+                  </div>
+                  <div class="actions">
+                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                  </div>
                 </div>
-                <div class="actions">
-                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-                </div>
-              </div>
-              <div class="box-content">
-                <div class="row">
-                  <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
-                    <div class="col-md-12">
-                      <% if index != 0 %>
-                        <hr/>
-                      <% end %>
-                      <%= render 'order_custom_item', order_custom_item: order_custom_item %>
-                    </div>
-                  <% end %>
+                <div class="box-content">
+                  <div class="row">
+                    <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
+                      <div class="col-md-12">
+                        <% if index != 0 %>
+                          <hr/>
+                        <% end %>
+                        <%= render 'order_custom_item', order_custom_item: order_custom_item %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="box">
-        <div class="box-header">
-          <div class="title">
-            <div class="glyphicon-saved glyphicon"></div>
-            <%= t('subtotal') %>
-          </div>
-          <div class="actions">
-            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-          </div>
+          <% end %>
         </div>
-        <div class="box-content">
-          <h4 class="margin-bottom-30">
-            <strong>
-              <span style="color:#666;"><%= t('total_amount') %></span>
-              <span class="pull-right">
+      </div>
+      <div class="col-sm-4">
+        <div class="box">
+          <div class="box-header">
+            <div class="title">
+              <div class="glyphicon-saved glyphicon"></div>
+              <%= t('subtotal') %>
+            </div>
+            <div class="actions">
+              <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+            </div>
+          </div>
+          <div class="box-content">
+            <h4 class="margin-bottom-30">
+              <strong>
+                <span style="color:#666;"><%= t('total_amount') %></span>
+              <span class="pull-right total-amount">
                 <%= number_to_currency(@subtotal) %>
               </span>
-            </strong>
-          </h4>
-          <div class="row">
-            <div class="col-md-12 margin-bottom-10">
-              <%= link_to t('check_out'), new_order_path, class: 'btn btn-block btn-u-orange btn-lg hover-effect', style: 'color:#FFF;' %>
-            </div>
-            <div class="col-md-12">
-              <%= link_to products_path do %>
-                <i class="fa fa-angle-left"></i>
-                <%= t('keep_shopping') %>
-              <% end %>
+              </strong>
+            </h4>
+            <div class="row">
+              <div class="col-md-12 margin-bottom-10">
+                <button type="submit" class="btn btn-block btn-u-orange btn-lg hover-effect" style="color:#FFF;">
+                  <%= t('check_out') %>
+                </button>
+              </div>
+              <div class="col-md-12">
+                <%= link_to products_path do %>
+                  <i class="fa fa-angle-left"></i>
+                  <%= t('keep_shopping') %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140629041617) do
+ActiveRecord::Schema.define(version: 20140629070851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -462,6 +462,7 @@ ActiveRecord::Schema.define(version: 20140629041617) do
     t.datetime "canceled_time"
     t.integer  "shipping_fee_id"
     t.string   "currency"
+    t.integer  "locale_id"
   end
 
   add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree
@@ -482,6 +483,7 @@ ActiveRecord::Schema.define(version: 20140629041617) do
     t.datetime "pay_time"
     t.boolean  "wait"
     t.integer  "user_gift_id"
+    t.string   "currency"
   end
 
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree

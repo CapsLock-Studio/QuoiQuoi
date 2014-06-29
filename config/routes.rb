@@ -144,6 +144,8 @@ QuoiQuoi::Application.routes.draw do
 
   get 'rss' => 'rss#index'
   get 'cart' => 'cart#index'
+  put 'cart' => 'cart#update'
+  patch 'cart' => 'cart#update'
 
   devise_scope :user do
     get 'user' => 'user#index'

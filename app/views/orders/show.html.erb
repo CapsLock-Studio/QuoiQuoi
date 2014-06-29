@@ -130,6 +130,7 @@
                     </thead>
                     <tbody>
                     <% @order.order_products.each do |order_product| %>
+                      <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: @order.locale_id).first %>
                       <tr>
                         <td class="text-left col-xs-6">
                           <div class="row">
@@ -137,12 +138,13 @@
                               <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
                             </div>
                             <div class="col-md-10 col-sm-8 hidden-xs">
-                              <%= order_product.product.product_translates.where(locale_id: session[:locale_id]).first.name %>
+                              <%= translate.name %>
                             </div>
                           </div>
                         </td>
                         <td class="col-xs-1">
-                          <%= number_to_currency(order_product.product.price) %>
+                          <%= number_to_currency(translate.price) %><br/>
+                          <span class="text-muted">*&nbsp;<%= order_product.quantity %></span>
                         </td>
                       </tr>
                     <% end %>
@@ -174,7 +176,7 @@
       <div class="row">
         <div class="col-md-12">
           <h4 class="text-right color-orange">
-            <%= t('subtotal') %>
+            <%= t('total_amount') %>
             <strong class="text-muted">
               <%= number_to_currency(@order.subtotal) %>
             </strong>

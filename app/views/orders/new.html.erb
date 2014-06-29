@@ -92,12 +92,13 @@
                           <td></td>
                           <td><%= t('name') %></td>
                           <td><%= t('price') %></td>
+                          <td><%= t('quantity') %></td>
                         </tr>
                         </thead>
                         <tbody>
                         <% @order.order_products.each_with_index do |order_product, index| %>
                           <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
-                          <% @subtotal += translate.price %>
+                          <% @subtotal += translate.price * order_product.quantity %>
                           <tr>
                             <td>
                               <%= image_tag order_product.product.image.url(:thumb) %>
@@ -109,6 +110,9 @@
                             </td>
                             <td>
                               <%= number_to_currency(translate.price) %>
+                            </td>
+                            <td>
+                              <%= order_product.quantity %>
                             </td>
                           </tr>
                         <% end %>
