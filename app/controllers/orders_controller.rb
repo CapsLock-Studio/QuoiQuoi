@@ -31,13 +31,13 @@ class OrdersController < ApplicationController
     subtotal = 0
 
     @order.order_products.each do |order_product|
-      subtotal += order_product.product.price
+      subtotal += ProductTranslate.where(locale_id: session[:locale_id], product_id: order_product.product.id).first.price
     end
     @order.order_custom_items do |order_custom_item|
       subtotal += order_custom_item.price
     end
 
-    shipping_fee = ShippingFee.find(params[:order][:shipping_fee_id])
+    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: params[:order][:shipping_fee_id], locale_id: session[:locale_id]).first
     subtotal += shipping_fee.fee
     if !shipping_fee.free_condition.blank? && subtotal > shipping_fee.free_condition
       subtotal -= shipping_fee.fee
@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
         end
       end
 
-      if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now}))
+      if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now, currency: Locale.find(session[:locale_id]).currency}))
         format.html {redirect_to pay_order_path(@order)}
       else
         format.html {render json: @order.errors}

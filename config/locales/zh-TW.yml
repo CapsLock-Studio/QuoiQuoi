@@ -169,7 +169,7 @@ zh-TW:
   my_gift: '我的禮券'
   business_hours: '營業時間'
   position_designer: '設計師'
-  free_shipping_fee: '國內滿4,000免運費'
+  free_shipping_fee: '國內滿%{free_condition}免運費'
   article: '文章'
   validate_email: '請輸入正確的Email位置'
   validate_required: '此欄位不可留空'

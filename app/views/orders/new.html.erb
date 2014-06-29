@@ -16,11 +16,20 @@
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
-                    <div class="controls col-md-3">
-                      <%= f.select :shipping_fee_id, options_for_select(ShippingFee.all.order(:id).collect{|fee|
-                        [fee.area, fee.id, {data: {fee: fee.fee, 'free-condition' => fee.free_condition}}]
-                      }), {}, {class: 'form-control shipping-fee selectpicker'} %>
-                      <small class="text-muted"><%= t('free_shipping_fee') %></small>
+                    <div class="controls col-md-12">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <%= f.select :shipping_fee_id, options_for_select(ShippingFee.all.order(:id).collect{|fee|
+                            translate = ShippingFeeTranslate.where(shipping_fee_id: fee.id, locale_id: session[:locale_id]).first
+                            [fee.area, fee.id, {data: {fee: translate.fee, 'free-condition' => translate.free_condition}}]
+                          }), {}, {class: 'form-control shipping-fee selectpicker'} %>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <small class="text-muted"><%= t('free_shipping_fee', free_condition: number_to_currency(ShippingFeeTranslate.where(locale_id: session[:locale_id]).first.free_condition)) %></small>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -127,7 +136,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <% shipping_fee = ShippingFee.first %>
+                  <% shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: ShippingFee.first.id, locale_id: session[:locale_id]).first %>
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>
                     <strong class="text-muted subtotal" data-price="<%= @subtotal %>">
