@@ -20,7 +20,7 @@
             <div class="row">
               <div class="col-md-12">
                 <h4 class="side-section-title">
-                  你的購物清單
+                  <%= t('shopping_list') %>
                 </h4>
               </div>
             </div>
@@ -28,7 +28,7 @@
           <div>
             <% @menu_orders.order_products.each do |order_product| %>
               <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
-              <% subtotal += translate.price %>
+              <% subtotal += translate.price * order_product.quantity %>
               <div class="search-blocks search-blocks-colored side-menu-block">
                 <div class="col-md-6 search-img">
                   <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
@@ -40,7 +40,7 @@
                   <h4>
                     <%= translate.name %>
                   </h4>
-                  <h5 class="text-muted"><%= number_to_currency(translate.price) %></h5>
+                  <h5 class="text-muted"><%= "#{number_to_currency(translate.price)} * #{order_product.quantity}" %></h5>
                 </div>
               </div>
             <% end %>
@@ -64,9 +64,9 @@
             <div class="row">
               <div class="col-md-12">
                 <h4 class="text-right margin-bottom-20">
-                  總金額: <%= number_to_currency(subtotal) %>
+                  <%= t('total_amount') %>: <%= number_to_currency(subtotal) %>
                 </h4>
-                <%= link_to '去結算', cart_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect navbar-toggle-aside-menu', style: 'color:#FFF;' %>
+                <%= link_to t('check_out'), cart_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect navbar-toggle-aside-menu', style: 'color:#FFF;' %>
               </div>
             </div>
           </div>

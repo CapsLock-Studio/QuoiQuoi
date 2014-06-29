@@ -11,16 +11,20 @@ class PaymentsController < ApplicationController
       payment = Payment.new(payment_params)
 
       amount = 0
+      currency = :TWD
       if payment.order
         amount = payment.order.subtotal
+        currency = payment.order.currency
       elsif payment.registration
         amount = payment.registration.subtotal
+        currency = payment.registration.currency
       elsif payment.user_gift
         amount = payment.user_gift.gift.quota
+        currency = payment.user_gift.currency
       end
 
       if amount == 0
-        if payment.update_attribute(:completed, true)
+        if payment.update_attributes(completed: true, currency: currency)
           if payment.order
             OrderMailer.remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
             format.html {redirect_to order_path(payment.order_id)}
@@ -41,7 +45,7 @@ class PaymentsController < ApplicationController
       else
         #format.html {render json: payment}
 
-        payment.setup!(amount, success_payments_url, cancel_payments_url)
+        payment.setup!(amount, currency, success_payments_url, cancel_payments_url)
         format.html {redirect_to payment.redirect_uri}
       end
     end
@@ -97,14 +101,17 @@ class PaymentsController < ApplicationController
       if @payment.update_attributes(payment_params.merge({token: Base64.encode64("#{Time.now}#{(0..3).map{('a'..'z').to_a[rand(26)]}.join}")}))
         redirect_uri = orders_path
         if @payment.order
+          @payment.update_attributes(currency: @payment.order.currency)
           redirect_uri = order_path(@payment.order_id)
         elsif @payment.registration
+          @payment.update_attributes(currency: @payment.registration.currency)
           if @payment.registration.user
             format.html {redirect_to registrations_path}
           else
             format.html {redirect_to action: :show}
           end
         elsif @payment.user_gift
+          @payment.update_attributes(currency: @payment.user_gift.currency)
           redirect_uri = user_gift_path(@payment.user_gift)
         end
         format.html {redirect_to redirect_uri}

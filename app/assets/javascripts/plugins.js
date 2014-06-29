@@ -196,3 +196,18 @@ var initToggleSearchGiftForm = function() {
         $('.gift-search').toggleClass('active');
     });
 };
+
+var initCartCalculate = function() {
+    $('.product-price').on('change', function(e){
+        var productBlock = $(this).closest('.product');
+        var subtotal = parseFloat($(this).data('price')) * $(this).val();
+        productBlock.find('.subtotal').text('$' + subtotal.toFixed(2)).data('subtotal', subtotal);
+
+        var totalAmount = 0;
+        $('.subtotal').each(function(e){
+            totalAmount += parseFloat($(this).data('subtotal'));
+        });
+
+        $('.total-amount').text(totalAmount.toFixed(2));
+    });
+};
