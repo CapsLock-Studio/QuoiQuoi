@@ -22,7 +22,7 @@ class Admin::CoursesController < AdminController
 
     @course = Course.new
 
-    Locale.all.each do |locale|
+    Locale.all.order(id: :desc).each do |locale|
       @course.course_translates.build(locale_id: locale.id)
     end
   end
@@ -73,6 +73,6 @@ class Admin::CoursesController < AdminController
     def course_params
       params.require(:course).permit(:id, :image, :price, :time, :length, :popular, :attendance,
                                      course_images_attributes: [:_destroy, :id, :course_id, :image],
-                                     course_translates_attributes: [:_destroy, :id, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
+                                     course_translates_attributes: [:_destroy, :id, :price, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
     end
 end

@@ -73,8 +73,8 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th></th>
                   <th>編號</th>
+                  <th></th>
                   <th>課程名稱</th>
                   <th>價格</th>
                   <th>時間</th>
@@ -89,18 +89,25 @@
                 </thead>
                 <tbody>
                   <% @courses.each do |course| %>
+                    <% translates = course.course_translates.reject{|translate| translate.price.blank?}.collect do |translate|
+                      {name: translate.name, price: translate.price, lang: translate.locale.name, currency: translate.locale.currency}
+                    end %>
                     <tr>
+                      <td><%= course.id %></td>
                       <td>
                         <div class="preview" style="width:100px;height:75px;">
                           <%= image_tag course.image.url(:thumb) %>
                         </div>
                       </td>
-                      <td><%= course.id %></td>
                       <td>
-                        <%= course.course_translates.collect{|translate| translate.name.blank?? 'No Translate' : translate.name}.join(' - ') %>
+                        <% translates.each do |translate| %>
+                          <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= translate[:name] %><br/>
+                        <% end %>
                       </td>
                       <td>
-                        <%= number_to_currency(course.price) %>
+                        <% translates.each do |translate| %>
+                          <%= number_to_currency(translate[:price]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                        <% end %>
                       </td>
                       <td>
                         <%= "#{course.time.strftime('%Y/%m/%d %H:%M')} - #{(course.time + course.length.hours).strftime('%H:%M')}" %><br/>

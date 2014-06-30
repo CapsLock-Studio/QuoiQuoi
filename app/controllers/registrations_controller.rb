@@ -31,11 +31,15 @@ class RegistrationsController < ApplicationController
   def create
     respond_to do |format|
       course = Course.find(registration_params[:course_id])
+      translate = course.course_translates.where(locale_id: session[:locale_id]).first
       @registration = Registration.new(registration_params)
 
       if course.popular > (course.registrations.collect{|r| (r.payment && r.payment.completed?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
+        # if email has registered course can not register again
         if Registration.count(conditions: {email: registration_params[:email]}) <= 0
-          @registration.subtotal = @registration.attendance * @registration.course.price
+          @registration.subtotal = @registration.attendance * translate.price
+          @registration.locale_id = translate.locale.id
+          @registration.currency = translate.locale.currency
 
           if @registration.save
             format.html {redirect_to pay_registration_path(@registration)}

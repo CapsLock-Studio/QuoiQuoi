@@ -40,10 +40,10 @@
                       <%= link_to payment.user.id, admin_user_path(payment.user.id) %>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.order.subtotal) %>
+                      <%= number_to_currency(payment.order.subtotal) %>&nbsp;<span class="text-muted"><%= payment.order.currency %></span>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.amount) %>
+                      <%= number_to_currency(payment.amount) %>&nbsp;<span class="text-muted"><%= payment.order.currency %></span>
                     </td>
                     <td>
                       <%= payment.identifier %>

@@ -4,21 +4,22 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2>感謝您報名QuoiQuoi - 布知道工作室的課程，您的報名已經取消</h2>
+<h2><%= t('mailer.cancel_registration') %></h2>
 <p>
-  <strong>親愛的客戶: </strong><br/>
+  <strong><%= t('mailer.dear') %> </strong><br/>
   <%= simple_format(@registration.reason) %><br/>
   <br/>
 </p>
 <% if @registration.payment && @registration.payment.completed? %>
-  <h2>因您已經付款完成，我們需要您的退款資訊方可將報名金額退還，還請您回覆信件告知退款所需資訊(匯款帳號、姓名、分行...)</h2>
+  <h2><%= t('mailer.help_return_tuition_hint') %></h2>
 <% end %>
 <table class="table">
   <thead>
   <tr>
     <td></td>
-    <td>名稱</td>
-    <td>課程時間</td>
+    <td><%= t('call_name') %></td>
+    <td><%= t('course_time') %></td>
+    <td><%= t('course.number') %></td>
   </tr>
   </thead>
   <tbody>
@@ -34,6 +35,7 @@
     <td>
       <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
     </td>
+    <td><%= @registration.attendance %></td>
   </tr>
   </tbody>
 </table>

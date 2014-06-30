@@ -72,6 +72,7 @@ en:
     cancel: 'Cancel order'
     sketch: 'Design sketch'
     your: 'Accessories'
+    mind: 'Mind you after accept your custom order. We will process the request after paying.Remind that, after your order is accepted, full payment must be made before we produce the order.'
 
   registration:
     my: 'My courses'
@@ -82,6 +83,9 @@ en:
     attendance: 'Number'
     to: 'To register'
     keep: 'See other courses'
+    name: 'Course name'
+    received: 'Remittance received'
+    detail: 'Course detail'
 
   course:
     closed: 'Closed courses'
@@ -90,6 +94,8 @@ en:
     canceled: 'Course canceled'
     name: 'Course name'
     information: 'Course information'
+    number: 'Number'
+    over: 'Course over'
 
   actions:
     delete: 'Delete'
@@ -310,7 +316,15 @@ en:
   mailer:
     subject_for_order: "[quoiquoi.tw] Remind for ordering complete (Please don't reply this mail)"
     title_for_order: "Thanks for ordering quoiquoi studio's production"
-    remind_for_order: "Thanks for ordering quoiquoi 's production. Mind you, if you don't remittance the ordering, this order will be canceled. If you want to advice remittance please click the %{remittance_link} to do that."
+    remind_for_order: "Thanks for ordering quoiquoi 's production. Mind you, if you don't remittance the ordering in three days, this order will be canceled. If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     thanks_for_order: "Thanks for ordering quoiquoi studio's production. This is your ordering information below"
-    thanks_for_registration: ''
+    subject_for_remittance_registration: "[quoiquoi.tw] Remind for remitting the registration (Please don't reply this mail)"
+    subject_for_registration: "[quoiquoi.tw] Remind for course (Please don't reply this mail)"
+    subject_for_cancel_registration: "[quoiquoi.tw] Notification for course was canceled"
+    help_return_tuition: '(please reply this mail to help us return your tuition)'
+    thanks_for_registration: "Thanks for register quoiquoi studio's course"
+    remind_for_remittance_registration: "Thanks for registering quoiquoi studio's course. Mind you, if you don't complete payment in three days, the registration will be canceled, If you want to advice remittance please click the 「%{remittance_link}」 to do that."
+    remind_for_registration: "Thanks for registering quoiquoi studio's course. This is your register information below. Mind you don't miss the course time."
+    help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
+    cancel_registration: "Thanks for register quoiquoi studio's course, your registration was canceled."
     dear: 'Dear you'

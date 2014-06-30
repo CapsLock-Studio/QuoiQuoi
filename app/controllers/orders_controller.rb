@@ -46,10 +46,10 @@ class OrdersController < ApplicationController
     respond_to do |format|
       @order.order_products.each do |order_product|
         product = Product.find(order_product.product)
-        if product.quantity - 1 < 0
+        if product.quantity - order_product.quantity < 0
           format.html {render json: 'Products are sold out.'}
         else
-          product.update_attribute(:quantity, product.quantity - 1)
+          product.update_attribute(:quantity, product.quantity - order_product.quantity)
         end
       end
 

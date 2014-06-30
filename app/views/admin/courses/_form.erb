@@ -50,13 +50,6 @@
           </div>
           <div class="col-sm-6">
             <div class="form-group">
-              <%= f.label :price, '課程價格' %>
-              <div class="controls">
-                <%= f.text_field :price, class: 'form-control', placeholder: '請輸入課程價格',
-                                 data: {'rule-required' => true, 'rule-number' => true} %>
-              </div>
-            </div>
-            <div class="form-group">
               <%= f.label :time, '課程時間' %>
               <div class="controls">
                 <div class="datetimepicker input-group">
@@ -104,6 +97,13 @@
                   </div>
                 </div>
                 <div class="box-content">
+                  <div class="form-group">
+                    <%= builder.label :price, "課程價格(#{@course.course_translates[builder.index].locale.currency})" %>
+                    <div class="controls">
+                      <%= builder.text_field :price, class: 'form-control',
+                                             placeholder: '請輸入價格', data: {number: true} %>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <%= builder.label :teacher, '上課老師' %>
                     <div class="controls">

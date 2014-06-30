@@ -21,8 +21,9 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th>課程編號</th>
+                  <th>編號</th>
                   <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                  <th>課程名稱&nbsp;<label class="label label-success">點擊前往編輯</label></th>
                   <th>報名參加人數</th>
                   <th>應付價格</th>
                   <th>已匯款金額</th>
@@ -33,6 +34,7 @@
                 </thead>
                 <tbody>
                 <% @payments.each do |payment| %>
+                  <% translate = CourseTranslate.where(course_id: payment.registration.course_id, locale_id: payment.registration.locale_id).first %>
                   <tr>
                     <td>
                       <%= payment.registration_id %>
@@ -41,13 +43,16 @@
                       <%= link_to payment.user.id, admin_user_path(payment.user.id) %>
                     </td>
                     <td>
+                      <%= link_to translate.name, edit_admin_course_path(payment.registration.course_id), target: '_blank' %>
+                    </td>
+                    <td>
                       <%= payment.registration.attendance %> 人
                     </td>
                     <td>
-                      <%= number_to_currency(payment.registration.subtotal) %>
+                      <%= number_to_currency(payment.registration.subtotal) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.amount) %>
+                      <%= number_to_currency(payment.amount) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
                     </td>
                     <td>
                       <%= payment.identifier %>
@@ -60,7 +65,7 @@
                         <%= link_to(check_admin_registration_path(payment.registration), class: 'btn btn-md') do %>
                           <i class='icon-pencil'></i>
                         <% end %>
-                        <%= link_to(uncheck_admin_payment_path(payment), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '<h3><i class="icon-exclamation"></i>&nbsp;&nbsp;匯款資訊有誤嗎?</h3>'}) do %>
+                        <%= link_to(uncheck_admin_payment_path(payment), class: 'btn btn-danger btn-md', method: :put, data: {confirm: '<h3><i class="icon-exclamation"></i>&nbsp;&nbsp;匯款資訊有誤嗎?</h3>'}) do %>
                           <i class='icon-remove'></i>
                         <% end %>
                       </div>

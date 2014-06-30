@@ -57,7 +57,7 @@ class CoursesController < ApplicationController
 
     def set_course
       begin
-        @course = Course.where(id: params[:id], canceled: false).first
+        @course = Course.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
       end
