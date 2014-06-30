@@ -64,7 +64,9 @@
                 <tr>
                   <th></th>
                   <th>編號</th>
-                  <th>課程名稱</th>
+                  <th>
+                    課程名稱<span class="label label-success">點擊前往編輯</span>
+                  </th>
                   <th>
                     <label class="label label-default">報名人數</label>&nbsp;
                     <label class="label label-warning">繳費完成人數</label>&nbsp;
@@ -76,6 +78,9 @@
                 </thead>
                 <tbody>
                 <% @courses.each do |course| %>
+                  <% translates = course.course_translates.reject{|translate| translate.name.blank?}.collect do |translate|
+                    {name: translate.name, lang: translate.locale.name}
+                  end %>
                   <tr>
                     <td>
                       <%= image_tag course.image.url(:thumb) %>
@@ -84,7 +89,11 @@
                       <%= course.id %>
                     </td>
                     <td>
-                      <%= course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %>
+                      <%= link_to edit_admin_course_path(course), target: '_blank' do %>
+                        <% translates.each do |translate| %>
+                          <%= translate[:name] %>&nbsp;<span class="label label-default"><%= translate[:lang] %></span><br/>
+                        <% end %>
+                      <% end %>
                     </td>
                     <td>
                       <label class="label label-default">

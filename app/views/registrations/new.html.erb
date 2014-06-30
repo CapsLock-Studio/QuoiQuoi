@@ -26,7 +26,7 @@
                           <% end %>
                         </div>
                         <div class="controls col-md-3">
-                          <%= f.select :attendance, options_for_select(1..@registration.course.popular{|index| [index, index]}), {}, {class: 'selectpicker refresh-price-source', data: {width: '100%'}} %>
+                          <%= f.select :attendance, options_for_select(1..@registration.course.popular{|index| [index, index]}), {}, {class: 'selectpicker refresh-price-source form-control', data: {width: '100%'}} %>
                         </div>
                       </div>
                       <% unless current_user %>

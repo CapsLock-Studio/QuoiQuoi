@@ -24,11 +24,16 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('register')
 
+    flash[:message] = nil
+
     course = Course.find(params[:course_id])
     @registration = course.registrations.build
   end
 
   def create
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('register')
+
     respond_to do |format|
       course = Course.find(registration_params[:course_id])
       translate = course.course_translates.where(locale_id: session[:locale_id]).first
@@ -47,7 +52,7 @@ class RegistrationsController < ApplicationController
             format.html {render json: @registration.errors}
           end
         else
-          flash[:message] = t('had_registered')
+          flash[:message] = t('had_registered_hint')
           format.html {render action: :new}
         end
       else

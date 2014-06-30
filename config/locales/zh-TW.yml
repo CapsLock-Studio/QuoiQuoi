@@ -305,7 +305,8 @@ zh-TW:
   other_gift_cards: '其他禮券'
   money_name: ''
   not_in_stock: '目前無存貨'
-  had_registered: '報名重複囉'
+  had_registered: '你已經報名過囉'
+  had_registered_hint: '報名重複囉'
   recent_course: '近期課程'
   share_this_on_facebook: '分享到Facebook'
   share_this_on_pinterest: '分享到Pinterest'
@@ -364,6 +365,8 @@ zh-TW:
   cancel: '取消'
   instructions: '說明'
   close: '關閉'
+  courses: '課程'
+  rss_feeds: 'RSS訂閱'
 
   mailer:
     subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'
