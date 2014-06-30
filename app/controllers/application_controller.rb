@@ -101,6 +101,8 @@ class ApplicationController < ActionController::Base
       session[:temp] = nil
 
       order_custom_item_path(order_custom_item)
+    else
+      super
     end
   end
 

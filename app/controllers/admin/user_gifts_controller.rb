@@ -14,6 +14,6 @@ class Admin::UserGiftsController < AdminController
   end
 
   def show
-
+    @user_gift = UserGift.find(params[:id])
   end
 end

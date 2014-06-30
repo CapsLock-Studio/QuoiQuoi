@@ -112,6 +112,9 @@ en:
     serial: 'Serial'
     confirm: 'I want to use this gift card'
     sorry: 'Sorry, We can not find gift card by this serial'
+    cancel: 'Cancel'
+    renew: 'Renew serial'
+    use: 'Use Gift card'
 
   rss:
     product:

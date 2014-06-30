@@ -50,9 +50,11 @@
           <%= t('back_to_control_panel') %>
         <% end %>
       <% end %>
-      <a href="#" class="gift-pay pull-right" data-toggle="gift-form">
-        <%= t('use_gift_card') %>
-      </a>
+      <% unless @payment.user_gift %>
+        <a href="#" class="gift-pay pull-right" data-toggle="gift-form">
+          <%= t('use_gift_card') %>
+        </a>
+      <% end %>
     </div>
   </div>
 <% end %>

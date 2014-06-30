@@ -21,8 +21,9 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th>禮券編號</th>
+                  <th>編號</th>
                   <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                  <th>禮券名稱&nbsp;<label class="label label-success">點擊前往編輯</label></th>
                   <th>額度</th>
                   <th>狀態</th>
                   <th>付款方式</th>
@@ -31,6 +32,7 @@
                 </thead>
                 <tbody>
                 <% @user_gifts.each do |user_gift| %>
+                  <% translate = GiftTranslate.where(gift_id: user_gift.gift_id, locale_id: user_gift.locale_id).first %>
                   <tr>
                     <td>
                       <%= user_gift.id %>
@@ -39,7 +41,10 @@
                       <%= link_to user_gift.user_id, admin_user_path(user_gift.user_id), target: '_blank' %>
                     </td>
                     <td>
-                      <%= number_to_currency(user_gift.gift.quota) %>
+                      <%= link_to translate.name, admin_gift_path(user_gift.gift_id) %>
+                    </td>
+                    <td>
+                      <%= number_to_currency(translate.quota) %>
                     </td>
                     <td>
                       <%= render 'status', user_gift: user_gift %>
