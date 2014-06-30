@@ -11,7 +11,10 @@
           </div>
         </div>
         <%= link_to '手作現有商品', products_path(format: :rss), class: 'btn btn-block btn-default hover-effect' %>
+        <h4 class="text-center"><%= products_url(format: :rss) %></h4>
+        <hr/>
         <%= link_to '課程', courses_path(format: :rss), class: 'btn btn-block btn-default hover-effect' %>
+        <h4 class="text-center"><%= courses_url(format: :rss) %></h4>
       </div>
     </div>
   </div>
