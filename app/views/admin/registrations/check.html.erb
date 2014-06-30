@@ -40,7 +40,11 @@
                       <%= payment.registration_id %>
                     </td>
                     <td>
-                      <%= link_to payment.user.id, admin_user_path(payment.user.id) %>
+                      <% if registration.user %>
+                        <%= link_to registration.user_id, admin_user_path(registration.user_id), target: '_blank' %>
+                      <% else %>
+                        -
+                      <% end %>
                     </td>
                     <td>
                       <%= link_to translate.name, edit_admin_course_path(payment.registration.course_id), target: '_blank' %>

@@ -36,7 +36,7 @@ class RegistrationsController < ApplicationController
 
       if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
         # if email has registered course can not register again
-        if Registration.count(conditions: {email: registration_params[:email]}) <= 0
+        if Registration.count(conditions: {email: registration_params[:email], course_id: @registration.course_id}) <= 0
           @registration.subtotal = @registration.attendance * translate.price
           @registration.locale_id = translate.locale.id
           @registration.currency = translate.locale.currency
