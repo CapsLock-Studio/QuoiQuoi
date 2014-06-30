@@ -111,6 +111,31 @@ zh-TW:
     number: '人數'
     over: '課程結束'
 
+  user:
+    title: '個人帳戶資訊'
+    hint: '您可以在這邊設定常用聯絡資訊，方便您使用布知道網路商店'
+    not_set: '尚未設定常用聯絡資訊'
+    set: '設定常用聯絡資訊'
+    set_password: '設定密碼'
+    save: '儲存常用資訊'
+    password_hint: '定期更新密碼能讓你的個人帳號更為安全'
+    password_old: '舊密碼'
+    password_old_placeholder: '請輸入舊密碼'
+    password_new: '新密碼'
+    password_new_placeholder: '請輸入新密碼'
+    password_confirm: '確認密碼'
+    password_confirm_placeholder: '再次確認密碼'
+    password_update: '更新密碼'
+
+  message:
+    title: '訊息匣'
+    new: '新訊息'
+    write: '寫新的訊息'
+    to: '攥寫訊息給管理者'
+    hint: '訊息送出後無法修改，請注意'
+    content: '訊息內容'
+    your: '請寫下您想留給管理者的訊息內容'
+    back: '回到訊息匣'
 
   actions:
     delete: '刪除'
@@ -232,7 +257,7 @@ zh-TW:
   new_password_ingore_content: "你的密碼不會因此修改, 除非你按下了修改的連結前往修改密碼"
   new_password_title: '有人使用你的帳號申請了重設密碼, 你可以使用以下連結前往重設'
   signup: '註冊'
-  user: '我的帳戶'
+
   add_to_cart: '加到購物車'
   buy: '下單'
   detail: '詳細'
@@ -242,10 +267,12 @@ zh-TW:
   bid: '報價'
   work_days: '大約工作天'
   completed_date: '預估完成日期'
-  message: '訊息'
+  message_no_sign_in: '訊息'
   your_contact: '你的聯絡資訊'
   name: '姓名'
+  name_placeholder: '請輸入你的姓名'
   phone_number: '電話號碼'
+  phone_placeholder: '請輸入你的電話號碼'
   requirement: '需求內容'
   your_idea: '你的點子'
   description: '敘述'
@@ -259,6 +286,8 @@ zh-TW:
   shipped: '配送'
   shipping_information: '配送資訊'
   address: '收件地址'
+  address_for_profile: '住址'
+  address_placeholder: '請輸入你的住址'
   register: '報名課程'
   customize_hint: '覺得這個包很棒，不過想要加點自己的點子嗎？'
   control_panel: '我的帳號'
@@ -332,6 +361,7 @@ zh-TW:
   full_name: '你的姓名'
   call_name: '名稱'
   tuition: '費用'
+  cancel: '取消'
 
   mailer:
     subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'

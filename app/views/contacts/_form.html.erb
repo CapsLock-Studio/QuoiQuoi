@@ -39,7 +39,7 @@
     <div class="col-xs-12 col-sm-12">
       <div class="form-group">
         <%= f.label :content do %>
-          <%= t('message') %>&nbsp;<span class="text-danger">*</span>
+          <%= t('message_no_sign_in') %>&nbsp;<span class="text-danger">*</span>
         <% end %>
         <div class="controls">
           <%= f.text_area :content, value: flash[:content], class: 'form-control', data: {'rule-required' => true}, rows: 8 %>

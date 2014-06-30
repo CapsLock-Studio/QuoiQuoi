@@ -5,25 +5,25 @@
       <div class="reg-page" style="border-top:none;">
         <div class="reg-header">
           <div class="text-center">
-            <h2><i class="fa fa-comment-alt"></i>攥寫訊息給管理者</h2>
-            <p><span class="color-red">*</span> 訊息送出後無法修改，請注意</p>
+            <h2><i class="fa fa-comment-alt"></i><%= t('message.to') %></h2>
+            <p><span class="color-red">*</span> <%= t('message.hint') %></p>
           </div>
         </div>
 
         <%= form_for @message, html: {class: 'form-horizontal validate-form'} do |f| %>
           <div class="form-group">
             <div class="col-md-12">
-              <%= f.label :content, '訊息內容', class: 'text-muted control-label' %>
+              <%= f.label :content, t('message.content'), class: 'text-muted control-label' %>
               <div class="controls">
-                <%= f.text_area :content, class: 'form-control', placeholder: '請寫下您想留給管理者的訊息內容', rows: 6 %>
+                <%= f.text_area :content, class: 'form-control', placeholder: t('message.your'), rows: 6 %>
               </div>
             </div>
           </div>
           <hr/>
-          <%= f.button '送出訊息', class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+          <%= f.button t('submit_message'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
           <%= link_to messages_path do %>
             <i class="fa fa-angle-left"></i>
-            回到訊息匣
+            <%= t('message.back') %>
           <% end %>
         <% end %>
       </div>

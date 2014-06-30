@@ -5,14 +5,14 @@
       <div class="reg-page" style="border-top:none;">
         <div class="reg-header">
           <div class="text-center">
-            <h2><i class="icon-info"></i>個人帳戶資訊</h2>
-            <p>您可以在這邊設定常用聯絡資訊，方便您使用布知道網路商城</p>
+            <h2><i class="icon-info"></i><%= t('user.title') %></h2>
+            <p><%= t('user.hint') %></p>
           </div>
         </div>
 
         <%= form_for current_user, html: {class: 'form-horizontal validate-form'} do |f| %>
           <div class="form-group">
-            <label class="text-muted col-xs-2 control-label">信箱</label>
+            <label class="text-muted col-xs-2 control-label">Email</label>
             <div class="col-xs-10">
               <label class="form-control" style="border-color:#FEFEFE;">
                 <%= current_user.email %>
@@ -20,31 +20,31 @@
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :name, '姓名', class: 'text-muted col-xs-2 control-label' %>
+            <%= f.label :name, t('name'), class: 'text-muted col-xs-2 control-label' %>
             <div class="col-xs-10">
-              <%= f.text_field :name, class: 'col-xs-10 form-control', placeholder: '請輸入姓名' %>
+              <%= f.text_field :name, class: 'col-xs-10 form-control', placeholder: t('name_placeholder') %>
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :phone, '電話', class: 'text-muted col-xs-2 control-label' %>
+            <%= f.label :phone, t('phone_number'), class: 'text-muted col-xs-2 control-label' %>
             <div class="controls col-xs-10">
-              <%= f.text_field :phone, value: '', class: 'col-xs-10 form-control', placeholder: '請輸入電話', data: {'rule-number' => true} %>
+              <%= f.text_field :phone, value: '', class: 'col-xs-10 form-control', placeholder: t('phone_placeholder'), data: {'rule-number' => true} %>
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :address, '住址', class: 'text-muted col-xs-2 control-label' %>
+            <%= f.label :address, t('address_for_profile'), class: 'text-muted col-xs-2 control-label' %>
             <div class="col-xs-10">
-              <%= f.text_area :address, class: 'col-xs-10 form-control', placeholder: '請輸入住址' %>
+              <%= f.text_area :address, class: 'col-xs-10 form-control', placeholder: t('address_placeholder') %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :line, 'Line', class: 'text-muted col-xs-2 control-label' %>
             <div class="col-xs-10">
-              <%= f.text_field :line, value: '', class: 'col-xs-10 form-control', placeholder: '請輸入Line帳號' %>
+              <%= f.text_field :line, value: '', class: 'col-xs-10 form-control' %>
             </div>
           </div>
-          <%= f.button '儲存常用資訊', class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
-          <%= link_to '取消', user_path %>
+          <%= f.button t('user.save'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+          <%= link_to t('cancel'), user_path %>
         <% end %>
       </div>
     </div>
