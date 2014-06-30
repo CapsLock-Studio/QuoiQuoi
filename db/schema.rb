@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630051014) do
+ActiveRecord::Schema.define(version: 20140630063214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,27 @@ ActiveRecord::Schema.define(version: 20140630051014) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  create_table "instruction_images", force: true do |t|
+    t.integer  "instruction_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "instruction_images", ["instruction_id"], name: "index_instruction_images_on_instruction_id", using: :btree
+
+  create_table "instructions", force: true do |t|
+    t.integer  "locale_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "instructions", ["locale_id"], name: "index_instructions_on_locale_id", using: :btree
 
   create_table "introduce_image_slides", force: true do |t|
     t.integer  "sort"

@@ -1,0 +1,46 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-credit-card"></i>
+      <span>訂購說明資訊管理</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <% if @instruction %>
+          <%= link_to '修改訂購說明資訊', edit_admin_locale_instruction_path(params[:locale_id], @instruction.id), class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to '新增訂購說明資訊', new_admin_locale_instruction_path(params[:locale_id]), class: 'btn btn-info' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="modal" style="display: block;position: relative;">
+        <div class="modal-dialog" style="width: 800px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title"><i class="icon-info-sign"></i>&nbsp;<%= t('instructions') %></h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <% if @instruction %>
+                  <%= @instruction.content.html_safe %>
+                <% else %>
+                  <div class="alert alert-info alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    目前沒有設定訂購說明資訊，請按下 <%= link_to '新增', new_admin_locale_instruction_path(params[:locale_id]) %> 設定
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('close') %></button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div>
+  </div>
+</div>

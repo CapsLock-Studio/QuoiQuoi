@@ -44,6 +44,8 @@ class AdminAbility
       can :manage, Admin::TravelInformation
       can :manage, Admin::TravelPhoto
       can :manage, Admin::OrderInformation
+      can :manage, Admin::Instruction
+      can :manage, Admin::InstructionImage
       can :manage, Admin::Area
     end
 

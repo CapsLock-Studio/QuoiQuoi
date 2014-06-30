@@ -37,6 +37,8 @@
             <h4>
               <i class="fa fa-exclamation"></i>
               <%= t('ordering_information') %>
+              &nbsp;&nbsp;
+              <div class="btn btn-primary btn-xs" data-toggle="modal" data-target="#instructions"><%= t('instructions') %></div>
             </h4>
           </div>
           <div class="box-content box-no-padding" style="border:0;">
@@ -238,3 +240,20 @@
     </div>
   </div>
 <% end %>
+
+<div class="modal fade" id="instructions">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><i class="fa fa-info"></i><%= t('instructions') %></h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('close') %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -362,6 +362,8 @@ zh-TW:
   call_name: '名稱'
   tuition: '費用'
   cancel: '取消'
+  instructions: '說明'
+  close: '關閉'
 
   mailer:
     subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'
