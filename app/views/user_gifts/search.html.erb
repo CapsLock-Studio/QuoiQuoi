@@ -1,4 +1,4 @@
-<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id) %>
+<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: @user_gift.locale_id).first %>
 <div class="container">
   <div class="row">
     <!--Reg Block-->
