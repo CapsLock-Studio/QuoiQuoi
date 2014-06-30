@@ -1,0 +1,58 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-info-sign"></i>
+      訂購說明資訊
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @instruction], html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="form-group">
+          <%= f.label :content, '內容' %>
+          <div class="controls">
+            <%= f.text_area :content, class: 'form-control wysihtml5', rows: 30,
+                            placeholder: '請輸入內容', data: {'rule-required' => true} %>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_articles_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+
+<div class="ajax-upload-insert-image-modal modal fade">
+  <div class="modal-dialog" style="width:auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3 class="modal-title">插入圖片</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="box">
+          <div class="box-content">
+            <%= render 'image_upload' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+      </div>
+    </div>
+  </div>
+</div>

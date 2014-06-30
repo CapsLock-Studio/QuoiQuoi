@@ -14,6 +14,10 @@ QuoiQuoi::Application.routes.draw do
     resources :articles do
       resources :article_images
     end
+    resources :instructions do
+      resources :instruction_images
+    end
+    resources :instruction_images
     resources :article_images
     resources :article_types
     resources :products do
@@ -113,6 +117,7 @@ QuoiQuoi::Application.routes.draw do
 
     resources :locales do
       resources :order_information
+      resources :instructions
     end
     resources :order_information
     resources :slides do
