@@ -97,6 +97,32 @@ en:
     number: 'Number'
     over: 'Course over'
 
+  user:
+    title: 'Profile information'
+    hint: 'You can set up your contact information'
+    not_set: 'Not set yet'
+    set: 'Set contact information'
+    set_password: 'Set password'
+    save: 'Save contact information'
+    password_hint: 'Regularly update the password to make your personal account more secure'
+    password_old: 'Old password'
+    password_old_placeholder: 'Enter your old password'
+    password_new: 'New password'
+    password_new_placeholder: 'Enter your new password'
+    password_confirm: 'Password confirmation'
+    password_confirm_placeholder: 'Re-enter your new password'
+    password_update: 'Update password'
+
+  message:
+    title: 'Message box'
+    new: 'New message'
+    write: 'Write new message'
+    to: 'Write a message to administrator'
+    hint: "You can't edit the message after submit"
+    content: 'Message content'
+    your: 'Write down your message'
+    back: 'Back to message box'
+
   actions:
     delete: 'Delete'
     edit: 'Edit'
@@ -214,7 +240,7 @@ en:
   new_password_ingore_content: "Your password won't change until you access the link above and create a new one."
   new_password_title: 'Someone has requested a link to change your password. You can do this through the link below.'
   signup: 'Sign up'
-  user: 'ACCOUNT'
+
   add_to_cart: 'Add to cart'
   buy: 'Buy'
   detail: 'Detail'
@@ -224,10 +250,12 @@ en:
   bid: 'Bid price'
   work_days: 'About work days'
   completed_date: 'Estimate completed date'
-  message: 'Message'
+  message_no_sign_in: 'Message'
   your_contact: 'Contact information'
   name: 'Name'
+  name_placeholder: 'Enter your name'
   phone_number: 'Phone number'
+  phone_placeholder: 'Enter your phone number'
   requirement: 'Requirement'
   your_idea: 'Sample pictures'
   description: 'Description'
@@ -243,6 +271,8 @@ en:
   shipped: 'shipped'
   shipping_information: 'Shipping information'
   address: 'Address'
+  address_for_profile: 'Address'
+  address_placeholder: 'Enter your address'
   register: 'Register'
   customize_hint: 'Like this bag and want to add some your ideas?'
   control_panel: 'Control panel'
@@ -315,6 +345,7 @@ en:
   full_name: 'Full name'
   call_name: 'Name'
   tuition: 'Tuition'
+  cancel: 'Cancel'
 
   mailer:
     subject_for_order: "[quoiquoi.tw] Remind for ordering complete (Please don't reply this mail)"
