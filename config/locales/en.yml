@@ -348,6 +348,8 @@ en:
   cancel: 'Cancel'
   instructions: 'Instructions'
   close: 'Close'
+  courses: 'Courses'
+  rss_feeds: 'RSS feeds'
 
   mailer:
     subject_for_order: "[quoiquoi.tw] Remind for ordering complete (Please don't reply this mail)"
