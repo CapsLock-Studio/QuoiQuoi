@@ -40,8 +40,8 @@
                       <%= payment.registration_id %>
                     </td>
                     <td>
-                      <% if registration.user %>
-                        <%= link_to registration.user_id, admin_user_path(registration.user_id), target: '_blank' %>
+                      <% if payment.registration.user %>
+                        <%= link_to payment.registration.user_id, admin_user_path(payment.registration.user_id), target: '_blank' %>
                       <% else %>
                         -
                       <% end %>
