@@ -1,6 +1,4 @@
 class OrderCustomItem < ActiveRecord::Base
-  validates :user_id, presence: true
-
   belongs_to :order
   belongs_to :product
   belongs_to :material

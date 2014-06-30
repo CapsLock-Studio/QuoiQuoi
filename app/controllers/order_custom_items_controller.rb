@@ -1,5 +1,5 @@
 class OrderCustomItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:new]
+  before_action :authenticate_user!, except: [:new, :create]
   before_action :set_order_custom_item, except: [:index, :new, :create]
 
   # GET /order_custom_items
@@ -49,18 +49,28 @@ class OrderCustomItemsController < ApplicationController
 
   # GET /order_custom_items/1/edit
   def edit
-
   end
 
   # POST /order_custom_items
   def create
     respond_to do |format|
-      #format.html {render json: order_custom_item_params}
-      @order_custom_item = OrderCustomItem.new(order_custom_item_params.merge({user_id: current_user.id}))
-      if @order_custom_item.save
-        format.html {redirect_to order_custom_item_path(@order_custom_item)}
+      @order_custom_item = OrderCustomItem.new(order_custom_item_params)
+      if current_user.nil?
+        if @order_custom_item.save
+          session[:temp] = @order_custom_item.id
+          flash[:alert] = t('devise.failure.unauthenticated')
+          format.html {redirect_to new_user_session_path}
+        else
+          format.html {render json: @order_custom_item.errors}
+        end
       else
-        format.html {render json: @order_custom_item.errors}
+        #format.html {render json: order_custom_item_params}
+        @order_custom_item.user_id = current_user.id
+        if @order_custom_item.save
+          format.html {redirect_to order_custom_item_path(@order_custom_item)}
+        else
+          format.html {render json: @order_custom_item.errors}
+        end
       end
     end
   end

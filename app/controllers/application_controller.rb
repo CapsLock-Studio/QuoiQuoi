@@ -92,6 +92,18 @@ class ApplicationController < ActionController::Base
     @article_types = ArticleType.where(locale_id: session[:locale_id])
   end
 
+  # handle the order custom item params
+  def after_sign_in_path_for(resource)
+    if session[:temp].present?
+      order_custom_item = OrderCustomItem.find(session[:temp])
+      order_custom_item.user_id = current_user.id
+      order_custom_item.save!
+      session[:temp] = nil
+
+      order_custom_item_path(order_custom_item)
+    end
+  end
+
   private
     def store_actions_to_current_user(guest_user_id, current_user_id)
       source_order = Order.where(user_id: guest_user_id, checkout: false).first
