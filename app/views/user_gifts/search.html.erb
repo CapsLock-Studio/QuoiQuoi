@@ -1,3 +1,4 @@
+<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id) %>
 <div class="container">
   <div class="row">
     <!--Reg Block-->
@@ -31,7 +32,7 @@
                           <tbody>
                           <tr>
                             <td class="col-xs-4"><%= t('user_gift.quota') %></td>
-                            <td><%= number_to_currency(@user_gift.gift.quota) %></td>
+                            <td><%= number_to_currency(translate.quota) %></td>
                           </tr>
                           <tr>
                             <td class="col-xs-4"><%= t('user_gift.serial') %></td>
