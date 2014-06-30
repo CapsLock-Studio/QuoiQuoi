@@ -71,7 +71,7 @@ zh-TW:
     wait_paying: '等待付款'
     advice: '回報'
     received: '收貨'
-    cancel: '取消訂製'
+    cancel: '取消訂單'
 
   custom_order:
     my: '我的訂製要求'
@@ -130,6 +130,9 @@ zh-TW:
     serial: '序號'
     confirm: '確認無誤, 我要使用禮券'
     sorry: '抱歉, 找不到你的禮券資訊'
+    cancel: '取消購買'
+    renew: '重新取得序號'
+    use: '使用禮券'
 
   rss:
     product:

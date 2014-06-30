@@ -19,7 +19,8 @@ class PaymentsController < ApplicationController
         amount = payment.registration.subtotal
         currency = payment.registration.currency
       elsif payment.user_gift
-        amount = payment.user_gift.gift.quota
+        gift = GiftTranslate.where(locale_id: payment.user_gift.locale_id, gift_id: payment.user_gift.gift_id).first
+        amount = gift.quota
         currency = payment.user_gift.currency
       end
 

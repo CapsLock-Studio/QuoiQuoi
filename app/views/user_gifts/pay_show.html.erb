@@ -1,3 +1,4 @@
+<% translate = @user_gift.gift.gift_translates.where(locale_id: session[:locale_id]).first %>
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2" style="margin-top: 40px;">
@@ -21,7 +22,7 @@
                       <%= t('gift') %>
                     </div>
                     <div class="col-md-10 col-xs-9">
-                      <strong><%= @user_gift.gift.gift_translates.where(locale_id: session[:locale_id]).first.name %></strong>
+                      <strong><%= translate.name %></strong>
                     </div>
                   </div>
                   <div class="row">
@@ -29,7 +30,7 @@
                       <%= t('amount_payable') %>
                     </div>
                     <div class="col-md-10 col-xs-9">
-                      <strong><%= number_to_currency(@user_gift.gift.quota) %></strong>
+                      <strong><%= number_to_currency(translate.quota) %></strong>
                     </div>
                   </div>
                 </div>

@@ -1,3 +1,7 @@
+<% translates = gift.gift_translates.reject{|translate| translate.quota.blank?}.collect do |translate|
+  locale = Locale.where(id: translate.locale_id).first
+  {name: translate.name, quota: translate.quota, currency: locale.currency, lang: locale.name}
+end %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
   <div class="box-header sea-blue-background">
     <div class="title">禮品券詳細內容</div>
@@ -23,25 +27,19 @@
               <%= image_tag gift.image.url(:thumb), class: 'img-responsive' %>
             </td>
             <td>
-              <strong><%= gift.gift_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %></strong>
+              <% translates.each do |translate| %>
+                <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= translate[:name] %><br/>
+              <% end %>
             </td>
-            <td class="col-xs-1">
-              <%= number_to_currency(gift.quota) %>
+            <td>
+              <% translates.each do |translate| %>
+                <%= number_to_currency(translate[:quota]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+              <% end %>
             </td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-12">
-    <h4 class="text-right">
-      總金額 :
-      <strong class="text-muted">
-        <%= number_to_currency(gift.quota) %>
-      </strong>
-    </h4>
   </div>
 </div>
