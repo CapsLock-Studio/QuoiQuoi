@@ -305,7 +305,7 @@ zh-TW:
   other_gift_cards: '其他禮券'
   money_name: ''
   not_in_stock: '目前無存貨'
-  had_registered: '你已經報名過囉'
+  had_registered: '報名重複囉'
   recent_course: '近期課程'
   share_this_on_facebook: '分享到Facebook'
   share_this_on_pinterest: '分享到Pinterest'
