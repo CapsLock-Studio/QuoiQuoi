@@ -53,7 +53,7 @@ en:
     wait_receiving: 'Wait receiving'
     wait_shipping: 'Pre-shipping'
     wait_remittance: 'Wait remittance'
-    wait_confirm: 'Wait confirm'
+    wait_confirm: 'Wait confirmation'
     wait_paying: 'Wait paying'
     advice: 'Advice'
     received: 'Received'
