@@ -1,3 +1,4 @@
+<% translate = CourseTranslate.where(course_id: registration.course_id, locale_id: registration.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
   <div class="box-header sea-blue-background">
     <div class="title">課程詳細內容</div>
@@ -25,7 +26,7 @@
               <%= image_tag registration.course.image.url(:thumb), class: 'img-responsive' %>
             </td>
             <td>
-              <strong><%= registration.course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %></strong>
+              <strong><%= translate.name %></strong>
             </td>
             <td>
               <%= "#{registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(registration.course.time + registration.course.length.hours).strftime('%H:%M')}" %>
@@ -34,7 +35,7 @@
               <%= "#{registration.attendance}/#{@total_attendance}/#{registration.course.popular}" %>
             </td>
             <td>
-              <%= number_to_currency(registration.course.price) %>
+              <%= number_to_currency(translate.price) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
             </td>
           </tr>
           </tbody>

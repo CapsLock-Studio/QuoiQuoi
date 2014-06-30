@@ -4,17 +4,18 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2>感謝您報名QuoiQuoi - 布知道工作室的課程</h2>
+<h2><%= t('mailer.thanks_for_registration') %></h2>
 <p>
-  <strong>親愛的客戶: </strong><br/>
-  非常感謝你報名我們的課程, 以下是您報名的課程, 在此提醒您請勿錯過已報名課程以免侵害自身權益
+  <strong><%= t('mailer.dear') %>: </strong><br/>
+  <%= t('mailer.remind_for_registration') %>
 </p>
 <table class="table table-hover">
   <thead>
   <tr>
     <td></td>
-    <td>名稱</td>
-    <td>課程時間</td>
+    <td><%= t('call_name') %></td>
+    <td><%= t('course_time') %></td>
+    <td><%= t('course.number') %></td>
   </tr>
   </thead>
   <tbody>
@@ -29,6 +30,9 @@
     </td>
     <td>
       <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
+    </td>
+    <td>
+      <%= @registration.attendance %>
     </td>
   </tr>
   </tbody>

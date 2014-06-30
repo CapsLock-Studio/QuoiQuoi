@@ -12,22 +12,35 @@
         <table class="data-table table table-striped" style="margin-bottom:0;">
           <thead>
           <tr>
-            <th></th>
+            <th>
+              <span class="label label-success">點擊圖片前往編輯</span>
+            </th>
             <th>名稱</th>
             <th>金額</th>
+            <th>客戶訂購數量</th>
+            <th>扣除訂購數量後商品剩餘數量</th>
           </tr>
           </thead>
           <tbody>
           <% order.order_products.each do |order_product| %>
+            <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: order.locale_id).first %>
             <tr>
               <td>
-                <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
+                <%= link_to edit_admin_product_path(order_product.product_id), target: '_blank' do %>
+                  <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
+                <% end %>
               </td>
               <td>
-                <strong><%= order_product.product.product_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %></strong>
+                <strong><%= translate.name %></strong>
               </td>
-              <td class="col-xs-1">
-                <%= number_to_currency(order_product.product.price) %>
+              <td>
+                <%= number_to_currency(translate.price) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
+              </td>
+              <td>
+                <%= order_product.quantity %>
+              </td>
+              <td>
+                <%= translate.product.quantity %>
               </td>
             </tr>
           <% end %>
@@ -39,7 +52,7 @@
               <td>
                 <strong><%= t('original_bag') %></strong>
               </td>
-              <td class="col-xs-1">
+              <td>
                 <%= number_to_currency(custom_item.price) %>
               </td>
             </tr>
@@ -55,7 +68,7 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(order.subtotal) %>
+        <%= number_to_currency(order.subtotal) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
       </strong>
     </h4>
   </div>

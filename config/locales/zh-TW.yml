@@ -83,9 +83,10 @@ zh-TW:
     accept_time: '接受時間'
     decline: '拒絕訂製'
     waiting: '等待回應'
-    cancel: '取消要求'
+    cancel: '取消訂製要求'
     sketch: '設計草稿'
     your: '你選擇的客製化項目'
+    mind: '提醒您, 訂製手作包在確認接受定製要求以後, 需要先付款完成我們才會著手製作喔!'
 
   registration:
     my: '我的課程'
@@ -96,6 +97,9 @@ zh-TW:
     attendance: '報名人數'
     to: '報名課程'
     keep: '繼續逛逛'
+    name: '課程名稱'
+    received: '已收取費用'
+    detail: '課程詳細'
 
   course:
     closed: '已關閉課程'
@@ -104,6 +108,8 @@ zh-TW:
     canceled: '課程已取消'
     name: '課程名稱'
     information: '課程資訊'
+    number: '人數'
+    over: '課程結束'
 
 
   actions:
@@ -262,7 +268,7 @@ zh-TW:
   add_hint: '一張圖不夠嗎? 按一下按鈕可以增加上傳欄位'
   add_text: '增加上傳欄位'
   choose_text: '選一張圖片'
-  your_contact_hint: '請填寫正確的聯絡資訊，我們與您確認需求'
+  your_contact_hint: '請填寫正確的聯絡資訊，我們將會與您聯絡確認需求'
   submit_hint: '提出訂製要求後，需要請您等待一段時間，我們將替您評估是否接受訂製要求'
   other_gift_cards: '其他禮券'
   money_name: ''
@@ -327,7 +333,15 @@ zh-TW:
   mailer:
     subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'
     title_for_order: '感謝您訂購quoiquoi布知道工作室的商品'
-    remind_for_order: '非常感謝你報名我們的課程, 提醒您, 訂單在三天內未繳費則自動放棄, 回報匯款請至 %{remittance_link} 回報'
-    thanks_for_order: '非常感謝你訂購我我們的商品, 以下是你的訂單詳細訊息'
-    thanks_for_registration: ''
+    remind_for_order: '非常感謝你訂購我們的商品, 提醒您, 訂單在三天內未繳費則自動放棄, 回報匯款請至 「%{remittance_link}」'
+    thanks_for_order: '非常感謝你訂購我們的商品, 以下是你的訂單詳細訊息'
+    subject_for_remittance_registration: '[quoiquoi.tw] 課程匯款提醒通知信 (系統自動寄出請勿回覆)'
+    subject_for_registration: '[quoiquoi.tw] 課程提醒通知信 (系統自動寄出請勿回覆)'
+    subject_for_cancel_registration: '[quoiquoi.tw] 課程取消通知信'
+    help_return_tuition: '(請協助回復退還報名金所需資料)'
+    thanks_for_registration: '感謝您報名quoiquoi布知道工作室的課程'
+    remind_for_remittance_registration: '非常感謝你報名我們的課程, 提醒您, 課程在三天內未繳費視為放棄報名, 回報匯款請至 「%{remittance_link}」'
+    remind_for_registration: '非常感謝你報名我們的課程, 以下是您報名的課程, 在此提醒您請勿錯過已報名課程以免侵害自身權益'
+    help_return_tuition_hint: '因您已經付款完成，我們需要您的退款資訊方可將報名金額退還，還請您回覆信件告知退款所需資訊(匯款帳號、姓名、分行...)'
+    cancel_registration: '感謝您報名quoiquoi布知道工作室的課程，您的報名已經取消'
     dear: '親愛的客戶'

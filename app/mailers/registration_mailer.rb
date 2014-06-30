@@ -5,20 +5,20 @@ class RegistrationMailer < ActionMailer::Base
     @registration = registration
     @locale_id = locale_id
     @domain = domain
-    mail(to: (registration.user)? registration.user.email : registration.email, subject: '[quoiquoi.tw] 課程匯款提醒通知信 (系統自動寄出請勿回覆)')
+    mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_remittance_registration'))
   end
 
   def remind(registration, locale_id, domain)
     @registration = registration
     @locale_id = locale_id
     @domain = domain
-    mail(to: (registration.user)? registration.user.email : registration.email, subject: '[quoiquoi.tw] 課程提醒通知信 (系統自動寄出請勿回覆)')
+    mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_registration'))
   end
 
   def cancel_remind(registration, locale_id, domain)
     @registration = registration
     @locale_id = locale_id
     @domain = domain
-    mail(to: (registration.user)? registration.user.email : registration.email, subject: "[quoiquoi.tw] 課程取消通知信 #{'(請協助回復退還報名金所需資料)' if registration.payment && registration.payment.completed?}")
+    mail(to: (registration.user)? registration.user.email : registration.email, subject: "#{t('mailer.subject_for_cancel_registration')} #{t('mailer.help_return_tuition') if registration.payment && registration.payment.completed?}")
   end
 end

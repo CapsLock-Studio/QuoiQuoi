@@ -23,22 +23,33 @@ class PaymentsController < ApplicationController
         currency = payment.user_gift.currency
       end
 
+      # when gift card cause price decrease to zero, set it pay complete
       if amount == 0
         if payment.update_attributes(completed: true, currency: currency)
           if payment.order
+
+            # send mail to remind order complete
             OrderMailer.remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
             format.html {redirect_to order_path(payment.order_id)}
           elsif payment.registration
+
+            # send mail to remind registration
             format.html {redirect_to registrations_path}
           end
         else
           format.html {render json: @payment.errors}
         end
+
+        # payment need manual check
       elsif payment_params[:wait] == 'true'
         payment.save!(validate: false)
         if payment.registration
+
+          # send mail to remind that if the remittance not complete in three days, it will discard auto
           RegistrationMailer.remittance_remind(payment.registration, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
         elsif payment.order
+
+
           OrderMailer.remittance_remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
         end
         format.html {redirect_to edit_payment_path(payment)}

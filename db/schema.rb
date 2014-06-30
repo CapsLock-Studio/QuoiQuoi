@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140629070851) do
+ActiveRecord::Schema.define(version: 20140629212926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 20140629070851) do
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price"
   end
 
   add_index "course_translates", ["course_id"], name: "index_course_translates_on_course_id", using: :btree
@@ -204,7 +205,6 @@ ActiveRecord::Schema.define(version: 20140629070851) do
   end
 
   create_table "courses", force: true do |t|
-    t.integer  "price"
     t.datetime "time"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -603,6 +603,8 @@ ActiveRecord::Schema.define(version: 20140629070851) do
     t.datetime "canceled_time"
     t.string   "email"
     t.text     "reason"
+    t.string   "currency"
+    t.integer  "locale_id"
   end
 
   add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree

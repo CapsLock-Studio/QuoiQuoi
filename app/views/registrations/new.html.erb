@@ -4,6 +4,7 @@
     <div class="col-md-12 reg-page">
       <div class="item">
         <%= form_for @registration, html: {class: 'form-horizontal validate-form'} do |f| %>
+          <% translate = @registration.course.course_translates.where(locale_id: session[:locale_id]).first %>
           <% if flash[:message] %>
             <div class="alert alert-warning text-center">
               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
@@ -90,11 +91,11 @@
                             </td>
                             <td>
                               <h5>
-                                <%= @registration.course.course_translates.where(locale_id: session[:locale_id]).first.name %>
+                                <%= translate.name %>
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(@registration.course.price) %>
+                              <%= number_to_currency(translate.price) %>
                             </td>
                           </tr>
                         </tbody>
@@ -107,8 +108,8 @@
                 <div class="col-md-12">
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>:
-                    <strong class="text-muted refresh-price-target" data-price="<%= @registration.course.price %>">
-                      <%= number_to_currency(@registration.course.price) %>
+                    <strong class="text-muted refresh-price-target" data-price="<%= translate.price %>">
+                      <%= number_to_currency(translate.price) %>
                     </strong>
                   </h4>
                 </div>
@@ -121,7 +122,7 @@
               <%= f.hidden_field :course_id %>
               <%= f.button t('register'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
               <%= link_to courses_path do %>
-                <i class="icon-angle-left"></i>
+                <i class="fa fa-angle-left"></i>
                 <%= t('registration.keep') %>
               <% end %>
             </div>

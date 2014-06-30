@@ -21,13 +21,13 @@
               <p><%= @order_custom_item.created_at.strftime('%Y/%m/%d %H:%M') %></p>
             </li>
             <li class="col-xs-3 step-active">
-              <% if @order_custom_item.accept? && !@order_custom_item.price.blank? %>
+              <% if @order_custom_item.accept? && !@order_custom_item.accept_time.blank? %>
                 <span>
                   <i class="fa fa-check icon-round"></i>
                 </span>
                 <h4><%= t('custom_order.accept_time') %></h4>
                 <p><%= @order_custom_item.accept_time.strftime('%Y/%m/%d %H:%M') %></p>
-              <% elsif @order_custom_item.accept && !@order_custom_item.accept %>
+              <% elsif !@order_custom_item.accept? && !@order_custom_item.accept_time.blank? %>
                 <span>
                   <i class="fa fa-times icon-round"></i>
                 </span>
@@ -233,9 +233,9 @@
           </div>
         <% end %>
         <hr/>
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-sm-offset-4">
           <% if @order_custom_item.accept.blank? || @order_custom_item.accept_time.blank? %>
-            <%= link_to t('custom_order.cancel'), cancel_order_custom_item_path(@order_custom_item), method: :put %>
+            <%= link_to t('custom_order.cancel'), cancel_order_custom_item_path(@order_custom_item), class: 'btn btn-block', method: :put %>
           <% end %>
           <% if @order_custom_item.accept? && !@order_custom_item.accept_time.blank? && !@order_custom_item.order %>
             <%= link_to t('add_to_cart'), order_custom_item_path(@order_custom_item), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect', method: :put %>

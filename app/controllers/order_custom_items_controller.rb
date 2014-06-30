@@ -1,5 +1,5 @@
 class OrderCustomItemsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new]
   before_action :set_order_custom_item, except: [:index, :new, :create]
 
   # GET /order_custom_items

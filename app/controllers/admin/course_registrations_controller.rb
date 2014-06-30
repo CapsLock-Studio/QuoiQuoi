@@ -26,7 +26,7 @@ class Admin::CourseRegistrationsController < AdminController
     respond_to do |format|
       if @course.update_attributes({canceled: true, canceled_time: Time.now}) && @course.registrations.where(canceled: false).update_all(cancel_params.merge({canceled: true, canceled_time: Time.now}))
         @course.registrations.where(canceled: false).each do |registration|
-          RegistrationMailer.cancel_remind(registration, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
+          RegistrationMailer.cancel_remind(registration, registration.locale_id, "#{request.protocol}#{request.host_with_port}").deliver
         end
         format.html {redirect_to admin_course_registrations_path}
       end

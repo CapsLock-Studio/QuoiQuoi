@@ -4,17 +4,18 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2>感謝您報名QuoiQuoi - 布知道工作室的課程</h2>
+<h2><%= t('mailer.thanks_for_registration') %></h2>
 <p>
-  <strong>親愛的客戶: </strong><br/>
-  非常感謝你報名我們的課程, 提醒您, 課程在三天內未繳費視為放棄報名, 回報匯款請至 <a href="<%= "#{@domain}/payments/#{@registration.payment.id}/edit" %>">回報</a>
+  <strong><%= t('mailer.dear') %> </strong><br/>
+  <%= t('mailer.remind_for_remittance_registration', remittance_link: "<a href=\"#{@domain}/payments/#{@registration.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %>
 </p>
 <table class="table table-hover">
   <thead>
   <tr>
     <td></td>
-    <td>名稱</td>
-    <td>費用</td>
+    <td><%= t('call_name') %></td>
+    <td><%= t('tuition') %></td>
+    <td><%= t('course.number') %></td>
   </tr>
   </thead>
   <tbody>
@@ -28,11 +29,14 @@
       </h5>
     </td>
     <td>
-      <%= number_to_currency(@registration.course.price) %>
+      <%= number_to_currency(@registration.course.course_translates.where(locale_id: @locale_id).first.price) %>
+    </td>
+    <td>
+      <%= @registration.attendance %>
     </td>
   </tr>
   </tbody>
 </table>
-<h3>總金額: <%= number_to_currency(@registration.subtotal) %></h3>
+<h3><%= t('total_amount') %>: <%= number_to_currency(@registration.subtotal) %></h3>
 </body>
 </html>
