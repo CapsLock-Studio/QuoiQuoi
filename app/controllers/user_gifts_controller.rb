@@ -91,7 +91,7 @@ class UserGiftsController < ApplicationController
           raise ActiveRecord::RecordNotFound
         end
 
-        discount_item.subtotal -= @user_gift.gift.quota
+        discount_item.subtotal -= GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: discount_item.locale_id).first.quota
 
         if discount_item.subtotal < 0
           discount_item.subtotal = 0
