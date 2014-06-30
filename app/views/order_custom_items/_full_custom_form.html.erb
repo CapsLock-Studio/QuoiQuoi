@@ -249,7 +249,8 @@
         <h4 class="modal-title"><i class="fa fa-info"></i><%= t('instructions') %></h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <% instruction = Instruction.where(locale_id: session[:locale_id]).first %>
+        <%= instruction.content.html_safe if instruction %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('close') %></button>
