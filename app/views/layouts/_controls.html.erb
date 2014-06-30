@@ -20,25 +20,25 @@
         <div class="control-title">
           <%= t('links') %>
         </div>
-        <a href="https://www.facebook.com/">
+        <a href="https://www.facebook.com/bellazakka" target="_blank">
           <i class="fa fa-fw fa-facebook"></i>
           <%= t('facebook') %>
         </a>
-        <a href="">
+        <a href="http://weibo.com/quoiquoistudio" target="_blank">
           <i class="fa fa-fw fa-weibo"></i>
           <%= t('weibo') %>
         </a>
-        <a href="https://www.facebook.com/">
+        <a href="http://lisabella.pixnet.net/blog" target="_blank">
           <i class="fa fa-fw fa-share"></i>
           Blog
         </a>
       </li>
       <li class="divider"></li>
       <li>
-        <a href="">
+        <%= link_to rss_path do %>
           <i class="fa fa-fw fa-rss"></i>
-          RSS推播
-        </a>
+          RSS
+        <% end %>
       </li>
       <li class="divider"></li>
       <% if user_signed_in? %>
