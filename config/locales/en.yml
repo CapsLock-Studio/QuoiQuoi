@@ -160,11 +160,11 @@ en:
   choose_payment: 'Choose payment'
   registrations: 'Registrations'
   ideation_sketches: 'IDEATION SKETCHED'
-  account_name: 'A/C Name'
-  account_number: 'A/C No.'
+  account_name: 'Beneficiary'
+  account_number: "Beneficiary's Account No."
   bank_code: 'Swift Code'
-  bank_name: 'Bank Name'
-  bank_address: 'Bank Address'
+  bank_name: "Beneficiary's bank name"
+  bank_address: "Beneficiary's bank address"
   your_account: 'The last five number of your account'
   remitted_date: 'Remittance Date'
   remitted_amount: 'Remittance Amount'
@@ -346,7 +346,7 @@ en:
   call_name: 'Name'
   tuition: 'Tuition'
   cancel: 'Cancel'
-  instructions: 'Instructions'
+  instructions: 'Catalog instructions'
   close: 'Close'
   courses: 'Courses'
   rss_feeds: 'RSS feeds'
@@ -365,4 +365,4 @@ en:
     remind_for_registration: "Thanks for registering quoiquoi studio's course. This is your register information below. Mind you don't miss the course time."
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thanks for register quoiquoi studio's course, your registration was canceled."
-    dear: 'Dear you'
+    dear: 'Dear customer'

@@ -62,10 +62,10 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th></th>
+                  <th><span class="label label-success">點擊圖片前往編輯</span></th>
                   <th>編號</th>
                   <th>
-                    課程名稱<span class="label label-success">點擊前往編輯</span>
+                    課程名稱
                   </th>
                   <th>
                     <label class="label label-default">報名人數</label>&nbsp;
@@ -83,16 +83,16 @@
                   end %>
                   <tr>
                     <td>
-                      <%= image_tag course.image.url(:thumb) %>
+                      <%= link_to edit_admin_course_path(course), target: '_blank' do %>
+                        <%= image_tag course.image.url(:thumb) %>
+                      <% end %>
                     </td>
                     <td>
                       <%= course.id %>
                     </td>
                     <td>
-                      <%= link_to edit_admin_course_path(course), target: '_blank' do %>
-                        <% translates.each do |translate| %>
-                          <%= translate[:name] %>&nbsp;<span class="label label-default"><%= translate[:lang] %></span><br/>
-                        <% end %>
+                      <% translates.each do |translate| %>
+                        <%= translate[:name] %>&nbsp;<span class="label label-default"><%= translate[:lang] %></span><br/>
                       <% end %>
                     </td>
                     <td>
