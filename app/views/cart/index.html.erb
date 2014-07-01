@@ -43,7 +43,7 @@
                             <h5 style="color:#666;">
                               <strong><%= t('quantity') %></strong>
                             </h5>
-                            <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price', data: {width: '100%', price: translate.price} %>
+                            <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price form-control', data: {width: '100%', price: translate.price} %>
                             <hr/>
                             <h5 class="margin-bottom-20">
                               <span style="color:#666;"><%= t('single_subtotal') %></span>
