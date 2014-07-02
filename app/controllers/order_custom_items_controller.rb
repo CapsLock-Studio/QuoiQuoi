@@ -7,7 +7,7 @@ class OrderCustomItemsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('custom_order.my'), :order_custom_items_path
 
-    @order_custom_items = OrderCustomItem.where(canceled: false, user_id: current_user.id)
+    @order_custom_items = OrderCustomItem.where(canceled: false, user_id: current_user.id, order_id: ['', nil])
   end
 
   def show
