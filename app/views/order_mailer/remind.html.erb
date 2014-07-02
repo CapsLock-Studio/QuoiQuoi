@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.title_for_order') %></h2>
 <p>
-  <strong><%= t('mailer.thanks_for_order') %>: </strong><br/>
+  <strong><%= t('mailer.dear') %>: </strong><br/>
+  <strong><%= t('mailer.thanks_for_order') %> </strong><br/>
 </p>
 <table>
   <thead>
@@ -90,6 +90,11 @@
   <%= t('working_days', workdays: workdays) %>
 </p>
 <br>
+<p>
+  <%= t('completed_hint') %><br/>
+  <%= link_to t('control_panel'), order_url(@order) %>&nbsp;<%= order_url(@order) %>
+  <%= t('sincerely') %>
+</p>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>
 </body>

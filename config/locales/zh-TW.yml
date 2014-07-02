@@ -379,6 +379,8 @@ zh-TW:
   your_order: '你的訂單資訊'
   tourist_attractions: '旅遊景點'
   all_area: '所有地區'
+  completed_hint: '感謝你的耐心等候, 如果需要詳細的資訊請到quoi quoi網站, 以下是你的連結'
+  sincerely: 'Sincerely'
 
   mailer:
     subject_for_order: '[quoi quoi 布知道] 訂購完成通知信 (系統自動寄出請勿回覆)'
