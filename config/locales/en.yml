@@ -123,10 +123,10 @@ en:
     to: 'Write a message to administrator'
     hint: "You can't edit the message after submit"
     content: 'Message content'
-    your: 'Write down your message'
+    your: 'Send down your message'
     back: 'Back to message box'
     from: 'Message from manager'
-    other: 'Write other message'
+    other: 'Send other message'
 
   actions:
     delete: 'Delete'
