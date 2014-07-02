@@ -379,10 +379,10 @@ en:
     subject_for_completed_gift: "[quoi quoi studio] Notice of payment completed of gift card (Please don't reply this mail)"
     title_for_order: "Thank you for shopping at quoi quoi studio"
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
-    remind_for_order: "Thank you for shopping at quoi quoi. Notice that  this order will be canceled if you don't remit money in three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
+    remind_for_order: "Thank you for shopping at quoi quoi studio. Notice that  this order will be canceled if you don't remit money in three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     re_remittance: "Thank you for shopping at quoi quoi studio. Sorry, your remittance information is wrong, please check your remittance and advice again.<br>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
-    deliver_for_order: "Thank you for shopping at quoi quoi, your order has been shipped. You may review the details below."
-    thanks_for_order: "Thank you for shopping at quoi quoi.  Your order information is in the following."
+    deliver_for_order: "Thank you for shopping at quoi quoi studio, your order has been shipped. You may review the details below."
+    thanks_for_order: "Thank you for shopping at quoi quoi studio.  Your order information is in the following."
     thanks_for_registration: "Thank you for register quoi quoi studio's course."
     thanks_for_user_gift: 'Thank you for buy our gift card.'
     help_return_tuition: '(please reply this mail to help us return your tuition)'
