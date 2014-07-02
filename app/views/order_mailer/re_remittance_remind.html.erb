@@ -66,7 +66,7 @@
       <td>
         <%= number_to_currency(translate.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
-      <td>
+      <td style="text-align: center">
         <%= order_product.quantity %>
       </td>
     </tr>
@@ -81,7 +81,7 @@
           <%= t('original_bag') %>
         </h5>
       </td>
-      <td>
+      <td style="text-align: center">
         <%= number_to_currency(order_custom_item.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
       <td>
