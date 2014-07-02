@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.title_for_re_remittance') %></h2>
 <p>
+  <strong><%= t('mailer.dear') %>: </strong><br/>
   <strong><%= t('mailer.re_remittance', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %> </strong><br/>
 </p>
 <h3><%= t('remitted_information') %></h3>
