@@ -56,6 +56,6 @@ class OrderMailer < ActionMailer::Base
     @order = order
     @domain = domain
 
-    mail(to: order.user.email, subject: t('mailer.subject_for_order'))
+    mail(to: order.user.email, subject: t('mailer.subject_for_deliver_order'))
   end
 end
