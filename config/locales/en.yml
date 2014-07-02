@@ -75,6 +75,7 @@ en:
     mind: 'Remind that, after your order is accepted, full payment must be made before we produce the order.'
     respond: 'Message'
     detail: 'Detail of custom order'
+    about: 'About %{days} business days'
 
   registration:
     my: 'My courses'
@@ -257,7 +258,7 @@ en:
   ordered: 'Ordered'
   response_from_designer: 'Response from designer'
   bid: 'Price'
-  work_days: 'About work days'
+  work_days: 'Working days'
   completed_date: 'Estimate completed date'
   message_no_sign_in: 'Message'
   your_contact: 'Contact information'
