@@ -6,7 +6,7 @@
 <body>
 <h2><%= t('mailer.title_for_order') %></h2>
 <p>
-  <strong><%= t('mailer.thanks_for_order') %>: </strong><br/>
+  <strong><%= t('mailer.deliver_for_order') %>: </strong><br/>
 </p>
 <table>
   <thead>
@@ -42,9 +42,7 @@
       </td>
     </tr>
   <% end %>
-  <% workdays = 5 %>
   <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
-  <% workdays = order_custom_item.workday if order_custom_item.workday and order_custom_item.workday > workdays %>
     <tr>
       <td>
         <%= image_tag "#{@domain}#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
@@ -64,7 +62,7 @@
   <% end %>
   </tbody>
 </table>
-<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
+<h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
 <h3><%= t('shipping_information') %></h3>
 <table>
   <tr>
@@ -88,9 +86,6 @@
     <td><%= @fee %>&nbsp;<small><%= @order.currency %></small></td>
   </tr>
 </table>
-<p>
-  <%= t('working_days', workdays: workdays) %>
-</p>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>

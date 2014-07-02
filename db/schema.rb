@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630063214) do
+ActiveRecord::Schema.define(version: 20140701231236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -428,6 +428,8 @@ ActiveRecord::Schema.define(version: 20140630063214) do
     t.boolean  "canceled",               default: false
     t.datetime "canceled_time"
     t.integer  "user_id"
+    t.string   "currency"
+    t.integer  "locale_id"
   end
 
   add_index "order_custom_items", ["material_id"], name: "index_order_custom_items_on_material_id", using: :btree
@@ -868,8 +870,8 @@ ActiveRecord::Schema.define(version: 20140630063214) do
     t.datetime "used_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "locale_id"
     t.string   "currency"
+    t.integer  "locale_id"
   end
 
   add_index "user_gifts", ["gift_id"], name: "index_user_gifts_on_gift_id", using: :btree

@@ -4,10 +4,38 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.title_for_order') %></h2>
+<h2><%= t('mailer.title_for_re_remittance') %></h2>
 <p>
-  <strong><%= t('mailer.thanks_for_order') %>: </strong><br/>
+  <strong><%= t('mailer.re_remittance', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %> </strong><br/>
 </p>
+<h3><%= t('remitted_information') %></h3>
+<table>
+  <tr>
+    <td>
+      <%= t('remitted_amount') %>
+    </td>
+    <td>
+      <%= number_to_currency(@order.payment.amount) %>&nbsp;<small><%= @order.currency %></small>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('your_account') %>
+    </td>
+    <td>
+      <%= @order.payment.identifier %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('remitted_date') %>
+    </td>
+    <td>
+      <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
+    </td>
+  </tr>
+</table>
+<h3><%= t('your_order') %></h3>
 <table>
   <thead>
   <tr>
@@ -24,7 +52,7 @@
   </thead>
   <tbody>
   <% @order.order_products.each_with_index do |order_product, index| %>
-    <% translate = order_product.product.product_translates.where(locale_id: @locale_id).first %>
+    <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
     <tr>
       <td>
         <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
@@ -42,9 +70,7 @@
       </td>
     </tr>
   <% end %>
-  <% workdays = 5 %>
   <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
-  <% workdays = order_custom_item.workday if order_custom_item.workday and order_custom_item.workday > workdays %>
     <tr>
       <td>
         <%= image_tag "#{@domain}#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
@@ -64,33 +90,7 @@
   <% end %>
   </tbody>
 </table>
-<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
-<h3><%= t('shipping_information') %></h3>
-<table>
-  <tr>
-    <td style="text-align: right"><%= t('recipient_name') %></td>
-    <td><%= @order.name %></td>
-  </tr>
-  <tr>
-    <td style="text-align: right"><%= t('zip_code') %></td>
-    <td><%= @order.zip_code %></td>
-  </tr>
-  <tr>
-    <td style="text-align: right"><%= t('address') %></td>
-    <td><%= @order.address %></td>
-  </tr>
-  <tr>
-    <td style="text-align: right"><%= t('phone_number') %></td>
-    <td><%= (@order.phone.blank?)? @order.phone.gsub(/\d{4}$/, '****') : '-' %></td>
-  </tr>
-  <tr>
-    <td style="text-align: right"><%= t('shipping_fee') %></td>
-    <td><%= @fee %>&nbsp;<small><%= @order.currency %></small></td>
-  </tr>
-</table>
-<p>
-  <%= t('working_days', workdays: workdays) %>
-</p>
+<h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>

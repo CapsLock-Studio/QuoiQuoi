@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
         amount = payment.registration.subtotal
         currency = payment.registration.currency
       elsif payment.user_gift
-        gift = GiftTranslate.where(locale_id: payment.user_gift.locale_id, gift_id: payment.user_gift.gift_id).first
+        gift = GiftTranslate.where(locale_id: session[:locale_id], gift_id: payment.user_gift.gift_id).first
         amount = gift.quota
         currency = payment.user_gift.currency
       end
@@ -30,11 +30,12 @@ class PaymentsController < ApplicationController
           if payment.order
 
             # send mail to remind order complete
-            OrderMailer.remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+            OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
             format.html {redirect_to order_path(payment.order_id)}
           elsif payment.registration
 
             # send mail to remind registration
+            RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
             format.html {redirect_to registrations_path}
           end
         else
@@ -47,11 +48,11 @@ class PaymentsController < ApplicationController
         if payment.registration
 
           # send mail to remind that if the remittance not complete in three days, it will discard auto
-          RegistrationMailer.remittance_remind(payment.registration, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+          RegistrationMailer.remittance_remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
         elsif payment.order
-
-
-          OrderMailer.remittance_remind(payment.order, session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+          OrderMailer.remittance_remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+        elsif payment.user_gift
+          UserGiftMailer.remittance_remind(payment.user_gift).deliver
         end
         format.html {redirect_to edit_payment_path(payment)}
       else
@@ -79,6 +80,7 @@ class PaymentsController < ApplicationController
           format.html {redirect_to action: :show}
         end
       elsif payment.user_gift
+        UserGiftMailer.completed_remind(payment.user_gift).deliver
         format.html {redirect_to user_gifts_path}
       end
     end

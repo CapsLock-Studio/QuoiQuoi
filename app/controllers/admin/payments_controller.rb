@@ -29,11 +29,13 @@ class Admin::PaymentsController < AdminController
     respond_to do |format|
       if @payment.update_attribute(:completed, true)
         if @payment.order
-          OrderMailer.remind(@payment.order, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
+          OrderMailer.remind(@payment.order, "#{request.protocol}#{request.host_with_port}").deliver
           format.html {redirect_to check_admin_orders_path}
         elsif @payment.registration
+          RegistrationMailer.remind(@payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
           format.html {redirect_to check_admin_registrations_path}
         elsif @payment.user_gift
+          UserGiftMailer.completed_remind(@payment.user_gift).deliver
           format.html {redirect_to check_admin_user_gifts_path}
         end
       else
@@ -45,6 +47,14 @@ class Admin::PaymentsController < AdminController
   # remittance information not correct, reset value
   def uncheck
     respond_to do |format|
+
+      if @payment.order
+        OrderMailer.re_remittance_remind(@payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+      elsif @payment.registration
+        RegistrationMailer.re_remittance_remind(@payment.registration).deliver
+      elsif @payment.user_gift
+      end
+
       @payment.amount = 0
       @payment.identifier = ''
       @payment.pay_time = ''
@@ -52,6 +62,7 @@ class Admin::PaymentsController < AdminController
         if @payment.order
           format.html {redirect_to check_admin_orders_path}
         elsif @payment.registration
+
           format.html {redirect_to check_admin_registrations_path}
         elsif @payment.user_gift
           format.html {redirect_to check_admin_user_gifts_path}

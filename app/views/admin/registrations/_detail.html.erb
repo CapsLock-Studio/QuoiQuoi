@@ -49,7 +49,7 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(registration.subtotal) %>
+        <%= number_to_currency(registration.subtotal) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
       </strong>
     </h4>
   </div>

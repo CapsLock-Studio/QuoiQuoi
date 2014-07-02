@@ -1,21 +1,32 @@
 class RegistrationMailer < ActionMailer::Base
   default from: 'admin@quoiquoi.tw'
 
-  def remittance_remind(registration, locale_id, domain)
+  def remittance_remind(registration, domain)
+    I18n.locale = Locale.find(registration.locale_id).lang
+
     @registration = registration
-    @locale_id = locale_id
     @domain = domain
     mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_remittance_registration'))
   end
 
-  def remind(registration, locale_id, domain)
+  def remind(registration, domain)
+    I18n.locale = Locale.find(registration.locale_id).lang
+
     @registration = registration
-    @locale_id = locale_id
     @domain = domain
     mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_registration'))
   end
 
+  def re_remittance_remind(registration)
+    I18n.locale = Locale.find(registration.locale_id).lang
+
+    @registration = registration
+    mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_re_remittance'))
+  end
+
   def cancel_remind(registration, locale_id, domain)
+    I18n.locale = Locale.find(registration.locale_id).lang
+
     @registration = registration
     @locale_id = locale_id
     @domain = domain

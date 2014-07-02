@@ -13,6 +13,12 @@
         <div class="box-content">
           <div class="row">
             <div class="col-sm-6">
+              <label>通知信語言</label>
+              <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}), class: 'form-control' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
               <div class="form-group">
                 <label>估價</label>
                 <div class="controls">

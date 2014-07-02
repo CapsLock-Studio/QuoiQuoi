@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2><%= t('mailer.title_for_order') %></h2>
+<p>
+  <%= t('mailer.custom_item_accept') %>
+  <br>
+  <%= t('custom_order.mind') %>
+</p>
+<%= link_to t('add_to_cart'), order_custom_item_url(@order_custom_item) %>
+<h4><%= t('response_from_designer') %></h4>
+<table>
+  <tr>
+    <td>
+      <%= t('bid') %>
+    </td>
+    <td>
+      <%= number_to_currency(@order_custom_item.price) %>&nbsp;<small><%= @order_custom_item.currency %></small>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('work_days') %>
+    </td>
+    <td>
+      <%= (@order_custom_item.workday)? @order_custom_item.workday : '-' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('completed_date') %>
+    </td>
+    <td>
+      <%= (@order_custom_item.estimate_complete_time)? @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d') : '-' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('custom_order.respond') %>
+    </td>
+    <td>
+      <%= (@order_custom_item.response.blank?)? '-' : simple_format(@order_custom_item.response) %>
+    </td>
+  </tr>
+</table>
+<br>
+<table class="table table-bordered text-left table-padding-20" style="margin-bottom:0;">
+  <thead>
+
+  </thead>
+  <tbody>
+  <% if @order_custom_item.product %>
+    <tr>
+      <td><%= t('customize') %></td>
+      <td>
+        <%= link_to product_url(@order_custom_item.product), target: '_blank' do %>
+          <div class="text-muted">
+            <%= @order_custom_item.product.product_translates.where(locale_id: Locale.where(lang: 'zh-TW').first.id).first.name %>
+          </div>
+          <%= image_tag @order_custom_item.product.image.url(:thumb) %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= t('custom_order.your') %></td>
+      <td>
+        <% @order_custom_item.order_custom_item_product_custom_items.each do |custom_items| %>
+          <%= image_tag custom_items.product_custom_item.image.url(:thumb) %>
+        <% end %>
+      </td>
+    </tr>
+  <% else %>
+    <tr>
+      <td><%= t('design') %></td>
+      <td><%= @order_custom_item.design %></td>
+    </tr>
+    <tr>
+      <td><%= t('style') %></td>
+      <td><%= @order_custom_item.style %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td><%= t('material') %></td>
+    <td>
+      <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
+        <%= image_tag order_custom_item_material.material.image.url(:thumb) %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= t('description') %></td>
+    <td>
+      <%= simple_format(@order_custom_item.description) %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= t('your_idea') %></td>
+    <td>
+      <% @order_custom_item.order_custom_item_images.each do |order_custom_item_image| %>
+        <%= image_tag order_custom_item_image.image.url(:thumb) %>
+      <% end %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
+</body>
+</html>

@@ -4,11 +4,38 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.thanks_for_registration') %></h2>
+<h2><%= t('mailer.title_for_re_remittance') %></h2>
 <p>
-  <strong><%= t('mailer.dear') %> </strong><br/>
-  <%= t('mailer.remind_for_remittance_registration', remittance_link: "<a href=\"#{@domain}/payments/#{@registration.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %>
+  <strong><%= t('mailer.re_remittance', remittance_link: (link_to t('order.advice'), edit_payment_url(@registration.payment))).html_safe %> </strong><br/>
 </p>
+<h3><%= t('remitted_information') %></h3>
+<table>
+  <tr>
+    <td>
+      <%= t('remitted_amount') %>
+    </td>
+    <td>
+      <%= number_to_currency(@registration.payment.amount) %>&nbsp;<small><%= @registration.currency %></small>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('your_account') %>
+    </td>
+    <td>
+      <%= @registration.payment.identifier %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('remitted_date') %>
+    </td>
+    <td>
+      <%= @registration.payment.pay_time.strftime('%Y/%m/%d') %>
+    </td>
+  </tr>
+</table>
+<h3><%= t('registration.information') %></h3>
 <table class="table table-hover">
   <thead>
   <tr>

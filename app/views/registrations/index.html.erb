@@ -5,7 +5,7 @@
     <div class="col-md-9">
       <% if @registrations.length > 0 %>
         <% @registrations.each do |registration| %>
-          <% translate = registration.course.course_translates.where(locale_id: session[:locale_id]).first %>
+          <% translate = registration.course.course_translates.where(locale_id: registration.locale_id).first %>
           <div class="box">
             <div class="box-header box-header-small grey-background">
               <h4>
