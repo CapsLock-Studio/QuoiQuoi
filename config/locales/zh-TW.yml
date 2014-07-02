@@ -204,6 +204,7 @@ zh-TW:
   total_amount: '總金額'
   recipient_name: '收件者姓名'
   remitted_information: '匯款資訊'
+  remittance_information: '匯款資訊'
   report_remittance: '匯款回報'
   submit: '送出'
   submit_message: '送出訊息'

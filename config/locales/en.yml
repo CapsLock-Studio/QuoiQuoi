@@ -188,6 +188,7 @@ en:
   total_amount: 'Total amount'
   recipient_name: 'Full name'
   remitted_information: 'Remitted information'
+  remittance_information: 'Remittance information'
   report_remittance: 'Remittance advice'
   submit: 'SUBMIT'
   submit_message: 'Send the message'
