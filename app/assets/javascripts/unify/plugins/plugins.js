@@ -28,6 +28,7 @@
 //= require unify/plugins/validate/jquery.validate.min
 //= require unify/plugins/validate/additional-methods
 // require unify/plugins/bootstrap_colorpicker/bootstrap-colorpicker.min.js
+//= require unify/plugins/common/moment.min.js
 // require unify/plugins/bootstrap_daterangepicker/bootstrap-daterangepicker.js
 //= require unify/plugins/bootstrap_datetimepicker/bootstrap-datetimepicker.js
 //= require unify/plugins/bootstrap_maxlength/bootstrap-maxlength.min.js

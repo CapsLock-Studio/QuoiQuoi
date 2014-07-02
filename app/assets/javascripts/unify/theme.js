@@ -43,12 +43,34 @@ $(document).on('page:change', function() {
     }
   }
   if (jQuery().datetimepicker) {
-    $(".datetimepicker").datetimepicker();
+      $.fn.datetimepicker.defaults = {
+          pickDate: true, //en/disables the date picker
+          pickTime: true, //en/disables the time picker
+          useMinutes: true, //en/disables the minutes picker
+          useSeconds: true, //en/disables the seconds picker
+          useCurrent: true, //when true, picker will set the value to the current date/time
+          minuteStepping: 1, //set the minute stepping
+          //minDate: '1/1/2014', //set a minimum date
+          //maxDate: '10/10/2014', //set a maximum date (defaults to today +100 years)
+          format: 'YYYY/MM/DD',
+          showToday: true, //shows the today indicator
+          language: 'en', //sets language locale
+          defaultDate: "", //sets a default date, accepts js dates, strings and moment objects
+          disabledDates: [], //an array of dates that cannot be selected
+          enabledDates: [], //an array of dates that can be selected
+          icons: {
+              time: 'glyphicon glyphicon-time',
+              date: 'glyphicon glyphicon-calendar',
+              up: 'glyphicon glyphicon-chevron-up',
+              down: 'glyphicon glyphicon-chevron-down'
+          },
+          useStrict: false, //use "strict" when validating dates
+          sideBySide: false, //show the date and time picker side by side
+          daysOfWeekDisabled: [] //for exam
+      };
     $(".datepicker").datetimepicker({
-      pickTime: false
-    });
-    $(".timepicker").datetimepicker({
-      pickDate: false
+      pickTime: false,
+      format: 'YYYY/MM/DD'
     });
   }
   if (jQuery().bootstrapFileInput) {
