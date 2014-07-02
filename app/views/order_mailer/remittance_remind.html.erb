@@ -7,7 +7,7 @@
 <h2><%= t('mailer.title_for_order') %></h2>
 <p>
   <strong><%= t('mailer.dear') %>: </strong><br/>
-  <%= t('mailer.remind_for_order', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %>
+  <%= t('mailer.remind_for_order', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %>&nbsp;<%= "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>" %>
 </p>
 <table>
   <thead>
@@ -63,7 +63,7 @@
   <% end %>
   </tbody>
 </table>
-<h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
+<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3><label><%= @fee %>&nbsp;<small><%= @order.currency %></label>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>
