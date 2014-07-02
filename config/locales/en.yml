@@ -186,7 +186,7 @@ en:
   shipping_fee: 'Shipping fee'
   submit_order: 'Submit order'
   total_amount: 'Total amount'
-  recipient_name: 'Recipient name'
+  recipient_name: 'Full name'
   remitted_information: 'Remitted information'
   report_remittance: 'Remittance advice'
   submit: 'SUBMIT'
