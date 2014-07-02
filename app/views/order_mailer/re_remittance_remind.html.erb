@@ -8,7 +8,7 @@
   <strong><%= t('mailer.dear') %>: </strong><br/>
   <strong><%= t('mailer.re_remittance', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %> </strong>&nbsp;<%= "#{@domain}/payments/#{@order.payment.id}/edit" %>
 </p>
-<h3><%= t('remitted_information') %></h3>
+<h3><%= t('remittance_information') %></h3>
 <table>
   <tr>
     <td>
