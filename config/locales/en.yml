@@ -65,8 +65,8 @@ en:
     next: 'Next'
     finish: 'Finish'
     accept: 'Accepted'
-    submit_time: 'Submit time'
-    accept_time: 'Accept time'
+    submit_time: 'Submitting time'
+    accept_time: 'Accepting time'
     decline: 'Declined'
     waiting: 'Responding'
     cancel: 'Cancel order'
@@ -87,7 +87,7 @@ en:
     to: 'To register'
     keep: 'See other courses'
     name: 'Course name'
-    received: 'Remittance received'
+    received: 'Remittance paid'
     detail: 'Course detail'
 
   course:
@@ -125,6 +125,8 @@ en:
     content: 'Message content'
     your: 'Write down your message'
     back: 'Back to message box'
+    from: 'Message from manager'
+    other: 'Write other message'
 
   actions:
     delete: 'Delete'
