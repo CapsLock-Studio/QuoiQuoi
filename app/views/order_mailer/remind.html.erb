@@ -24,7 +24,7 @@
   </thead>
   <tbody>
   <% @order.order_products.each_with_index do |order_product, index| %>
-    <% translate = order_product.product.product_translates.where(locale_id: @locale_id).first %>
+    <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
     <tr>
       <td>
         <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
