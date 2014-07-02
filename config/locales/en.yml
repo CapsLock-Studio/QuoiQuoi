@@ -361,6 +361,8 @@ en:
   rss_feeds: 'RSS feeds'
   working_days: 'Working days: %{workdays} business days'
   your_order: 'Your order'
+  tourist_attractions: 'Tourist attractions'
+  all_area: 'All area'
 
   mailer:
     subject_for_order: "[quoiquoi.tw] Remind for ordering complete (Please don't reply this mail)"

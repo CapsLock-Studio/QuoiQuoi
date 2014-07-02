@@ -9,7 +9,7 @@
     </div>
 
     <% @article_types.each do |type| %>
-      <div class="col-md-3">
+      <div class="col-md-3 articles">
         <div class="headline">
           <h2><%= type.name %></h2>
         </div>
@@ -23,23 +23,21 @@
       </div>
     <% end %>
 
-    <div class="col-md-3">
+    <div class="col-md-3 articles">
       <div class="headline">
-        <h2>旅遊景點</h2>
+        <%= link_to areas_path do %>
+          <h2>
+            <%= t('tourist_attractions') %>
+          </h2>
+        <% end %>
       </div>
       <ul class="list-unstyled article">
         <% Area.where(locale_id: session[:locale_id]).each do |area| %>
           <li>
-            <div class="dropdown">
-              <a data-toggle="dropdown" class="btn-block" href="#"><%= area.name %><i class="fa fa-angle-down fa-fw pull-right"></i></a>
-              <ul class="dropdown-menu pull-right">
-                <% area.travel_informations.order(created_at: :desc).limit(5).each do |travel_information| %>
-                  <li>
-                    <%= link_to truncate(travel_information.title, length: 18), area_travel_information_path(area.id, travel_information.id) %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
+            <%= link_to area_path(area.id) do %>
+              <%= area.name %>
+              <i class="fa fa-angle-right pull-right"></i>
+            <% end %>
           </li>
         <% end %>
       </ul>

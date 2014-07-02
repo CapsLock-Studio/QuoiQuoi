@@ -1,0 +1,13 @@
+<ul class="list-group sidebar-nav-v1">
+  <%= nav_item(areas_path, {class: 'list-group-item'}) do %>
+    <%= link_to t('all_area'), areas_path %>
+  <% end %>
+  <% @areas.each do |area| %>
+    <%= nav_item(nil, {rule: /^#{area_path(area)}.*/,class: 'list-group-item'}) do %>
+      <%= link_to area_path(area) do %>
+        <%= area.name %>
+        <i class="fa fa-angle-right pull-right"></i>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>

@@ -376,6 +376,8 @@ zh-TW:
   rss_feeds: 'RSS訂閱'
   working_days: '大約所需工作天數: %{workdays}天'
   your_order: '你的訂單資訊'
+  tourist_attractions: '旅遊景點'
+  all_area: '所有地區'
 
   mailer:
     subject_for_order: '[quoiquoi.tw] 訂購完成通知信 (系統自動寄出請勿回覆)'

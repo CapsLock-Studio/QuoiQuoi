@@ -611,3 +611,40 @@ a[data-toggle=offcanvas] {
   height: auto;
   opacity: 1;
 }
+
+.articles {
+  a {
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    transition: opacity 0.05s ease;
+    -o-transition: opacity 0.05s ease;
+    -moz-transition: opacity 0.05s ease;
+    -webkit-transition: opacity 0.05s ease;
+
+    &:hover {
+      color: #000;
+      opacity: 0.6;
+    }
+  }
+
+  .article {
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 10px;
+  }
+}
+
+.headline h3 small {
+  margin-top: 5px;
+}
+
+.sidebar-nav-v1 {
+  .list-group-item {
+    a {
+      i {
+        margin-top: 3px;
+      }
+    }
+  }
+}
