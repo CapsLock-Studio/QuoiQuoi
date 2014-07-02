@@ -45,7 +45,7 @@ en:
   products: 'Products'
 
   order:
-    my: 'Orders under communication'
+    my: 'My orders'
     detail: 'Order detail'
     in_trading: 'Orders in trading'
     closed: 'Closed order'
@@ -60,11 +60,11 @@ en:
     cancel: 'Cancel order'
 
   custom_order:
-    my: 'Custom orders'
+    my: 'Orders under communication'
     prev: 'Prev'
     next: 'Next'
     finish: 'Finish'
-    accept: 'Accept'
+    accept: 'Accepted'
     submit_time: 'Submit time'
     accept_time: 'Accept time'
     decline: 'Decline'
@@ -72,7 +72,7 @@ en:
     cancel: 'Cancel order'
     sketch: 'Design sketch'
     your: 'Accessories'
-    mind: 'Mind you after accept your custom order. We will process the request after paying.Remind that, after your order is accepted, full payment must be made before we produce the order.'
+    mind: 'Remind that, after your order is accepted, full payment must be made before we produce the order.'
     respond: 'Message'
     detail: 'Detail of custom order'
 
