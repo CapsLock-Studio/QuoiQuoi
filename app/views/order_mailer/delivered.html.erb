@@ -63,6 +63,7 @@
   <% end %>
   </tbody>
 </table>
+<h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %><small><%= @order.currency %></label></h4>
 <h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
 <h3><%= t('shipping_information') %></h3>
 <table>
@@ -81,10 +82,6 @@
   <tr>
     <td style="text-align: right"><%= t('phone_number') %></td>
     <td><%= (@order.phone.blank?)? @order.phone.gsub(/\d{4}$/, '****') : '-' %></td>
-  </tr>
-  <tr>
-    <td style="text-align: right"><%= t('shipping_fee') %></td>
-    <td><%= @fee %>&nbsp;<small>&nbsp;<%= number_to_currency(@order.currency) %></small></td>
   </tr>
 </table>
 <br>
