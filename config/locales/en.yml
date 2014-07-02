@@ -370,7 +370,7 @@ en:
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
     subject_for_remittance_order: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
-    subject_for_re_remittance: "[quoi quoi studio] Sorry！Your remittance information wrong (Please don't reply this mail)"
+    subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
     subject_for_deliver_order: "[quoi quoi studio] Notice of your order had on delivery (Please don't reply this mail)"
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice of your custom order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] We are sorry about decline your custom order (Please don't reply this mail)"
