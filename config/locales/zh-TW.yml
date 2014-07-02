@@ -139,6 +139,8 @@ zh-TW:
     content: '訊息內容'
     your: '請寫下您想留給管理者的訊息內容'
     back: '回到訊息匣'
+    from: '來自管理者的訊息'
+    other: '寫其他訊息'
 
   actions:
     delete: '刪除'

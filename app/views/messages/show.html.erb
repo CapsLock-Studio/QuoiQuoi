@@ -5,11 +5,11 @@
       <div class="reg-page" style="border-top:none;">
         <div class="reg-header">
           <div class="text-center">
-            <h2><i class="fa fa-comment"></i>訊息內容</h2>
+            <h2><i class="fa fa-comment"></i><%= t('message.content') %></h2>
             <div class="row">
               <div class="col-md-12">
                 <% if @message.admin? %>
-                  <div class="text-muted pull-left">來自管理者的訊息</div>
+                  <div class="text-muted pull-left"><%= t('message.from') %></div>
                 <% end %>
                 <div class="text-muted pull-right">
                   <i class=icon-edit></i>&nbsp;<%= @message.updated_at.strftime('%Y/%m/%d %H:%M') %>
@@ -20,10 +20,10 @@
         </div>
         <%= simple_format(@message.content) %>
         <hr/>
-        <%= link_to '寫其他訊息', new_message_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' %>
+        <%= link_to t('message.other'), new_message_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' %>
         <%= link_to messages_path do %>
           <i class="fa fa-angle-left"></i>
-          回到訊息匣
+          <%= t('message.back') %>
         <% end %>
       </div>
     </div>
