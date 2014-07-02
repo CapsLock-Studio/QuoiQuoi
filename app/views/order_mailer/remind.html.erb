@@ -38,7 +38,7 @@
       <td>
         <%= number_to_currency(translate.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
-      <td>
+      <td style="text-align: center">
         <%= order_product.quantity %>
       </td>
     </tr>
@@ -58,7 +58,7 @@
       <td>
         <%= number_to_currency(order_custom_item.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
-      <td>
+      <td style="text-align: center">
         1
       </td>
     </tr>
@@ -86,7 +86,7 @@
   </tr>
   <tr>
     <td style="text-align: right"><%= t('shipping_fee') %></td>
-    <td><%= @fee %>&nbsp;<small><%= @order.currency %></small></td>
+    <td><%= @fee %>&nbsp;<small>&nbsp;<%= number_to_currency(@order.currency) %></small></td>
   </tr>
 </table>
 <p>
