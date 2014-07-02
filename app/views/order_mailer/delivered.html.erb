@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.title_for_order') %></h2>
 <p>
-  <strong><%= t('mailer.deliver_for_order') %>: </strong><br/>
+  <strong><%= t('mailer.dear') %>: </strong><br/>
+  <strong><%= t('mailer.deliver_for_order').html_safe %> </strong><br/>
 </p>
 <table>
   <thead>
@@ -64,7 +64,7 @@
   </tbody>
 </table>
 <h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %><small><%= @order.currency %></label></h4>
-<h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
+<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
 <h3><%= t('shipping_information') %></h3>
 <table>
   <tr>
@@ -85,6 +85,7 @@
   </tr>
 </table>
 <br>
+<%= t('sincerely') %>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>
 </body>

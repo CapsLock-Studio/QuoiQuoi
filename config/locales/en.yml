@@ -371,7 +371,7 @@ en:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
     subject_for_remittance_order: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
-    subject_for_deliver_order: "[quoi quoi studio] Notice of your order had on delivery (Please don't reply this mail)"
+    subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice of your custom order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] We are sorry about decline your custom order (Please don't reply this mail)"
     subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the registration (Please don't reply this mail)"
@@ -383,7 +383,7 @@ en:
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
     remind_for_order: "Thank you for shopping at quoi quoi studio. Notice that  this order will be canceled if you don't remit money in three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     re_remittance: "Thank you for shopping at quoi quoi studio. Your remittance information is wrong.<br/>Please check your remittance and advice again.<br>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
-    deliver_for_order: "Thank you for shopping at quoi quoi studio, your order has been shipped. You may review the details below."
+    deliver_for_order: "Thank you for shopping at quoi quoi studio. Your order has been shipped.<br/>Your order information is in the following."
     thanks_for_order: "Thank you for shopping at quoi quoi studio.  Your order information is in the following."
     thanks_for_registration: "Thank you for register quoi quoi studio's course."
     thanks_for_user_gift: 'Thank you for buy our gift card.'
