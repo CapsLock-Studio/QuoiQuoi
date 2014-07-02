@@ -87,15 +87,7 @@
             </div>
             <div class="row">
               <div class="col-md-2 col-xs-5 text-right">
-                <%= t('completed_date') %>
-              </div>
-              <div class="col-md-10 col-xs-7">
-                <%= (@order_custom_item.estimate_complete_time)? @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d') : '-' %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 col-xs-5 text-right">
-                <%= t('curs') %>
+                <%= t('message_no_sign_in') %>
               </div>
               <div class="col-md-10 col-xs-7">
                 <%= (@order_custom_item.response.blank?)? '-' : simple_format(@order_custom_item.response) %>
