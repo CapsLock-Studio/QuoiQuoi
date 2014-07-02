@@ -46,7 +46,7 @@
                             <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price form-control', data: {width: '100%', price: translate.price} %>
                             <hr/>
                             <h5 class="margin-bottom-20">
-                              <span style="color:#666;"><%= t('single_subtotal') %></span>
+                              <span style="color:#666;"><%= t('subtotal') %></span>
                               <strong class="pull-right subtotal" data-subtotal="<%= translate.price * builder.object.quantity %>">
                                 <%= number_to_currency(translate.price * builder.object.quantity) %>
                               </strong>
@@ -96,7 +96,6 @@
           <div class="box-header">
             <div class="title">
               <div class="glyphicon-saved glyphicon"></div>
-              <%= t('subtotal') %>
             </div>
             <div class="actions">
               <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
