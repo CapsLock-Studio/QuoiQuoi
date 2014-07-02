@@ -19,16 +19,12 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="headline">
-        <h3>
-          <strong>
-            <%= @article.title %>
-          </strong>
-        </h3>
-        <h3 class="pull-right" style="border-bottom: 0;">
-          <small><i class="icon-edit"></i>&nbsp;<%= @article.updated_at.strftime('%Y/%m/%d %H:%M') %></small>
-        </h3>
-      </div>
+      <h3 class="headline">
+        <strong>
+          <%= @article.title %>
+        </strong>
+        <small class="pull-right"><i class="fa fa-clock-o"></i>&nbsp;<%= @article.updated_at.strftime('%Y/%m/%d') %></small>
+      </h3>
       <p>
         <%= @article.content.html_safe %>
       </p>
