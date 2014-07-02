@@ -91,8 +91,8 @@
 </p>
 <br>
 <p>
-  <%= t('completed_hint') %><br/>
-  <%= link_to t('control_panel'), order_url(@order) %>&nbsp;<%= order_url(@order) %>
+  <%= t('completed_hint').html_safe %><br/>
+  <%= link_to t('control_panel'), order_url(@order) %>&nbsp;<%= order_url(@order) %><br/>
   <%= t('sincerely') %>
 </p>
 <br>
