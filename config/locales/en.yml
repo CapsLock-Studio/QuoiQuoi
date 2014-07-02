@@ -364,8 +364,8 @@ en:
   your_order: 'Your order'
   tourist_attractions: 'Tourist attractions'
   all_area: 'All area'
-  completed_hint: 'Thank you for your patience.<br>If you want to know the detailed information, please got to the member account on the quoi quoi website as follows'
-  sincerely: 'Sincerely'
+  completed_hint: 'Thank you for your patience.<br>If you want to know the detailed information, please go to the member account on the quoi quoi website as follows'
+  sincerely: 'Sincerely.'
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for ordering complete (Please don't reply this mail)"
