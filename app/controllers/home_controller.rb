@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   # GET /
   # GET /.json
   def index

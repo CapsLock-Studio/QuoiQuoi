@@ -21,7 +21,7 @@ class Admin::OrdersController < AdminController
   end
 
   def check
-    @payments = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: nil)
+    @payments = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: [nil])
   end
 
   def check_show
@@ -67,6 +67,7 @@ class Admin::OrdersController < AdminController
   def update
     respond_to do |format|
       if @order.update_attributes({delivered: true, delivered_time: Time.now})
+        OrderMailer.delivered(@order, "#{request.protocol}#{request.host_with_port}").deliver
         format.html {redirect_to deliver_admin_orders_path}
       else
         format.html {render json: @order.errors}

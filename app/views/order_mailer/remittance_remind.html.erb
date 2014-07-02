@@ -25,7 +25,7 @@
   </thead>
   <tbody>
   <% @order.order_products.each_with_index do |order_product, index| %>
-    <% translate = order_product.product.product_translates.where(locale_id: @locale_id).first %>
+    <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
     <tr>
       <td>
         <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
@@ -36,7 +36,7 @@
         </h5>
       </td>
       <td>
-        <%= number_to_currency(translate.price) %>
+        <%= number_to_currency(translate.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
       <td>
         <%= order_product.quantity %>
@@ -54,7 +54,7 @@
         </h5>
       </td>
       <td>
-        <%= number_to_currency(order_custom_item.price) %>
+        <%= number_to_currency(order_custom_item.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
       <td>
         1
@@ -63,6 +63,9 @@
   <% end %>
   </tbody>
 </table>
-<h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %></h3>
+<h3><%= t('subtotal') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
+<br>
+<br>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
 </body>
 </html>

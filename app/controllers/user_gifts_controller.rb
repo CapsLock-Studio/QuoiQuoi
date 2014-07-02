@@ -26,8 +26,8 @@ class UserGiftsController < ApplicationController
 
     locale = Locale.find(session[:locale_id])
     @user_gift = UserGift.new(user_gift_params.merge({user_id: current_user.id}))
-    @user_gift.locale_id = locale.id
     @user_gift.currency = locale.currency
+    @user_gift.locale_id = locale.id
     respond_to do |format|
       if @user_gift.save
         format.html {redirect_to pay_user_gift_path(@user_gift)}

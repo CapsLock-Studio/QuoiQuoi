@@ -6,7 +6,7 @@ class Admin::UserGiftsController < AdminController
   end
 
   def check
-    @payments = Payment.where(canceled: false).where.not(user_gift_id: '', completed: true)
+    @payments = Payment.where(canceled: false, completed: false).where.not(user_gift_id: '', amount: 0, pay_time: nil)
   end
 
   def check_show

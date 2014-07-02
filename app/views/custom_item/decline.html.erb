@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2><%= t('mailer.title_for_order') %></h2>
+<p>
+  <%= t('mailer.custom_item_decline') %>
+  <br>
+  <%= link_to t('custom_order.detail'), order_custom_item_url(@order_custom_item) %>
+</p>
+
+<br>
+<br>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
+</body>
+</html>

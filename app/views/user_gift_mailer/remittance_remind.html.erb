@@ -1,0 +1,43 @@
+<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: @user_gift.locale_id).first %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2><%= t('mailer.thanks_for_user_gift') %></h2>
+<p>
+  <strong><%= t('mailer.dear') %> </strong><br/>
+  <%= t('mailer.remind_for_user_gift', remittance_link: link_to(t('order.advice'), edit_payment_url(@user_gift.payment))).html_safe %>
+</p>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td></td>
+    <td><%= t('call_name') %></td>
+    <td><%= t('user_gift.quota') %></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <%= image_tag "http://quoiquoi.tw#{@user_gift.gift.image(:thumb)}" %>
+    </td>
+    <td>
+      <h5>
+        <%= translate.name %>
+      </h5>
+    </td>
+    <td>
+      <%= number_to_currency(translate.quota) %>&nbsp;<small><%= @user_gift.currency %></small>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h3><%= t('total_amount') %>: <%= number_to_currency(translate.quota) %>&nbsp;<small><%= @user_gift.currency %></small></h3>
+<br>
+<br>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
+</body>
+</html>
