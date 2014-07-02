@@ -63,8 +63,8 @@
   <% end %>
   </tbody>
 </table>
+<h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %><small><%= @order.currency %></label></h4>
 <h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
-<h4><%= t('shipping_fee') %><label><%= @fee %>&nbsp;<small><%= @order.currency %></label></h4>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>
