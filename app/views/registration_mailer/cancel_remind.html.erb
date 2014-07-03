@@ -20,6 +20,7 @@
     <td><%= t('call_name') %></td>
     <td><%= t('course_time') %></td>
     <td><%= t('course.number') %></td>
+    <td></td>
   </tr>
   </thead>
   <tbody>
@@ -36,6 +37,9 @@
       <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
     </td>
     <td><%= @registration.attendance %></td>
+    <td>
+      <%= @registration.course_option.content if @registration.course_option %>
+    </td>
   </tr>
   </tbody>
 </table>
