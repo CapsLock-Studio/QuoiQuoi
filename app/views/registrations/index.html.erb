@@ -3,14 +3,6 @@
   <div class="row">
     <%= render 'user/side_navigation' %>
     <div class="col-md-9">
-      <% if flash[:message] %>
-      <div class="col-xs-12">
-        <div class="alert alert-success fade in text-center">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <i class="fa fa-exclamation fa-fw"></i><%= t('user_gift.success') %>
-        </div>
-      </div>
-      <% end %>
       <div class="col-xs-12">
         <% if @registrations.length > 0 %>
           <% @registrations.each do |registration| %>

@@ -105,7 +105,13 @@ class UserGiftsController < ApplicationController
 
         flash[:message] = t('user_gift.success')
 
-        redirect_to discount_item
+        unless params[:order_id].blank?
+          redirect_to pay_order_path(discount_item)
+        end
+
+        unless params[:registration_id].blank?
+          redirect_to pay_registration_path(discount_item)
+        end
 
       rescue ActiveRecord::RecordNotFound
         render json: 'Discount item not found, please restart your work.'
