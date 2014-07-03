@@ -107,7 +107,7 @@ en:
     set: 'Set contact information'
     set_password: 'Set password'
     save: 'Save contact information'
-    password_hint: 'Regularly update the password to make your personal account more secure'
+    password_hint: 'Regularly update the password to let your personal account more secure'
     password_old: 'Old password'
     password_old_placeholder: 'Enter your old password'
     password_new: 'New password'
@@ -140,7 +140,7 @@ en:
     oops: 'Oops! this serial used'
     information: 'Gift card information'
     quota: 'Quota'
-    serial: 'Serial'
+    serial: 'Serial number'
     confirm: 'I want to use this gift card'
     sorry: 'Sorry, We can not find gift card by this serial'
     cancel: 'Cancel'
@@ -369,6 +369,7 @@ en:
   all_area: 'All area'
   completed_hint: 'Thank you for your patience.<br>If you want to know the detailed information, please go to the member account on the quoi quoi website as follows'
   sincerely: 'Sincerely.'
+  option: 'Options'
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"

@@ -82,20 +82,24 @@
                           <td></td>
                           <td><%= t('call_name') %></td>
                           <td><%= t('tuition') %></td>
+                          <td></td>
                         </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td>
+                            <td class="col-xs-3">
                               <%= image_tag @registration.course.image.url(:thumb) %>
                             </td>
-                            <td>
+                            <td class="col-xs-2">
                               <h5>
                                 <%= translate.name %>
                               </h5>
                             </td>
-                            <td>
+                            <td class="col-xs-2">
                               <%= number_to_currency(translate.price) %>
+                            </td>
+                            <td class="col-xs-2">
+                              <%= f.select :course_option_id, CourseOption.where(locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]}, {}, {class: 'selectpicker form-control'} %>
                             </td>
                           </tr>
                         </tbody>

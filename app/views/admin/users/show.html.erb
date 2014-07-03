@@ -59,6 +59,14 @@
                       <%= text_field_tag :provider, @user.provider.blank?? '一般帳號' : @user.provider, class: 'form-control', disabled: 'disabled' %>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label>加入時間</label>
+                    <div class="controls">
+                      <div class="form-control">
+                        <%= @user.created_at.strftime('%Y/%m/%d %H:%I:%S') %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

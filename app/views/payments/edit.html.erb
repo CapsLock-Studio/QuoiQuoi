@@ -5,13 +5,15 @@
         <%= form_for @payment, html: {class: 'form-horizontal validate-form'} do |f| %>
           <h4><%= t('remittance_information').upcase %></h4>
           <div class="box">
-            <div class="box-header box-header-small grey-background">
+            <div class="box-content">
               <%= render 'remittance' %>
             </div>
+          </div>
+          <h4>
+            <%= t('report_remittance') %>
+          </h4>
+          <div class="box">
             <div class="box-content">
-              <h4>
-                <%= t('report_remittance') %>
-              </h4>
               <div class="form-group row">
                 <div class="col-md-12">
                   <%= f.label :amount do %>

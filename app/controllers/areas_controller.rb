@@ -7,6 +7,7 @@ class AreasController < ApplicationController
     add_breadcrumb t('tourist_attractions'), :areas_path
     add_breadcrumb t('all_area')
 
+    # filter area locale
     @articles = TravelInformation.all.order(created_at: :desc)
   end
 

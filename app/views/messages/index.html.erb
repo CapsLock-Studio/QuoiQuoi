@@ -14,7 +14,7 @@
             <li>
               <div class="row" style="padding:10px">
                 <div class="col-xs-10">
-                  <%= truncate(message.content, size: 20) %>
+                  <%= truncate(message.content, length: 56) %>
                 </div>
                 <div class="col-xs-2 text-center">
                   <%= link_to t('detail'), message_path(message) %>

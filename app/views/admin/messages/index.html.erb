@@ -25,7 +25,7 @@
             <span>訊息列表</span>
             <% if @user %>
               <small style="color: #eee">
-                <%= link_to "用戶id: #{@user.id}", admin_user_path(@user), target: '_blank', style: 'color: #eee' %>
+                <%= link_to "用戶: #{@user.id}. #{@user.email}", admin_user_path(@user), target: '_blank', style: 'color: #eee' %>
               </small>
             <% end %>
           </div>
@@ -41,13 +41,16 @@
                 <% if @user %>
                   <thead>
                   <tr>
+                    <th>編號</th>
                     <th>訊息內容</th>
                     <th>狀態</th>
+                    <th>送出時間</th>
                     <th></th>
                   </tr>
                   <tbody>
                   <% @user.messages.each do |message| %>
                     <tr>
+                      <td><%= message.id %></td>
                       <td>
                         <%= truncate(message.content) %>
                       </td>
@@ -57,6 +60,9 @@
                         <% else %>
                           <label class="label label-warning"><%= '客戶' if message.admin? %>未讀</label>
                         <% end %>
+                      </td>
+                      <td>
+                        <%= message.created_at.strftime('%Y/%m/%d %H:%I:%S') %>
                       </td>
                       <td>
                         <div class="text-right">
@@ -71,8 +77,9 @@
                 <% else %>
                   <thead>
                   <tr>
-                    <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                    <th>用戶&nbsp;<label class="label label-success">點擊查看</label></th>
                     <th>最後一則訊息內容</th>
+                    <th>最後一則訊息收到時間</th>
                     <th>未讀訊息數</th>
                     <th></th>
                   </tr>
@@ -81,10 +88,13 @@
                   <% @users.each do |user| %>
                     <tr>
                       <td>
-                        <%= link_to user.id, user_path(user), target: '_blank' %>
+                        <%= link_to "#{user.id}. #{user.email}", admin_user_path(user), target: '_blank' %>
                       </td>
                       <td>
                         <%= truncate(user.messages.last.content) %>
+                      </td>
+                      <td>
+                        <%= user.messages.last.created_at.strftime('%Y/%m/%d %H:%I:%S') %>
                       </td>
                       <td>
                         <%= user.messages.where(admin: false, read: false).length %>

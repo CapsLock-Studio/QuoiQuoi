@@ -21,9 +21,12 @@ class Admin::MessagesController < AdminController
   def show
     add_breadcrumb '首頁', :root_path
     add_breadcrumb '所有使用者訊息', :admin_messages_path
-    add_breadcrumb "用戶id: #{@message.user.id}"
+    add_breadcrumb "用戶: #{@message.user.id}. #{@message.user.email}"
 
-    @message.update_attribute(:read, true)
+    unless @message.admin?
+      @message.update_attribute(:read, true)
+    end
+
     @new_message = Message.new(user_id: @message.user_id)
   end
 
