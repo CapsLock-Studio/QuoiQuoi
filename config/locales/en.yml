@@ -190,7 +190,7 @@ en:
   submit_order: 'Submit order'
   total_amount: 'Total amount'
   recipient_name: 'Full name'
-  remitted_information: 'Remitted information'
+  remitted_information: 'Remittance information'
   remittance_information: 'Remittance information'
   report_remittance: 'Remittance advice'
   submit: 'SUBMIT'
