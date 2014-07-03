@@ -386,6 +386,7 @@ zh-TW:
   sincerely: ''
   option: '選項'
   enter: '確認'
+  person: '人'
 
   mailer:
     subject_for_order: '[quoi quoi 布知道] 訂購完成通知信 (系統自動寄出請勿回覆)'

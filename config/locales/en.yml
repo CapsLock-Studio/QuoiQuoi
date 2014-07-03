@@ -146,7 +146,7 @@ en:
     cancel: 'Cancel'
     renew: 'Renew serial number'
     use: 'Gift card used'
-    first_step: 'Step 1. Find the serial number.'
+    first_step: 'Step 1. Find the serial number and you can also renew the serial number.'
     second_step: 'Step 2. After choosing the products, click "Use gift card" to pay the bill.'
     third_step: 'Step 3. Check the gift card information.'
     fourth_step: 'Step 4. If gift card transaction is successful, you will see the following page.<br/>Moreover, if the bill is not paid completely, you will be required to pay the remaining amount.'
@@ -371,6 +371,7 @@ en:
   sincerely: 'Sincerely.'
   option: 'Options'
   enter: 'Enter'
+  person: 'Person'
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
@@ -396,7 +397,7 @@ en:
     remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment in three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_for_registration: "Thank you for registering quoi quoi studio's course. This is your registration information below. Please don't miss the course."
     remind_for_user_gift: "Thank you for buying this product.<br/>Mind you, if you don't complete payment in three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
-    user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] in my account of quoi quoi website.&nbsp;%{url}<br/>Remind that there is no change in the gift card payment.<br/>How to use the gift card?<br/>For example, please take a look at the following steps.'
+    user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] in my account of quoi quoi website.&nbsp;%{url}<br/>You can use gift card to buy the products and join the courses on quoi quoi website.<br/>Remind that there is no change in the gift card payment.<br/>How to use the gift card?<br/>For example, please take a look at the following steps.'
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
