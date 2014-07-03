@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.title_for_re_remittance') %></h2>
 <p>
-  <strong><%= t('mailer.re_remittance', remittance_link: (link_to t('order.advice'), edit_payment_url(@registration.payment))).html_safe %> </strong><br/>
+  <strong><%= t('mailer.re_remittance', remittance_link: (link_to t('order.advice'), edit_payment_url(@registration.payment))).html_safe %> </strong>&nbsp;<%= edit_payment_url(@registration.payment) %><br/>
 </p>
 <h3><%= t('remitted_information') %></h3>
 <table>
@@ -49,7 +48,7 @@
   <tbody>
   <tr>
     <td>
-      <%= image_tag "#{@domain}#{@registration.course.image.url(:thumb)}" %>
+      <%= image_tag "http://quoiquoi.tw#{@registration.course.image.url(:thumb)}" %>
     </td>
     <td>
       <h5>
