@@ -134,7 +134,7 @@ en:
     add: 'Add'
 
   user_gift:
-    success: 'Use gift card success!'
+    success: 'Use gift card successfully!'
     danger: 'Use gift card failed, please contact us to find out the reason.'
     not_found: 'Search not found'
     oops: 'Oops! this serial used'
@@ -146,10 +146,10 @@ en:
     cancel: 'Cancel'
     renew: 'Renew serial number'
     use: 'Gift card used'
-    first_step: 'Go to [%{link}] and get the serial'
-    second_step: 'Choose your product and checkout then Click "Use gift card"'
-    third_step: 'Check your gift card'
-    fourth_step: 'Use gift card success'
+    first_step: 'Find the serial number.'
+    second_step: 'After choosing the products, click "Use gift card" to pay the bill.'
+    third_step: 'Check the gift card information.'
+    fourth_step: 'If gift card transaction is successful, you will see the following page.<br/>Moreover, if the bill is not paid completely, you will be required to pay the remaining amount.'
     my: 'My gift card'
 
 
@@ -383,7 +383,7 @@ en:
     subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
     subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
-    subject_for_completed_gift: "[quoi quoi studio] Payment completion for gift card and example of shopping with gift card (Please don't reply this mail)"
+    subject_for_completed_gift: "[quoi quoi studio] Payment completion and instruction for gift card (Please don't reply this mail)"
     title_for_order: "Thank you for shopping at quoi quoi studio"
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
     remind_for_order: "Thank you for shopping at quoi quoi studio. Notice that  this order will be canceled if you don't remit money in three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
@@ -396,7 +396,7 @@ en:
     remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment in three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_for_registration: "Thank you for registering quoi quoi studio's course. This is your registration information below. Please don't miss the course."
     remind_for_user_gift: "Thank you for buying this product.<br/>Mind you, if you don't complete payment in three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
-    user_gift_hint: 'Thank you for buy our gift card. If you want to use the gift card to discount payment, please follow doing'
+    user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] in my account in quoi quoi website.<br/>Remind that there is no change in the gift card payment.<br/>How to use the gift card.<br/>Please take a look at the following steps.'
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
