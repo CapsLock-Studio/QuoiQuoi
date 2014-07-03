@@ -144,7 +144,7 @@ en:
     confirm: 'I want to use this gift card'
     sorry: 'Sorry, We can not find gift card by this serial'
     cancel: 'Cancel'
-    renew: 'Renew serial'
+    renew: 'Renew serial number'
     use: 'Gift card used'
     first_step: 'Go to [%{link}] and get the serial'
     second_step: 'Choose your product and checkout then Click "Use gift card"'
@@ -343,7 +343,7 @@ en:
   back_to_control_panel: 'Back to control panel'
   remittance: 'Remittance'
   use_gift_card: 'Use gift card'
-  enter_serial: 'Enter your serial'
+  enter_serial: 'Enter your serial number'
   back_to_payment: 'Back to payment'
   cancel_and_back_to_payment: 'Cancel and back to payment'
   used_time: 'Used time'
@@ -370,6 +370,7 @@ en:
   completed_hint: 'Thank you for your patience.<br>If you want to know the detailed information, please go to the member account on the quoi quoi website as follows'
   sincerely: 'Sincerely.'
   option: 'Options'
+  enter: 'Enter'
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
