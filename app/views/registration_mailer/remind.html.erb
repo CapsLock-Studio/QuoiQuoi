@@ -42,8 +42,8 @@
 </table>
 <br/>
 <p>
-  <%= t('completed_hint').html_safe %><br/>
   <% if @registration.user %>
+    <%= t('completed_hint').html_safe %><br/>
     <%= link_to t('control_panel'), registrations_url %>&nbsp;<%= registration_url %><br/>
   <% end %>
   <%= t('sincerely') %>
