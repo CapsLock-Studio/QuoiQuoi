@@ -8,6 +8,10 @@ class UserGiftMailer < ActionMailer::Base
     mail(to: user_gift.user.email, subject: t('mailer.subject_for_remittance_gift'))
   end
 
+  def re_remittance_remind(user_gift)
+
+  end
+
   def completed_remind(user_gift)
     I18n.locale = Locale.find(user_gift.locale_id).lang
 
