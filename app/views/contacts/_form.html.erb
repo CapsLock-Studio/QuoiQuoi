@@ -1,4 +1,4 @@
-<div class="headline"><h2><%= t('contact_hint') %></h2></div>
+<div class="headline"><h4><%= t('contact_hint') %></h4></div>
 <%= form_for @contact_us, url: contacts_path, html: {class: 'form validate-form'} do |f| %>
   <% if flash[:message] %>
     <div class="row">

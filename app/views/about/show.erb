@@ -78,20 +78,20 @@
         <div class="col-md-12 margin-bottom-40">
           <!-- Contacts -->
           <div class="headline">
-            <h2><%= t('contact') %></h2>
+            <h4><%= t('contact') %></h4>
           </div>
           <%= render 'about/infos' %>
         </div>
         <div class="col-md-12 margin-bottom-40">
           <!-- Business Hours -->
           <div class="headline">
-            <h2><%= t('business_hours') %></h2>
+            <h4><%= t('business_hours') %></h4>
           </div>
           <%= simple_format(@contact.business_hour) %>
         </div>
         <div class="col-md-12 margin-bottom-40">
           <div class="headline">
-            <h2>交通資訊</h2>
+            <h4>交通資訊</h4>
           </div>
           <%= link_to asset_path('location_info.png'), target: '_blank' do %>
             <%= image_tag 'location_info.png', class: 'img-responsive' %>
