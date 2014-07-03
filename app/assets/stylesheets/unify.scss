@@ -37,6 +37,10 @@ h3, .h3{
 h2 .h2 {
   font-size: 18px;
 }
+.btn-lg, .btn-group-lg > .btn {
+  font-size: 15px;
+}
+
 // override font size end
 
 .breadcrumb > li:last-child {
