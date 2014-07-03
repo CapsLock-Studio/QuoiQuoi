@@ -392,7 +392,7 @@ en:
     thanks_for_registration: "Thank you for register quoi quoi studio's course."
     thanks_for_user_gift: 'Thank you for buy our gift card.'
     help_return_tuition: '(please reply this mail to help us return your tuition)'
-    remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course. Mind you, if you don't complete payment in three days, the registration will be canceled, If you want to advice remittance please click the 「%{remittance_link}」 to do that."
+    remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment in three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_for_registration: "Thank you for registering quoi quoi studio's course. This is your register information below. Mind you don't miss the course time."
     remind_for_user_gift: "Thank you for buy our gift card. Mind you, if you don't complete payment in three days, this will be canceled, If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     user_gift_hint: 'Thank you for buy our gift card. If you want to use the gift card to discount payment, please follow doing'
