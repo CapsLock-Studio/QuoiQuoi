@@ -15,7 +15,7 @@
     <td><%= t('call_name') %></td>
     <td><%= t('tuition') %></td>
     <td><%= t('course.number') %></td>
-    <td></td>
+    <td><%= t('option') %></td>
   </tr>
   </thead>
   <tbody>
@@ -31,7 +31,7 @@
     <td>
       <%= number_to_currency(@registration.course.course_translates.where(locale_id: @registration.locale_id).first.price) %>&nbsp;<small><%= @registration.currency %></small>
     </td>
-    <td>
+    <td style="text-align: center">
       <%= @registration.attendance %>
     </td>
     <td>
