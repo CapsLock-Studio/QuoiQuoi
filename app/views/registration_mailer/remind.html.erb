@@ -16,7 +16,7 @@
     <td><%= t('call_name') %></td>
     <td><%= t('course_time') %></td>
     <td><%= t('course.number') %></td>
-    <td><%= t('option') %></td>
+    <td></td>
   </tr>
   </thead>
   <tbody>
@@ -34,6 +34,9 @@
     </td>
     <td>
       <%= @registration.attendance %>
+    </td>
+    <td>
+      <%= @registration.course_option.content if @registration.course_option %>
     </td>
   </tr>
   </tbody>
