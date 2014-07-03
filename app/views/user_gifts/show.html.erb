@@ -26,7 +26,7 @@
               </span>
               <h4><%= t('pay') %></h4>
               <p><%= @user_gift.payment.pay_time.strftime('%Y/%m/%d %H:%M') if @user_gift.payment && @user_gift.payment.completed? %></p>
-              <span class="label label-success"><%= (@user_gift.payment.amount == 0 || @user_gift.payment.identifier.blank?)? '等待匯款' : '等待確認' if @user_gift.payment && !@user_gift.payment.completed? %></span>
+              <span class="label label-success"><%= (@user_gift.payment.amount == 0 || @user_gift.payment.identifier.blank?)? t('order.wait_remittance') : t('order.wait_confirm') if @user_gift.payment && !@user_gift.payment.completed? %></span>
             </li>
             <li class="col-xs-3 <%= 'step-active' unless @user_gift.used_time.blank? %>">
               <span>

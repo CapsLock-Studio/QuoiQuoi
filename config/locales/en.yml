@@ -381,7 +381,7 @@ en:
     subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
-    subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the gift card (Please don't reply this mail)"
+    subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_completed_gift: "[quoi quoi studio] Notice of payment completed of gift card (Please don't reply this mail)"
     title_for_order: "Thank you for shopping at quoi quoi studio"
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
@@ -394,7 +394,7 @@ en:
     help_return_tuition: '(please reply this mail to help us return your tuition)'
     remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment in three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_for_registration: "Thank you for registering quoi quoi studio's course. This is your registration information below. Please don't miss the course."
-    remind_for_user_gift: "Thank you for buy our gift card. Mind you, if you don't complete payment in three days, this will be canceled, If you want to advice remittance please click the 「%{remittance_link}」 to do that."
+    remind_for_user_gift: "Thank you for buy it.<br/>Mind you, if you don't complete payment in three days, this will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     user_gift_hint: 'Thank you for buy our gift card. If you want to use the gift card to discount payment, please follow doing'
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
