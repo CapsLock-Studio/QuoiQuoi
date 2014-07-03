@@ -53,6 +53,7 @@ class Admin::PaymentsController < AdminController
       elsif @payment.registration
         RegistrationMailer.re_remittance_remind(@payment.registration).deliver
       elsif @payment.user_gift
+        UserGiftMailer.re_remittance_remind(@payment.user_gift).deliver
       end
 
       @payment.amount = 0

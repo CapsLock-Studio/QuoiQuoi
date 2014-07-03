@@ -1,0 +1,68 @@
+<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: @user_gift.locale_id).first %>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<p>
+  <strong><%= t('mailer.re_remittance', remittance_link: (link_to t('order.advice'), edit_payment_url(@user_gift.payment))).html_safe %> </strong>&nbsp;<%= edit_payment_url(@user_gift.payment) %><br/>
+</p>
+<h3><%= t('remitted_information') %></h3>
+<table>
+  <tr>
+    <td>
+      <%= t('remitted_amount') %>
+    </td>
+    <td>
+      <%= number_to_currency(@user_gift.payment.amount) %>&nbsp;<small><%= @user_gift.currency %></small>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('your_account') %>
+    </td>
+    <td>
+      <%= @user_gift.payment.identifier %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('remitted_date') %>
+    </td>
+    <td>
+      <%= @user_gift.payment.pay_time.strftime('%Y/%m/%d') %>
+    </td>
+  </tr>
+</table>
+<h3><%= t('user_gift.information') %></h3>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td></td>
+    <td><%= t('call_name') %></td>
+    <td><%= t('user_gift.quota') %></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <%= image_tag "http://quoiquoi.tw#{@user_gift.gift.image(:thumb)}" %>
+    </td>
+    <td>
+      <h5>
+        <%= translate.name %>
+      </h5>
+    </td>
+    <td>
+      <%= number_to_currency(translate.quota) %>&nbsp;<small><%= @user_gift.currency %></small>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h3><%= t('total_amount') %>: <%= number_to_currency(translate.quota) %>&nbsp;<small><%= @user_gift.currency %></small></h3>
+<br>
+<br>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
+</body>
+</html>
