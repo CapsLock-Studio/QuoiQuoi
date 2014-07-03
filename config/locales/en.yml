@@ -145,7 +145,7 @@ en:
     sorry: 'Sorry, We can not find gift card by this serial'
     cancel: 'Cancel'
     renew: 'Renew serial'
-    use: 'Use Gift card'
+    use: 'Gift card used'
     first_step: 'Go to [%{link}] and get the serial'
     second_step: 'Choose your product and checkout then Click "Use gift card"'
     third_step: 'Check your gift card'
@@ -382,7 +382,7 @@ en:
     subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
     subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
-    subject_for_completed_gift: "[quoi quoi studio] Notice of payment completed of gift card (Please don't reply this mail)"
+    subject_for_completed_gift: "[quoi quoi studio] Payment completion for gift card and example of shopping with gift card (Please don't reply this mail)"
     title_for_order: "Thank you for shopping at quoi quoi studio"
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
     remind_for_order: "Thank you for shopping at quoi quoi studio. Notice that  this order will be canceled if you don't remit money in three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
