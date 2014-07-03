@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-12 margin-bottom-40">
           <% if @requirements.length > 0 %>
-            <div class="headline"><h2><%= t('hiring') %></h2></div>
+            <div class="headline"><h4><%= t('hiring') %></h4></div>
           <% end %>
           <% @requirements.each do |requirement| %>
             <% requirement.requirement_translates.where(locale_id: session[:locale_id]).each do |translate| %>

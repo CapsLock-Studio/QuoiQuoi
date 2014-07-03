@@ -3,7 +3,7 @@
     <div class="col-md-3 md-margin-bottom-40">
       <!-- About -->
       <div class="headline">
-        <h2><%= t('contact') %></h2>
+        <h4><%= t('contact') %></h4>
       </div>
       <%= render 'about/infos' %>
     </div>
@@ -12,7 +12,7 @@
       <div class="col-md-3 articles">
         <%= link_to article_path(type.articles.last) do %>
           <div class="headline">
-            <h2><%= type.name %></h2>
+            <h4><%= type.name %></h4>
           </div>
         <% end %>
         <ul class="list-unstyled article">
@@ -28,9 +28,9 @@
     <div class="col-md-3 articles">
       <div class="headline">
         <%= link_to areas_path do %>
-          <h2>
+          <h4>
             <%= t('tourist_attractions') %>
-          </h2>
+          </h4>
         <% end %>
       </div>
       <ul class="list-unstyled article">
