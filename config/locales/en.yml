@@ -287,7 +287,7 @@ en:
   address_placeholder: 'Enter your address'
   register: 'Register'
   customize_hint: 'Like this bag and want to add some your ideas?'
-  control_panel: 'Control panel'
+  control_panel: 'My account'
   ordering_information: 'Reference information for the order'
   design_hint: 'Please give us some simple idea'
   style_hint: 'You can paste the web address of your favorite sample'
@@ -379,7 +379,7 @@ en:
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice of your custom order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] We are sorry about decline your custom order (Please don't reply this mail)"
     subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
-    subject_for_registration: "[quoi quoi studio] Remind for course (Please don't reply this mail)"
+    subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
     subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the gift card (Please don't reply this mail)"
     subject_for_completed_gift: "[quoi quoi studio] Notice of payment completed of gift card (Please don't reply this mail)"
