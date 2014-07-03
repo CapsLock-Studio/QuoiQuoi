@@ -146,10 +146,10 @@ en:
     cancel: 'Cancel'
     renew: 'Renew serial number'
     use: 'Gift card used'
-    first_step: 'Find the serial number.'
-    second_step: 'After choosing the products, click "Use gift card" to pay the bill.'
-    third_step: 'Check the gift card information.'
-    fourth_step: 'If gift card transaction is successful, you will see the following page.<br/>Moreover, if the bill is not paid completely, you will be required to pay the remaining amount.'
+    first_step: 'Step 1. Find the serial number.'
+    second_step: 'Step 2. After choosing the products, click "Use gift card" to pay the bill.'
+    third_step: 'Step 3. Check the gift card information.'
+    fourth_step: 'Step 4. If gift card transaction is successful, you will see the following page.<br/>Moreover, if the bill is not paid completely, you will be required to pay the remaining amount.'
     my: 'My gift card'
 
 
