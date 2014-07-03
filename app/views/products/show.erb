@@ -68,7 +68,7 @@
                 </h4>
                 <% if @order_product.product.quantity > 0 %>
                   <label><%= t('quantity') %></label>
-                  <%= f.select :quantity, options_for_select((1..@order_product.product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker', data: {width: '100%'} %>
+                  <%= f.select :quantity, options_for_select((1..@order_product.product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
                   <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
                     <i class="icon-shopping-cart"></i>
                     <span><%= t('add_to_cart') %></span>

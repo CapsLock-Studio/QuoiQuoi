@@ -26,13 +26,12 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
-                  <th>課程編號</th>
                   <th>報名編號</th>
                   <th>用戶id<br/><label class="label label-success">點擊查看</label></th>
                   <th>姓名</th>
-                  <th>費用</th>
                   <th>Email</th>
                   <th>電話</th>
+                  <th></th>
                   <th>狀態</th>
                   <th></th>
                 </tr>
@@ -40,9 +39,6 @@
                 <tbody>
                 <% @course.registrations.each do |registration| %>
                   <tr>
-                    <td>
-                      <%= registration.course.id %>
-                    </td>
                     <td>
                       <%= registration.id %>
                     </td>
@@ -57,13 +53,19 @@
                       <%= registration.name %>
                     </td>
                     <td>
-                      <%= number_to_currency(registration.subtotal) %>
-                    </td>
-                    <td>
                       <%= registration.email %>
                     </td>
                     <td>
                       <%= registration.phone %>
+                    </td>
+                    <td>
+                      <% if registration.course_option %>
+                        <h4 style="margin:0;">
+                          <span class="label label-lg label-primary">
+                            <%= registration.course_option.content %>
+                          </span>
+                        </h4>
+                      <% end %>
                     </td>
                     <td>
                       <% if registration.returned? %>

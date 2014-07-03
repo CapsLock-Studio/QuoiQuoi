@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_side_menu_orders
   before_action :set_contact
   before_action :set_article_types
+  before_action :configure_devise_params, if: :devise_controller?
 
   def layout_by_resource
     if devise_controller? && resource_name == :admin
@@ -103,6 +104,14 @@ class ApplicationController < ActionController::Base
       order_custom_item_path(order_custom_item)
     else
       super
+    end
+  end
+
+  def configure_devise_params
+
+    # custom the user sign up parameters
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:name, :email, :password, :password_confirmation)
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701231236) do
+ActiveRecord::Schema.define(version: 20140703031458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,17 @@ ActiveRecord::Schema.define(version: 20140701231236) do
   end
 
   add_index "course_images", ["course_id"], name: "index_course_images_on_course_id", using: :btree
+
+  create_table "course_options", force: true do |t|
+    t.integer  "course_id"
+    t.integer  "locale_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_options", ["course_id"], name: "index_course_options_on_course_id", using: :btree
+  add_index "course_options", ["locale_id"], name: "index_course_options_on_locale_id", using: :btree
 
   create_table "course_translates", force: true do |t|
     t.integer  "course_id"
@@ -344,7 +355,7 @@ ActiveRecord::Schema.define(version: 20140701231236) do
 
   create_table "messages", force: true do |t|
     t.integer  "user_id"
-    t.string   "content"
+    t.text     "content"
     t.boolean  "admin",      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -614,23 +625,25 @@ ActiveRecord::Schema.define(version: 20140701231236) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "closed",        default: false
+    t.boolean  "closed",           default: false
     t.datetime "closed_time"
     t.string   "name"
     t.string   "phone"
-    t.integer  "attendance",    default: 0
-    t.integer  "subtotal",      default: 0
-    t.boolean  "returned",      default: false
+    t.integer  "attendance",       default: 0
+    t.integer  "subtotal",         default: 0
+    t.boolean  "returned",         default: false
     t.datetime "returned_time"
-    t.boolean  "canceled",      default: false
+    t.boolean  "canceled",         default: false
     t.datetime "canceled_time"
     t.string   "email"
     t.text     "reason"
     t.string   "currency"
     t.integer  "locale_id"
+    t.integer  "course_option_id"
   end
 
   add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree
+  add_index "registrations", ["course_option_id"], name: "index_registrations_on_course_option_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "remittance_translates", force: true do |t|

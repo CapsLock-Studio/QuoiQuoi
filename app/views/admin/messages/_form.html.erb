@@ -13,12 +13,12 @@
         <div class="box-content">
           <div class="form-group">
             <%= f.label :user_id, '會員' %>
-            <%= f.select :user_id, User.all.reject{|user| user.name == 'guest'}.collect{|user| ["編號: #{user.id} - Email: #{user.email}", user.id]}, {selected: params[:user_id]}, {class: 'form-control select2'} %>
+            <%= f.select :user_id, User.all.reject{|user| user.name == 'guest'}.collect{|user| ["編號: #{user.id} - Email: #{user.email}", user.id]}, {selected: @new_message.user_id}, {class: 'form-control select2'} %>
           </div>
           <div class="form-group">
             <%= f.label :content, '訊息內容' %>
             <div class="controls">
-              <%= f.text_area :content, class: 'form-control', rows: 6, placeholder: '請填入給客戶的訊息內容' %>
+              <%= f.text_area :content, class: 'form-control', rows: 6, placeholder: '請填入給客戶的訊息內容', data: {'rule-required' => true} %>
             </div>
           </div>
         </div>
@@ -28,7 +28,6 @@
   <div class="row form-actions">
     <div class="col-sm-12">
       <div class="pull-right">
-        <%= f.hidden_field :user_id %>
         <% if @new_message.user_id.blank? %>
           <%= link_to '取消', admin_messages_path, class: 'btn btn-lg' %>
         <% else %>

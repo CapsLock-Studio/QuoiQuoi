@@ -10,9 +10,11 @@
 
     <% @article_types.each do |type| %>
       <div class="col-md-3 articles">
-        <div class="headline">
-          <h2><%= type.name %></h2>
-        </div>
+        <%= link_to article_path(type.articles.last) do %>
+          <div class="headline">
+            <h2><%= type.name %></h2>
+          </div>
+        <% end %>
         <ul class="list-unstyled article">
           <% type.articles.order(created_at: :desc).limit(10).each do |article| %>
             <li>
@@ -35,8 +37,8 @@
         <% Area.where(locale_id: session[:locale_id]).each do |area| %>
           <li>
             <%= link_to area_path(area.id) do %>
+              <i class="fa fa-tag fa-fw"></i>
               <%= area.name %>
-              <i class="fa fa-angle-right pull-right"></i>
             <% end %>
           </li>
         <% end %>

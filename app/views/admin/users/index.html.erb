@@ -33,6 +33,7 @@
                   <th>常用聯絡姓名</th>
                   <th>常用聯絡電話</th>
                   <th>常用聯絡line</th>
+                  <th>加入時間</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -53,6 +54,9 @@
                     </td>
                     <td>
                       <%= user.line.blank?? '未設定' : user.line %>
+                    </td>
+                    <td>
+                      <%= user.created_at.strftime('%Y/%m/%d %H:%I:%S') %>
                     </td>
                     <td>
                       <div class="text-right">

@@ -5,14 +5,14 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registrations')
 
-    @registrations = Registration.where(closed: false, user_id: current_user.id)
+    @registrations = Registration.where(closed: false, email: current_user.email)
   end
 
   def close_index
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('course.past')
 
-    @registrations = Registration.where(closed: true, user_id: current_user.id)
+    @registrations = Registration.where(closed: true, email: current_user.email)
 
     respond_to do |format|
       format.html {render action: :index}
@@ -26,8 +26,7 @@ class RegistrationsController < ApplicationController
 
     flash[:message] = nil
 
-    course = Course.find(params[:course_id])
-    @registration = course.registrations.build
+    @registration = Registration.new(registration_params)
   end
 
   def create
@@ -38,6 +37,11 @@ class RegistrationsController < ApplicationController
       course = Course.find(registration_params[:course_id])
       translate = course.course_translates.where(locale_id: session[:locale_id]).first
       @registration = Registration.new(registration_params)
+
+      if current_user
+        @registration.email = current_user.email
+        @registration.user_id = current_user.id
+      end
 
       if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
         # if email has registered course can not register again
@@ -80,10 +84,6 @@ class RegistrationsController < ApplicationController
 
   private
     def registration_params
-      if current_user
-        params.require(:registration).permit(:attendance, :name, :phone, :course_id).merge({user_id: current_user.id, email: current_user.email})
-      else
-        params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id)
-      end
+      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id)
     end
 end

@@ -2,7 +2,7 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-comment-alt"></i>
-      <span>訊息管理&nbsp;<small><%= link_to "用戶id: #{@message.user.id}", admin_user_path(@message.user), target: '_blank', style: 'color: #eee' %></small></span>
+      <span>訊息管理&nbsp;<small><%= link_to "用戶: #{@message.user.id}. #{@message.user.email}", admin_user_path(@message.user), target: '_blank', style: 'color: #eee' %></small></span>
     </h1>
     <div class="pull-right">
       <ul class="breadcrumb">
