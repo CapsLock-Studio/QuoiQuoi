@@ -19,16 +19,6 @@
               <%= description.gsub(/{/, '<span style="color:#E67E22">').gsub(/}/, '</span>').html_safe %>
             </div>
           <% end %>
-          <% unless slide.link.blank? %>
-            <div class="caption large_text sfr hidden-xs"
-                 data-x="<%= slide.slide_position.position %>"
-                 data-y="<%= 200 + 40 * descriptions.length %>"
-                 data-speed="300"
-                 data-start="<%= (800 + 300 * (descriptions.length - 1)) %>"
-                 data-easing="easeOutExpo">
-              <%= link_to '來瞧瞧', '#', class: 'btn btn-glassy btn-default btn-lg' %>
-            </div>
-          <% end %>
         <% end %>
       </li>
       <% end %>
