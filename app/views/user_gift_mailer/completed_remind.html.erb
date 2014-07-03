@@ -8,10 +8,12 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %> </strong><br/>
-  <%= t('mailer.user_gift_hint') %>
+  <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift))).html_safe %>&nbsp;<%= user_gift_url(@user_gift) %>
 </p>
+<br/>
+<br/>
 <p>
-  <%= t('user_gift.first_step', link: link_to(t('user_gift.my'), user_gift_url(@user_gift))).html_safe %><br/>
+  <%= t('user_gift.first_step') %><br/>
   <%= image_tag("#{root_url}system/placeholder/step1.png") %>
 </p>
 <hr/>
