@@ -26,16 +26,16 @@ html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
   font-family: "Helvetica Neue",Helvetica,Arial, "微軟正黑體",sans-serif;
-  font-size: 13px;
+  font-size: 12px;
 }
 h4, .h4 {
-  font-size: 16px;
+  font-size: 13px;
 }
 h3, .h3{
-  font-size: 20px;
+  font-size: 16px;
 }
 h2 .h2 {
-  font-size: 22px;
+  font-size: 18px;
 }
 // override font size end
 
@@ -178,21 +178,21 @@ h2 .h2 {
 }
 
 #flexHome h4 {
+  font-size: 13px;
   margin-bottom: 11px;
   font-weight: 300;
   line-height: 1em;
-  text-transform: uppercase;
   padding: 0px;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
   width: 100%;
   text-align: center;
   display: inline-block;
   background: none repeat scroll 0% 0% transparent;
-  color: #95A5A6;
+  color: #585F69;
 }
 
 #flexHome h4:hover {
-  color: #585F69;
+  color: #333;
 }
 
 .preload {

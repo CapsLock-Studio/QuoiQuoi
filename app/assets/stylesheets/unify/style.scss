@@ -12,7 +12,7 @@
 /*Block Headline*/
 .headline {
 	display: block;
-	margin: 10px 0 25px 0;
+	margin: 10px 0 14px 0;
 	border-bottom: 1px dotted #e4e9f0;
 }
 .headline h2, 
@@ -248,12 +248,8 @@ blockquote:hover {
 .footer h5 {
 	text-shadow: none;
 	font-weight: normal !important; 
-} 
+}
 
-.footer p,
-.footer a {
-	font-size: 14px;
-} 
 .footer p {
 	color: #dadada;
 }
