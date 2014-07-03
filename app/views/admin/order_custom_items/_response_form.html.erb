@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col-sm-6">
               <label>通知信語言</label>
-              <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}), class: 'form-control' %>
+              <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}), class: 'form-control lang-options' %>
             </div>
           </div>
           <div class="row">
@@ -73,7 +73,14 @@
             <div class="col-sm-12">
               <div class="pull-right">
                 <% if @order_custom_item.accept.blank? && @order_custom_item.accept_time.blank? %>
-                  <%= link_to '不接受訂製', admin_order_custom_item_path(@order_custom_item), class: 'btn btn-lg', method: :delete %>
+                  <div class="hidden">
+                    <% Locale.order(id: :desc).each do |locale| %>
+                      <div class="<%= locale.lang %>">
+                        <%= admin_order_custom_item_path(@order_custom_item, lang: locale.lang) %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <%= link_to '不接受訂製', admin_order_custom_item_path(@order_custom_item, lang: Locale.order(id: :desc).first.lang), class: 'btn btn-lg decline-btn', method: :delete %>
                   <%= f.button(class: 'btn btn-primary btn-lg') do %>
                     <i class="icon-save"></i>
                     接受並儲存

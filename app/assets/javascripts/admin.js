@@ -125,3 +125,7 @@ if($("#fileupload").length != 0) {
         });
     });
 }
+
+$('.lang-options').on('change', function(){
+    $('.decline-btn').attr('href', $('.' + $(this).val()).text());
+});
