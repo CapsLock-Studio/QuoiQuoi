@@ -5,12 +5,16 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registrations')
 
+    flash[:message]
+
     @registrations = Registration.where(closed: false, email: current_user.email)
   end
 
   def close_index
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('course.past')
+
+    flash[:message]
 
     @registrations = Registration.where(closed: true, email: current_user.email)
 
@@ -67,9 +71,9 @@ class RegistrationsController < ApplicationController
 
   def show
     respond_to do |format|
-      registration = Registration.where(id: params[:id], user_id: current_user.id).first
+      @registrations = Registration.where(closed: false, email: current_user.email)
       #format.html {render course_path(registration.course)}
-      format.html {}
+      format.html {render :index}
     end
   end
 
