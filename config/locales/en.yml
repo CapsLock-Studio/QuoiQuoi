@@ -378,7 +378,7 @@ en:
     subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice of your custom order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] We are sorry about decline your custom order (Please don't reply this mail)"
-    subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the registration (Please don't reply this mail)"
+    subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_registration: "[quoi quoi studio] Remind for course (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
     subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the gift card (Please don't reply this mail)"
