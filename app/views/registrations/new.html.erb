@@ -98,7 +98,7 @@
                             <td class="col-xs-2">
                               <%= number_to_currency(translate.price) %>
                             </td>
-                            <td class="col-xs-2">
+                            <td class="col-xs-3">
                               <%= f.select :course_option_id, CourseOption.where(locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]}, {}, {class: 'selectpicker form-control'} %>
                             </td>
                           </tr>
