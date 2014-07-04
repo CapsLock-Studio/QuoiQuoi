@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
       subtotal += ProductTranslate.where(locale_id: session[:locale_id], product_id: order_product.product_id).first.price * order_product.quantity
     end
     @order.order_custom_items.each do |order_custom_item|
-      subtotal += order_custom_item.price
+      subtotal += OrderCustomItemTranslate.where(locale_id: session[:locale_id], order_custom_item_id: order_custom_item.id).first.price
     end
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: params[:order][:shipping_fee_id], locale_id: session[:locale_id]).first

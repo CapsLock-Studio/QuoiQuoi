@@ -161,7 +161,7 @@
                           </div>
                         </td>
                         <td class="col-xs-1">
-                          <%= number_to_currency(custom_item.price) %>
+                          <%= number_to_currency(custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>
                         </td>
                       </tr>
                     <% end %>

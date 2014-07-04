@@ -13,20 +13,27 @@
         <div class="box-content">
           <div class="row">
             <div class="col-sm-6">
-              <label>通知信語言</label>
-              <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}), class: 'form-control lang-options' %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
               <div class="form-group">
-                <label>估價</label>
-                <div class="controls">
-                  <%= f.text_field :price, class: 'form-control', data: {'rule-required' => true, 'rule-number' => true}, placeholder: '請填入價格' %>
-                </div>
+                <label>通知信語言</label>
+                <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}, Locale.where(@order_custom_item.locale_id).first.lang), class: 'form-control lang-options' %>
               </div>
             </div>
           </div>
+          <%= f.fields_for :order_custom_item_translates do |builder| %>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>估價(<%= @order_custom_item.order_custom_item_translates[builder.index].locale.currency %>)</label>
+                  <div class="controls">
+                    <%= builder.text_field :price, class: 'form-control', data: {'rule-required' => true, 'rule-number' => true}, placeholder: '請填入價格' %>
+                    <%= builder.hidden_field :locale_id %>
+                    <%= builder.hidden_field :order_custom_item_id %>
+                    <%= builder.hidden_field :id %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">

@@ -74,7 +74,7 @@
                 <%= t('bid') %>
               </span>
               <span class="col-md-10 col-xs-7">
-                <strong class="text-muted"><%= number_to_currency(@order_custom_item.price) %></strong>
+                <strong class="text-muted"><%= number_to_currency(@order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first.price) %></strong>
               </span>
             </h4>
             <div class="row">

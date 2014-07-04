@@ -117,7 +117,8 @@
                           </tr>
                         <% end %>
                         <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
-                          <% @subtotal += order_custom_item.price %>
+                          <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
+                          <% @subtotal += translate.price %>
                           <tr>
                             <td>
                               <%= image_tag order_custom_item.image.url(:thumb) %>
@@ -128,7 +129,7 @@
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(order_custom_item.price) %>
+                              <%= number_to_currency(translate.price) %>
                             </td>
                             <td>
                               1

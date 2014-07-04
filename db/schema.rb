@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703031458) do
+ActiveRecord::Schema.define(version: 20140704042058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -413,6 +413,17 @@ ActiveRecord::Schema.define(version: 20140703031458) do
 
   add_index "order_custom_item_product_custom_items", ["order_custom_item_id"], name: "order_custom_item_on_product_custom_item", using: :btree
   add_index "order_custom_item_product_custom_items", ["product_custom_item_id"], name: "product_custom_item_order_custom_item", using: :btree
+
+  create_table "order_custom_item_translates", force: true do |t|
+    t.integer  "order_custom_item_id"
+    t.integer  "locale_id"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_custom_item_translates", ["locale_id"], name: "index_order_custom_item_translates_on_locale_id", using: :btree
+  add_index "order_custom_item_translates", ["order_custom_item_id"], name: "index_order_custom_item_translates_on_order_custom_item_id", using: :btree
 
   create_table "order_custom_items", force: true do |t|
     t.integer  "order_id"

@@ -78,7 +78,7 @@ class OrderCustomItemsController < ApplicationController
   # PUT/PATCH /order_custom_items/1
   def update
     respond_to do |format|
-      if @order_custom_item.accept? && !@order_custom_item.price.blank?
+      if @order_custom_item.accept? && (@order_custom_item.order_custom_item_translates.length > 0)
         if @order_custom_item.update_attribute(:order_id, order_in_cart.id)
           format.html {redirect_to cart_path}
         else

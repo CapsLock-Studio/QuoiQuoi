@@ -54,7 +54,7 @@
         </h5>
       </td>
       <td>
-        <%= number_to_currency(order_custom_item.price) %>&nbsp;<small><%= @order.currency %></small>
+        <%= number_to_currency(order_custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>&nbsp;<small><%= @order.currency %></small>
       </td>
       <td>
         1

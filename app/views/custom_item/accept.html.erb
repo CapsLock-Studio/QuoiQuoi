@@ -21,7 +21,7 @@
       <%= t('bid') %>
     </td>
     <td>
-      <%= number_to_currency(@order_custom_item.price) %>&nbsp;<small><%= @order_custom_item.currency %></small>
+      <%= number_to_currency(@order_custom_item.order_custom_item_translates.where(locale_id: @locale.id).first.price) %>&nbsp;<small><%= @locale.currency %></small>
     </td>
   </tr>
   <tr>
@@ -65,7 +65,7 @@
       <td>
         <%= link_to product_url(@order_custom_item.product), target: '_blank' do %>
           <div class="text-muted">
-            <%= @order_custom_item.product.product_translates.where(locale_id: Locale.where(lang: 'zh-TW').first.id).first.name %>
+            <%= @order_custom_item.product.product_translates.where(locale_id: Locale.where(lang: @locale.lang).first.id).first.name %>
           </div>
           <%= image_tag "http://quoiquoi.tw#{@order_custom_item.product.image.url(:thumb)}" %>
         <% end %>

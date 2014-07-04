@@ -13,10 +13,16 @@ class Admin::OrderCustomItemsController < AdminController
     add_breadcrumb '訂製要求記錄', :admin_order_custom_items_path
     add_breadcrumb '訂製要求詳細'
 
+    if @order_custom_item.order_custom_item_translates.length <= 0
+      Locale.order(id: :desc).each do |locale|
+        @order_custom_item.order_custom_item_translates.build(locale_id: locale.id)
+      end
+    end
   end
 
   def update
     respond_to do |format|
+
       if @order_custom_item.update_attributes(order_custom_item_params.merge({accept: true, accept_time: Time.now}))
         CustomItem.accept(@order_custom_item, params[:lang]).deliver
         format.html {redirect_to action: :index}
@@ -53,6 +59,7 @@ class Admin::OrderCustomItemsController < AdminController
     end
 
     def order_custom_item_params
-      params.require(:order_custom_item).permit(:response, :workday, :estimate_complete_time, :price, :image)
+      params.require(:order_custom_item).permit(:response, :workday, :estimate_complete_time, :price, :image,
+                                                order_custom_item_translates_attributes: [:id, :order_custom_item_id, :locale_id, :price])
     end
 end
