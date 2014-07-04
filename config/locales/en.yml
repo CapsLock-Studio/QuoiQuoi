@@ -372,6 +372,8 @@ en:
   option: 'Options'
   enter: 'Enter'
   person: 'Person'
+  customizations: 'Customizations'
+  personalized_products: 'Personalized products'
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"

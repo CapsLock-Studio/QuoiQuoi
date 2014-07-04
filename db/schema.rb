@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140704051659) do
+ActiveRecord::Schema.define(version: 20140704054752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -449,7 +449,6 @@ ActiveRecord::Schema.define(version: 20140704051659) do
     t.boolean  "canceled",               default: false
     t.datetime "canceled_time"
     t.integer  "user_id"
-    t.string   "currency"
     t.integer  "locale_id"
   end
 

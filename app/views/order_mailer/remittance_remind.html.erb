@@ -24,6 +24,11 @@
   </tr>
   </thead>
   <tbody>
+  <tr>
+    <td colspan="4">
+      <h4><%= t('products') %></h4>
+    </td>
+  </tr>
   <% @order.order_products.each_with_index do |order_product, index| %>
     <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
     <tr>
@@ -43,6 +48,11 @@
       </td>
     </tr>
   <% end %>
+  <tr>
+    <td colspan="4">
+      <h4><%= t('personalized_products') %></h4>
+    </td>
+  </tr>
   <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
     <tr>
       <td>

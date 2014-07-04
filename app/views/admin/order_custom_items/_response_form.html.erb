@@ -15,7 +15,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>通知信語言</label>
-                <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}, Locale.where(@order_custom_item.locale_id).first.lang), class: 'form-control lang-options' %>
+                <%= select_tag :lang, options_for_select(Locale.order(id: :desc).all.collect{|locale| [locale.name, locale.lang]}, Locale.where(id: @order_custom_item.locale_id).first.lang), class: 'form-control lang-options' %>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@
                       </div>
                     <% end %>
                   </div>
-                  <%= link_to '不接受訂製', admin_order_custom_item_path(@order_custom_item, lang: Locale.order(id: :desc).first.lang), class: 'btn btn-lg decline-btn', method: :delete %>
+                  <%= link_to '不接受訂製', admin_order_custom_item_path(@order_custom_item, lang: Locale.where(id: @order_custom_item.locale_id).first.lang), class: 'btn btn-lg decline-btn', method: :delete %>
                   <%= f.button(class: 'btn btn-primary btn-lg') do %>
                     <i class="icon-save"></i>
                     接受並儲存

@@ -54,7 +54,9 @@ class OrderCustomItemsController < ApplicationController
   # POST /order_custom_items
   def create
     respond_to do |format|
+      locale = Locale.find(session[:locale_id])
       @order_custom_item = OrderCustomItem.new(order_custom_item_params)
+      @order_custom_item.locale_id = locale.id
       if current_user.nil?
         if @order_custom_item.save
           session[:temp] = @order_custom_item.id
