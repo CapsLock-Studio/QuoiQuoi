@@ -13,6 +13,7 @@
         </div>
         <div class="col-xs-12">
           <% @order_custom_items.each do |order_custom_item| %>
+            <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
             <div class="box">
               <div class="box-header box-header-small grey-background">
                 <h4>
@@ -50,7 +51,7 @@
                           <%= render 'status', order_custom_item: order_custom_item %>
                         </td>
                         <td>
-                          <%= order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first.price %>
+                          <%= (translate)? translate.price : '-' %>
                         </td>
                         <td>
                           <ul class="list-unstyled">
