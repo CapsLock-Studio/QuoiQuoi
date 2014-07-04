@@ -48,6 +48,7 @@
     </tbody>
   </table>
 <% end %>
+<% workdays = 5 %>
 <% if @order.order_custom_items.length > 0 %>
   <h4><%= t('personalized_products') %></h4>
   <table>
@@ -66,7 +67,6 @@
     </tr>
     </thead>
     <tbody>
-    <% workdays = 5 %>
     <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
     <% workdays = order_custom_item.workday if order_custom_item.workday and order_custom_item.workday > workdays %>
       <tr>
@@ -110,10 +110,6 @@
     <td><%= (@order.phone.blank?)? @order.phone.gsub(/\d{4}$/, '****') : '-' %></td>
   </tr>
 </table>
-<p>
-  <%= t('working_days', workdays: workdays) %>
-</p>
-<br>
 <p>
   <%= t('working_days', workdays: workdays) %>
   <%= t('completed_hint').html_safe %><br/>
