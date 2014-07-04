@@ -60,7 +60,7 @@
           <div class="text-muted">
             <%= @order_custom_item.product.product_translates.where(locale_id: Locale.where(lang: 'zh-TW').first.id).first.name %>
           </div>
-          <%= image_tag @order_custom_item.product.image.url(:thumb) %>
+          <%= image_tag "http://quoiquoi.tw#{@order_custom_item.product.image.url(:thumb)}" %>
         <% end %>
       </td>
     </tr>
@@ -68,7 +68,7 @@
       <td><%= t('custom_order.your') %></td>
       <td>
         <% @order_custom_item.order_custom_item_product_custom_items.each do |custom_items| %>
-          <%= image_tag custom_items.product_custom_item.image.url(:thumb) %>
+          <%= image_tag "http://quoiquoi.tw#{custom_items.product_custom_item.image.url(:thumb)}" %>
         <% end %>
       </td>
     </tr>
@@ -86,7 +86,7 @@
     <td><%= t('material') %></td>
     <td>
       <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
-        <%= image_tag order_custom_item_material.material.image.url(:thumb) %>
+        <%= image_tag "http://quoiquoi.tw#{order_custom_item_material.material.image.url(:thumb)}" %>
       <% end %>
     </td>
   </tr>
@@ -100,7 +100,7 @@
     <td><%= t('your_idea') %></td>
     <td>
       <% @order_custom_item.order_custom_item_images.each do |order_custom_item_image| %>
-        <%= image_tag order_custom_item_image.image.url(:thumb) %>
+        <%= image_tag "http://quoiquoi.tw#{order_custom_item_image.image.url(:thumb)}" %>
       <% end %>
     </td>
   </tr>
