@@ -393,7 +393,7 @@ en:
     subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
     subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice that your customization order is accepted (Please don't reply this mail)"
-    subject_for_decline_custom_order: "[quoi quoi studio] We are sorry about decline your custom order (Please don't reply this mail)"
+    subject_for_decline_custom_order: "[quoi quoi studio] Decline you personalized order (Please don't reply this mail)"
     subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
@@ -416,8 +416,9 @@ en:
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
     custom_item_accept: 'We have accepted your customization order.'
-    custom_item_decline: 'Sorry! We can not accept your custom order. This is your custom order link below.'
+    custom_item_decline: "We regret that we need to reject your order. The order was reviewed by the quoi quoi designer and our assessment is that the order is not well suited to our studio's production. <br/>Please note that in view of the quantity of orders we receive, we have to be selective in the orders we accept, and unfortunately we have to make difficult decisions.<br/><br/>Thank you for giving us the opportunity to consider your order and I hope the decision will not discourage you from considering quoi quoi studio's products as a potential outlet for your future shopping."
     suggestion_hint: 'If you have any suggestion, please contact us by '
+    order_information: 'Your order information is on %{link} of quoi quoi website.'
     custom_order:
       mind: 'Remind that full payment must be made before we product the order.'
       add_to_cart: 'If you want to pay the bill, please go to'

@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<h2><%= t('mailer.title_for_order') %></h2>
 <p>
+  <strong><%= t('mailer.dear') %>: </strong><br/>
+  <%= t('mailer.order_information', link: link_to(order_custom_item_url(@order_custom_item))) %><br/>
+  <%= link_to t('custom_order.detail'), order_custom_item_url(@order_custom_item) %><br/><br/>
   <%= t('mailer.custom_item_decline') %>
-  <br>
-  <%= link_to t('custom_order.detail'), order_custom_item_url(@order_custom_item) %>
 </p>
 
 <br>
