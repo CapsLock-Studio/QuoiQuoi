@@ -10,7 +10,7 @@
   <br>
   <%= t('mailer.custom_order.mind') %>
 </p>
-<%= link_to t('add_to_cart'), order_custom_item_url(@order_custom_item) %>
+<%= link_to t('add_to_cart'), order_custom_item_url(@order_custom_item) %>&nbsp;<%= order_custom_item_url(@order_custom_item) %>
 <h4><%= t('response_from_designer') %></h4>
 <table>
   <tr>
