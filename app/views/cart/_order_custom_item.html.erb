@@ -19,19 +19,19 @@
       </h5>
       <ul class="list-unstyled">
         <li>
-          設計
+          <%= t('design') %>
           <span class="pull-right">
             <%= order_custom_item.design %>
           </span>
         </li>
         <li>
-          風格
+          <%= t('style') %>
           <span class="pull-right">
             <%= order_custom_item.style %>
           </span>
         </li>
         <li>
-          布料
+          <%= t('material') %>
         </li>
         <li class="text-center margin-bottom-5">
           <% if order_custom_item.order_custom_item_materials.length > 0 %>
@@ -39,15 +39,13 @@
               <%= image_tag order_custom_item_material.material.image.url(:thumb), class: 'margin-bottom-5' %>
             <% end %>
           <% else %>
-            <h5 class="text-center">
-              <i class="icon-exclamation"></i>沒有選擇布料
-            </h5>
+            -
           <% end %>
         </li>
       </ul>
       <hr/>
       <h5 class="margin-bottom-20">
-        <span style="color:#666;">單品小計</span>
+        <span style="color:#666;"><%= t('subtotal') %></span>
         <strong class="pull-right">
           <%= number_to_currency(order_custom_item.price) %>
         </strong>
