@@ -36,6 +36,9 @@
   </tr>
 </table>
 <h3><%= t('your_order') %></h3>
+<% if @order.order_products.length > 0 %>
+  <h4><%= t('products') %></h4>
+<% end %>
 <table>
   <thead>
   <tr>
@@ -52,13 +55,6 @@
   </tr>
   </thead>
   <tbody>
-  <% if @order.order_products.length > 0 %>
-    <tr>
-      <td colspan="4">
-        <h4><%= t('products') %></h4>
-      </td>
-    </tr>
-  <% end %>
   <% @order.order_products.each_with_index do |order_product, index| %>
     <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
     <tr>
@@ -78,13 +74,27 @@
       </td>
     </tr>
   <% end %>
-  <% if @order.order_custom_items.length > 0 %>
-    <tr>
-      <td colspan="4">
-        <h4><%= t('personalized_products') %></h4>
-      </td>
-    </tr>
-  <% end %>
+  </tbody>
+</table>
+<% if @order.order_custom_items.length > 0 %>
+  <h4><%= t('personalized_products') %></h4>
+<% end %>
+<table>
+  <thead>
+  <tr>
+    <th></th>
+    <th>
+      <%= t('call_name') %>
+    </th>
+    <th>
+      <%= t('price') %>
+    </th>
+    <th>
+      <%= t('quantity') %>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
   <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
     <tr>
       <td>

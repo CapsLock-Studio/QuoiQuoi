@@ -58,6 +58,17 @@ zh-TW:
   teacher: '開課老師'
   products: '商品'
 
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u %n"
+        precision: 0
+        separator: ""
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "NT $"
+
   order:
     my: '我的訂單'
     detail: '訂單詳細'
@@ -209,6 +220,7 @@ zh-TW:
   remitted_information: '匯款資訊'
   remittance_information: '匯款資訊'
   report_remittance: '匯款回報'
+  no_s: '編號'
   submit: '送出'
   submit_message: '送出訊息'
   report: '回報'
@@ -239,7 +251,6 @@ zh-TW:
   account: '我的帳號'
   message_box: '訊息匣'
   profile_management: '個人資料管理'
-  number: '編號'
   build_time: '建立時間'
   customize: '現貨修改'
   personalize: '量身訂製手作包'

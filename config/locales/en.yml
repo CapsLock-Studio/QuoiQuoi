@@ -267,6 +267,7 @@ en:
   name: 'Name'
   name_placeholder: 'Enter your name'
   phone_number: 'Phone number'
+  no_s: 'No.'
   phone_placeholder: 'Enter your phone number'
   requirement: 'Requirement'
   your_idea: 'Sample pictures'
