@@ -10,83 +10,83 @@
 </p>
 <% if @order.order_products.length > 0 %>
   <h4><%= t('products') %></h4>
-<% end %>
-<table>
-  <thead>
-  <tr>
-    <th></th>
-    <th>
-      <%= t('call_name') %>
-    </th>
-    <th>
-      <%= t('price') %>
-    </th>
-    <th>
-      <%= t('quantity') %>
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @order.order_products.each_with_index do |order_product, index| %>
-    <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
+  <table>
+    <thead>
     <tr>
-      <td>
-        <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
-      </td>
-      <td>
-        <h5>
-          <%= translate.name %>
-        </h5>
-      </td>
-      <td>
-        <%= number_to_currency(translate.price) %>&nbsp;<small><%= @order.currency %></small>
-      </td>
-      <td style="text-align: center">
-        <%= order_product.quantity %>
-      </td>
+      <th></th>
+      <th>
+        <%= t('call_name') %>
+      </th>
+      <th>
+        <%= t('price') %>
+      </th>
+      <th>
+        <%= t('quantity') %>
+      </th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @order.order_products.each_with_index do |order_product, index| %>
+      <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
+      <tr>
+        <td>
+          <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
+        </td>
+        <td>
+          <h5>
+            <%= translate.name %>
+          </h5>
+        </td>
+        <td>
+          <%= number_to_currency(translate.price) %>&nbsp;<small><%= @order.currency %></small>
+        </td>
+        <td style="text-align: center">
+          <%= order_product.quantity %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
 <% if @order.order_custom_items.length > 0 %>
   <h4><%= t('personalized_products') %></h4>
-<% end %>
-<table>
-  <thead>
-  <tr>
-    <th></th>
-    <th>
-      <%= t('call_name') %>
-    </th>
-    <th>
-      <%= t('price') %>
-    </th>
-    <th>
-      <%= t('quantity') %>
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
+  <table>
+    <thead>
     <tr>
-      <td>
-        <%= image_tag "#{@domain}#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
-      </td>
-      <td>
-        <h5>
-          <%= t('original_bag') %>
-        </h5>
-      </td>
-      <td>
-        <%= number_to_currency(order_custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>&nbsp;<small><%= @order.currency %></small>
-      </td>
-      <td>
-        1
-      </td>
+      <th></th>
+      <th>
+        <%= t('call_name') %>
+      </th>
+      <th>
+        <%= t('price') %>
+      </th>
+      <th>
+        <%= t('quantity') %>
+      </th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
+      <tr>
+        <td>
+          <%= image_tag "#{@domain}#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
+        </td>
+        <td>
+          <h5>
+            <%= t('original_bag') %>
+          </h5>
+        </td>
+        <td>
+          <%= number_to_currency(order_custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>&nbsp;<small><%= @order.currency %></small>
+        </td>
+        <td>
+          1
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
 <h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %><small><%= @order.currency %></label></h4>
 <h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
 <br>
