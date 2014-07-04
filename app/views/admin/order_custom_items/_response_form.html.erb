@@ -40,21 +40,6 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <label>估計完成日期&nbsp;&nbsp;<span class="label label-danger">可在接受訂單後填寫、修改</span></label>
-                <div class="datepicker input-group">
-                  <%= f.text_field :estimate_complete_time, class: 'form-control', value: @order_custom_item.estimate_complete_time.blank?? '' : @order_custom_item.estimate_complete_time.strftime('%Y/%m/%d'),
-                                   placeholder: '請輸入日期(年/月/日) ',
-                                   data: {'rule-date' => true, format: 'yyyy/MM/dd'} %>
-                  <span class="input-group-addon">
-                  <span class="icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></span>
-                </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="form-group">
                 <label>回應</label>
                 <div class="controls">
                   <%= f.text_area :response, class: 'form-control', rows: 3 %>
