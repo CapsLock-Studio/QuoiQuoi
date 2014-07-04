@@ -50,11 +50,11 @@
                           <%= render 'status', order_custom_item: order_custom_item %>
                         </td>
                         <td>
-                          <%= (order_custom_item.price)? number_to_currency(order_custom_item.price) : '-' %>
+                          <%= order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first.price %>
                         </td>
                         <td>
                           <ul class="list-unstyled">
-                            <% if order_custom_item.accept && order_custom_item.price && !order_custom_item.order %>
+                            <% if order_custom_item.accept && !order_custom_item.order %>
                               <li>
                                 <%= link_to t('add_to_cart'), order_custom_item_path(order_custom_item), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
                               </li>

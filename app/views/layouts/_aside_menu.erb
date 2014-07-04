@@ -45,7 +45,8 @@
               </div>
             <% end %>
             <% @menu_orders.order_custom_items.each do|order_custom_item| %>
-              <% subtotal += order_custom_item.price %>
+              <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
+              <% subtotal += translate.price %>
               <div class="search-blocks search-blocks-colored side-menu-block">
                 <div class="col-md-6 search-img">
                   <%= image_tag order_custom_item.image.url(:medium), class: 'img-responsive' %>
@@ -55,7 +56,7 @@
                     <i class="icon-remove"></i>
                   <% end %>
                   <h4><%= t('original_bag') %></h4>
-                  <h5 class="text-muted"><%= number_to_currency(order_custom_item.price) %></h5>
+                  <h5 class="text-muted"><%= number_to_currency(translate.price) %></h5>
                 </div>
               </div>
             <% end %>

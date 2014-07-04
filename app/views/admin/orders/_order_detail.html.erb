@@ -45,15 +45,18 @@
             </tr>
           <% end %>
           <% order.order_custom_items.each do |custom_item| %>
+            <% translate = custom_item.order_custom_item_translates.where(locale_id: order.locale_id).first %>
             <tr>
               <td>
-                <%= image_tag custom_item.image.url(:thumb), class: 'img-responsive' %>
+                <%= link_to edit_admin_order_custom_item_path(custom_item), target: '_blank' do %>
+                  <%= image_tag custom_item.image.url(:thumb), class: 'img-responsive' %>
+                <% end %>
               </td>
               <td>
                 <strong><%= t('original_bag') %></strong>
               </td>
               <td>
-                <%= number_to_currency(custom_item.price) %>
+                <%= number_to_currency(translate.price) %>&nbsp;<small class="text-muted"><%= order.currency %></small>
               </td>
             </tr>
           <% end %>

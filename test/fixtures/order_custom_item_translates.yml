@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_custom_item_id: 
+  locale_id: 
+  price: 1.5
+
+two:
+  order_custom_item_id: 
+  locale_id: 
+  price: 1.5

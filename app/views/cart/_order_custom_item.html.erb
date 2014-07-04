@@ -1,3 +1,4 @@
+<% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
 <div class="col-md-12 margin-bottom-30">
   <div class="row">
     <div class="col-md-7">
@@ -11,8 +12,8 @@
           <strong>
             <%= t('original_bag') %>
             <span class="pull-right">
-            <% @subtotal += order_custom_item.price %>
-              <%= number_to_currency(order_custom_item.price) %>
+            <% @subtotal += translate.price %>
+              <%= number_to_currency(translate.price) %>
           </span>
           </strong>
         <% end %>

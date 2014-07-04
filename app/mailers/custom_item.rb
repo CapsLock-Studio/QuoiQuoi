@@ -13,6 +13,7 @@ class CustomItem < ActionMailer::Base
     I18n.locale = lang
 
     @order_custom_item = custom_item
+    @locale = Locale.find_by_lang(lang)
 
     mail(to: custom_item.user.email, subject: t('mailer.subject_for_accpet_custom_order'))
   end
