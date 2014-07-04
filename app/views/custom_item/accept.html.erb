@@ -10,7 +10,7 @@
   <br>
   <%= t('mailer.custom_order.mind') %>
   <br/>
-  <%= "#{t('mailer.custom_order.add_to_cart')} #{link_to t('add_to_cart'), order_custom_item_url(@order_custom_item)}" %>&nbsp;<%= order_custom_item_url(@order_custom_item) %>
+  <%= "#{t('mailer.custom_order.add_to_cart')} #{link_to t('add_to_cart'), order_custom_item_url(@order_custom_item)}".html_safe %>&nbsp;<%= order_custom_item_url(@order_custom_item) %>
   <br/>
   <%= t('mailer.custom_order.following') %>
 </p>
