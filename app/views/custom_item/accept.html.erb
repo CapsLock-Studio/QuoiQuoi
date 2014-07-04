@@ -29,7 +29,7 @@
       <%= t('work_days') %>
     </td>
     <td>
-      <%= (@order_custom_item.workday)? @order_custom_item.workday : '-' %>
+      <%= t('custom_order.about', days: ((@order_custom_item.workday)? @order_custom_item.workday : '-')) %>
     </td>
   </tr>
   <tr>
