@@ -406,3 +406,4 @@ en:
     custom_order:
       mind: 'Remind that full payment must be made before we product the order.'
       add_to_cart: 'If you want to pay the bill, please go to'
+      following: 'The order information is in the following.'
