@@ -34,17 +34,6 @@ en:
             current_password:
               invalid: 'Current password confirm failed.'
 
-  number:
-    currency:
-      format:
-        delimiter: ","
-        format: "%u %n"
-        precision: 2
-        separator: "."
-        significant: false
-        strip_insignificant_zeros: false
-        unit: "$"
-
   footer:
     login: 'Login Admin'
   view_detail: 'View Detail'
@@ -232,7 +221,6 @@ en:
   account: 'Account'
   message_box: 'Message box'
   profile_management: 'Profile management'
-  number: 'No.'
   build_time: 'Record date'
   customize: 'Customization'
   personalize: 'Personalization'
