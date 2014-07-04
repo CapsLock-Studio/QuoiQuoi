@@ -94,7 +94,7 @@ class OrderCustomItemsController < ApplicationController
   def destroy
     respond_to do |format|
       if @order_custom_item.update_attribute(:order_id, '')
-        format.html {redirect_to cart_pa}
+        format.html {redirect_to cart_path}
       else
         format.html {render json: @order_custom_item.errors}
       end
