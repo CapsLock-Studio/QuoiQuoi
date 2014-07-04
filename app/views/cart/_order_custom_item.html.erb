@@ -48,7 +48,7 @@
       <h5 class="margin-bottom-20">
         <span style="color:#666;"><%= t('subtotal') %></span>
         <strong class="pull-right">
-          <%= number_to_currency(order_custom_item.price) %>
+          <%= number_to_currency(translate.price) %>
         </strong>
       </h5>
       <%= link_to t('actions.delete'), order_custom_item_path(order_custom_item), method: :delete, class: 'btn btn-default pull-right hover-effect' %>
