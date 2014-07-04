@@ -374,6 +374,7 @@ en:
   person: 'Person'
   customizations: 'Customizations'
   personalized_products: 'Personalized products'
+  check_hint: "Please check your mailbox.<br/>Please consider the shipping distance to determine the arrival time.<br/>If you don't receive the products, please contact us by "
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
