@@ -669,3 +669,17 @@ a[data-toggle=offcanvas] {
 .top-navigation {
   font-size: 13px;
 }
+
+.badge {
+  border-radius: 10px !important;
+
+  &.badge-orange {
+    background-color: lighten(#E67E22, 10%);
+  }
+}
+
+.fa-shopping-cart {
+  .badge {
+    top: 0px;
+  }
+}

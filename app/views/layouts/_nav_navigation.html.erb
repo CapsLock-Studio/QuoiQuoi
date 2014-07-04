@@ -66,7 +66,15 @@
     <li class="hidden-xs hidden-sm">
       <a href="#" class="aside-menu-switch dropdown-toggle dropdown-form-toggle btn btn-link" title="Open sidebar">
         <i class="fa fa-shopping-cart">
-          <strong class="hidden-sm" style="margin-left:5px;"><%= t('cart') %></strong>
+          <strong class="hidden-sm" style="margin-left:5px;">
+            <%= t('cart') %>
+            <% number = @menu_orders.order_products.length + @menu_orders.order_custom_items.length %>
+            <% if number > 0 %>
+              <span class="badge badge-orange">
+                <%= number %>
+              </span>
+            <% end %>
+          </strong>
         </i>
       </a>
     </li>
