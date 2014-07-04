@@ -367,7 +367,7 @@ en:
   your_order: 'Your order'
   tourist_attractions: 'Tourist attractions'
   all_area: 'All area'
-  completed_hint: 'Thank you for your patience.<br>If you want to know the detailed information, please go to the member account on the quoi quoi website as follows'
+  completed_hint: 'We will hand produce your order as soon as possible.<br/>Thank you for your patience.<br>If you want to know the detailed information, please go to the member account on the quoi quoi website as follows'
   sincerely: 'Sincerely.'
   option: 'Options'
   enter: 'Enter'
@@ -405,6 +405,7 @@ en:
     dear: 'Dear customer'
     custom_item_accept: 'We have accepted your customization order.'
     custom_item_decline: 'Sorry! We can not accept your custom order. This is your custom order link below.'
+    suggestion_hint: 'If you have any suggestion, please contact us by '
     custom_order:
       mind: 'Remind that full payment must be made before we product the order.'
       add_to_cart: 'If you want to pay the bill, please go to'
