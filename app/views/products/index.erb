@@ -14,7 +14,7 @@
                 <div class="caption">
                   <h4 style="margin-top: 10px; margin-bottom: 5px;"><%= translate.name %></h4>
                     <span class="price">
-                      <%= number_to_currency(translate.price) %>
+                      <%= number_to_currency(translate.price, locale: session[:locale]) %>
                     </span>
                 </div>
               </div>

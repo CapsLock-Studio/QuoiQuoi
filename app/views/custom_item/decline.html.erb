@@ -6,9 +6,8 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %>: </strong><br/>
-  <%= t('mailer.order_information', link: link_to(order_custom_item_url("[#{t('control_panel')}]", @order_custom_item))) %><br/>
-  <%= link_to t('custom_order.detail'), order_custom_item_url(@order_custom_item) %><br/><br/>
-  <%= t('mailer.custom_item_decline') %>
+  <%= t('mailer.order_information', link: link_to("[#{t('control_panel')}]", order_custom_item_url(@order_custom_item))).html_safe %><br/>
+  <%= t('mailer.custom_item_decline').html_safe %>
 </p>
 
 <br>

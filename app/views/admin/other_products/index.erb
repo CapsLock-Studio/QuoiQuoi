@@ -26,6 +26,7 @@
               <table class="data-table table table-striped" style="margin-bottom:0;">
                 <thead>
                 <tr>
+                  <th>編號</th>
                   <th></th>
                   <th>商品名稱</th>
                   <th>商品種類</th>
@@ -40,6 +41,9 @@
                       {name: translate.name, price: translate.price, lang: translate.locale.name, currency: translate.locale.currency}
                     end %>
                     <tr>
+                      <td>
+                        <%= product.id %>
+                      </td>
                       <td>
                         <div class="preview" style="width:100px;height:75px;">
                           <%= image_tag product.image.url(:thumb) %>
