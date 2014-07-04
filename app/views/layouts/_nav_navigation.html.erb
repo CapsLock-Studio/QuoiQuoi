@@ -68,11 +68,13 @@
         <i class="fa fa-shopping-cart">
           <strong class="hidden-sm" style="margin-left:5px;">
             <%= t('cart') %>
-            <% number = @menu_orders.order_products.length + @menu_orders.order_custom_items.length %>
-            <% if number > 0 %>
+            <% if @menu_orders %>
+              <% number = @menu_orders.order_products.length + @menu_orders.order_custom_items.length %>
+              <% if number > 0 %>
               <span class="badge badge-orange">
                 <%= number %>
               </span>
+              <% end %>
             <% end %>
           </strong>
         </i>

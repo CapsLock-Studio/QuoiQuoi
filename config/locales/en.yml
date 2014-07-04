@@ -34,6 +34,16 @@ en:
             current_password:
               invalid: 'Current password confirm failed.'
 
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u %n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "$"
 
   footer:
     login: 'Login Admin'
