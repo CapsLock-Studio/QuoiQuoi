@@ -40,6 +40,18 @@
       <%= (@order_custom_item.response.blank?)? '-' : simple_format(@order_custom_item.response) %>
     </td>
   </tr>
+  <% if @order_custom_item.image.exists? %>
+    <tr>
+      <td>
+        <%= t('custom_order.sketch') %>
+      </td>
+      <td>
+        <a href="http://quoiquoi.tw<%= @order_custom_item.image.url(:large) %>" target="_blank">
+          <%= image_tag "http://quoiquoi.tw#{@order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
+        </a>
+      </td>
+    </tr>
+  <% end %>
 </table>
 <br>
 <table class="table table-bordered text-left table-padding-20" style="margin-bottom:0;">
