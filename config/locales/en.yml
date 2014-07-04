@@ -378,7 +378,7 @@ en:
     subject_for_remittance_order: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
     subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
-    subject_for_accpet_custom_order: "[quoi quoi studio] Notice of your custom order is accepted (Please don't reply this mail)"
+    subject_for_accpet_custom_order: "[quoi quoi studio] Notice that your customization order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] We are sorry about decline your custom order (Please don't reply this mail)"
     subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
@@ -401,5 +401,7 @@ en:
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
-    custom_item_accept: 'Hi! We accept your custom order.'
+    custom_item_accept: 'We have accepted your customization order.'
     custom_item_decline: 'Sorry! We can not accept your custom order. This is your custom order link below.'
+    custom_order:
+      mind: 'Remind that full payment must be made before we product the order.'
