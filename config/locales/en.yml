@@ -385,7 +385,7 @@ en:
   person: 'Person'
   customizations: 'Customizations'
   personalized_products: 'Personalized products'
-  check_hint: "Thank you for shopping at quoi quoi studio.<br/>Please check your mailbox.<br/>Please consider the shipping distance to determine the arrival time.<br/>If you don't receive the products, please contact us by "
+  check_hint: "Thank you for shopping at quoi quoi studio. Your order has been shipped.<br/>Please check your mailbox.<br/>Please consider the shipping distance to determine the arrival time.<br/>If you don't receive the products, please contact us by "
 
   mailer:
     subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
@@ -403,8 +403,8 @@ en:
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
     remind_for_order: "Thank you for shopping at quoi quoi studio. Notice that  this order will be canceled if you don't remit money in three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     re_remittance: "Thank you for shopping at quoi quoi studio. Your remittance information is wrong.<br/>Please check your remittance and advice again.<br>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
-    deliver_for_order: "Thank you for shopping at quoi quoi studio. Your order has been shipped.<br/>Your order information is in the following."
-    thanks_for_order: "Your order information is in the following."
+    deliver_for_order: "Your order information is in the following."
+    thanks_for_order: "Thank you for shopping at quoi quoi studio.  Your order information is in the following."
     thanks_for_registration: "Thank you for register quoi quoi studio's course."
     thanks_for_user_gift: 'Thank you for buy our gift card.'
     help_return_tuition: '(please reply this mail to help us return your tuition)'
