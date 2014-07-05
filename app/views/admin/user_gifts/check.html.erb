@@ -61,7 +61,7 @@
                         <%= link_to(check_admin_user_gift_path(payment.user_gift), class: 'btn btn-md') do %>
                           <i class='icon-pencil'></i>
                         <% end %>
-                        <%= link_to(uncheck_admin_payment_path(payment), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '<h3><i class="icon-exclamation"></i>&nbsp;&nbsp;匯款資訊有誤嗎?</h3>'}) do %>
+                        <%= link_to(uncheck_admin_payment_path(payment), class: 'btn btn-danger btn-md', method: :put, data: {confirm: '<h3><i class="icon-exclamation"></i>&nbsp;&nbsp;匯款資訊有誤嗎?</h3>'}) do %>
                           <i class='icon-remove'></i>
                         <% end %>
                       </div>

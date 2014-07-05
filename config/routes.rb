@@ -146,6 +146,7 @@ QuoiQuoi::Application.routes.draw do
   end
 
   root to: 'home#index'
+  get 'test' => 'home#test'
 
   get 'rss' => 'rss#index'
   get 'cart' => 'cart#index'
