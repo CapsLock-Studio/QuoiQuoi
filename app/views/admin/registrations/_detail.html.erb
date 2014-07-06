@@ -1,4 +1,5 @@
 <% translate = CourseTranslate.where(course_id: registration.course_id, locale_id: registration.locale_id).first %>
+<% locale = Locale.where(id: registration.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
   <div class="box-header sea-blue-background">
     <div class="title">課程詳細內容</div>
@@ -35,7 +36,7 @@
               <%= "#{registration.attendance}/#{@total_attendance}/#{registration.course.popular}" %>
             </td>
             <td>
-              <%= number_to_currency(translate.price) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
+              <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
             </td>
           </tr>
           </tbody>
@@ -49,7 +50,7 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(registration.subtotal) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
+        <%= number_to_currency(registration.subtotal, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
       </strong>
     </h4>
   </div>

@@ -36,7 +36,7 @@
                 <tbody>
                 <% @gifts.each do |gift| %>
                   <% translates = gift.gift_translates.reject{|translate| translate.quota.blank?}.collect do |translate|
-                    {name: translate.name, quota: translate.quota, lang: translate.locale.name, currency: translate.locale.currency}
+                    {name: translate.name, quota: translate.quota, locale: translate.locale.lang, lang: translate.locale.name, currency: translate.locale.currency}
                   end %>
                   <tr>
                     <td><%= gift.id %></td>
@@ -52,7 +52,7 @@
                     </td>
                     <td>
                       <% translates.each do |translate| %>
-                        <%= number_to_currency(translate[:quota]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                        <%= number_to_currency(translate[:quota], locale: translate[:locale]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
                       <% end %>
                     </td>
                     <td>

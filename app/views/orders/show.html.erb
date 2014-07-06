@@ -1,3 +1,5 @@
+<% locale = Locale.where(id: @order.locale_id).first.lang %>
+
 <%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
@@ -64,7 +66,7 @@
                 <%= t('remitted_amount') %>
               </div>
               <div class="col-md-10 col-xs-9">
-                <%= number_to_currency(@order.payment.amount) %>
+                <%= number_to_currency(@order.payment.amount, locale: locale) %>
               </div>
             </div>
             <div class="row">
@@ -143,7 +145,7 @@
                           </div>
                         </td>
                         <td class="col-xs-1">
-                          <%= number_to_currency(translate.price) %><br/>
+                          <%= number_to_currency(translate.price, locale: locale) %><br/>
                           <span class="text-muted">*&nbsp;<%= order_product.quantity %></span>
                         </td>
                       </tr>
@@ -161,7 +163,7 @@
                           </div>
                         </td>
                         <td class="col-xs-1">
-                          <%= number_to_currency(custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>
+                          <%= number_to_currency(custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price, locale: locale) %>
                         </td>
                       </tr>
                     <% end %>
@@ -178,7 +180,7 @@
           <h4 class="text-right color-orange">
             <%= t('total_amount') %>
             <strong class="text-muted">
-              <%= number_to_currency(@order.subtotal) %>
+              <%= number_to_currency(@order.subtotal, locale: locale) %>
             </strong>
           </h4>
         </div>

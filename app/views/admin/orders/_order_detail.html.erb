@@ -1,3 +1,4 @@
+<% locale = Locale.where(id: order.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
   <div class="box-header sea-blue-background">
     <div class="title">訂單詳細內容</div>
@@ -34,7 +35,7 @@
                 <strong><%= translate.name %></strong>
               </td>
               <td>
-                <%= number_to_currency(translate.price) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
+                <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
               </td>
               <td>
                 <%= order_product.quantity %>
@@ -56,7 +57,7 @@
                 <strong><%= t('original_bag') %></strong>
               </td>
               <td>
-                <%= number_to_currency(translate.price) %>&nbsp;<small class="text-muted"><%= order.currency %></small>
+                <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= order.currency %></small>
               </td>
             </tr>
           <% end %>
@@ -71,7 +72,7 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(order.subtotal) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
+        <%= number_to_currency(order.subtotal, locale: locale.lang) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
       </strong>
     </h4>
   </div>

@@ -32,6 +32,7 @@
                 </thead>
                 <tbody>
                 <% @payments.each do |payment| %>
+                  <% locale = Locale.where(id: payment.order.locale_id).first %>
                   <tr>
                     <td>
                       <%= payment.order_id %>
@@ -40,10 +41,10 @@
                       <%= link_to payment.user.id, admin_user_path(payment.user.id) %>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.order.subtotal) %>&nbsp;<span class="text-muted"><%= payment.order.currency %></span>
+                      <%= number_to_currency(payment.order.subtotal, locale: locale.lang) %>&nbsp;<span class="text-muted"><%= payment.order.currency %></span>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.amount) %>&nbsp;<span class="text-muted"><%= payment.order.currency %></span>
+                      <%= number_to_currency(payment.amount, locale: locale.lang) %>&nbsp;<span class="text-muted"><%= payment.order.currency %></span>
                     </td>
                     <td>
                       <%= payment.identifier %>

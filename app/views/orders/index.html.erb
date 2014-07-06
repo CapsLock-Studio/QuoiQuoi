@@ -7,6 +7,7 @@
         <%= render 'layouts/nav_item' %>
       </div>
       <% @orders.each do |order| %>
+        <% locale = Locale.where(id: order.locale_id).first.lang %>
         <div class="box">
           <div class="box-header box-header-small grey-background">
             <h4>
@@ -48,7 +49,7 @@
                       <% end %>
                     </td>
                     <td>
-                      <%= number_to_currency(order.subtotal) %>
+                      <%= number_to_currency(order.subtotal, locale: locale) %>
                     </td>
                     <td>
                       <ul class="list-unstyled">

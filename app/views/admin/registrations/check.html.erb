@@ -34,6 +34,7 @@
                 </thead>
                 <tbody>
                 <% @payments.each do |payment| %>
+                  <% locale = Locale.where(id: payment.registration.locale_id).first %>
                   <% translate = CourseTranslate.where(course_id: payment.registration.course_id, locale_id: payment.registration.locale_id).first %>
                   <tr>
                     <td>
@@ -53,10 +54,10 @@
                       <%= payment.registration.attendance %> 人
                     </td>
                     <td>
-                      <%= number_to_currency(payment.registration.subtotal) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
+                      <%= number_to_currency(payment.registration.subtotal, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.amount) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
+                      <%= number_to_currency(payment.amount, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
                     </td>
                     <td>
                       <%= payment.identifier %>
