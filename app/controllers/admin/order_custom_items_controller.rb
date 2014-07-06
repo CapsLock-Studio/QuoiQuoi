@@ -3,7 +3,7 @@ class Admin::OrderCustomItemsController < AdminController
   add_breadcrumb '首頁', :admin_root_path
 
   def index
-    @order_custom_items = OrderCustomItem.where(canceled: false)
+    @order_custom_items = OrderCustomItem.where(canceled: false).where.not(user_id: ['', nil])
   end
 
   def show
@@ -50,7 +50,7 @@ class Admin::OrderCustomItemsController < AdminController
   end
 
   def check
-    @order_custom_items = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil)
+    @order_custom_items = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil).where.not(user_id: ['', nil])
   end
 
   private
