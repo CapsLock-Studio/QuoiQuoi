@@ -16,7 +16,8 @@ class UserGiftMailer < ActionMailer::Base
   end
 
   def completed_remind(user_gift)
-    I18n.locale = Locale.find(user_gift.locale_id).lang
+    @locale_lang = Locale.find(user_gift.locale_id).lang
+    I18n.locale = @locale_lang
 
     @user_gift = user_gift
     mail(to: user_gift.user.email, subject: t('mailer.subject_for_completed_gift'))
