@@ -1,23 +1,24 @@
 class CoursesController < ApplicationController
   before_action :set_course, except: [:index]
+  before_action :set_months
 
   # GET /course
   def index
     set_breadcrumbs
 
     respond_to do |format|
-      @courses = Course.where(canceled: false).where('time > ?', Time.now)
+      @courses = Course.where(canceled: false)
       format.html do
         # not show any past courses
-        if params[:month] && params[:month] != 'recent'
+        if params[:month] && params[:month] != 'new'
           @courses = @courses.by_month(params[:month])
         else
 
           # show now to two months after
           # @courses = @courses.where('time <= ?', Time.now + 2.months)
+          @courses = @courses.order(created_at: :desc).limit(12)
         end
 
-        # make page
         @courses = @courses.page(params[:page]).per(12).order(:time)
       end
 
@@ -60,6 +61,14 @@ class CoursesController < ApplicationController
         @course = Course.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
+      end
+    end
+
+    def set_months
+      @months = []
+      month_first = Time.now.month - 1
+      6.times do |index|
+        @months << ((index + month_first > 12)? month_first + index - 12 : index + month_first)
       end
     end
 end

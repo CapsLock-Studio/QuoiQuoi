@@ -16,6 +16,12 @@
               <h4><%= type.name %></h4>
             </div>
           <% end %>
+        <% else %>
+          <a href="#">
+            <div class="headline">
+              <h4><%= type.name %></h4>
+            </div>
+          </a>
         <% end %>
         <ul class="list-unstyled article">
           <% type.articles.order(created_at: :desc).limit(10).each do |article| %>
