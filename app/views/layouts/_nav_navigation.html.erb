@@ -44,7 +44,7 @@
       </ul>
     <% end %>
     <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>
-      <%= link_to t('course.title').upcase, courses_path(month: 'recent'), class: 'btn btn-link' %>
+      <%= link_to t('course.title').upcase, courses_path(month: 'new'), class: 'btn btn-link' %>
     <% end %>
     <%= nav_item(nil, {rule: /#{reports_path}/}) do %>
       <%= link_to t('report_remittance'), reports_path, class: 'btn btn-link' %>
