@@ -24,7 +24,7 @@
           </a>
         <% end %>
         <ul class="list-unstyled article">
-          <% type.articles.order(created_at: :desc).limit(10).each do |article| %>
+          <% type.articles.order(created_at: :desc).limit(5).each do |article| %>
             <li>
               <%= link_to truncate(article.title, length: 22), article_path(article.id) %>
             </li>
@@ -42,7 +42,7 @@
         <% end %>
       </div>
       <ul class="list-unstyled article">
-        <% Area.where(locale_id: session[:locale_id]).each do |area| %>
+        <% Area.where(locale_id: session[:locale_id]).limit(5).each do |area| %>
           <li>
             <%= link_to area_path(area.id) do %>
               <i class="fa fa-tag fa-fw"></i>
