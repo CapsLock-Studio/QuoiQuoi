@@ -10,10 +10,12 @@
 
     <% @article_types.each do |type| %>
       <div class="col-md-3 articles">
-        <%= link_to article_path(type.articles.last) do %>
-          <div class="headline">
-            <h4><%= type.name %></h4>
-          </div>
+        <% if type.articles.last %>
+          <%= link_to article_path(type.articles.last) do %>
+            <div class="headline">
+              <h4><%= type.name %></h4>
+            </div>
+          <% end %>
         <% end %>
         <ul class="list-unstyled article">
           <% type.articles.order(created_at: :desc).limit(10).each do |article| %>
