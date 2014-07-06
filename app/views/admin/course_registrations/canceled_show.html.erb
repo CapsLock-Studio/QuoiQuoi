@@ -39,6 +39,7 @@
                 </thead>
                 <tbody>
                 <% @course.registrations.each do |registration| %>
+                  <% locale = Locale.where(id: registration.locale_id).first %>
                   <tr>
                     <td>
                       <%= registration.course.id %>
@@ -57,7 +58,7 @@
                       <%= registration.name %>
                     </td>
                     <td>
-                      <%= number_to_currency(registration.subtotal) %>
+                      <%= number_to_currency(registration.subtotal, locale: locale.lang) %>
                     </td>
                     <td>
                       <%= registration.email %>

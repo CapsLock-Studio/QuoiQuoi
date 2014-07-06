@@ -37,6 +37,7 @@
                   <tbody>
                   <% @registrations.each do |registration| %>
                     <% name = registration.course.course_translates.where(locale_id: session[:locale_id]).first.name %>
+                    <% locale = Locale.where(id: registration.locale_id).first.lang %>
                     <% unless name.blank? %>
                       <tr>
                         <td class="hidden-xs">
@@ -46,7 +47,7 @@
                           <%= name %>
                         </td>
                         <td>
-                          <%= "#{t('money_name')}#{number_to_currency(registration.subtotal)}" %>
+                          <%= "#{t('money_name')}#{number_to_currency(registration.subtotal, locale: locale)}" %>
                         </td>
                         <td>
                           <% if registration.payment %>

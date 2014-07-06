@@ -38,7 +38,7 @@
                 <tbody>
                   <% @products.each do |product| %>
                     <% translates = product.product_translates.reject{|translate| translate.price.blank?}.collect do |translate|
-                      {name: translate.name, price: translate.price, lang: translate.locale.name, currency: translate.locale.currency}
+                      {name: translate.name, price: translate.price, locale: translate.locale.lang, lang: translate.locale.name, currency: translate.locale.currency}
                     end %>
                     <tr>
                       <td>
@@ -62,7 +62,7 @@
                       </td>
                       <td>
                         <% translates.each do |translate| %>
-                          <%= number_to_currency(translate[:price]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                          <%= number_to_currency(translate[:price], locale: translate[:locale]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
                         <% end %>
                       </td>
                       <td>
