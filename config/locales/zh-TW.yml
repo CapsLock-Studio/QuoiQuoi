@@ -82,7 +82,7 @@ zh-TW:
     wait_confirm: '等待確認'
     wait_paying: '等待付款'
     advice: '回報'
-    received: '收貨'
+    received: '收到貨了'
     cancel: '取消訂單'
 
   custom_order:

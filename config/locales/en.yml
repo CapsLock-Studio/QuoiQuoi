@@ -76,7 +76,7 @@ en:
     detail: 'Detail of custom order'
     about: 'About %{days} business days'
     hint: 'If you do not sign in or sign up on this website, you will be required to sign in after pressing the “submit” button.'
-    first_hint: 'It is not unnecessary to input your requirement in order. The information input is indispensable to the items with red asterisk.'
+    first_hint: 'It is unnecessary to input your requirement in order. The information input is indispensable to the items with red asterisk.'
 
   registration:
     my: 'My courses'
@@ -198,7 +198,7 @@ en:
   submit_message: 'Send the message'
   report: 'REPORT'
   chose_your_material: 'Choose the materials'
-  choose_additional: 'Other accessories?'
+  choose_additional: 'Choose the modes, accessories and materials'
   no_options: 'Sorry, there is no options.'
   no_message: 'No message.'
   original_bag: 'Customization charge'
