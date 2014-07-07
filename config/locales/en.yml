@@ -75,7 +75,7 @@ en:
     respond: 'Message'
     detail: 'Detail of custom order'
     about: 'About %{days} business days'
-    hint: '訂製手作包需要會員功能, 下一步驟需要請您登入或是註冊網站會員'
+    hint: 'If you do not sign in or sign up on this website, you will be required to sign in after pressing the “submit” button.'
     first_hint: 'It is not unnecessary to input your requirement in order. The information input is indispensable to the items with red asterisk.'
 
   registration:
