@@ -5,22 +5,6 @@
       <div class="reg-page" style="border-top:0;">
         <div class="reg-header">
           <h2><%= t('signup') %></h2>
-          <p>
-            <%= t('signup_hint', signin_link: link_to(t('signin'), new_user_session_path, class: 'text-muted', style: 'font-size: 16px;')).html_safe %>
-          </p>
-          <ul class="list-inline style-icons text-center">
-            <li>
-              <%= link_to user_omniauth_authorize_path(:google_oauth2) do %>
-                <i class="fa fa-google-plus icon-round icon-round-md icon-bg-dark-orange hover-effect icon-hover"></i>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to user_omniauth_authorize_path(:facebook) do %>
-                <i class="fa fa-facebook icon-round icon-round-md icon-bg-sea-blue hover-effect icon-hover"></i>
-              <% end %>
-            </li>
-            <li><a href="#"><i class="fa fa-twitter icon-round icon-round-md icon-bg-blue hover-effect icon-hover"></i></a></li>
-          </ul>
         </div>
 
         <%= form_for(resource, as: resource_name, url: user_registration_path, html: { class: 'validate-form' }) do |f| %>
