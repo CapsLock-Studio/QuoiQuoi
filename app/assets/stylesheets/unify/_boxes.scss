@@ -1,0 +1,145 @@
+.box {
+  margin-bottom: 20px;
+  position: relative; }
+.box.box-collapsed .box-header .actions .box-collapse i:before {
+  content: "\f078"; }
+.box.box-collapsed .box-content {
+  display: none; }
+.box .box-header {
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 30px;
+  padding: 10px 15px;
+  overflow: hidden;
+  *zoom: 1; }
+.box .box-header .title {
+  float: left;
+  color: #3c3c3c; }
+.box .box-header .actions {
+  margin-top: -3px;
+  float: right; }
+.box .box-header .actions .dropdown-toggle {
+  position: relative;
+  top: 5px; }
+.box .box-header .actions .btn-link {
+  color: #c4c4c4;
+  text-decoration: none;
+  text-shadow: none; }
+.box .box-header .actions .box-collapse i {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  margin-top: 0; }
+.box .box-header .actions .box-collapse i:before {
+  content: "\f077"; }
+.box .box-header.box-header-small {
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 19px;
+  padding: 10px 10px; }
+.box .box-header.box-header-small .actions {
+  margin-top: -1px; }
+.box .box-content {
+  padding: 10px;
+  border: 1px solid #dddddd;
+  background: white;
+  display: block;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055); }
+.box .box-content .box-toolbox {
+  overflow: hidden;
+  *zoom: 1;
+  background-color: #f4f4f4;
+  padding: 5px; }
+.box .box-content .box-toolbox.box-toolbox-top {
+  margin: -10px -10px 10px -10px;
+  border-bottom: 1px solid #dddddd; }
+.box .box-content .box-toolbox.box-toolbox-bottom {
+  margin: 10px -10px -10px -10px;
+  border-top: 1px solid #dddddd; }
+.box .box-content.box-no-padding {
+  padding: 0; }
+.box .box-content.box-no-padding form {
+  margin-bottom: 0; }
+.box .box-content.box-padding {
+  padding: 20px; }
+.box .box-content.box-padding .box-toolbox {
+  padding: 10px;
+  position: relative; }
+.box .box-content.box-padding .box-toolbox.box-toolbox-top {
+  margin: -20px -20px 20px -20px; }
+.box .box-content.box-padding .box-toolbox.box-toolbox-bottom {
+  margin: 20px -20px -20px -20px; }
+.box .box-content.box-double-padding {
+  padding: 40px; }
+.box .box-content.box-double-padding .box-toolbox {
+  padding: 20px; }
+.box .box-content.box-double-padding .box-toolbox.box-toolbox-top {
+  margin: -40px -40px 40px -40px; }
+.box .box-content.box-double-padding .box-toolbox.box-toolbox-bottom {
+  margin: 40px -40px -40px -40px; }
+.box.box-transparent {
+  background: none;
+  padding: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+.box.box-transparent .box-content {
+  background: transparent;
+  border: none;
+  border-top: 1px solid #dddddd;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+.box.box-bordered {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #dddddd; }
+.box.box-bordered .box-content {
+  border-left: none;
+  border-right: none;
+  border-bottom: none; }
+
+.box-quick-link {
+  text-align: center;
+  margin-bottom: 10px; }
+.box-quick-link a {
+  text-decoration: none; }
+.box-quick-link a .header {
+  height: 60px;
+  line-height: 60px;
+  padding-bottom: 2px; }
+.box-quick-link a .header [class^="icon-"], .box-quick-link a .header [class*=" icon-"] {
+  color: white;
+  font-size: 30px;
+  vertical-align: middle; }
+.box-quick-link a .content {
+  text-transform: uppercase;
+  font-size: 85%;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  color: #5b5b5b;
+  background-color: #dbdbdb;
+  border-bottom: 1px solid #cecece;
+  padding: 5px; }
+.box-quick-link a:hover .header [class^="icon-"], .box-quick-link a:hover .header [class*=" icon-"] {
+  font-size: 40px; }
+.box-quick-link a:hover .content {
+  text-decoration: underline;
+  border-bottom-color: #c1c1c1;
+  background-color: #cecece; }

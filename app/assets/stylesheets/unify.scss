@@ -1,6 +1,7 @@
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
 
+
 @import 'unify/plugins/plugins';
 
 @import 'flatty/plugins/fullcalendar/fullcalendar';
@@ -15,9 +16,12 @@
 
 @import 'unify/pages/pages';
 
-@import 'unify/themes/default';
 @import 'unify/themes/light';
 @import 'unify/themes/headers/header1-light';
+
+@import 'unify/boxes';
+@import 'unify/wizard';
+
 @import 'unify/asside_menu';
 @import 'unify/offcanvas';
 
@@ -436,8 +440,13 @@ li.step-active {
   -o-animation: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s; /* Opera */
   animation: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   background-color: #FFF;
-  border-right: 5px solid #F5F5F5;
-  border-left: 5px solid #F5F5F5;
+  padding: 0;
+  margin: 0 -8px;
+
+  @media (max-width: 767px) {
+    padding: 0 15px;
+    margin: 0;
+  }
 }
 
 .right-0 {
@@ -487,6 +496,47 @@ li.step-active {
   .dropdown-menu li.active a {
     background-color: #F5F5F5;
     color: #262626;
+  }
+}
+
+.fuelux .wizard {
+  border-radius: 0px;
+  box-shadow: none;
+  background-color: transparent;
+  border: medium none;
+}
+
+.fuelux .wizard ul li {
+  background-color: #F5F5F5;
+  margin-right: 30px;
+  padding: 0px 15px;
+  color: #424242;
+  font-family: Montserrat;
+  font-size: 20px;
+  position: relative;
+  border-radius: 0px !important;
+
+  @media (max-width: 767px) {
+    margin-right: 10px;
+  }
+}
+
+.responsive-table {
+  position: relative;
+  overflow: hidden;
+
+  .scrollable-area {
+    width: 100%;
+    overflow: scroll;
+    overflow-y: hidden;
+  }
+
+  table {
+    td {
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
 }
 

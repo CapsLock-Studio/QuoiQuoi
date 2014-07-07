@@ -1,5 +1,5 @@
 class OrderCustomItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
+  before_action :authenticate_user!, except: [:new, :create, :material]
   before_action :set_order_custom_item, except: [:index, :new, :create]
 
   # GET /order_custom_items
@@ -61,6 +61,7 @@ class OrderCustomItemsController < ApplicationController
         if @order_custom_item.save
           session[:temp] = @order_custom_item.id
           flash[:alert] = t('devise.failure.unauthenticated')
+          flash[:email] = params[:email]
           format.html {redirect_to new_user_session_path}
         else
           format.html {render json: @order_custom_item.errors}
