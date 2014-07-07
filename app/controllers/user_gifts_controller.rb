@@ -93,8 +93,10 @@ class UserGiftsController < ApplicationController
 
         discount_item.subtotal -= GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: discount_item.locale_id).first.quota
 
-        if discount_item.subtotal < 0
+        if discount_item.subtotal <= 0
           discount_item.subtotal = 0
+        else
+          flash[:message] = t('user_gift.success')
         end
 
         @user_gift.used_time = Time.now
@@ -103,14 +105,24 @@ class UserGiftsController < ApplicationController
         discount_item.save!
         @user_gift.save!
 
-        flash[:message] = t('user_gift.success')
+        if discount_item.subtotal == 0
+          payment = discount_item.build_payment(token: Base64.encode64("#{Time.now}#{(0..3).map{('a'..'z').to_a[rand(26)]}.join}"), user_id: current_user.id, order_id: params[:order_id], registration_id: params[:registration_id], completed: true, currency: discount_item.currency, pay_time: Time.now, amount: 0)
 
-        unless params[:order_id].blank?
-          redirect_to pay_order_path(discount_item)
-        end
+          if payment.save
+            if discount_item.payment.order
 
-        unless params[:registration_id].blank?
-          redirect_to pay_registration_path(discount_item)
+              # send mail to remind order complete
+              OrderMailer.remind(discount_item.payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+              redirect_to order_path(params[:order_id])
+            elsif discount_item.payment.registration
+
+              # send mail to remind registration
+              RegistrationMailer.remind(discount_item.payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
+              redirect_to registration_path(params[:registration_id])
+            end
+          else
+            format.html {render json: @payment.errors}
+          end
         end
 
       rescue ActiveRecord::RecordNotFound

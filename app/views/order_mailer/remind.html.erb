@@ -48,7 +48,7 @@
     </tbody>
   </table>
 <% end %>
-<% workdays = 5 %>
+<% workdays = 0 %>
 <% if @order.order_custom_items.length > 0 %>
   <h4><%= t('personalized_products') %></h4>
   <table>
@@ -68,7 +68,7 @@
     </thead>
     <tbody>
     <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
-    <% workdays = order_custom_item.workday if order_custom_item.workday and order_custom_item.workday > workdays %>
+    <% workdays += order_custom_item.workday %>
       <tr>
         <td>
           <%= image_tag "#{@domain}#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
@@ -89,6 +89,7 @@
     </tbody>
   </table>
 <% end %>
+<% workdays = 5 if workdays < 5 %>
 <h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %><small><%= @order.currency %></label></h4>
 <h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
 <h3><%= t('shipping_information') %></h3>
