@@ -45,6 +45,14 @@ class Admin::OrderCustomItemsController < AdminController
     end
   end
 
+  def delete
+    if @order_custom_item.destroy
+      redirect_to action: :check
+    else
+      render json: @order_custom_item.errors
+    end
+  end
+
   def accepted
     @order_custom_items = OrderCustomItem.where(canceled: false, accept: true)
   end

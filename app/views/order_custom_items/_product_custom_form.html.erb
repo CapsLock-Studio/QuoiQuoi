@@ -11,9 +11,6 @@
         <li class="hover-effect" data-target="#step3">
           <span class="step">3</span>
         </li>
-        <li class="hover-effect" data-target="#step4">
-          <span class="step">4</span>
-        </li>
       </ul>
       <div class="actions">
         <button type="button" class="btn btn-mini btn-prev" disabled="disabled">
@@ -29,7 +26,7 @@
     <div class="step-content">
       <hr class="hr-normal">
       <div class="step-pane active" id="step1">
-        <h4><%= t('choose_additional') %></h4>
+        <h4><span class="color-red">*</span>&nbsp;<%= t('choose_additional') %></h4>
         <div class="row">
           <div class="col-md-12">
             <div class="box select-boxes" data-name="product_custom_item_id">
@@ -78,49 +75,6 @@
         </div>
       </div>
       <div class="step-pane" id="step2">
-        <h4><%= t('chose_your_material') %> <span class="text-danger">*</span></h4>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box select-boxes" data-name="material_id">
-              <div class="items">
-                <%= f.nested_fields_for :order_custom_item_materials do |builder| %>
-                  <%= builder.hidden_field :material_id %>
-                <% end %>
-              </div>
-              <div class="box-content">
-                <div class="row">
-                  <div class="col-md-12 select-box-paginate">
-                    <%= paginate @materials, params: {controller: :order_custom_items, action: :material} %>
-                  </div>
-                </div>
-                <div class="row">
-                  <% @materials.each do |material| %>
-                    <div class="col-sm-3 col-xs-6">
-                      <div class="box image-preview-box select-box">
-                        <div class="box-header box-header-small" style="cursor:pointer" data-id="<%= material.id %>">
-                          <div class="title">
-                            <%= material.material_translates.where(locale_id: session[:locale_id]).first.name %>
-                          </div>
-                          <div class="actions">
-                            <i class="fa fa-square-o fa-2x text-muted"></i>
-                          </div>
-                        </div>
-                        <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
-                                <span class="overlay-zoom">
-                                  <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
-                                  <span class="zoom-icon"></span>
-                                </span>
-                        </a>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="step-pane" id="step3">
         <h4><%= t('description_hint') %></h4>
         <div class="row">
           <div class="col-md-12">
@@ -174,7 +128,7 @@
           </div>
         </div>
       </div>
-      <div class="step-pane" id="step4">
+      <div class="step-pane" id="step3">
         <h4><%= t('your_contact') %> <small class="text-muted"><%= t('your_contact_hint') %></small></h4>
         <div class="row">
           <div class="col-md-12">

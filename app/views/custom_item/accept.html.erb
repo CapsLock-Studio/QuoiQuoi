@@ -88,15 +88,15 @@
       <td><%= t('style') %></td>
       <td><%= @order_custom_item.style %></td>
     </tr>
+    <tr>
+      <td><%= t('material') %></td>
+      <td>
+        <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
+          <%= image_tag "http://quoiquoi.tw#{order_custom_item_material.material.image.url(:thumb)}" %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
-  <tr>
-    <td><%= t('material') %></td>
-    <td>
-      <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
-        <%= image_tag "http://quoiquoi.tw#{order_custom_item_material.material.image.url(:thumb)}" %>
-      <% end %>
-    </td>
-  </tr>
   <tr>
     <td><%= t('description') %></td>
     <td>
