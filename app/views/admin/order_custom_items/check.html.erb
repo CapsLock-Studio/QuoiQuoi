@@ -56,7 +56,7 @@
                         <%= link_to(edit_admin_order_custom_item_path(order_custom_item), class: 'btn btn-md') do %>
                           <i class='icon-pencil'></i>
                         <% end %>
-                        <%= link_to(admin_order_custom_item_path(order_custom_item), class: 'btn btn-md btn-danger', method: :delete) do %>
+                        <%= link_to(delete_admin_order_custom_item_path(order_custom_item), class: 'btn btn-md btn-danger', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
                           <i class="icon-remove"></i>
                         <% end %>
                       </div>

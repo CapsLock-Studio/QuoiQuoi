@@ -96,6 +96,9 @@ QuoiQuoi::Application.routes.draw do
     resources :messages
 
     resources :order_custom_items do
+      member do
+        delete :delete
+      end
       collection do
         get :accepted
         get :canceled
