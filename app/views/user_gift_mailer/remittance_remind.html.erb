@@ -10,6 +10,7 @@
   <strong><%= t('mailer.dear') %> </strong><br/>
   <%= t('mailer.remind_for_user_gift', remittance_link: link_to(t('order.advice'), edit_payment_url(@user_gift.payment))).html_safe %>&nbsp;<%= edit_payment_url(@user_gift.payment) %>
 </p>
+<h4><%= t('user_gift.information') %></h4>
 <table class="table table-hover">
   <thead>
   <tr>

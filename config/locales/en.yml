@@ -384,7 +384,7 @@ en:
     subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
     subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice that your customization order is accepted (Please don't reply this mail)"
-    subject_for_decline_custom_order: "[quoi quoi studio] Decline you personalized order (Please don't reply this mail)"
+    subject_for_decline_custom_order: "[quoi quoi studio] Decline your customization order (Please don't reply this mail)"
     subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
     subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
@@ -401,7 +401,7 @@ en:
     help_return_tuition: '(please reply this mail to help us return your tuition)'
     remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment in three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_for_registration: "Thank you for registering quoi quoi studio's course. This is your registration information below. Please don't miss the course."
-    remind_for_user_gift: "Thank you for buying this product.<br/>Mind you, if you don't complete payment in three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
+    remind_for_user_gift: "Thank you for buying this gift card.<br/>Mind you, if you don't complete payment in three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] in my account of quoi quoi website.&nbsp;%{url}<br/>You can use gift card to buy the products and join the courses on quoi quoi website.<br/>Remind that there is no change in the gift card payment.<br/>How to use the gift card?<br/>For example, please take a look at the following steps.'
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
