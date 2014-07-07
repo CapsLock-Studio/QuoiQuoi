@@ -178,54 +178,50 @@
         <h4><%= t('your_contact') %> <small class="text-muted"><%= t('your_contact_hint') %></small></h4>
         <div class="row">
           <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box">
-                  <div class="box-content">
-                    <% unless user_signed_in? %>
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <label>
-                            Email
-                            <span class="color-red">*</span>
-                          </label>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= text_field_tag :email, class: 'form-control', data: {'rule-required' => true, 'rule-email' => true} %>
-                        </div>
-                      </div>
+            <div class="box">
+              <div class="box-content">
+                <% unless user_signed_in? %>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <label>
+                        Email
+                        <span class="color-red">*</span>
+                      </label>
+                    </div>
+                    <div class="controls col-md-3">
+                      <%= text_field_tag :email, (flash[:email])? flash[:email] : '', class: 'form-control', data: {'rule-required' => true, 'rule-email' => true} %>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <%= f.label :name do %>
+                      <%= t('name') %>
+                      <span class="color-red">*</span>
                     <% end %>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <%= f.label :name do %>
-                          <%= t('name') %>
-                          <span class="color-red">*</span>
-                        <% end %>
-                      </div>
-                      <div class="controls col-md-3">
-                        <%= f.text_field :name, value: (user_signed_in?)? current_user.name : f.object.name, class: 'form-control', data: {'rule-required' => true} %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <%= f.label :phone do %>
-                          <%= t('phone_number') %>
-                        <% end %>
-                      </div>
-                      <div class="controls col-md-3">
-                        <%= f.text_field :phone, value: (user_signed_in?)? current_user.phone : f.object.phone, class: 'form-control' %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <%= f.label :line do %>
-                          Line
-                        <% end %>
-                      </div>
-                      <div class="controls col-md-3">
-                        <%= f.text_field :line, value: (user_signed_in?)? current_user.line : f.object.line, class: 'form-control' %>
-                      </div>
-                    </div>
+                  </div>
+                  <div class="controls col-md-3">
+                    <%= f.text_field :name, value: (user_signed_in?)? current_user.name : f.object.name, class: 'form-control', data: {'rule-required' => true} %>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <%= f.label :phone do %>
+                      <%= t('phone_number') %>
+                    <% end %>
+                  </div>
+                  <div class="controls col-md-3">
+                    <%= f.text_field :phone, value: (user_signed_in?)? current_user.phone : f.object.phone, class: 'form-control' %>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <%= f.label :line do %>
+                      Line
+                    <% end %>
+                  </div>
+                  <div class="controls col-md-3">
+                    <%= f.text_field :line, value: (user_signed_in?)? current_user.line : f.object.line, class: 'form-control' %>
                   </div>
                 </div>
               </div>

@@ -329,7 +329,7 @@ en:
   month_10: 'OCT'
   month_11: 'NOV'
   month_12: 'DEC'
-  remittance_hint: 'Input your email to search your register record.'
+  remittance_hint: 'This function is just for the course students. If you are the shop customer, please sign in and go to %{link} to advice the remittance.'
   remittance_placeholder: 'Input the email address'
   refunded: 'Refunded'
   tuition: 'Tuition'

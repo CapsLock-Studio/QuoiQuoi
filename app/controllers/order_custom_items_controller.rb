@@ -1,6 +1,6 @@
 class OrderCustomItemsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create, :material]
-  before_action :set_order_custom_item, except: [:index, :new, :create]
+  before_action :set_order_custom_item, except: [:index, :new, :create, :material]
 
   # GET /order_custom_items
   def index

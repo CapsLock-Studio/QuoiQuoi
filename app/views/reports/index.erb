@@ -6,7 +6,7 @@
         <div class="reg-header">
           <div class="text-center">
             <h3><i class="fa fa-edit"></i><%= t('report_remittance') %></h3>
-            <p><%= t('remittance_hint') %></p>
+            <p><%= t('remittance_hint', link: link_to(user_path, style: 'font-size: 16px;color: #95A5A6'){"<i class=\"fa fa-user fa-fw\"></i>#{t('control_panel')}".html_safe}).html_safe %></p>
           </div>
         </div>
         <div class="row margin-bottom-40">
