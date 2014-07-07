@@ -75,6 +75,8 @@ en:
     respond: 'Message'
     detail: 'Detail of custom order'
     about: 'About %{days} business days'
+    hint: '訂製手作包需要會員功能, 下一步驟需要請您登入或是註冊網站會員'
+    first_hint: 'It is not unnecessary to input your requirement in order. The information input is indispensable to the items with red asterisk.'
 
   registration:
     my: 'My courses'
