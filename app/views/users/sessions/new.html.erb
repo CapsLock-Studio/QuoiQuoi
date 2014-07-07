@@ -30,7 +30,7 @@
                 <div class="controls margin-bottom-20">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                    <%= f.email_field :email, class: 'form-control', 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
+                    <%= f.email_field :email, (flash[:email])? flash[:email] : f.object.email, class: 'form-control', 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
                   </div>
                 </div>
               </div>

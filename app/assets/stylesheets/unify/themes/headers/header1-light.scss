@@ -26,9 +26,15 @@
 ------------------------------------*/
 @media (min-width: 767px) {
 	/*Navbar*/
+    .header .navbar-default .navbar-nav {
+      .btn {
+        border: none;
+      }
+    }
 	.header .navbar-default .navbar-nav > li > a:hover,
 	.header .navbar-default .navbar-nav > .active > a {
-		border-bottom: solid 2px #787d80;
+
+      border-bottom: 2px solid #787d80;
 	}
 
 	.header .navbar-default .navbar-nav > .open > a,

@@ -16,41 +16,6 @@ a.read-more:hover {
 	color:#95a5a6;
 }
 
-/*Sliders
-------------------------------------*/
-/*Main Parallax Sldier*/
-.da-slide h2 i {
-	background:image_url('unify/plugins/parallax-slider/bg-heading-light.png') repeat;
-}
-
-/*Sequence Parallax Sldier*/
-.sequence-inner {
-  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#f0f0f0));
-  background: -webkit-linear-gradient(#fff, #f0f0f0);
-  background: -moz-linear-gradient(#fff, #f0f0f0);
-  background: -ms-linear-gradient(#fff, #f0f0f0);
-  background: -o-linear-gradient(#fff, #f0f0f0);
-  background: linear-gradient(#fff, #f0f0f0)
-}
-
-#sequence-theme h2 {
-	background:rgba(149, 165, 166, 0.8);
-}
-
-#sequence-theme .info p {
-	background:rgba(149, 165, 166, 0.8);
-}
-
-/*Purchase
-------------------------------------*/
-.purchase a.btn-buy {
-	background:#95a5a6;
-	text-shadow:0 1px 0 #7f8c8d;
-}
-.purchase a.btn-buy:hover {
-	background:#7f8c8d;
-} 
-
 /*Buttons
 ------------------------------------*/
 .btn-u {
@@ -60,17 +25,6 @@ a.read-more:hover {
 .btn-u:hover {
 	background: #7f8c8d;
 }
-
-/*Service
-------------------------------------*/
-.service .service-icon {
-	color:#95a5a6;	
-}
-
-/*Service Blocks*/
-.service-alternative .service:hover { 
-	background:#95a5a6;
-} 
 
 /*Thumbnail (Recent Work)
 ------------------------------------*/
@@ -183,16 +137,6 @@ blockquote:hover {
 	border: solid 1px #7f8c8d;
 }
 
-/*Accardion
-------------------------------------*/
-.acc-home a.active,
-.acc-home a.accordion-toggle:hover { 
-	color:#95a5a6; 
-}
-.acc-home .collapse.in { 
-	border-bottom:solid 1px #95a5a6; 
-}
-
 /*Testimonials
 ------------------------------------*/
 .testimonials .testimonial-info {
@@ -214,65 +158,6 @@ blockquote:hover {
 .breadcrumb li.active,
 .breadcrumb li a:hover {
 	color:#95a5a6;
-}
-
-/*About Page
-------------------------------------*/
-.team .thumbnail-style:hover h3 a {
-	color:#95a5a6 !important;
-}
-
-/*Social Icons*/
-.team ul.team-socail li i:hover {
-	background: #95a5a6;
-}
-
-/*Pricing Page
-------------------------------------*/
-/*Pricing Head*/
-.pricing:hover h4 {
-	color:#95A5A6;
-}
-
-.pricing-head h3 {
-	background:#787d80;
-	text-shadow:0 1px 0 #BDC3C7;
-	border-bottom:solid 1px #BDC3C7;
-}
-.pricing-head h4 {
-	color:#999;
-	background:#fcfcfc;
-	border-bottom:solid 1px #BDC3C7;
-}
-	
-/*Pricing Content*/
-.pricing-content li {
-	border-bottom:solid 1px #BDC3C7;
-}
-.pricing-content li i {
-	color:#787d80;
-}
-
-/*Pricing Footer*/
-.pricing-footer a,
-.pricing-footer button {
-	background:#787d80;
-	text-shadow:0 1px 0 #9c9fa1;
-	border-bottom:solid 2px #696f73;
-}
-.pricing-footer a:hover,
-.pricing-footer button:hover {
-	background:#696f73;
-}
-
-/*Priceing Active*/
-.price-active h4 {
-	color:#787d80;
-}
-
-.no-space-pricing .price-active .pricing-head h4,
-.no-space-pricing .pricing:hover .pricing-head h4 {
-	color:#787d80;
 }
 
 /*Right Sidebar
