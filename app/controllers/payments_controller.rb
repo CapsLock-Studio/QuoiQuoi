@@ -24,26 +24,8 @@ class PaymentsController < ApplicationController
         currency = payment.user_gift.currency
       end
 
-      # when gift card cause price decrease to zero, set it pay complete
-      if amount == 0
-        if payment.update_attributes(completed: true, currency: currency)
-          if payment.order
-
-            # send mail to remind order complete
-            OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
-            format.html {redirect_to order_path(payment.order_id)}
-          elsif payment.registration
-
-            # send mail to remind registration
-            RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
-            format.html {redirect_to registrations_path}
-          end
-        else
-          format.html {render json: @payment.errors}
-        end
-
-        # payment need manual check
-      elsif payment_params[:wait] == 'true'
+      # payment need manual check
+      if payment_params[:wait] == 'true'
         payment.save!(validate: false)
         if payment.registration
 

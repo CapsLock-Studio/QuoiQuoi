@@ -184,7 +184,7 @@
             </strong>
           </h4>
         </div>
-        <% if @order.paid? && (@order.payment.amount == 0 || @order.payment.identifier.blank?) %>
+        <% if !@order.payment.completed? && (@order.payment.amount == 0 || @order.payment.identifier.blank?) %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
             <%= link_to t('order.advice'), edit_payment_path(@order.payment), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
