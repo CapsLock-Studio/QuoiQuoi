@@ -219,7 +219,7 @@ en:
   facebook: 'Facebook'
   weibo: 'Weibo'
   search: 'Search'
-  nav_item: 'Nav item'
+  nav_item: 'Subitem'
   account: 'Account'
   message_box: 'Message box'
   profile_management: 'Profile management'
