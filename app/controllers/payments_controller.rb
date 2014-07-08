@@ -61,14 +61,24 @@ class PaymentsController < ApplicationController
         format.html {redirect_to order_path(payment.order)}
       elsif payment.registration
         RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
+
+        # show the message let users know their payment complete
+        flash[:status] = 'success'
+        flash[:message] = t('completed_payment')
+
         if payment.registration.user
-          format.html {redirect_to registrations_path}
+          format.html {redirect_to course_path(payment.registration.course)}
         else
           format.html {redirect_to action: :show}
         end
       elsif payment.user_gift
+
+        # show the message let users know their payment complete
+        flash[:status] = 'success'
+        flash[:message] = t('completed_payment')
+
         UserGiftMailer.completed_remind(payment.user_gift).deliver
-        format.html {redirect_to user_gifts_path}
+        format.html {redirect_to user_gift_path(payment.user_gift)}
       end
     end
   end
