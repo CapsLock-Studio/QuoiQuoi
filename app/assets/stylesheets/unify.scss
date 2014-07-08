@@ -680,9 +680,12 @@ a[data-toggle=offcanvas] {
 }
 
 .articles {
+  h1, h2, h3, h4, h5 {
+    margin-top: 0;
+  }
+
   :not(.headline) a {
     display: block;
-    padding-top: 5px;
     padding-bottom: 5px;
 
     transition: opacity 0.05s ease;
@@ -699,6 +702,7 @@ a[data-toggle=offcanvas] {
   .article {
     border-bottom: 1px solid #EEE;
     margin-bottom: 10px;
+    padding-bottom: 10px;
   }
 }
 

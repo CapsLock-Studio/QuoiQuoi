@@ -78,7 +78,7 @@ class Admin::TravelInformationController < AdminController
   end
 
   def travel_information_params
-    params.require(:travel_information).permit(:id, :area_id, :title, :content)
+    params.require(:travel_information).permit(:id, :area_id, :title, :content, :image)
   end
 
   def delete_blank_travel_information
