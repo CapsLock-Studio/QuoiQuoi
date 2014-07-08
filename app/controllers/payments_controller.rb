@@ -99,6 +99,8 @@ class PaymentsController < ApplicationController
   end
 
   def edit
+    flash[:message] = t('remittance_edit_hint')
+    flash[:status] = 'warning'
     begin
       @remittance_translate = Remittance.find(1).remittance_translates.where(locale_id: session[:locale_id]).first
     rescue ActiveRecord::RecordNotFound
