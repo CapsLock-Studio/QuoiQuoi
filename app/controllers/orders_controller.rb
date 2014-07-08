@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, except: [:index, :new, :close_index]
   before_action :authenticate_user!
+  before_action :set_discount, only: [:show, :close_show]
 
   def index
     add_breadcrumb t('home'), :root_path
@@ -23,11 +24,6 @@ class OrdersController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('order.in_trading'), :orders_path
     add_breadcrumb t('detail')
-
-    @discount = 0
-    UserGift.where(order_id: @order.id).each do |user_gift|
-      @discount += user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
-    end
   end
 
   # PUT/PATCH /orders/1
@@ -97,6 +93,8 @@ class OrdersController < ApplicationController
     add_breadcrumb t('order.closed'), :close_orders_path
     add_breadcrumb t('detail')
 
+
+
     respond_to do |format|
       format.html {render action: :show}
     end
@@ -138,5 +136,12 @@ class OrdersController < ApplicationController
 
     def order_params
       params.require(:order).permit(:name, :address, :phone, :zip_code, :shipping_fee_id)
+    end
+
+    def set_discount
+      @discount = 0
+      UserGift.where(order_id: @order.id).each do |user_gift|
+        @discount += user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+      end
     end
 end
