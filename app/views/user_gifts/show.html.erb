@@ -3,16 +3,26 @@
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-md-9">
+    <div class="col-sm-9 col-xs-12">
+      <% unless flash[:message].blank? %>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="alert alert-<%= flash[:status] %> text-center">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <%= flash[:message] %>
+            </div>
+          </div>
+        </div>
+      <% end %>
       <div class="row margin-bottom-40">
-        <div class="col-md-12">
-          <%= render 'layouts/nav_item' %>
+        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12">
           <h4 class="margin-bottom-30">
             <%= t('no_s') %>
             <strong class="text-muted"><%= @user_gift.id %></strong>
           </h4>
         </div>
-        <div class="col-md-12 text-center text-muted">
+        <div class="col-md-xs text-center text-muted">
           <ul class="list-unstyled step">
             <li class="col-xs-3 step-active">
               <span>

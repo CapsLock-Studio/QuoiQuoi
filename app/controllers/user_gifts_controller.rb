@@ -113,6 +113,10 @@ class UserGiftsController < ApplicationController
 
               # send mail to remind order complete
               OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+
+              flash[:status] = 'success'
+              flash[:message] = t('completed_payment')
+
               redirect_to order_path(params[:order_id])
             elsif payment.registration
 
@@ -124,9 +128,9 @@ class UserGiftsController < ApplicationController
               flash[:message] = t('completed_payment')
 
               if payment.registration.user
-                format.html {redirect_to course_path(payment.registration.course)}
+                redirect_to course_path(payment.registration.course)
               else
-                format.html {redirect_to action: :show}
+                redirect_to action: :show
               end
             end
           else
