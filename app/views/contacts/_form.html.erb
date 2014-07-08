@@ -1,14 +1,6 @@
 <div class="headline"><h4><%= t('contact_hint') %></h4></div>
 <%= form_for @contact_us, url: contacts_path, html: {class: 'form validate-form'} do |f| %>
-  <% if flash[:message] %>
-    <div class="row">
-      <div class="col-xs-12 col-sm-12">
-        <div class="alert alert-success">
-          <%= flash[:message] %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render 'layouts/flash_message' %>
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <div class="form-group">
@@ -50,16 +42,16 @@
 
   <div class="row">
     <div class="col-xs-12 col-sm-12">
+      <label>
+        <span class="text-danger">*</span>
+        <%= t('captcha_hint') %>
+      </label>
       <div class="form-group">
         <%= f.button type: 'submit', class: 'btn btn-lg btn-default btn-block hover-effect', data: {'rule-required' => true} do %>
           <i class="fa fa-edit fa-fw"></i>
           <%= t('submit_message') %>
         <% end %>
       </div>
-      <label>
-        <span class="text-danger">*</span>
-        <%= t('captcha_hint') %>
-      </label>
       <%= recaptcha_tags ajax: true %>
     </div>
   </div>
