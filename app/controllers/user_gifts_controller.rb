@@ -109,16 +109,25 @@ class UserGiftsController < ApplicationController
           payment = discount_item.build_payment(token: Base64.encode64("#{Time.now}#{(0..3).map{('a'..'z').to_a[rand(26)]}.join}"), user_id: current_user.id, order_id: params[:order_id], registration_id: params[:registration_id], completed: true, currency: discount_item.currency, pay_time: Time.now, amount: 0)
 
           if payment.save
-            if discount_item.payment.order
+            if payment.order
 
               # send mail to remind order complete
-              OrderMailer.remind(discount_item.payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+              OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
               redirect_to order_path(params[:order_id])
-            elsif discount_item.payment.registration
+            elsif payment.registration
 
               # send mail to remind registration
-              RegistrationMailer.remind(discount_item.payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
-              redirect_to registration_path(params[:registration_id])
+              RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
+
+              # show the message let users know their payment complete
+              flash[:status] = 'success'
+              flash[:message] = t('completed_payment')
+
+              if payment.registration.user
+                format.html {redirect_to course_path(payment.registration.course)}
+              else
+                format.html {redirect_to action: :show}
+              end
             end
           else
             format.html {render json: @payment.errors}
