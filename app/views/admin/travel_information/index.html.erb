@@ -63,6 +63,7 @@
                 <thead>
                 <tr>
                   <th>編號</th>
+                  <th>預覽圖</th>
                   <th>旅遊地區</th>
                   <th>標題</th>
                   <th>內文</th>
@@ -75,6 +76,9 @@
                   <tr>
                     <td>
                       <%= travel_information.id %>
+                    </td>
+                    <td>
+                      <%= image_tag travel_information.image.url(:thumb) %>
                     </td>
                     <td>
                       <label class="label label-success"><%= travel_information.area.name %></label>
