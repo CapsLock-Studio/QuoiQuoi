@@ -22,28 +22,28 @@
                         <%= simple_format translate.introduction %>
                         <div class="text-right">
                           <ul class="list-unstyled list-inline team-socail">
-                            <% unless designer.facebook.blank? %>
+                            <% if designer.facebook %>
                               <li>
                                 <%= link_to designer.facebook do %>
                                   <i class="icon-facebook"></i>
                                 <% end %>
                               </li>
                             <% end %>
-                            <% unless designer.twitter.blank? %>
+                            <% if designer.twitter %>
                               <li>
                                 <%= link_to designer.twitter do %>
                                   <i class="icon-twitter"></i>
                                 <% end %>
                               </li>
                             <% end %>
-                            <% unless designer.google_plus.blank? %>
+                            <% if designer.google_plus %>
                               <li>
                                 <%= link_to designer.google_plus do %>
                                   <i class="icon-google-plus"></i>
                                 <% end %>
                               </li>
                             <% end %>
-                            <% unless designer.linkedin.blank? %>
+                            <% if designer.linkedin %>
                               <li>
                                 <%= link_to designer.linkedin do %>
                                   <i class="icon-linkedin"></i>

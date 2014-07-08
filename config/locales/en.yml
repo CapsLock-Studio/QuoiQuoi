@@ -152,7 +152,7 @@ en:
     third_step: 'Step 3. Check the gift card information.'
     fourth_step: 'Step 4. If gift card transaction is successful, you will see the following page.<br/>Moreover, if the bill is not paid completely, you will be required to pay the remaining amount.'
     my: 'My gift card'
-    discount: 'Discount'
+    discount: 'Gift card deduction'
 
 
   rss:

@@ -182,7 +182,7 @@ zh-TW:
     third_step: '第三步驟 檢查禮券資訊是否正確'
     fourth_step: '第四步驟 扣款成功會顯示禮券扣款成功, 如面額不足支付貨款, 請再繼續付款'
     my: '我的禮券'
-    discount: '折價金額'
+    discount: '禮券抵減金額'
 
   rss:
     product:
