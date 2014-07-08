@@ -345,7 +345,7 @@ en:
   thanks_text: 'Thank for your contacts'
   recaptcha_error: 'Recaptcha error'
   back_to_control_panel: 'Back to control panel'
-  remittance: 'Remittance'
+  remittance: 'Money transfer by yourself'
   use_gift_card: 'Use gift card'
   enter_serial: 'Enter your serial number'
   back_to_payment: 'Back to payment'
@@ -382,16 +382,16 @@ en:
   check_hint: "Thank you for shopping at quoi quoi studio. Your order has been shipped.<br/>Please check your mailbox.<br/>Please consider the shipping distance to determine the arrival time.<br/>If you don't receive the products, please contact us by "
 
   mailer:
-    subject_for_order: "[quoi quoi studio] Remind for order completion (Please don't reply this mail)"
-    subject_for_remittance_order: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
+    subject_for_order: "[quoi quoi studio] Remind of order completion (Please don't reply this mail)"
+    subject_for_remittance_order: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
     subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
     subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice that your customization order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] Decline your customization order (Please don't reply this mail)"
-    subject_for_remittance_registration: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
-    subject_for_registration: "[quoi quoi studio] Remind for course information (Please don't reply this mail)"
+    subject_for_remittance_registration: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
+    subject_for_registration: "[quoi quoi studio] Remind of course information (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
-    subject_for_remittance_gift: "[quoi quoi studio] Remind for remitting the money (Please don't reply this mail)"
+    subject_for_remittance_gift: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
     subject_for_completed_gift: "[quoi quoi studio] Payment completion and instruction for gift card (Please don't reply this mail)"
     title_for_order: "Thank you for shopping at quoi quoi studio"
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
