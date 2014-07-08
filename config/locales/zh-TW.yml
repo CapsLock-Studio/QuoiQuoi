@@ -271,7 +271,7 @@ zh-TW:
   signin: '登入'
   signout: '登出'
   signin_hint: '沒有帳號嗎? 按下 %{signup_link} 或是使用下面的社群帳號登入帳號'
-  signup_hint: '你註冊的Email會作為我們聯絡溝通的管道, 請填入你可以收到近的Email'
+  signup_hint: '你註冊的Email會作為我們聯絡溝通的管道, 請填入你可以收到信的Email'
   new_password: '忘記密碼了嗎?'
   new_password_hint: '輸入你註冊的帳號Email來進行密碼重設, 或是使用下面的社群帳號登入帳號'
   new_password_btn: '讓我重設密碼'
