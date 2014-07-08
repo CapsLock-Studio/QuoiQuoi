@@ -760,3 +760,16 @@ a[data-toggle=offcanvas] {
 .nav > li > a.mobile-control-btn {
   padding: 6px 8px;
 }
+
+.carousel-caption {
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 7px 15px;
+  background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
+
+  p {
+    color: #FFF;
+    margin-bottom: 0px;
+  }
+}
