@@ -52,10 +52,15 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       payment.complete!(params[:PayerID])
       if payment.order
-        OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}", session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
-        format.html {redirect_to orders_path}
+        OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+
+        # show the message let users know their payment complete
+        flash[:status] = 'success'
+        flash[:message] = t('completed_payment')
+
+        format.html {redirect_to order_path(payment.order)}
       elsif payment.registration
-        RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}", session[:locale_id], "#{request.protocol}#{request.host_with_port}").deliver
+        RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
         if payment.registration.user
           format.html {redirect_to registrations_path}
         else
