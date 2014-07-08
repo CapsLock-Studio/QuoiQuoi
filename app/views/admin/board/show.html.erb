@@ -1,0 +1,53 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-comments-alt"></i>
+      <span>訊息留言板管理</span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <%= form_for @contact_us, url: '', html: {class: 'form validate-form'} do |f| %>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="box">
+              <div class="box-header">
+                <div class="title">
+                  消息詳細
+                </div>
+                <div class="actions">
+                  <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                </div>
+              </div>
+              <div class="box-content">
+                <div class="form-group">
+                  <%= f.label :name, '留言者稱呼' %>
+                  <div class="controls">
+                    <%= f.text_field :name, class: 'form-control', disabled: 'disabled' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= f.label :email, '留言者Email' %>
+                  <div class="controls">
+                    <%= f.text_field :email, class: 'form-control', disabled: 'disabled' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= f.label :content, '訊息內容' %>
+                  <div class="controls">
+                    <%= f.text_area :content, class: 'autosize form-control', disabled: 'disabled', rows: 6 %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
