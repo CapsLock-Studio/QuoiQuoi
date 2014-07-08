@@ -283,7 +283,8 @@ zh-TW:
   new_password_ingore_content: "你的密碼不會因此修改, 除非你按下了修改的連結前往修改密碼"
   new_password_title: '有人使用你的帳號申請了重設密碼, 你可以使用以下連結前往重設'
   signup: '註冊'
-  captcha_hint: '你是機器人嗎？麻煩你填寫下方驗證碼協助我們防止未知的攻擊'
+  captcha_hint: '請先填入下方驗證碼'
+  traffic_information: '交通資訊'
 
   add_to_cart: '加到購物車'
   buy: '下單'

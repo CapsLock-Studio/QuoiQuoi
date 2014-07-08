@@ -4,6 +4,7 @@ class ContactsController < ApplicationController
       if verify_recaptcha
         @contact_us = ContactUs.new(contact_us_params)
         if @contact_us.save
+          flash[:status] = 'success'
           flash[:message] = t('thanks_text')
           format.html {redirect_to :back}
         else
@@ -11,6 +12,7 @@ class ContactsController < ApplicationController
         end
       else
         format.html do
+          flash[:status] = 'danger'
           flash[:name] = contact_us_params[:name]
           flash[:email] = contact_us_params[:email]
           flash[:content] = contact_us_params[:content]
