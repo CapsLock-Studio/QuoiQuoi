@@ -1,3 +1,4 @@
+<% locale = Locale.where(id: @order.locale_id).first.lang %>
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2" style="margin-top: 40px;">
@@ -14,7 +15,7 @@
                       <%= t('amount_payable') %>
                     </div>
                     <div class="col-md-9 col-xs-7">
-                      <strong><%= number_to_currency(@order.subtotal) %></strong>
+                      <strong><%= number_to_currency(@order.subtotal, locale: locale) %></strong>
                     </div>
                   </div>
                   <div class="row">

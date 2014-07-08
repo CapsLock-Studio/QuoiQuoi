@@ -22,7 +22,7 @@
                       <%= t('amount_payable') %>
                     </div>
                     <div class="col-md-10 col-xs-9">
-                      <strong><%= number_to_currency(translate.quota) %></strong>
+                      <strong><%= number_to_currency(translate.quota, locale: translate.lang) %></strong>
                     </div>
                   </div>
                 </div>

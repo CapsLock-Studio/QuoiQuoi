@@ -1,3 +1,4 @@
+<% locale = Locale.where(id: @registration.locale_id).first.lang %>
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2" style="margin-top: 40px;">
@@ -22,7 +23,7 @@
                       <%= t('price') %>
                     </div>
                     <div class="col-md-10 col-xs-9">
-                      <strong><%= number_to_currency(@registration.subtotal) %></strong>
+                      <strong><%= number_to_currency(@registration.subtotal, locale: locale) %></strong>
                     </div>
                   </div>
                   <div class="row">
