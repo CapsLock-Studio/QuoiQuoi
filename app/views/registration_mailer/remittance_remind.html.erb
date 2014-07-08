@@ -29,7 +29,7 @@
       </h5>
     </td>
     <td>
-      <%= number_to_currency(@registration.course.course_translates.where(locale_id: @registration.locale_id).first.price) %>&nbsp;<small><%= @registration.currency %></small>
+      <%= number_to_currency(@registration.course.course_translates.where(locale_id: @registration.locale_id).first.price) %>
     </td>
     <td style="text-align: center">
       <%= @registration.attendance %>
@@ -40,7 +40,10 @@
   </tr>
   </tbody>
 </table>
-<h3><%= t('total_amount') %>: <%= number_to_currency(@registration.subtotal) %>&nbsp;<small><%= @registration.currency %></small></h3>
+<% if @discount > 0 %>
+  <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
+<% end %>
+<h3><%= t('total_amount') %>: <%= number_to_currency(@registration.subtotal) %></h3>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>

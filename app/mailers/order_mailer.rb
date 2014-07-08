@@ -11,6 +11,11 @@ class OrderMailer < ActionMailer::Base
       @fee = 0
     end
 
+    @discount = 0
+    UserGift.where(order_id: order.id).each do |user_gift|
+      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
+    end
+
     @order = order
     @domain = domain
     mail(to: order.user.email, subject: t('mailer.subject_for_order'))
@@ -23,6 +28,11 @@ class OrderMailer < ActionMailer::Base
     @fee = shipping_fee.fee
     if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
       @fee = 0
+    end
+
+    @discount = 0
+    UserGift.where(order_id: order.id).each do |user_gift|
+      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
     end
 
     @order = order
@@ -39,6 +49,11 @@ class OrderMailer < ActionMailer::Base
       @fee = 0
     end
 
+    @discount = 0
+    UserGift.where(order_id: order.id).each do |user_gift|
+      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
+    end
+
     @order = order
     @domain = domain
     mail(to: order.user.email, subject: t('mailer.subject_for_remittance_order'))
@@ -53,6 +68,11 @@ class OrderMailer < ActionMailer::Base
       @fee = 0
     end
 
+    @discount = 0
+    UserGift.where(order_id: order.id).each do |user_gift|
+      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
+    end
+
     @order = order
     mail(to: order.user.email, subject: t('mailer.subject_for_remittance_order'))
   end
@@ -64,6 +84,11 @@ class OrderMailer < ActionMailer::Base
     @fee = shipping_fee.fee
     if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
       @fee = 0
+    end
+
+    @discount = 0
+    UserGift.where(order_id: order.id).each do |user_gift|
+      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
     end
 
     @order = order

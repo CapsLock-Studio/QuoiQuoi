@@ -50,7 +50,7 @@ class Admin::OrdersController < AdminController
   def deliver
     @orders = []
     Payment.where(completed: true).where.not(order_id: ['', nil]).each do |payment|
-      unless payment.order && payment.order.closed?
+      if payment.order && !payment.order.closed?
         @orders << payment.order
       end
     end

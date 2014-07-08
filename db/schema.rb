@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708012449) do
+ActiveRecord::Schema.define(version: 20140708054239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -898,9 +898,13 @@ ActiveRecord::Schema.define(version: 20140708012449) do
     t.datetime "updated_at"
     t.string   "currency"
     t.integer  "locale_id"
+    t.integer  "order_id"
+    t.integer  "registration_id"
   end
 
   add_index "user_gifts", ["gift_id"], name: "index_user_gifts_on_gift_id", using: :btree
+  add_index "user_gifts", ["order_id"], name: "index_user_gifts_on_order_id", using: :btree
+  add_index "user_gifts", ["registration_id"], name: "index_user_gifts_on_registration_id", using: :btree
   add_index "user_gifts", ["user_id"], name: "index_user_gifts_on_user_id", using: :btree
 
   create_table "users", force: true do |t|

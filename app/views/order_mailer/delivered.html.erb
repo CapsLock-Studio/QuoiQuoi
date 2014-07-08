@@ -39,7 +39,7 @@
           </h5>
         </td>
         <td>
-          <%= number_to_currency(translate.price) %>&nbsp;<small><%= @order.currency %></small>
+          <%= number_to_currency(translate.price) %>
         </td>
         <td style="text-align: center">
           <%= order_product.quantity %>
@@ -78,7 +78,7 @@
           </h5>
         </td>
         <td>
-          <%= number_to_currency(order_custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>&nbsp;<small><%= @order.currency %></small>
+          <%= number_to_currency(order_custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>
         </td>
         <td style="text-align: center">
           1
@@ -88,8 +88,10 @@
     </tbody>
   </table>
 <% end %>
-<h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %><small><%= @order.currency %></label></h4>
-<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<small><%= @order.currency %></small></h3>
+<% if @discount > 0 %>
+  <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
+<% end %>
+<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %></h3>
 <h3><%= t('shipping_information') %></h3>
 <table>
   <tr>
@@ -107,6 +109,10 @@
   <tr>
     <td style="text-align: right"><%= t('phone_number') %></td>
     <td><%= (@order.phone.blank?)? @order.phone.gsub(/\d{4}$/, '****') : '-' %></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><%= t('shipping_fee') %></td>
+    <td><%= number_to_currency(@fee) %></td>
   </tr>
 </table>
 <br>

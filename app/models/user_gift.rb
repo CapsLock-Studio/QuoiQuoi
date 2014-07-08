@@ -1,6 +1,8 @@
 class UserGift < ActiveRecord::Base
   belongs_to :user
   belongs_to :gift
+  belongs_to :order
+  belongs_to :registration
 
   has_one :payment
 
