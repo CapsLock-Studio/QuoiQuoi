@@ -14,7 +14,7 @@ class ContactsController < ApplicationController
           flash[:name] = contact_us_params[:name]
           flash[:email] = contact_us_params[:email]
           flash[:content] = contact_us_params[:content]
-          flash[:recaptcha_error] = t('recaptcha_error')
+          flash[:message] = t('recaptcha_error')
           redirect_to :back
         end
       end
