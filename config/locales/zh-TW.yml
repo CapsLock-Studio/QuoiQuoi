@@ -408,6 +408,7 @@ zh-TW:
   customizations: '客製化商品'
   personalized_products: '客製化商品'
   check_hint: '非常感謝您對quoi quoi 布知道的支持, 在此通知您所訂購的商品我們已經寄出去了!<br/>還需要請您估算大約送達時間注意記得收取商品<br/>如果您沒有收到我們寄出的商品, 請使用後面附上的信箱連結寄信通知我們'
+  remittance_edit_hint: '請自行轉帳到下列帳戶, 轉帳完成後請登入「我的帳戶」回報已轉帳, 如是報名手作教室者, 可進入「匯款回報」選項回報'
 
   mailer:
     subject_for_order: '[quoi quoi 布知道] 訂購完成通知信 (系統自動寄出請勿回覆)'
