@@ -24,6 +24,8 @@ QuoiQuoi::Application.routes.draw do
       resources :product_custom_items
     end
 
+    resources :board
+
     resources :product_types
     resources :courses
     resources :course_registrations do

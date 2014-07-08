@@ -49,20 +49,6 @@
         <% end %>
       <% end %>
 
-      <%= nav_item_with_resource(nil, {rule: /#{admin_messages_path}.*|#{admin_users_path}\/\d+\/messages.*/}, Admin::Message) do %>
-        <%= link_to(admin_messages_path) do %>
-          <i class="icon-comment-alt"></i>
-          <span>訊息管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_users_path}(\/\d+)?(?!\/messages)$/}, Admin) do %>
-        <%= link_to(admin_users_path) do %>
-          <i class="icon-user"></i>
-          <span>用戶管理</span>
-        <% end %>
-      <% end %>
-
       <%= nav_item_with_resource('#', nil, Admin::Order) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:orders) %>" href="#">
           <i class="icon-file-text"></i>
@@ -230,10 +216,17 @@
         </ul>
       <% end %>
 
+      <%= nav_item_with_resource(admin_courses_path, {rule: /#{admin_courses_path}.*/}, Admin::Course) do %>
+        <%= link_to(admin_courses_path) do %>
+          <i class="icon-book"></i>
+          <span>開設課程管理</span>
+        <% end %>
+      <% end %>
+
       <%= nav_item_with_resource('#', {rule: /#{admin_materials_path}.*|#{admin_order_information_index_path}/}, Admin::Material) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:materials) or is_in(:order_information) %>" href="#">
           <i class="icon-heart-empty"></i>
-          <span>訂製手工包管理</span>
+          <span>訂製手工包說明管理</span>
           <i class="icon-angle-down"></i>
         </a>
         <ul class="nav <%= 'in' if is_in(:materials) or is_in(:order_information) or is_in(:instructions) %>">
@@ -260,6 +253,57 @@
             <% end %>
           <% end %>
         </ul>
+      <% end %>
+
+      <%= nav_item_with_resource(nil, {rule: /#{admin_articles_path}.*/}, Admin::Article) do %>
+        <%= link_to admin_articles_path do %>
+          <i class="icon-book"></i>
+          <span>文章管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource('#', {rule: /#{admin_travel_information_index_path}.*|#{admin_areas_path}.*/}, Admin::TravelInformation) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:areas) or is_in(:travel_information) %>" href="#">
+          <i class="icon-globe"></i>
+          <span>旅遊景點管理</span>
+          <i class="icon-angle-down"></i>
+        </a>
+        <ul class="nav <%= 'in' if is_in(:areas) or is_in(:travel_information) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_travel_information_index_path}.*/}, Admin::TravelInformation) do %>
+            <%= link_to admin_travel_information_index_path do %>
+              <i class="icon-globe"></i>
+              <span>旅遊景點文章管理</span>
+            <% end %>
+          <% end %>
+
+          <%= nav_item_with_resource(nil, {rule: /#{admin_areas_path}.*/}, Admin::Area) do %>
+            <%= link_to(admin_areas_path) do %>
+              <i class="icon-anchor"></i>
+              <span>旅遊景點地區管理</span>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <%= nav_item_with_resource(nil, {rule: /#{admin_board_index_path}.*/}, Admin::Message) do %>
+        <%= link_to(admin_board_index_path) do %>
+          <i class="icon-comments-alt"></i>
+          <span>訊息留言板管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(nil, {rule: /#{admin_messages_path}.*|#{admin_users_path}\/\d+\/messages.*/}, Admin::Message) do %>
+        <%= link_to(admin_messages_path) do %>
+          <i class="icon-comment-alt"></i>
+          <span>訊息管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(nil, {rule: /#{admin_users_path}(\/\d+)?(?!\/messages)$/}, Admin) do %>
+        <%= link_to(admin_users_path) do %>
+          <i class="icon-user"></i>
+          <span>用戶管理</span>
+        <% end %>
       <% end %>
 
       <%= nav_item_with_resource('#', {rule: /#{admin_slides_path}.*/}, Admin::Slide) do %>
@@ -357,43 +401,6 @@
             <% end %>
           <% end %>
         </ul>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_articles_path}.*/}, Admin::Article) do %>
-        <%= link_to admin_articles_path do %>
-          <i class="icon-book"></i>
-          <span>文章管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource('#', {rule: /#{admin_travel_information_index_path}.*|#{admin_areas_path}.*/}, Admin::TravelInformation) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:areas) or is_in(:travel_information) %>" href="#">
-          <i class="icon-globe"></i>
-          <span>旅遊景點管理</span>
-          <i class="icon-angle-down"></i>
-        </a>
-        <ul class="nav <%= 'in' if is_in(:areas) or is_in(:travel_information) %>">
-          <%= nav_item_with_resource(nil, {rule: /#{admin_travel_information_index_path}.*/}, Admin::TravelInformation) do %>
-            <%= link_to admin_travel_information_index_path do %>
-              <i class="icon-globe"></i>
-              <span>旅遊景點文章管理</span>
-            <% end %>
-          <% end %>
-
-          <%= nav_item_with_resource(nil, {rule: /#{admin_areas_path}.*/}, Admin::Area) do %>
-            <%= link_to(admin_areas_path) do %>
-              <i class="icon-anchor"></i>
-              <span>旅遊景點地區管理</span>
-            <% end %>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <%= nav_item_with_resource(admin_courses_path, {rule: /#{admin_courses_path}.*/}, Admin::Course) do %>
-        <%= link_to(admin_courses_path) do %>
-          <i class="icon-book"></i>
-          <span>開設課程管理</span>
-        <% end %>
       <% end %>
 
       <%= nav_item_with_resource(admin_designers_path, {rule: /#{admin_designers_path}.*/}, Admin::Designer) do %>
