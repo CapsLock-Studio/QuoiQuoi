@@ -56,6 +56,10 @@
           <%= t('submit_message') %>
         <% end %>
       </div>
+      <label>
+        <span class="text-danger">*</span>
+        <%= t('captcha_hint') %>
+      </label>
       <%= recaptcha_tags ajax: true %>
       <div class="has-error text-danger">
         <%= flash[:recaptcha_error] %>

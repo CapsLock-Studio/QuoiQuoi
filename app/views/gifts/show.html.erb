@@ -1,12 +1,13 @@
 <%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
-  <div class="row">
+  <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'products/side_navigation' %>
-    <div class="col-md-9">
+    <div class="col-sm-9 col-xs-12">
       <div class="row margin-bottom-40">
         <div class="col-md-6">
           <div class="row">
-            <div class="col-sm-12">
+            <%= render 'layouts/nav_item' %>
+            <div class="col-sm-12 col-xs-12">
               <%= image_tag @user_gift.gift.image.url(:medium), class: 'img-responsive' %>
             </div>
           </div>
