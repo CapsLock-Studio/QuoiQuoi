@@ -9,6 +9,13 @@ class RegistrationMailer < ActionMailer::Base
     mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_remittance_registration'))
   end
 
+  def remittance_remind_three_days(registration)
+    I18n.locale = Locale.find(registration.locale_id).lang
+
+    @registration = registration
+    mail(to: (registration.user)? registration.user.email : registration.email, subject: t('mailer.subject_for_remittance_registration'))
+  end
+
   def remind(registration, domain)
     I18n.locale = Locale.find(registration.locale_id).lang
 
