@@ -3,16 +3,7 @@
   <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'side_navigation' %>
     <div class="col-sm-9 col-xs-12">
-      <% unless flash[:message].blank? %>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="alert alert-<%= flash[:status] %> text-center">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <%= flash[:message] %>
-          </div>
-        </div>
-      </div>
-      <% end %>
+      <%= render 'layouts/flash_message' %>
       <div class="row margin-bottom-60">
         <%= render 'layouts/nav_item' %>
         <% translate = @course.course_translates.where(locale_id: session[:locale_id]).first %>
