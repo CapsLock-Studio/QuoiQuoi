@@ -4,16 +4,7 @@
   <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
     <div class="col-sm-9 col-xs-12">
-      <% unless flash[:message].blank? %>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="alert alert-<%= flash[:status] %> text-center">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <%= flash[:message] %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      <%= render 'layouts/flash_message' %>
       <div class="row margin-bottom-40">
         <%= render 'layouts/nav_item' %>
         <div class="col-xs-12">
