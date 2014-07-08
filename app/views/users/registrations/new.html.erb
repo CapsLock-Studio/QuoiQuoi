@@ -5,8 +5,10 @@
       <div class="reg-page" style="border-top:0;">
         <div class="reg-header">
           <h2><%= t('signup') %></h2>
+          <p>
+            <%= t('signup_hint') %>
+          </p>
         </div>
-
         <%= form_for(resource, as: resource_name, url: user_registration_path, html: { class: 'validate-form' }) do |f| %>
           <div class="row">
             <div class="col-md-10 col-md-offset-1">
