@@ -288,14 +288,14 @@
       <%= nav_item_with_resource(nil, {rule: /#{admin_board_index_path}.*/}, Admin::Message) do %>
         <%= link_to(admin_board_index_path) do %>
           <i class="icon-comments-alt"></i>
-          <span>訊息留言板管理</span>
+          <span>訪客留言訊息管理</span>
         <% end %>
       <% end %>
 
       <%= nav_item_with_resource(nil, {rule: /#{admin_messages_path}.*|#{admin_users_path}\/\d+\/messages.*/}, Admin::Message) do %>
         <%= link_to(admin_messages_path) do %>
           <i class="icon-comment-alt"></i>
-          <span>訊息管理</span>
+          <span>客戶留言訊息管理</span>
         <% end %>
       <% end %>
 

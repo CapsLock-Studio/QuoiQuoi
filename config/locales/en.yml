@@ -253,6 +253,7 @@ en:
   new_password_ingore_content: "Your password won't change until you access the link above and create a new one."
   new_password_title: 'Someone has requested a link to change your password. You can do this through the link below.'
   signup: 'Sign up'
+  captcha_hint: '你是機器人嗎？麻煩你填寫下方驗證碼協助我們防止未知的攻擊'
 
   add_to_cart: 'Add to cart'
   buy: 'Buy'
