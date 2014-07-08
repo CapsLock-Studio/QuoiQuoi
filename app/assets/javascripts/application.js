@@ -166,13 +166,19 @@
         });
     });
 
-    $('[data-toggle=tooltip]').tooltip('hide').hover(function(e){
+    var tooltipInCourse = $('[data-toggle=tooltip]');
+
+    tooltipInCourse.tooltip('hide').hover(function(e){
         if ($(this).data('shown') == true) {
             $(this).tooltip('destroy');
         } else {
             $(this).data('shown', true);
         }
     });
+
+    if (!window.matchMedia || (window.matchMedia("(max-width: 767px)").matches)) {
+        tooltipInCourse.tooltip('destroy');
+    }
 
     if ($('#map').length > 0) {
         map = new GMaps({
@@ -189,7 +195,7 @@
         marker = map.addMarker({
             lat: 25.1359486,
             lng: 121.4612855,
-            title: '布知道(QuoiQuoi)工作室'
+            title: '布知道(quoi quoi)工作室'
         });
     }
 })();
