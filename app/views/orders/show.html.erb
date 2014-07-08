@@ -108,6 +108,14 @@
               <%= @order.address %>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-2 col-xs-5 text-right">
+              <%= t('shipping_fee') %>
+            </div>
+            <div class="col-md-10 col-xs-7">
+              <%= number_to_currency(@order.shipping_fee.shipping_fee_translates.where(locale_id: @order.locale_id).first.fee, locale: locale) %>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -175,6 +183,13 @@
             <strong class="text-muted">
               <%= number_to_currency(@order.subtotal, locale: locale) %>
             </strong>
+            <% if @discount > 0 %>
+              <br/>
+              <small>
+                <%= t('user_gift.discount') %>
+                <%= number_to_currency(@discount, locale: locale) %>
+              </small>
+            <% end %>
           </h4>
         </div>
         <% if @order.payment && !@order.payment.completed? && (@order.payment.amount == 0 || @order.payment.identifier.blank?) %>

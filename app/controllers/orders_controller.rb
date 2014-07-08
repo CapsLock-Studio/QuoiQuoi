@@ -23,6 +23,11 @@ class OrdersController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('order.in_trading'), :orders_path
     add_breadcrumb t('detail')
+
+    @discount = 0
+    UserGift.where(order_id: @order.id).each do |user_gift|
+      @discount += user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+    end
   end
 
   # PUT/PATCH /orders/1

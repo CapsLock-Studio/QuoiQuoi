@@ -15,7 +15,7 @@
       <%= t('remitted_amount') %>
     </td>
     <td>
-      <%= number_to_currency(@user_gift.payment.amount) %>&nbsp;<small><%= @user_gift.currency %></small>
+      <%= number_to_currency(@user_gift.payment.amount) %>
     </td>
   </tr>
   <tr>
@@ -55,12 +55,12 @@
       </h5>
     </td>
     <td>
-      <%= number_to_currency(translate.quota) %>&nbsp;<small><%= @user_gift.currency %></small>
+      <%= number_to_currency(translate.quota) %>
     </td>
   </tr>
   </tbody>
 </table>
-<h3><%= t('total_amount') %>: <%= number_to_currency(translate.quota) %>&nbsp;<small><%= @user_gift.currency %></small></h3>
+<h3><%= t('total_amount') %>: <%= number_to_currency(translate.quota) %></h3>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>

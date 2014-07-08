@@ -11,6 +11,8 @@ class Order < ActiveRecord::Base
   has_many :order_custom_items
   accepts_nested_attributes_for :order_custom_items
 
+  has_many :user_gifts
+
   def paid?
     self.payment
   end

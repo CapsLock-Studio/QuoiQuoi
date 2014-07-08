@@ -91,7 +91,8 @@ class UserGiftsController < ApplicationController
           raise ActiveRecord::RecordNotFound
         end
 
-        discount_item.subtotal -= GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: discount_item.locale_id).first.quota
+        gift_translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: discount_item.locale_id).first
+        discount_item.subtotal -= gift_translate.quota
 
         if discount_item.subtotal <= 0
           discount_item.subtotal = 0
@@ -101,6 +102,8 @@ class UserGiftsController < ApplicationController
 
         @user_gift.used_time = Time.now
         @user_gift.used_user_id = current_or_guest_user.id
+        @user_gift.order_id = params[:order_id]
+        @user_gift.registration_id = params[:registration_id]
 
         discount_item.save!
         @user_gift.save!
@@ -136,17 +139,15 @@ class UserGiftsController < ApplicationController
           else
             format.html {render json: @payment.errors}
           end
-        end
+        else
+          flash[:status] = 'success'
+          flash[:message] = t('user_gift.success')
 
-        flash[:status] = 'success'
-        flash[:message] = t('user_gift.success')
-
-        unless params[:order_id].blank?
-          redirect_to pay_order_path(discount_item)
-        end
-
-        unless params[:registration_id].blank?
-          redirect_to pay_registration_path(discount_item)
+          if params[:order_id]
+            redirect_to pay_order_path(discount_item)
+          elsif params[:registration_id]
+            redirect_to pay_registration_path(discount_item)
+          end
         end
 
       rescue ActiveRecord::RecordNotFound
