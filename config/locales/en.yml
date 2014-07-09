@@ -341,6 +341,7 @@ en:
   hiring: 'We are hiring'
   position: 'Position'
   contact_hint: 'Want to contact us?'
+  general_questions: 'General questions'
   your_name: 'Your name'
   thanks_text: 'Thank for your contacts'
   recaptcha_error: 'Recaptcha error'

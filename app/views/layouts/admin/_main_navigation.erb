@@ -382,7 +382,7 @@
       <% end %>
 
       <%= nav_item_with_resource('#', {rule: /#{admin_introduce_image_slides_path}.*|#{admin_introduce_youtubes_path}.*/}, Admin::IntroduceImageSlide) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:introduce_image_slides) or is_in(:introduce_youtubes) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:introduce_image_slides) or is_in(:introduce_youtubes) or is_in(:questions) %>" href="#">
           <i class="icon-group"></i>
           <span>介紹我們管理</span>
           <i class="icon-angle-down"></i>
@@ -398,6 +398,12 @@
             <%= link_to admin_introduce_youtubes_path do %>
               <i class="icon-youtube"></i>
               <span>影片管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_questions_path}.*/}, Admin::Faq) do %>
+            <%= link_to admin_questions_path do %>
+              <i class="icon-question"></i>
+              <span>FAQ管理</span>
             <% end %>
           <% end %>
         </ul>

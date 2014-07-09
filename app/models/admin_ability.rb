@@ -47,6 +47,7 @@ class AdminAbility
       can :manage, Admin::Instruction
       can :manage, Admin::InstructionImage
       can :manage, Admin::Area
+      can :manage, Admin::Faq
     end
 
     # for development

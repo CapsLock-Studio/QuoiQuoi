@@ -1,0 +1,52 @@
+<div class="box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      FAQ
+    </div>
+    <div class="actions">
+      <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content box-padding">
+    <%= form_for([:admin, @faq], url: admin_questions_path, html: { class: 'form validate-form', multipart: true }) do |f| %>
+      <fieldset>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <%= f.label :locale_id, '語系' %>
+              <div class="controls">
+                <%= f.select :locale_id, Locale.all.order(id: :desc).collect{|locale| [locale.name, locale.id]}, {selected: f.object.locale_id}, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :question, '問題' %>
+              <div class="controls">
+                <%= f.text_field :question, class: 'form-control', placeholder: '請輸入問題內文',
+                                 data: {'rule-required' => true} %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :answer, '答案' %>
+              <div class="controls">
+                <%= f.text_area :answer, class: 'form-control autosize', placeholder: '請輸入答案內文',
+                                 data: {'rule-required' => true} %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-actions">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <%= link_to '取消', admin_questions_path, class: 'btn btn-lg' %>
+              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+                <i class="icon-save"></i>
+                儲存
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

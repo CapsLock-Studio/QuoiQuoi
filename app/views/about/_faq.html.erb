@@ -1,0 +1,25 @@
+<div id="accordion-1" class="panel-group">
+  <% faqs.each_with_index do |faq, index| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a href="#collapse-<%= index %>" data-parent="#accordion-1" data-toggle="collapse" class="accordion-toggle">
+          <h4 class="panel-title">
+            <%= faq.question %>
+            <% if removeable %>
+              <%= link_to admin_question_path(faq), method: :delete, class: 'pull-right', data: {confirm: '你確定要刪除嗎?'} do %>
+                <i class="glyphicon-remove glyphicon"></i>
+              <% end %>
+            <% end %>
+          </h4>
+        </a>
+      </div>
+      <div class="panel-collapse collapse" id="collapse-<%= index %>">
+        <div class="panel-body">
+          <p>
+            <%= simple_format(faq.answer) %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

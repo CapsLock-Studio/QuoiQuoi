@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708095136) do
+ActiveRecord::Schema.define(version: 20140709032250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,16 @@ ActiveRecord::Schema.define(version: 20140708095136) do
     t.string   "google_plus"
     t.string   "linkedin"
   end
+
+  create_table "faqs", force: true do |t|
+    t.integer  "locale_id"
+    t.string   "question"
+    t.text     "answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "faqs", ["locale_id"], name: "index_faqs_on_locale_id", using: :btree
 
   create_table "gift_translates", force: true do |t|
     t.integer  "gift_id"
