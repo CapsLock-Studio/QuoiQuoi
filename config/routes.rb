@@ -25,6 +25,7 @@ QuoiQuoi::Application.routes.draw do
     end
 
     resources :board
+    resources :questions
 
     resources :product_types
     resources :courses
