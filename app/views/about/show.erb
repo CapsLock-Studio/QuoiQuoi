@@ -9,58 +9,60 @@
             <%= simple_format(@contact.introduction) %>
           </div>
         </div>
-        <div class="col-md-12">
-          <div class="row">
-            <ul id="list" class="bxslider">
-              <% @designers.each do |designer| %>
-                <li>
-                  <a>
-                    <div class="thumbnail-style">
-                      <%= image_tag designer.photo.url(:medium), class: 'img-responsive' %>
-                      <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
-                        <h3><a><%= translate.name %></a> <small><%= translate.position %></small></h3>
-                        <%= simple_format translate.introduction %>
-                        <div class="text-right">
-                          <ul class="list-unstyled list-inline">
-                            <% unless designer.facebook.blank? %>
-                              <li>
-                                <%= link_to designer.facebook, target: '_blank' do %>
-                                  <i class="fa fa-fw fa-lg fa-facebook"></i>
-                                <% end %>
-                              </li>
-                            <% end %>
-                            <% unless designer.twitter.blank? %>
-                              <li>
-                                <%= link_to designer.twitter, target: '_blank' do %>
-                                  <i class="fa fa-fw fa-lg fa-twitter"></i>
-                                <% end %>
-                              </li>
-                            <% end %>
-                            <% unless designer.google_plus.blank? %>
-                              <li>
-                                <%= link_to designer.google_plus, target: '_blank' do %>
-                                  <i class="fa fa-fw fa-lg fa-google-plus"></i>
-                                <% end %>
-                              </li>
-                            <% end %>
-                            <% unless designer.linkedin.blank? %>
-                              <li>
-                                <%= link_to designer.linkedin, target: '_blank' do %>
-                                  <i class="fa fa-fw fa-lg fa-linkedin"></i>
-                                <% end %>
-                              </li>
-                            <% end %>
-                          </ul>
-                        </div>
-                      <% end %>
-                    </div>
-                  </a>
-                </li>
-              <% end %>
-            </ul>
+        <% if @designers.length > 0 %>
+          <div class="col-md-12">
+            <div class="row">
+              <ul id="list" class="bxslider">
+                <% @designers.each do |designer| %>
+                  <li>
+                    <a>
+                      <div class="thumbnail-style">
+                        <%= image_tag designer.photo.url(:medium), class: 'img-responsive' %>
+                        <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
+                          <h3><a><%= translate.name %></a> <small><%= translate.position %></small></h3>
+                          <%= simple_format translate.introduction %>
+                          <div class="text-right">
+                            <ul class="list-unstyled list-inline">
+                              <% unless designer.facebook.blank? %>
+                                <li>
+                                  <%= link_to designer.facebook, target: '_blank' do %>
+                                    <i class="fa fa-fw fa-lg fa-facebook"></i>
+                                  <% end %>
+                                </li>
+                              <% end %>
+                              <% unless designer.twitter.blank? %>
+                                <li>
+                                  <%= link_to designer.twitter, target: '_blank' do %>
+                                    <i class="fa fa-fw fa-lg fa-twitter"></i>
+                                  <% end %>
+                                </li>
+                              <% end %>
+                              <% unless designer.google_plus.blank? %>
+                                <li>
+                                  <%= link_to designer.google_plus, target: '_blank' do %>
+                                    <i class="fa fa-fw fa-lg fa-google-plus"></i>
+                                  <% end %>
+                                </li>
+                              <% end %>
+                              <% unless designer.linkedin.blank? %>
+                                <li>
+                                  <%= link_to designer.linkedin, target: '_blank' do %>
+                                    <i class="fa fa-fw fa-lg fa-linkedin"></i>
+                                  <% end %>
+                                </li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        <% end %>
+                      </div>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
-        </div>
-        <hr/>
+          <hr/>
+        <% end %>
         <div class="col-md-12">
           <%= render 'youtube' %>
         </div>
@@ -72,9 +74,11 @@
 
     <div class="col-md-3">
       <div class="row">
-        <div class="col-md-12 margin-bottom-40">
-          <%= render 'designer_carousel' %>
-        </div>
+        <% if @designers.length > 0 %>
+          <div class="col-md-12 margin-bottom-40">
+            <%= render 'designer_carousel' %>
+          </div>
+        <% end %>
         <div class="col-md-12 margin-bottom-40">
           <!-- Contacts -->
           <div class="headline">
