@@ -40,6 +40,14 @@ class RegistrationsController < ApplicationController
     respond_to do |format|
       course = Course.find(registration_params[:course_id])
       translate = course.course_translates.where(locale_id: session[:locale_id]).first
+
+      @registration = Registration.where(course_id: registration_params[:course_id],email: (current_user)? current_user.email : registration_params[:email]).first
+
+      if @registration
+        flash[:message] = t('had_registered_hint')
+        flash[:status] = 'warning'
+      end
+
       @registration = Registration.new(registration_params)
 
       if current_user
@@ -89,5 +97,12 @@ class RegistrationsController < ApplicationController
   private
     def registration_params
       params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id)
+    end
+
+    def set_discount
+      @discount = 0
+      UserGiftSerial.where(registration_id: @registration.id).each do |user_gift_serial|
+        @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @registration.locale_id).first.quota
+      end
     end
 end

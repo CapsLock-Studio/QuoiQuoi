@@ -68,7 +68,7 @@
                 <%= f.hidden_field :course_id %>
                 <% if @course.course_options.length > 0 %>
                   <label><%= t('option') %></label>
-                  <%= f.select :course_option_id, CourseOption.where(locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]}, {}, class: 'selectpicker form-control', data: {width: '100%'}, disabled: (current_user && @registration.id)? true : false %>
+                  <%= f.select :course_option_id, CourseOption.where(locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]}, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
                 <% end %>
 
                 <% if @course.canceled? || @registration.canceled? %>
@@ -81,9 +81,9 @@
                       <span><%= t('registration.full') %></span>
                     </a>
                   <% elsif current_user && @registration.id %>
-                    <%= link_to registrations_path, class: 'btn btn-default btn-lg btn-block hover-effect one-page-btn', disabled: 'disabled' do %>
+                    <button type="submit" class="btn btn-default btn-lg btn-block hover-effect">
                       <span><%= t('had_registered') %></span>
-                    <% end %>
+                    </button>
                   <% else %>
                     <button type="submit" class="btn btn-default btn-lg btn-block hover-effect">
                       <i class="icon-edit"></i>

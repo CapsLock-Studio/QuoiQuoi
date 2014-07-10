@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_order, except: [:index, :new, :close_index]
   before_action :authenticate_user!
   before_action :set_discount, only: [:show, :close_show]
+  before_action :set_shipping_fee, only: [:show, :close_show]
 
   def index
     add_breadcrumb t('home'), :root_path
@@ -140,8 +141,15 @@ class OrdersController < ApplicationController
 
     def set_discount
       @discount = 0
-      UserGift.where(order_id: @order.id).each do |user_gift|
-        @discount += user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+      UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
+        @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+      end
+    end
+
+    def set_shipping_fee
+      @shipping_fee = ShippingFeeTranslate.where(locale_id: @order.locale_id, shipping_fee_id: @order.shipping_fee_id).first
+      if @shipping_fee.free_condition && @shipping_fee.free_condition < @order.subtotal
+        @shipping_fee.fee = 0
       end
     end
 end

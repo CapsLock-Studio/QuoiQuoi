@@ -6,7 +6,7 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %>: </strong><br/>
-  <strong><%= t('mailer.re_remittance', remittance_link: "<a href=\"#{@domain}/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %> </strong>&nbsp;<%= "#{@domain}/payments/#{@order.payment.id}/edit" %>
+  <strong><%= t('mailer.re_remittance', remittance_link: "<a href=\"http://quoiquoi.tw/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %> </strong>&nbsp;<%= "http://quoiquoi.tw/payments/#{@order.payment.id}/edit" %>
 </p>
 <h3><%= t('remittance_information') %></h3>
 <table>
@@ -58,7 +58,7 @@
       <% translate = order_product.product.product_translates.where(locale_id: @order.locale_id).first %>
       <tr>
         <td>
-          <%= image_tag "#{@domain}#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
+          <%= image_tag "http://quoiquoi.tw#{order_product.product.image.url(:thumb)}", class: 'img-responsive' %>
         </td>
         <td>
           <h5>
@@ -97,7 +97,7 @@
     <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
       <tr>
         <td>
-          <%= image_tag "#{@domain}#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
+          <%= image_tag "http://quoiquoi.tw#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
         </td>
         <td>
           <h5>

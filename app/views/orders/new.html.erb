@@ -11,6 +11,28 @@
                 <div class="box-content">
                   <div class="form-group row">
                     <div class="col-md-12">
+                      <%= f.label :name do %>
+                        <%= t('recipient_name') %>
+                        <span class="color-red">*</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-3">
+                      <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <%= f.label :zip_code do %>
+                        <%= t('zip_code') %>
+                        <span class="color-red">*</span>
+                      <% end %>
+                    </div>
+                    <div class="controls col-md-2">
+                      <%= f.text_field :zip_code, value: current_user.zip_code, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '3', 'rule-maxlength' => '5'} %>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
                       <%= f.label :area do %>
                         <%= t('area') %>
                         <span class="color-red">*</span>
@@ -30,28 +52,6 @@
                           <small class="text-muted"><%= t('free_shipping_fee', free_condition: number_to_currency(ShippingFeeTranslate.where(locale_id: session[:locale_id]).first.free_condition)) %></small>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <%= f.label :name do %>
-                        <%= t('recipient_name') %>
-                        <span class="color-red">*</span>
-                      <% end %>
-                    </div>
-                    <div class="controls col-md-3">
-                      <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <%= f.label :zip_code do %>
-                        <%= t('zip_code') %>
-                        <span class="color-red">*</span>
-                      <% end %>
-                    </div>
-                    <div class="controls col-md-2">
-                      <%= f.text_field :zip_code, value: current_user.zip_code, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '3', 'rule-maxlength' => '5'} %>
                     </div>
                   </div>
                   <div class="form-group row">

@@ -1,4 +1,5 @@
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+// @import 'unify/bootstrap/bootstrap/bootstrap';
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
 
 
@@ -81,10 +82,6 @@ h2 .h2 {
 
 .da-slider {
 //  height: 500px;
-}
-
-.modal-dialog {
-  width: 800px !important;
 }
 
 .show-calendar {
@@ -771,5 +768,25 @@ a[data-toggle=offcanvas] {
   p {
     color: #FFF;
     margin-bottom: 0px;
+  }
+}
+
+.serial-number {
+  width: 100%;
+
+  input {
+    background-color: #EEE;
+  }
+
+  input:focus {
+    background-color: #FFF;
+  }
+
+  span {
+    background-color: #FFF;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 10px;
   }
 }

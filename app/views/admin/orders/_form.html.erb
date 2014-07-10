@@ -23,6 +23,12 @@
           </div>
         </div>
         <div class="form-group">
+          <label>國家/區域</label>
+          <div class="conrtols">
+            <%= text_field_tag :shipping_fee, @order.shipping_fee.area, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
           <label>收件地址</label>
           <div class="controls">
             <%= text_field_tag :address, @order.address, class: 'form-control', disabled: 'disabled' %>

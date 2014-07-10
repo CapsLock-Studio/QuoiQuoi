@@ -130,6 +130,10 @@
         $('#calendar-modal').modal('show');
     });
 
+    $('.send-serial-btn').on('click', function(){
+        $('[name=user_gift_serial_id]').val($(this).data('id'));
+    });
+
     $('.refresh-price-source').on('change', function(){
         var priceTarget = $('.refresh-price-target');
         priceTarget.text(((parseInt(priceTarget.data('price'), 10) * parseInt($(this).val(), 10)) + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');

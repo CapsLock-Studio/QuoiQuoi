@@ -20,7 +20,7 @@ class PaymentsController < ApplicationController
         currency = payment.registration.currency
       elsif payment.user_gift
         gift = GiftTranslate.where(locale_id: session[:locale_id], gift_id: payment.user_gift.gift_id).first
-        amount = gift.quota
+        amount = gift.quota * payment.user_gift.quantity
         currency = payment.user_gift.currency
       end
 
@@ -30,11 +30,11 @@ class PaymentsController < ApplicationController
         if payment.registration
 
           # send mail to remind that if the remittance not complete in three days, it will discard auto
-          RegistrationMailer.remittance_remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
+          RegistrationMailer.remittance_remind(payment.registration_id).deliver
         elsif payment.order
-          OrderMailer.remittance_remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+          OrderMailer.remittance_remind(payment.order_id).deliver
         elsif payment.user_gift
-          UserGiftMailer.remittance_remind(payment.user_gift).deliver
+          UserGiftMailer.remittance_remind(payment.user_gift_id).deliver
         end
         format.html {redirect_to edit_payment_path(payment)}
       else
@@ -47,12 +47,12 @@ class PaymentsController < ApplicationController
   end
 
   def success
-    payment = Payment.where(token: params[:token]).all.first
+    payment = Payment.find_by_token(params[:token])
 
     respond_to do |format|
       payment.complete!(params[:PayerID])
       if payment.order
-        OrderMailer.remind(payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+        OrderMailer.remind(payment.order_id).deliver
 
         # show the message let users know their payment complete
         flash[:status] = 'success'
@@ -60,7 +60,7 @@ class PaymentsController < ApplicationController
 
         format.html {redirect_to order_path(payment.order)}
       elsif payment.registration
-        RegistrationMailer.remind(payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
+        RegistrationMailer.remind(payment.registration_id).deliver
 
         # show the message let users know their payment complete
         flash[:status] = 'success'
@@ -77,7 +77,11 @@ class PaymentsController < ApplicationController
         flash[:status] = 'success'
         flash[:message] = t('completed_payment')
 
-        UserGiftMailer.completed_remind(payment.user_gift).deliver
+        1..payment.user_gift.quantity.times do |i|
+          UserGiftSerial.new(user_gift_id: payment.user_gift_id, serial: get_unique_random_string).save
+        end
+
+        UserGiftMailer.completed_remind(payment.user_gift_id).deliver
         format.html {redirect_to user_gift_path(payment.user_gift)}
       end
     end
@@ -109,6 +113,8 @@ class PaymentsController < ApplicationController
   end
 
   def update
+    flash[:message] = nil
+
     respond_to do |format|
       #format.html {render json: @payment}
       if @payment.update_attributes(payment_params.merge({token: Base64.encode64("#{Time.now}#{(0..3).map{('a'..'z').to_a[rand(26)]}.join}")}))

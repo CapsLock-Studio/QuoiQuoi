@@ -10,13 +10,13 @@ namespace :payment do
 
     payments.each do |payment|
       if payment.order
-        OrderMailer.remittance_remind_three_days(payment.order).deliver
+        OrderMailer.remittance_remind_three_days(payment.order_id).deliver
         puts 'send order remind mail'
       elsif payment.registration
-        RegistrationMailer.remittance_remind_three_days(payment.registration).deliver
+        RegistrationMailer.remittance_remind_three_days(payment.registration_id).deliver
         puts 'send registration remind mail'
       elsif payment.user_gift
-        UserGiftMailer.remittance_remind_three_days(payment.user_gift).deliver
+        UserGiftMailer.remittance_remind_three_days(payment.user_gift_id).deliver
         puts 'send user card remind mail'
       end
     end
