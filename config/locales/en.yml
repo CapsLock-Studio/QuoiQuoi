@@ -417,7 +417,7 @@ en:
     remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment within three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_three_days_for_remittance_registration: ''
     remind_for_registration_part1: "Thank you for registering quoi quoi studio's course.<br/>You have finished the registration process.<br/>Remind that you don't miss this course and make ready for course requirement."
-    remind_for_registration_part1: "For the detailed course information, please surf our website.<br/>The brief course information is in the following."
+    remind_for_registration_part2: 'For detailed course information, please surf our website.<br/>The brief course information is in the following.'
     remind_for_user_gift: "Thank you for buying this gift card.<br/>Mind you, if you don't complete payment within three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_three_days_for_user_gift: ''
     user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] on my account of quoi quoi website.&nbsp;%{url}<br/>The instruction of this card is in the following.'
