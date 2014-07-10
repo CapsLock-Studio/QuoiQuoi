@@ -21,7 +21,7 @@
     </a>
   </li>
   <li>
-    <a href="//pinterest.com/pin/create/button/?url=<%= image %>&description=<%= text %>"
+    <a href="//pinterest.com/pin/create/button/?url=<%= request.original_url %>&media=<%= image %>&description=<%= text %>"
        title="<%= t('share_this_on_pinterest') %>"
        target="_blank"
        class="hover-effect text-danger"
