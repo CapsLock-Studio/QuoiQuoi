@@ -30,7 +30,7 @@
       <%= t('remitted_date') %>
     </td>
     <td>
-      <%= @registration.payment.pay_time.strftime('%Y/%m/%d') %>
+      <%= (@registration.payment.pay_time)? @registration.payment.pay_time.strftime('%Y/%m/%d') : '-' %>
     </td>
   </tr>
 </table>
