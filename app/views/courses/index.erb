@@ -13,7 +13,7 @@
                   <%= image_tag course.image.url(:small), class: 'img-responsive' %>
                   <div class="caption">
                     <h4 style="margin-top: 10px; margin-bottom: 5px;">
-                      <%= translate.name %>
+                      <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
                     </h4>
                     <ul class="list-unstyled">
                       <li>
