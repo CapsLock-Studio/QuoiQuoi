@@ -420,7 +420,7 @@ en:
     remind_for_registration_part1: "For the detailed course information, please surf our website.<br/>The brief course information is in the following."
     remind_for_user_gift: "Thank you for buying this gift card.<br/>Mind you, if you don't complete payment within three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_three_days_for_user_gift: ''
-    user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] on my account of quoi quoi website.&nbsp;%{url}<br/>The gift card can be used to buy the products and join the courses on our website.<br/>To use this gift card, please click "Use gift card" in the payment page to pay the bill.<br/>Remind that there is no change in this payment and if the face value is not enough to pay the bill, you are required to continue paying the remaining amount.'
+    user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] on my account of quoi quoi website.&nbsp;%{url}<br/>The instruction of this card is in the following.'
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'

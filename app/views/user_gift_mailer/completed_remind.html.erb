@@ -8,7 +8,10 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %> </strong><br/>
-  <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %><br/>
+  <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %>
+</p>
+<%= simple_format(translate.description) %>
+<p>
   <%= t('mailer.any_question') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com
 </p>
 <br>
