@@ -2,15 +2,6 @@ class AreasController < ApplicationController
   before_action :set_areas
   before_action :set_area, only: [:show]
 
-  def index
-    add_breadcrumb t('home'), :root_path
-    add_breadcrumb t('tourist_attractions'), :areas_path
-    add_breadcrumb t('all_area')
-
-    # filter area locale
-    @articles = TravelInformation.all.order(created_at: :desc)
-  end
-
   def show
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('tourist_attractions'), :areas_path
