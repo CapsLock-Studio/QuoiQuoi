@@ -23,7 +23,7 @@ class Admin::OrdersController < AdminController
   end
 
   def check
-    @payments = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: [nil])
+    @payments = Payment.where(completed: false).where.not(order_id: ['', nil], amount: 0, pay_time: [nil])
   end
 
   def check_show
