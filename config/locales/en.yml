@@ -158,7 +158,7 @@ en:
     send: 'Send gift card to my friend'
     click: 'Click to select'
     target_email: "Enter your friend's email address"
-    hint: 'You can give the serial number to your friend yourself or sending the email by us'
+    hint: 'You can give your friend the serial number by yourself or by our Email.'
 
 
   rss:
