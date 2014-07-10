@@ -20,13 +20,13 @@
           <div class="form-group">
             <label>付款金額</label>
             <div class="controls">
-              <%= text_field_tag :amount, number_to_currency(@order.payment.amount), class: 'form-control', disabled: 'disabled' %>
+              <%= text_field_tag :amount, (@order.payment.amount != 0)? number_to_currency(@order.payment.amount) : '尚未付款', class: 'form-control', disabled: 'disabled' %>
             </div>
           </div>
           <div class="form-group">
             <label>付款日期</label>
             <div class="controls">
-              <%= text_field_tag :address, @order.payment.pay_time.strftime('%Y/%m/%d'), class: 'form-control', disabled: 'disabled' %>
+              <%= text_field_tag :address, (@order.payment.pay_time)? @order.payment.pay_time.strftime('%Y/%m/%d') : '尚未付款', class: 'form-control', disabled: 'disabled' %>
             </div>
           </div>
         <% else %>
