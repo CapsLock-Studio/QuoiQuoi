@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-9 col-xs-7">
                       <strong>
-                        <%= "#{@order.name} / #{@order.phone} / #{@order.address}" %>
+                        <%= "#{@order.name} / #{(@order.phone)? @order.phone : '-'} / #{@order.address} / #{@order.shipping_fee.area}" %>
                       </strong>
                     </div>
                   </div>
