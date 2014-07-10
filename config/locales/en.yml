@@ -214,7 +214,7 @@ en:
   my_gift: 'My Gift Cards'
   business_hours: 'Business Hours'
   position_designer: 'Designer'
-  free_shipping_fee: 'Free shipping rate in Taiwan when total amount over %{free_condition}.'
+  free_shipping_fee: ''
   quantity: 'Quantity'
   article: 'ARTICLE'
   validate_email: 'Please enter a valid email address.'
