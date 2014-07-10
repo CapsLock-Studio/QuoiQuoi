@@ -54,11 +54,11 @@ class Admin::PaymentsController < AdminController
     respond_to do |format|
 
       if @payment.order
-        OrderMailer.re_remittance_remind(@payment.order_id).deliver
+        OrderMailer.re_remittance_remind(@payment.order_id, @payment.amount, @payment.identifier, @payment.pay_time).deliver
       elsif @payment.registration
-        RegistrationMailer.re_remittance_remind(@payment.registration_id).deliver
+        RegistrationMailer.re_remittance_remind(@payment.registration_id, @payment.amount, @payment.identifier, @payment.pay_time).deliver
       elsif @payment.user_gift
-        UserGiftMailer.re_remittance_remind(@payment.user_gift_id).deliver
+        UserGiftMailer.re_remittance_remind(@payment.user_gift_id, @payment.amount, @payment.identifier, @payment.pay_time).deliver
       end
 
       @payment.amount = 0

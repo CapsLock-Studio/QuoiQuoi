@@ -437,6 +437,6 @@ en:
     subject_for_three_days: "[quoi quoi studio] Remind of prompt remitting the money (Please don't reply this mail)"
 
     custom_order:
-      mind: 'Remind that full payment must be made before we product the order.'
+      mind: 'Remind that full payment must be made before we produce the order.'
       add_to_cart: 'If you want to pay the bill, please go to'
       following: 'The order information is in the following.'
