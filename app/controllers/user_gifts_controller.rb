@@ -7,6 +7,8 @@ class UserGiftsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('my_gift'), :user_gifts_path
 
+    flash[:message] = nil
+
     @user_gifts = UserGift.where(user_id: current_user.id)
   end
 

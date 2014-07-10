@@ -6,6 +6,8 @@ class CoursesController < ApplicationController
   def index
     set_breadcrumbs
 
+    flash[:message] = nil
+
     respond_to do |format|
       @courses = Course.where(canceled: false)
       format.html do

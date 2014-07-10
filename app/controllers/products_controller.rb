@@ -4,6 +4,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+    flash[:message] = nil
+
     respond_to do |format|
       format.html do
         add_breadcrumb t('home'), :root_path
