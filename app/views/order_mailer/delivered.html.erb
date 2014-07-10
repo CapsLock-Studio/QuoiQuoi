@@ -91,6 +91,7 @@
 <% if @discount > 0 %>
   <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
 <% end %>
+<h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %></label></h4>
 <h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %></h3>
 <h3><%= t('shipping_information') %></h3>
 <table>
@@ -101,6 +102,10 @@
   <tr>
     <td style="text-align: right"><%= t('zip_code') %></td>
     <td><%= @order.zip_code %></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><%= t('area') %></td>
+    <td><%= @order.shipping_fee.area %></td>
   </tr>
   <tr>
     <td style="text-align: right"><%= t('address') %></td>
