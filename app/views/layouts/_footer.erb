@@ -34,15 +34,22 @@
     <% end %>
 
     <div class="col-md-3 articles">
+      <% areas = Area.where(locale_id: session[:locale_id]).limit(5).order(:id) %>
       <div class="headline">
-        <%= link_to areas_path do %>
+        <% if areas.first %>
+          <%= link_to area_path(areas.first) do %>
+            <h4>
+              <%= t('tourist_attractions') %>
+            </h4>
+          <% end %>
+        <% else %>
           <h4>
             <%= t('tourist_attractions') %>
           </h4>
         <% end %>
       </div>
       <ul class="list-unstyled article">
-        <% Area.where(locale_id: session[:locale_id]).limit(5).each do |area| %>
+        <% areas.each do |area| %>
           <li>
             <%= link_to area_path(area.id) do %>
               <i class="fa fa-tag fa-fw"></i>
