@@ -29,9 +29,13 @@ class RegistrationMailer < ActionMailer::Base
     mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_registration'))
   end
 
-  def re_remittance_remind(registration_id)
+  def re_remittance_remind(registration_id, amount, identifier, pay_time)
     @registration = Registration.find(registration_id)
     I18n.locale = Locale.find(@registration.locale_id).lang
+
+    @registration.payment.amount = amount
+    @registration.payment.identifier = identifier
+    @registration.payment.pay_time = pay_time
 
     set_discount
 

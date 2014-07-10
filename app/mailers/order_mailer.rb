@@ -17,9 +17,13 @@ class OrderMailer < ActionMailer::Base
     mail(to: @order.user.email, subject: t('mailer.subject_for_order'))
   end
 
-  def re_remittance_remind(order_id)
+  def re_remittance_remind(order_id, amount, identifier, pay_time)
     @order = Order.find(order_id)
     I18n.locale = Locale.find(@order.locale_id).lang
+
+    @order.payment.amount = amount
+    @order.payment.identifier = identifier
+    @order.payment.pay_time = pay_time
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
