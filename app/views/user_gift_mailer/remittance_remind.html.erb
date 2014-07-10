@@ -17,6 +17,7 @@
     <td></td>
     <td><%= t('call_name') %></td>
     <td><%= t('user_gift.quota') %></td>
+    <td><%= t('quantity') %></td>
   </tr>
   </thead>
   <tbody>
@@ -30,12 +31,18 @@
       </h5>
     </td>
     <td>
-      <%= number_to_currency(translate.quota) %>
+      <%= number_to_currency(translate.quota) %><br/>
+    </td>
+    <td style="text-align: center">
+      <%= @user_gift.quantity %>
     </td>
   </tr>
   </tbody>
 </table>
-<h3><%= t('total_amount') %>: <%= number_to_currency(translate.quota) %></h3>
+<h3>
+  <%= t('total_amount') %>: <%= number_to_currency(translate.quota * @user_gift.quantity.to_f) %><br/>
+  <small><%= "#{number_to_currency(translate.quota)} * #{@user_gift.quantity}" %></small>
+</h3>
 <br>
 <br>
 <a href="http://quoiquoi.tw">quoiquoi 布知道</a>
