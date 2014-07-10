@@ -1,6 +1,11 @@
 class RentsController < ApplicationController
   # GET /rents
   def show
+
+    if flash[:status] == 'warning'
+      flash[:message] = nil
+    end
+
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('rent')
 
