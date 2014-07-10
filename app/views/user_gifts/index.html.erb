@@ -33,17 +33,14 @@
                       <% elsif user_gift.payment.amount == 0 || user_gift.payment.identifier.blank? %>
                         <%= t('order.wait_remittance') %>
                       <% elsif user_gift.payment.completed? %>
-                        <% if user_gift.used_user_id.blank? || user_gift.used_time.blank? %>
-                          <%= t('not_used') %>
-                        <% else %>
-                          <%= t('used') %>
-                        <% end %>
+                        <%= t('completed_payment') %>
                       <% else %>
                         <%= t('order.wait_confirm') %>
                       <% end %>
                     </td>
                     <td>
-                      <%= number_to_currency(translate.quota) %>
+                      <%= number_to_currency(translate.quota * user_gift.quantity.to_f) %><br/>
+                      <span class="text-muted"><%= "#{number_to_currency(translate.quota)} * #{user_gift.quantity}" %></span>
                     </td>
                     <td>
                       <ul class="list-unstyled">

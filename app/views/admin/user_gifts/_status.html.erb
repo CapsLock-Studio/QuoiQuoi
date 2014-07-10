@@ -7,13 +7,9 @@
     <label class="label label-danger">
       等待確認
     </label>
-  <% elsif user_gift.used_user_id.blank? || user_gift.used_time.blank? %>
-    <label class="label label-success">
-      尚未使用
-    </label>
   <% else %>
-    <label class="label label-default">
-      使用完畢
+    <label class="label label-success">
+      付款完畢
     </label>
   <% end %>
 <% else %>

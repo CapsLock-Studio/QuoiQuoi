@@ -1,4 +1,4 @@
-<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: session[:locale_id]).first %>
+<% translate = GiftTranslate.where(gift_id: @user_gift_serial.user_gift.gift_id, locale_id: session[:locale_id]).first %>
 <div class="container">
   <div class="row">
     <!--Reg Block-->
@@ -6,8 +6,8 @@
       <div class="reg-page" style="border-top:none;">
         <div class="row">
           <div class="col-md-12">
-            <% if @user_gift %>
-              <% if @user_gift.used_time %>
+            <% if @user_gift_serial %>
+              <% if @user_gift_serial.used_time %>
                 <h4 class="text-center">
                   <i class="fa fa-exclamation"></i>
                   <%= t('user_gift.oops') %>
@@ -18,36 +18,6 @@
                   </div>
                 </div>
               <% else %>
-                <div class="box">
-                  <div class="box-header box-header-small grey-background">
-                    <span class="text-muted"><%= t('user_gift.information') %></span>
-                  </div>
-                  <div class="box-content box-no-padding" style="border:0;">
-                    <div class="responsive-table">
-                      <div class="scrollable-area">
-                        <table class="table table-bordered text-left table-padding-20" style="margin-bottom:0;">
-                          <thead>
-
-                          </thead>
-                          <tbody>
-                          <tr>
-                            <td class="col-xs-4"><%= t('user_gift.quota') %></td>
-                            <td><%= number_to_currency(translate.quota) %></td>
-                          </tr>
-                          <tr>
-                            <td class="col-xs-4"><%= t('user_gift.serial') %></td>
-                            <td><%= @user_gift.token %></td>
-                          </tr>
-                          <tr>
-                            <td class="col-xs-4"><%= t('used_time') %></td>
-                            <td><%= @user_gift.used_time.blank?? t('not_used') : @user_gift.used_time.strftime('%Y/%m/%d %H:%M') %></td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div class="row">
                   <%= form_tag discount_user_gifts_path, method: :put do %>
                     <div class="col-sm-6 col-sm-offset-3">

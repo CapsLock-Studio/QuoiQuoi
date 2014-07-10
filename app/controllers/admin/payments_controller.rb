@@ -29,13 +29,18 @@ class Admin::PaymentsController < AdminController
     respond_to do |format|
       if @payment.update_attribute(:completed, true)
         if @payment.order
-          OrderMailer.remind(@payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+          OrderMailer.remind(@payment.order_id).deliver
           format.html {redirect_to check_admin_orders_path}
         elsif @payment.registration
-          RegistrationMailer.remind(@payment.registration, "#{request.protocol}#{request.host_with_port}").deliver
+          RegistrationMailer.remind(@payment.registration_id).deliver
           format.html {redirect_to check_admin_registrations_path}
         elsif @payment.user_gift
-          UserGiftMailer.completed_remind(@payment.user_gift).deliver
+
+          1..@payment.user_gift.quantity.times do |i|
+            UserGiftSerial.new(user_gift_id: @payment.user_gift_id, serial: get_unique_random_string).save
+          end
+
+          UserGiftMailer.completed_remind(@payment.user_gift_id).deliver
           format.html {redirect_to check_admin_user_gifts_path}
         end
       else
@@ -49,11 +54,11 @@ class Admin::PaymentsController < AdminController
     respond_to do |format|
 
       if @payment.order
-        OrderMailer.re_remittance_remind(@payment.order, "#{request.protocol}#{request.host_with_port}").deliver
+        OrderMailer.re_remittance_remind(@payment.order_id).deliver
       elsif @payment.registration
-        RegistrationMailer.re_remittance_remind(@payment.registration).deliver
+        RegistrationMailer.re_remittance_remind(@payment.registration_id).deliver
       elsif @payment.user_gift
-        UserGiftMailer.re_remittance_remind(@payment.user_gift).deliver
+        UserGiftMailer.re_remittance_remind(@payment.user_gift_id).deliver
       end
 
       @payment.amount = 0

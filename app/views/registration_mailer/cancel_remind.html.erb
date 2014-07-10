@@ -26,11 +26,11 @@
   <tbody>
   <tr>
     <td>
-      <%= image_tag "#{@domain}#{@registration.course.image.url(:thumb)}" %>
+      <%= image_tag "http://quoiquoi.tw#{@registration.course.image.url(:thumb)}" %>
     </td>
     <td>
       <h5>
-        <%= @registration.course.course_translates.where(locale_id: @locale_id).first.name %>
+        <%= @registration.course.course_translates.where(locale_id: @registration.locale_id).first.name %>
       </h5>
     </td>
     <td>

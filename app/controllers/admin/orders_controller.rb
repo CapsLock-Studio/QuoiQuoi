@@ -1,6 +1,8 @@
 class Admin::OrdersController < AdminController
   authorize_resource
-  before_action :set_order, except: [:index, :deliver, :canceled, :closed, :check, :check_show]
+  before_action :set_order, only: [:check_show, :edit, :show, :update]
+  before_action :set_shipping_fee, only: [:check_show, :edit, :show]
+  before_action :set_discount, only: [:check_show, :edit, :show]
   add_breadcrumb '首頁', :admin_root_path
 
   # GET /admin/orders
@@ -67,7 +69,7 @@ class Admin::OrdersController < AdminController
   def update
     respond_to do |format|
       if @order.update_attributes({delivered: true, delivered_time: Time.now})
-        OrderMailer.delivered(@order, "#{request.protocol}#{request.host_with_port}").deliver
+        OrderMailer.delivered(@order.id).deliver
         format.html {redirect_to deliver_admin_orders_path}
       else
         format.html {render json: @order.errors}
@@ -84,5 +86,19 @@ class Admin::OrdersController < AdminController
   private
     def set_order
       @order = Order.find(params[:id])
+    end
+
+    def set_shipping_fee
+      @shipping_fee = ShippingFeeTranslate.where(locale_id: @order.locale_id, shipping_fee_id: @order.shipping_fee_id).first
+      if @shipping_fee.free_condition && @order.subtotal > @shipping_fee.free_condition
+        @shipping_fee.fee = 0
+      end
+    end
+
+    def set_discount
+      @discount = 0
+      UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
+        @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+      end
     end
 end

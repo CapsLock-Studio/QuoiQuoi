@@ -8,28 +8,8 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %> </strong><br/>
-  <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %>
-</p>
-<br/>
-<br/>
-<p>
-  <%= t('user_gift.first_step').html_safe %><br/>
-  <%= image_tag("#{root_url}system/placeholder/step1_#{@locale_lang}.png") %>
-</p>
-<hr/>
-<p>
-  <%= t('user_gift.second_step').html_safe %><br/>
-  <%= image_tag("#{root_url}system/placeholder/step2_#{@locale_lang}.png") %>
-</p>
-<hr/>
-<p>
-  <%= t('user_gift.third_step').html_safe %><br/>
-  <%= image_tag("#{root_url}system/placeholder/step3_#{@locale_lang}.png") %>
-</p>
-<hr/>
-<p>
-  <%= t('user_gift.fourth_step').html_safe %><br/>
-  <%= image_tag("#{root_url}system/placeholder/step4_#{@locale_lang}.png") %>
+  <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %><br/>
+  <%= t('mailer.any_question') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com
 </p>
 <br>
 <br>

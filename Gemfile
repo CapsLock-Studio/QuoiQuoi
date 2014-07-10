@@ -48,6 +48,7 @@ gem 'kaminari'
 #gem 'kaminari-bootstrap', '~> 3.0.1'
 
 gem 'paypal-express'
+gem 'redis'
 gem 'resque'
 gem 'resque_mailer'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'

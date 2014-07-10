@@ -193,6 +193,7 @@ QuoiQuoi::Application.routes.draw do
   resources :user_gifts do
     member do
       get :pay, action: :pay_show
+      post :send_email, action: :send_email
     end
 
     collection do

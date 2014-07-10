@@ -14,4 +14,7 @@ class GiftsController < ApplicationController
     @gifts = Gift.where.not(id: params[:id])
     @user_gift = UserGift.new(gift_id: params[:id])
   end
+
+  def new
+  end
 end

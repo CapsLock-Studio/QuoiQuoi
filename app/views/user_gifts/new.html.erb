@@ -1,0 +1,99 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-12 reg-page">
+      <div class="item">
+        <%= form_for @user_gift, html: {class: 'form-horizontal validate-form'} do |f| %>
+          <% translate = @user_gift.gift.gift_translates.where(locale_id: session[:locale_id]).first %>
+          <% if flash[:message] %>
+            <div class="alert alert-warning text-center">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+              <%= flash[:message] %>
+            </div>
+          <% end %>
+          <h4><%= t('check_out') %></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box">
+                    <div class="box-content">
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <label>
+                            <%= t('quantity') %>
+                          </label>
+                        </div>
+                        <div class="controls col-md-3">
+                          <%= f.select :quantity, (1..10).collect{|number| [number, number]}, {selected: f.object.quantity}, {class: 'selectpicker form-control', data: {width: '100%'}} %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h4><%= t('user_gift.information') %></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <td></td>
+                          <td><%= t('call_name') %></td>
+                          <td><%= t('user_gift.quota') %></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                          <td class="col-xs-3">
+                            <%= image_tag @user_gift.gift.image.url(:thumb) %>
+                          </td>
+                          <td class="col-xs-2">
+                            <h5>
+                              <%= translate.name %>
+                            </h5>
+                          </td>
+                          <td class="col-xs-2">
+                            <%= number_to_currency(translate.quota) %>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 class="text-right color-orange">
+                    <%= t('total_amount') %>:
+                    <strong class="text-muted refresh-price-target" data-price="<%= translate.quota %>">
+                      <%= number_to_currency(translate.quota * f.object.quantity.to_f) %>
+                    </strong>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+              <%= f.hidden_field :gift_id %>
+              <%= f.button t('check_out'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+              <%= link_to :back do %>
+                <i class="fa fa-angle-left"></i>
+                <%= t('keep_shopping') %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,99 +1,87 @@
 class OrderMailer < ActionMailer::Base
-  # include Resque::Mailer
+  include Resque::Mailer
   default from: 'admin@quoiquoi.tw'
 
-  def remind(order, domain)
-    I18n.locale = Locale.find(order.locale_id).lang
+  def remind(order_id)
+    @order = Order.find(order_id)
+    I18n.locale = Locale.find(@order.locale_id).lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: order.shipping_fee_id, locale_id: order.locale_id).first
+    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
       @fee = 0
     end
 
-    @discount = 0
-    UserGift.where(order_id: order.id).each do |user_gift|
-      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
-    end
+    set_discount
 
-    @order = order
-    @domain = domain
-    mail(to: order.user.email, subject: t('mailer.subject_for_order'))
+    mail(to: @order.user.email, subject: t('mailer.subject_for_order'))
   end
 
-  def re_remittance_remind(order, domain)
-    I18n.locale = Locale.find(order.locale_id).lang
+  def re_remittance_remind(order_id)
+    @order = Order.find(order_id)
+    I18n.locale = Locale.find(@order.locale_id).lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: order.shipping_fee_id, locale_id: order.locale_id).first
+    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
       @fee = 0
     end
 
-    @discount = 0
-    UserGift.where(order_id: order.id).each do |user_gift|
-      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
-    end
+    set_discount
 
-    @order = order
-    @domain = domain
-    mail(to: order.user.email, subject: t('mailer.subject_for_re_remittance'))
+    mail(to: @order.user.email, subject: t('mailer.subject_for_re_remittance'))
   end
 
-  def remittance_remind(order, domain)
-    I18n.locale = Locale.find(order.locale_id).lang
+  def remittance_remind(order_id)
+    @order = Order.find(order_id)
+    I18n.locale = Locale.find(@order.locale_id).lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: order.shipping_fee_id, locale_id: order.locale_id).first
+    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
       @fee = 0
     end
 
-    @discount = 0
-    UserGift.where(order_id: order.id).each do |user_gift|
-      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
-    end
+    set_discount
 
-    @order = order
-    @domain = domain
-    mail(to: order.user.email, subject: t('mailer.subject_for_remittance_order'))
+    mail(to: @order.user.email, subject: t('mailer.subject_for_remittance_order'))
   end
 
-  def remittance_remind_three_days(order)
-    I18n.locale = Locale.find(order.locale_id).lang
+  def remittance_remind_three_days(order_id)
+    @order = Order.find(order_id)
+    I18n.locale = Locale.find(@order.locale_id).lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: order.shipping_fee_id, locale_id: order.locale_id).first
+    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
       @fee = 0
     end
 
-    @discount = 0
-    UserGift.where(order_id: order.id).each do |user_gift|
-      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
-    end
+    set_discount
 
-    @order = order
-    mail(to: order.user.email, subject: t('mailer.subject_for_remittance_order'))
+    mail(to: @order.user.email, subject: t('mailer.subject_for_three_days'))
   end
 
-  def delivered(order, domain)
-    I18n.locale = Locale.find(order.locale_id).lang
+  def delivered(order_id)
+    @order = Order.find(order_id)
+    I18n.locale = Locale.find(@order.locale_id).lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: order.shipping_fee_id, locale_id: order.locale_id).first
+    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
       @fee = 0
     end
 
+    set_discount
+
+    mail(to: @order.user.email, subject: t('mailer.subject_for_deliver_order'))
+  end
+
+  private
+  def set_discount
     @discount = 0
-    UserGift.where(order_id: order.id).each do |user_gift|
-      @discount += user_gift.gift.gift_translates.where(locale_id: order.locale_id).first.quota
+    UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
+      @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
     end
-
-    @order = order
-    @domain = domain
-
-    mail(to: order.user.email, subject: t('mailer.subject_for_deliver_order'))
   end
 end

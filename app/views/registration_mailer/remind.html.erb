@@ -6,7 +6,9 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %>: </strong><br/>
-  <%= t('mailer.remind_for_registration') %>
+  <%= t('mailer.remind_for_registration_part1').html_safe %><br/>
+  <%= t('mailer.any_question') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
+  <%= t('mailer.remind_for_registration_part2').html_safe %>
 </p>
 <table class="table table-hover">
   <thead>
@@ -21,7 +23,7 @@
   <tbody>
   <tr>
     <td>
-      <%= image_tag "#{@domain}#{@registration.course.image.url(:thumb)}" %>
+      <%= image_tag "http://quoiquoi.tw#{@registration.course.image.url(:thumb)}" %>
     </td>
     <td>
       <h5>

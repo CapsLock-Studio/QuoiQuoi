@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   before_action :set_article_types
   before_action :configure_devise_params, if: :devise_controller?
 
+  include RandomHelper
+
   def layout_by_resource
     if devise_controller? && resource_name == :admin
       if is_a?(Devise::SessionsController) || is_a?(Devise::RegistrationsController) || is_a?(Devise::PasswordsController)

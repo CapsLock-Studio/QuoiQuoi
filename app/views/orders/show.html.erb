@@ -102,6 +102,14 @@
           </div>
           <div class="row">
             <div class="col-md-2 col-xs-5 text-right">
+              <%= t('area') %>
+            </div>
+            <div class="col-md-10 col-xs-7">
+              <%= @shipping_fee.shipping_fee.area %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 col-xs-5 text-right">
               <%= t('address') %>
             </div>
             <div class="col-md-10 col-xs-7">
@@ -113,7 +121,7 @@
               <%= t('shipping_fee') %>
             </div>
             <div class="col-md-10 col-xs-7">
-              <%= number_to_currency(@order.shipping_fee.shipping_fee_translates.where(locale_id: @order.locale_id).first.fee, locale: locale) %>
+              <%= number_to_currency(@shipping_fee.fee, locale: locale) %>
             </div>
           </div>
         </div>

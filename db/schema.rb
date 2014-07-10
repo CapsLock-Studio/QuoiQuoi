@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709032250) do
+ActiveRecord::Schema.define(version: 20140710002300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -898,18 +898,31 @@ ActiveRecord::Schema.define(version: 20140709032250) do
 
   add_index "travel_photos", ["travel_information_id"], name: "index_travel_photos_on_travel_information_id", using: :btree
 
+  create_table "user_gift_serials", force: true do |t|
+    t.integer  "user_gift_id"
+    t.string   "serial"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "used_time"
+    t.string   "email"
+    t.integer  "order_id"
+    t.integer  "registration_id"
+  end
+
+  add_index "user_gift_serials", ["order_id"], name: "index_user_gift_serials_on_order_id", using: :btree
+  add_index "user_gift_serials", ["registration_id"], name: "index_user_gift_serials_on_registration_id", using: :btree
+  add_index "user_gift_serials", ["user_gift_id"], name: "index_user_gift_serials_on_user_gift_id", using: :btree
+
   create_table "user_gifts", force: true do |t|
     t.integer  "user_id"
     t.integer  "gift_id"
-    t.string   "token"
-    t.integer  "used_user_id"
-    t.datetime "used_time"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "currency"
     t.integer  "locale_id"
     t.integer  "order_id"
     t.integer  "registration_id"
+    t.integer  "quantity"
   end
 
   add_index "user_gifts", ["gift_id"], name: "index_user_gifts_on_gift_id", using: :btree

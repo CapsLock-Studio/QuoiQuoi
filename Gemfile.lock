@@ -240,6 +240,7 @@ DEPENDENCIES
   pg
   rails (= 4.0.2)
   recaptcha
+  redis
   resque
   resque_mailer
   sass-rails (~> 4.0.0)
