@@ -36,7 +36,7 @@
                 <tbody>
                 <% @shipping_fees.each do |shipping_fee| %>
                   <% translates = shipping_fee.shipping_fee_translates.reject{|translate| translate.fee.blank?}.collect do |translate|
-                    {fee: translate.fee, free_condition: translate.free_condition, currency: translate.locale.currency}
+                    {fee: translate.fee, free_condition: translate.free_condition, currency: translate.locale.currency, locale: translate.locale.lang}
                   end %>
                   <tr>
                     <td>
@@ -47,13 +47,13 @@
                     </td>
                     <td>
                       <% translates.each_with_index do |translate, index| %>
-                        <%= number_to_currency(translate[:fee]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small>
+                        <%= number_to_currency(translate[:fee], locale: locale) %>
                         <%= '<br/>'.html_safe if index == 0 %>
                       <% end %>
                     </td>
                     <td>
                       <% translates.reject{|translate| translate[:free_condition].blank?}.each_with_index do |translate, index| %>
-                        <%= number_to_currency(translate[:free_condition]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small>
+                        <%= number_to_currency(translate[:free_condition], locale: locale) %>
                         <%= '<br/>'.html_safe if index == 0 %>
                       <% end %>
                     </td>
