@@ -24,7 +24,7 @@ class Admin::OrderCustomItemsController < AdminController
     respond_to do |format|
 
       if @order_custom_item.update_attributes(order_custom_item_params.merge({accept: true, accept_time: Time.now}))
-        CustomItem.accept(@order_custom_item, params[:lang]).deliver
+        CustomItem.accept(@order_custom_item.id, params[:lang]).deliver
         format.html {redirect_to action: :index}
       else
         format.html {render json: @order_custom_item.errors}
@@ -37,7 +37,7 @@ class Admin::OrderCustomItemsController < AdminController
   def destroy
     respond_to do |format|
       if @order_custom_item.update_attributes({accept: false, accept_time: Time.now})
-        CustomItem.decline(@order_custom_item, params[:lang]).deliver
+        CustomItem.decline(@order_custom_item.id, params[:lang]).deliver
         format.html {redirect_to action: :index}
       else
         format.html {render json: @order_custom_item.errors}

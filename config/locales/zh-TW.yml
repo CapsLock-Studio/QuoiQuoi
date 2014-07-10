@@ -450,7 +450,7 @@ zh-TW:
     remind_three_days_for_user_gift: ''
     help_return_tuition_hint: '因您已經付款完成，我們需要您的退款資訊方可將報名金額退還，還請您回覆信件告知退款所需資訊(匯款帳號、姓名、分行...)'
     cancel_registration: '非常感謝您報名quoi quoi布知道工作室的課程，您的報名已經取消'
-    user_gift_hint: '非常感謝您購買quoi quoi布知道的禮券, 如果您想取得禮券, 請登入 [%{link}] -&nbsp;%{url}<br/>這個禮券可以購買我們網站上的商品或手作教室的報名<br/>你只要在付款頁面選擇使用禮券即可使用這個禮券<br/>提醒你禮券沒有找零的功能, 付款時金額不足的部分還需要額外付款'
+    user_gift_hint: '非常感謝您購買quoi quoi布知道的禮券, 如果您想取得禮券, 請登入 [%{link}] -&nbsp;%{url}<br/>以下是禮券的使用說明'
     dear: '親愛的客戶'
     custom_item_accept: '我們很樂意接受您的客製化訂單'
     custom_item_decline: '真的非常抱歉! 經過我們設計師的仔細評估後, 因為訂單的數量過多, 我們必須很沈痛的拒絕您的訂單<br/>感謝您願意給我們這個機會, 希望這次的決定不會讓您感到不愉快<br/>也希望未來我們仍然可以繼續為您服務'

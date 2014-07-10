@@ -31,7 +31,7 @@
       <%= t('remitted_date') %>
     </td>
     <td>
-      <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
+      <%= (@order.payment.pay_time)? @order.payment.pay_time.strftime('%Y/%m/%d'): '-' %>
     </td>
   </tr>
 </table>
