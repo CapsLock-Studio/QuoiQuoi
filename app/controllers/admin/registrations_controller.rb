@@ -1,6 +1,7 @@
 class Admin::RegistrationsController < AdminController
   authorize_resource
 
+  before_action :remove_duplicate_payment, only: [:show, :check_show]
   before_action :set_check_payment, only: [:show, :check_show]
   before_action :set_discount, only: [:show, :check_show]
 
@@ -26,7 +27,7 @@ class Admin::RegistrationsController < AdminController
   end
 
   def check
-    @payments = Payment.where(canceled: false, completed: false).where.not(registration_id: '', amount: 0)
+    @payments = Payment.where(canceled: false, completed: false).where.not(registration_id: '', amount: 0, pay_time: nil)
   end
 
   def check_show
@@ -45,6 +46,13 @@ class Admin::RegistrationsController < AdminController
   private
     def set_check_payment
       @payment = Payment.where(registration_id: params[:id]).first
+    end
+
+    def remove_duplicate_payment
+      payments = Payment.where(registration_id: params[:id]).order(:created_at)
+      if payments.length > 1
+        payments.first.destroy
+      end
     end
 
     def set_discount
