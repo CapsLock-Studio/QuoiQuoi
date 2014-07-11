@@ -12,35 +12,35 @@
 
         <%= form_for current_user, html: {class: 'form-horizontal validate-form'} do |f| %>
           <div class="form-group">
-            <label class="text-muted col-xs-2 control-label">Email</label>
-            <div class="col-xs-10">
+            <label class="text-muted col-sm-2 col-xs-12 control-label">Email</label>
+            <div class="col-sm-10 col-xs-12">
               <label class="form-control" style="border-color:#FEFEFE;">
                 <%= current_user.email %>
               </label>
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :name, t('name'), class: 'text-muted col-xs-2 control-label' %>
-            <div class="col-xs-10">
-              <%= f.text_field :name, class: 'col-xs-10 form-control', placeholder: t('name_placeholder') %>
+            <%= f.label :name, t('name'), class: 'text-muted col-sm-2 col-xs-12 control-label' %>
+            <div class="col-sm-10 col-xs-12">
+              <%= f.text_field :name, class: 'col-sm-10 col-xs-12 form-control', placeholder: t('name_placeholder') %>
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :phone, t('phone_number'), class: 'text-muted col-xs-2 control-label' %>
-            <div class="controls col-xs-10">
-              <%= f.text_field :phone, value: '', class: 'col-xs-10 form-control', placeholder: t('phone_placeholder'), data: {'rule-number' => true} %>
+            <%= f.label :phone, t('phone_number'), class: 'text-muted col-sm-2 col-xs-12 control-label' %>
+            <div class="controls col-sm-10 col-xs-12">
+              <%= f.text_field :phone, value: '', class: 'col-sm-10 col-xs-12 form-control', placeholder: t('phone_placeholder'), data: {'rule-number' => true} %>
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :address, t('address_for_profile'), class: 'text-muted col-xs-2 control-label' %>
-            <div class="col-xs-10">
-              <%= f.text_area :address, class: 'col-xs-10 form-control', placeholder: t('address_placeholder') %>
+            <%= f.label :address, t('address_for_profile'), class: 'text-muted col-sm-2 col-xs-12 control-label' %>
+            <div class="col-sm-10 col-xs-12">
+              <%= f.text_area :address, class: 'col-sm-10 col-xs-12 form-control', placeholder: t('address_placeholder') %>
             </div>
           </div>
           <div class="form-group">
-            <%= f.label :line, 'Line', class: 'text-muted col-xs-2 control-label' %>
-            <div class="col-xs-10">
-              <%= f.text_field :line, value: '', class: 'col-xs-10 form-control' %>
+            <%= f.label :line, 'Line', class: 'text-muted col-sm-2 col-xs-12 control-label' %>
+            <div class="col-sm-10 col-xs-12">
+              <%= f.text_field :line, value: '', class: 'col-sm-10 col-xs-12 form-control' %>
             </div>
           </div>
           <%= f.button t('user.save'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>

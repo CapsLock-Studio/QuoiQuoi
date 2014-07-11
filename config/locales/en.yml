@@ -363,7 +363,7 @@ en:
   back_to_payment: 'Back to payment'
   cancel_and_back_to_payment: 'Cancel and back to payment'
   used_time: 'Used time'
-  used_who: "Email of who used gift card"
+  used_who: "User's email"
   not_used: 'Not used'
   used: 'Used'
   completed_payment: 'Completed payment'
