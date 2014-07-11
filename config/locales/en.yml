@@ -80,7 +80,7 @@ en:
 
   registration:
     my: 'My courses'
-    you_have_no_registrations: 'You have no registrations.'
+    you_have_no_registrations: 'No registrations.'
     full: 'Full registration'
     hint: 'For communication, Please fill in the following blanks with your information'
     information: 'Register information'
