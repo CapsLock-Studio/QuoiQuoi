@@ -27,18 +27,18 @@
                 <i class="fa fa-credit-card icon-round"></i>
               </span>
               <h4><%= t('pay') %></h4>
-              <p><%= @user_gift.payment.pay_time.strftime('%Y/%m/%d %H:%M') if @user_gift.payment && @user_gift.payment.completed? %></p>
+              <p><%= @user_gift.payment.pay_time.strftime('%Y/%m/%d') if @user_gift.payment && @user_gift.payment.completed? %></p>
               <span class="label label-success"><%= (@user_gift.payment.amount == 0 || @user_gift.payment.identifier.blank?)? t('order.wait_remittance') : t('order.wait_confirm') if @user_gift.payment && !@user_gift.payment.completed? %></span>
             </li>
             <li class="col-xs-3 <%= 'step-active' if @user_gift.payment && @user_gift.payment.completed? %>">
               <span>
-                <% if @user_gift.payment.completed? %>
+                <% if @user_gift.payment && @user_gift.payment.completed? %>
                   <i class="fa fa-smile-o icon-round"></i>
                 <% else %>
                   <i class="fa fa-check icon-round"></i>
                 <% end %>
               </span>
-              <% if @user_gift.payment.completed? %>
+              <% if @user_gift.payment && @user_gift.payment.completed? %>
                 <h4><%= t('user_gift.great') %></h4>
               <% end %>
             </li>
