@@ -130,11 +130,18 @@
             <% gift_translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: @user_gift.locale_id).first %>
             <%= simple_format(gift_translate.description) %>
           </div>
-        <% elsif !@user_gift.payment %>
+        <% elsif @user_gift.payment %>
           <div class="col-md-12 text-center">
             <h3>
               <i class="icon-exclamation"></i>
               <%= t('order.wait_remittance') %>
+            </h3>
+          </div>
+        <% else %>
+          <div class="col-md-12 text-center">
+            <h3>
+              <i class="icon-exclamation"></i>
+              <%= t('order.wait_paying') %>
             </h3>
           </div>
         <% end %>
