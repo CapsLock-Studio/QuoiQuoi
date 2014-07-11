@@ -189,7 +189,7 @@ zh-TW:
     send: '把序號寄給我的朋友'
     click: '點擊選取'
     target_email: '輸入你朋友的Email'
-    hint: '你可以自行複製序號或是透過我們寄送Email給你朋友'
+    hint: '你可以自行複製序號或是寄送g給你朋友'
 
   rss:
     product:
