@@ -1,8 +1,11 @@
 <%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
-  <div class="row">
+  <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-md-9">
+    <div class="col-sm-9 col-xs-12">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+      </div>
       <% @user_gifts.each do |user_gift| %>
         <% translate = GiftTranslate.where(gift_id: user_gift.gift_id, locale_id: session[:locale_id]).first %>
         <div class="box">

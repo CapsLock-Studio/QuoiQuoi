@@ -24,7 +24,7 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td class="text-left col-md-6 hidden-xs">
+                    <td class="text-left col-md-6">
                       <% order.order_products.each do |order_product| %>
                         <%= image_tag order_product.product.image.url(:thumb) %>
                       <% end %>
