@@ -1,12 +1,12 @@
 <% @articles.each do |article| %>
   <div class="article">
     <div class="row">
-      <div class="col-md-2 col-xs-12">
+      <div class="col-sm-2 col-xs-12">
         <%= link_to area_travel_information_path(article.area_id, article) do %>
           <%= image_tag article.image.url(:thumb), class: 'img-responsive' %>
         <% end %>
       </div>
-      <div class="col-md-10 col-xs-12">
+      <div class="col-sm-10 col-xs-12">
         <div class="article-body">
           <%= link_to area_travel_information_path(article.area_id, article) do %>
             <h4>
