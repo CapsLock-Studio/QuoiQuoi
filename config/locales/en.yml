@@ -392,6 +392,7 @@ en:
   check_hint: "Thank you for shopping at quoi quoi studio. Your order has been shipped.<br/>Please check your mailbox.<br/>Please consider the shipping distance to determine the arrival time.<br/>If you don't receive the products, please contact us by "
   remittance_edit_hint: 'Please transfer the money yourself to the following account. After transferring, please advice the remittance on "My account" of our website. If you pay the tuition of our courses, please go to "REMITTANCE ADVICE" item to advice.'
   quoiquoi_website: 'quoi quoi website'
+  had_account: 'You already have account, please sign in with email and password.'
 
   mailer:
     success: 'Send mail success.'

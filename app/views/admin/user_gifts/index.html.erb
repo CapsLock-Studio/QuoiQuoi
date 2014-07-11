@@ -25,6 +25,7 @@
                   <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
                   <th>禮券名稱&nbsp;<label class="label label-success">點擊前往編輯</label></th>
                   <th>額度</th>
+                  <th>張數</th>
                   <th>狀態</th>
                   <th>付款方式</th>
                   <th></th>
@@ -45,6 +46,9 @@
                     </td>
                     <td>
                       <%= number_to_currency(translate.quota) %>
+                    </td>
+                    <td>
+                      <%= user_gift.quantity %>
                     </td>
                     <td>
                       <%= render 'status', user_gift: user_gift %>
