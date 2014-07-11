@@ -1,7 +1,4 @@
-<% translates = gift.gift_translates.reject{|translate| translate.quota.blank?}.collect do |translate|
-  locale = Locale.where(id: translate.locale_id).first
-  {name: translate.name, quota: translate.quota, currency: locale.currency, lang: locale.name}
-end %>
+<% translate = GiftTranslate.where(gift_id: @user_gift.gift.id, locale_id: @user_gift.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
   <div class="box-header sea-blue-background">
     <div class="title">禮品券詳細內容</div>
@@ -19,22 +16,22 @@ end %>
             <th></th>
             <th>名稱</th>
             <th>額度</th>
+            <th>購買數量</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td>
-              <%= image_tag gift.image.url(:thumb), class: 'img-responsive' %>
+              <%= image_tag @user_gift.gift.image.url(:thumb), class: 'img-responsive' %>
             </td>
             <td>
-              <% translates.each do |translate| %>
-                <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= translate[:name] %><br/>
-              <% end %>
+              <%= translate.name %>
             </td>
             <td>
-              <% translates.each do |translate| %>
-                <%= number_to_currency(translate[:quota]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
-              <% end %>
+              <%= number_to_currency(translate.quota) %>
+            </td>
+            <td>
+              <%= @user_gift.quantity %>
             </td>
           </tr>
           </tbody>
@@ -43,3 +40,59 @@ end %>
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-sm-12">
+    <h4 class="text-right">
+      總金額 :
+      <strong class="text-muted">
+        <%= number_to_currency(translate.quota * @user_gift.quantity.to_f) %><br/>
+      </strong>
+    </h4>
+  </div>
+</div>
+<% if @user_gift.payment && @user_gift.payment.completed? %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>編號</th>
+              <th>序號</th>
+              <th>狀態</th>
+              <th>使用人</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @user_gift.user_gift_serials.each do |serial| %>
+              <tr>
+                <td>
+                  <%= serial.id %>
+                </td>
+                <td>
+                  <%= serial.serial %>
+                </td>
+                <td>
+                  <% if serial.used_time && serial.email %>
+                    <span class="label label-default">
+                      已使用
+                    </span>
+                  <% else %>
+                    <span class="label label-success">
+                      尚未使用
+                    </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= (serial.email)? serial.email : '-' %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

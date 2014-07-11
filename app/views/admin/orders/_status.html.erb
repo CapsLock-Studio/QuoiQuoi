@@ -14,7 +14,7 @@
       </label>
     <% end %>
   <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
-    <label class="label label-warning">
+    <label class="label label-info">
       等待匯款
     </label>
   <% else %>

@@ -32,12 +32,19 @@ class ProductsController < ApplicationController
     if @product.product_type_id.nil?
       add_breadcrumb t('handmadebag'), products_path
     else
-      add_breadcrumb @product.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
+      add_breadcrumb @product.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name
     end
     add_breadcrumb t('detail')
 
     @order_product = OrderProduct.new(product_id: @product.id)
     @other_products = Product.where(product_type_id: @product.product_type_id).order(id: :desc).limit(8)
+
+    #set seo meta
+    translate = @product.product_translates.where(locale_id: session[:locale_id]).first
+    @meta_og_title = translate.name
+    @meta_og_description = translate.description.gsub(/\n/, '')
+    @meta_og_type = 'product'
+    @meta_og_image = "http://quoiquoi.tw#{@product.image.url(:large)}"
   end
 
   # GET /products/new

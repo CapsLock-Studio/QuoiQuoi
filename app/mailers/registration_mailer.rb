@@ -26,7 +26,7 @@ class RegistrationMailer < ActionMailer::Base
 
     set_discount
 
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_registration'))
+    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.remind_three_days'))
   end
 
   def re_remittance_remind(registration_id, amount, identifier, pay_time)

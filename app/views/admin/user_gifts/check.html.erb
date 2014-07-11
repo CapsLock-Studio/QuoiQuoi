@@ -45,7 +45,7 @@
                       <%= link_to translate.name, admin_gift_path(payment.user_gift.gift_id) %>
                     </td>
                     <td>
-                      <%= number_to_currency(translate.quota) %>&nbsp;<small class="text-muted"><%= payment.user_gift.currency %></small>
+                      <%= number_to_currency(translate.quota * payment.user_gift.quantity) %>
                     </td>
                     <td>
                       <%= number_to_currency(payment.amount) %>

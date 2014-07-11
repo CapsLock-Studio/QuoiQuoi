@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('order.in_trading'), :orders_path
 
-    @orders = Order.where(closed: false, checkout: true, user_id: current_user.id, canceled: false)
+    @orders = Order.where(closed: false, checkout: true, user_id: current_user.id, canceled: false).order(:id)
   end
 
   def new

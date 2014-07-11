@@ -3,7 +3,7 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :order_products
-  has_one :payment
+  has_one :payment, dependent: :destroy
   accepts_nested_attributes_for :order_products
 
   belongs_to :shipping_fee

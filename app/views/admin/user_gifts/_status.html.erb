@@ -1,9 +1,9 @@
 <% if user_gift.payment %>
   <% if !user_gift.payment.completed? && (user_gift.payment.identifier.blank? || user_gift.payment.pay_time.blank?) %>
-    <label class="label label-contrast">
+    <label class="label label-info">
       等待匯款
     </label>
-  <% elsif !user_gift.payment.completed? && (user_gift.amount != 0 || !user_gift.payment.identifier.blank? || !user_gift.payment.pay_time.blank?) %>
+  <% elsif !user_gift.payment.completed? && (user_gift.payment.amount != 0 || !user_gift.payment.identifier.blank? || !user_gift.payment.pay_time.blank?) %>
     <label class="label label-danger">
       等待確認
     </label>
