@@ -10,7 +10,12 @@ class Admin::UserGiftsController < AdminController
   end
 
   def check_show
-    @payment = Payment.where(user_gift_id: params[:id]).first
+    @payment = Payment.find_by_user_gift_id(params[:id])
+
+    locale = Locale.find(@payment.user_gift.locale_id)
+    I18n.locale = locale.lang
+
+    @user_gift = @payment.user_gift
   end
 
   def show

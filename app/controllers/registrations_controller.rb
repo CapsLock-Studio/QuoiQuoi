@@ -7,7 +7,7 @@ class RegistrationsController < ApplicationController
 
     flash[:message]
 
-    @registrations = Registration.where(closed: false, email: current_user.email)
+    @registrations = Registration.where(closed: false, email: current_user.email).order(:id)
   end
 
   def close_index

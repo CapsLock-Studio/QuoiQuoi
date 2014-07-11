@@ -1,6 +1,6 @@
 class Payment < ActiveRecord::Base
   belongs_to :user
-  belongs_to :order, dependent: :destroy
+  belongs_to :order
   belongs_to :registration, dependent: :destroy
   belongs_to :user_gift
 

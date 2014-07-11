@@ -72,7 +72,7 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(order.subtotal, locale: locale.lang) %>&nbsp;<span class="text-muted"><%= order.currency %></span><br/>
+        <%= number_to_currency(order.subtotal, locale: locale.lang) %><br/>
         <small>運費: <%= number_to_currency(@shipping_fee.fee, locale: locale.lang) %><%= " / 禮券折抵金額: #{number_to_currency(@discount, locale: locale.lang)}" if @discount > 0 %></small>
       </strong>
     </h4>

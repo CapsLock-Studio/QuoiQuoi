@@ -433,7 +433,7 @@ en:
     send_gift_card_part2: 'To use this gift card, please click "Use gift card" in the payment page to pay the bill.<br/>Remind that there is no change in this payment and if the face value is not enough to pay the bill, you are required to continue paying the remaining amount.<br/>If you have any question, please contact us by'
     any_question: 'If you have any question, please contact us by'
     order_detail: 'Any suggestions are welcome.<br/>For the detailed information, please go to the member account on the quoi quoi website as follows'
-    remind_three_days: 'Thank you for buying the quoi quoi products or attending our courses.<br/>We have not received your remittance over last three days.<br/>Please hold your time to transfer the money in future two days.<br/>If we still do not receive the remittance, we will formally cancel your order.<br/>The order information is in following.'
+    remind_three_days: 'Thank you for buying the quoi quoi products or attending our courses.<br/>We have not received your remittance over last three days.<br/>Please hold your time to transfer the money within future two days.<br/>If we still do not receive the remittance, we will formally cancel your order.<br/>The order information is in the following.'
     subject_for_three_days: "[quoi quoi studio] Remind of prompt remitting the money (Please don't reply this mail)"
 
     custom_order:
