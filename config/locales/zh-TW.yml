@@ -170,6 +170,7 @@ zh-TW:
     danger: '禮券扣款失敗, 請聯絡店家查明原因'
     not_found: '這不是有效的禮券序號'
     oops: 'Oops! 這個序號已經用過囉'
+    instruction: '使用說明'
     information: '禮券資訊'
     quota: '可抵用額度'
     serial: '序號'
