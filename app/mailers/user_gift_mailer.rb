@@ -48,6 +48,6 @@ class UserGiftMailer < ActionMailer::Base
     @user_gift = @user_gift_serial.user_gift
     I18n.locale = Locale.find(@user_gift.locale_id).lang
 
-    mail(to: email, subject: t('mailer.subject_for_used_gift_card'))
+    mail(to: @user_gift.user.email, subject: t('mailer.subject_for_used_gift_card'))
   end
 end
