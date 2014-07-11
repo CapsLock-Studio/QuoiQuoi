@@ -3,6 +3,7 @@ class Admin::OrdersController < AdminController
   before_action :set_order, only: [:check_show, :edit, :show, :update]
   before_action :set_shipping_fee, only: [:check_show, :edit, :show]
   before_action :set_discount, only: [:check_show, :edit, :show]
+  before_action :remove_order_dulicate, only: [:check_show, :edit, :show, :update]
   add_breadcrumb '首頁', :admin_root_path
 
   # GET /admin/orders
@@ -99,6 +100,13 @@ class Admin::OrdersController < AdminController
       @discount = 0
       UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
         @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+      end
+    end
+
+    def remove_order_dulicate
+      payments = Payment.where(order_id: @order.id).order(:created_at)
+      if payments.length > 1
+        payments.first.destroy
       end
     end
 end
