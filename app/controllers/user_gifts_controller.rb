@@ -96,6 +96,9 @@ class UserGiftsController < ApplicationController
       else
         discount_item = nil
 
+        # send mail to remind registration
+        RegistrationMailer.remind(payment.registration_id).deliver
+
         begin
           unless params[:order_id].blank?
             discount_item = Order.find(params[:order_id])
@@ -146,9 +149,6 @@ class UserGiftsController < ApplicationController
 
                 redirect_to order_path(params[:order_id])
               elsif payment.registration
-
-                # send mail to remind registration
-                RegistrationMailer.remind(payment.registration_id).deliver
 
                 # show the message let users know their payment complete
                 flash[:status] = 'success'
