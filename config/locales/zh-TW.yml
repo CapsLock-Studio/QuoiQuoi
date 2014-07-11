@@ -201,6 +201,7 @@ zh-TW:
   check_out: '結算'
   payment: '付款'
 
+  no_data: '沒有資料'
   paypal_description: 'PayPal 是更快速、安全的跨國線上交易支付平台'
   online_payment: '線上付款'
   offline_payment: '前往匯款'
