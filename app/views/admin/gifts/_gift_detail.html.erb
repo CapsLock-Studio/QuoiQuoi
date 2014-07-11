@@ -62,6 +62,7 @@
               <th>序號</th>
               <th>狀態</th>
               <th>使用人</th>
+              <th>使用時間</th>
             </tr>
             </thead>
             <tbody>
@@ -86,6 +87,9 @@
                 </td>
                 <td>
                   <%= (serial.email)? serial.email : '-' %>
+                </td>
+                <td>
+                  <%= serial.used_time.strftime('%Y/%m/%d %H:%I:%S') if serial.used_time %>
                 </td>
               </tr>
             <% end %>
