@@ -96,8 +96,7 @@ class UserGiftsController < ApplicationController
       else
         discount_item = nil
 
-        # send mail to remind registration
-        RegistrationMailer.remind(payment.registration_id).deliver
+        UserGiftMailer.used_remind(@user_gift_serial.user_gift_id).deliver
 
         begin
           unless params[:order_id].blank?
@@ -150,6 +149,9 @@ class UserGiftsController < ApplicationController
                 redirect_to order_path(params[:order_id])
               elsif payment.registration
 
+                # send mail to remind registration
+                RegistrationMailer.remind(payment.registration_id).deliver
+
                 # show the message let users know their payment complete
                 flash[:status] = 'success'
                 flash[:message] = t('completed_payment')
@@ -166,8 +168,6 @@ class UserGiftsController < ApplicationController
           else
             flash[:status] = 'success'
             flash[:message] = t('user_gift.success')
-
-            UserGiftMailer.used_remind(@user_gift_serial.id).deliver
 
             redirect_to_order_or_registration
           end
