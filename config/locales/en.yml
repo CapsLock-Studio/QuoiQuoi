@@ -175,6 +175,8 @@ en:
   check_out: 'Check out'
   payment: 'PAYMENT'
 
+
+  no_data: 'No data'
   paypal_description: 'PayPal is the faster, safer way to send money, make an online payment'
   online_payment: 'Online Payment'
   offline_payment: 'Remittance'
