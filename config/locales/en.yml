@@ -90,6 +90,7 @@ en:
     name: 'Course name'
     received: 'Remittance paid'
     detail: 'Course detail'
+    cancel: 'Canceled'
 
   course:
     closed: 'Closed courses'
@@ -359,6 +360,7 @@ en:
   back_to_payment: 'Back to payment'
   cancel_and_back_to_payment: 'Cancel and back to payment'
   used_time: 'Used time'
+  used_who: "Email of who used gift card"
   not_used: 'Not used'
   used: 'Used'
   completed_payment: 'Completed payment'
@@ -429,6 +431,10 @@ en:
     suggestion_hint: ''
     order_information: 'Your order information is on %{link} of quoi quoi website.'
     subject_for_send_gift_card: "[quoi quoi studio] gift card delivery (Please don't reply this mail)"
+    subject_for_used_gift_card: "[quoi quoi studio] Remind that your quoi quoi gift card is used (Please don't reply this mail)"
+    content_for_used_gift_card: 'Your quoi quoi gift card is already used.<br/>For the detailed information, please go to "My Account" on our website.<br/>The brief gift card information is the following.'
+    contact_in_24: 'If you have any question, please contact us within 24 hours.'
+    phone: 'TEL: 886-2-28097712'
     send_gift_card_part1: 'Some customer buys our quoi quoi gift card for you.<br/>This email is to deliver this gift card to you.<br/>You can use gift card to but the products and join the courses on quoi quoi website.'
     send_gift_card_part2: 'To use this gift card, please click "Use gift card" in the payment page to pay the bill.<br/>Remind that there is no change in this payment and if the face value is not enough to pay the bill, you are required to continue paying the remaining amount.<br/>If you have any question, please contact us by'
     any_question: 'If you have any question, please contact us by'

@@ -54,10 +54,10 @@
                       <%= payment.registration.attendance %> 人
                     </td>
                     <td>
-                      <%= number_to_currency(payment.registration.subtotal, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
+                      <%= number_to_currency(payment.registration.subtotal, locale: locale.lang) %>
                     </td>
                     <td>
-                      <%= number_to_currency(payment.amount, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= payment.registration.currency %></small>
+                      <%= number_to_currency(payment.amount, locale: locale.lang) %>
                     </td>
                     <td>
                       <%= payment.identifier %>

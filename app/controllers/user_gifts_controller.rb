@@ -167,6 +167,8 @@ class UserGiftsController < ApplicationController
             flash[:status] = 'success'
             flash[:message] = t('user_gift.success')
 
+            UserGiftMailer.used_remind(@user_gift_serial.id).deliver
+
             redirect_to_order_or_registration
           end
 

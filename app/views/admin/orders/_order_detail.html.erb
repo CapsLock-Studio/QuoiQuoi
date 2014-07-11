@@ -74,7 +74,13 @@
       <strong class="text-muted">
         <%= number_to_currency(order.subtotal, locale: locale.lang) %><br/>
         <small>運費: <%= number_to_currency(@shipping_fee.fee, locale: locale.lang) %><%= " / 禮券折抵金額: #{number_to_currency(@discount, locale: locale.lang)}" if @discount > 0 %></small>
-      </strong>
+      </strong><br>
+      <% if order.payment.completed? %>
+        <label class="label label-success">
+          <% item_work_days = order.order_custom_items.collect{|item| item.workday}.inject{|sum, attendance| sum + attendance} || 0 %>
+          工作天數: <%= (item_work_days > 5)? item_work_days : 5 %> 天
+        </label>
+      <% end %>
     </h4>
   </div>
 </div>

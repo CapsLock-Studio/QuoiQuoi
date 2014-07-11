@@ -166,12 +166,6 @@
               <span>課程管理</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/canceled/}, Admin::Registration) do %>
-            <%= link_to(canceled_admin_course_registrations_path) do %>
-              <i class="icon-book"></i>
-              <span>已取消課程管理</span>
-            <% end %>
-          <% end %>
           <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/closed/}, Admin::Registration) do %>
             <%= link_to(closed_admin_course_registrations_path) do %>
               <i class="icon-book"></i>

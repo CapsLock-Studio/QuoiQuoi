@@ -11,7 +11,7 @@ class Admin::CourseRegistrationsController < AdminController
     query_condition << 'time > ?' unless @search_filter.include?('completed')
     query_condition << Time.now unless @search_filter.include?('completed')
 
-    @courses = Course.where('canceled = ? AND closed = ?', false, false).where(query_condition).order(time: :desc)
+    @courses = Course.where('canceled = ?', false).where(query_condition).order(time: :desc)
   end
 
   def show
@@ -20,16 +20,24 @@ class Admin::CourseRegistrationsController < AdminController
     @course = Course.find(params[:id])
   end
 
+  # cancel course
   def update
     @course = Course.find(params[:id])
 
-    respond_to do |format|
-      if @course.update_attributes({canceled: true, canceled_time: Time.now}) && @course.registrations.where(canceled: false).update_all(cancel_params.merge({canceled: true, canceled_time: Time.now}))
-        @course.registrations.where(canceled: false).each do |registration|
-          RegistrationMailer.cancel_remind(registration, registration.locale_id, "#{request.protocol}#{request.host_with_port}").deliver
-        end
-        format.html {redirect_to admin_course_registrations_path}
-      end
+    if @course.update_attributes(canceled: true, canceled_time: Time.now)
+      redirect_to action: :index
+    else
+      render json: @course.errors
+    end
+  end
+
+  # full course
+  def full_register
+    @course = Course.find(params[:id])
+    if @course.update_attributes(full: true, full_time: Time.now)
+      redirect_to action: :index
+    else
+      render json: @course.errors
     end
   end
 
@@ -48,8 +56,10 @@ class Admin::CourseRegistrationsController < AdminController
 
     respond_to do |format|
       if @registration.update_attributes(cancel_params.merge({canceled: true, canceled_time: Time.now}))
-        RegistrationMailer.cancel_remind(@registration, Locale.all.where(lang: 'zh-TW').first.id, "#{request.protocol}#{request.host_with_port}").deliver
+        RegistrationMailer.cancel_remind(@registration.id).deliver
         format.html {redirect_to admin_course_registration_path(@registration.course)}
+      else
+        render json: @registration.errors
       end
     end
   end
@@ -96,7 +106,7 @@ class Admin::CourseRegistrationsController < AdminController
   end
 
   def closed
-    @courses = Course.where(canceled: true, closed: true).order(time: :desc)
+    @courses = Course.where(canceled: true).order(time: :desc)
   end
 
   def closed_show

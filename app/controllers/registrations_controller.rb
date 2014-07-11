@@ -7,7 +7,7 @@ class RegistrationsController < ApplicationController
 
     flash[:message]
 
-    @registrations = Registration.where(closed: false, email: current_user.email).order(:id)
+    @registrations = Registration.where(email: current_user.email).order(:id)
   end
 
   def close_index
@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
 
     flash[:message]
 
-    @registrations = Registration.where(closed: true, email: current_user.email)
+    @registrations = Registration.where(email: current_user.email)
 
     respond_to do |format|
       format.html {render action: :index}
@@ -55,7 +55,7 @@ class RegistrationsController < ApplicationController
         @registration.user_id = current_user.id
       end
 
-      if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
+      if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed? && !r.canceled?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
         # if email has registered course can not register again
         if Registration.count(conditions: {email: registration_params[:email], course_id: @registration.course_id}) <= 0
           @registration.subtotal = @registration.attendance * translate.price
@@ -79,7 +79,7 @@ class RegistrationsController < ApplicationController
 
   def show
     respond_to do |format|
-      @registrations = Registration.where(closed: false, email: current_user.email)
+      @registrations = Registration.where(email: current_user.email)
       #format.html {render course_path(registration.course)}
       format.html {render :index}
     end

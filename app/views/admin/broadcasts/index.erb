@@ -48,13 +48,21 @@
                   </thead>
                   <tbody id="broadcast-sortable">
                   <% @broadcasts.each do |broadcast| %>
+                    <% translates = broadcast.broadcast_translates.reject{|translate| translate.notification.blank?}.collect do |translate|
+                      {notification: translate.notification, link: translate.link, locale: translate.locale.lang, lang: translate.locale.name}
+                    end %>
                     <tr>
                       <td>
                         <%= fields_for 'broadcasts[]', broadcast do |f| %>
                           <%= f.hidden_field :sort, class: 'sort-item' %>
                           <%= f.hidden_field :id %>
                         <% end %>
-                        <%= broadcast.broadcast_translates.collect{|translate| translate.notification}.join(' - ') %>
+                        <% translates.each_with_index do |translate, index| %>
+                          <%= simple_format((translate[:notification].blank?? 'No Translate' : translate[:notification]), {}, sanitize: false) %>
+                          <% if index != broadcast.broadcast_translates.length - 1 %>
+                            <hr/>
+                          <% end %>
+                        <% end %>
                       </td>
                       <td>
                         <div class='text-right'>
