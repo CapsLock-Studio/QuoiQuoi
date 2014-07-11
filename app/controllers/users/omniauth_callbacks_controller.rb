@@ -24,4 +24,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_session_url
     end
   end
+
+  def twitter
+
+  end
 end
