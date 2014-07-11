@@ -51,7 +51,7 @@
                           <%= render 'status', order_custom_item: order_custom_item %>
                         </td>
                         <td>
-                          <%= (translate)? translate.price : '-' %>
+                          <%= (translate)? number_to_currency(translate.price, locale: translate.locale.lang) : '-' %>
                         </td>
                         <td>
                           <ul class="list-unstyled">

@@ -42,8 +42,8 @@
                       <% end %>
                     </td>
                     <td>
-                      <%= number_to_currency(translate.quota * user_gift.quantity.to_f) %><br/>
-                      <span class="text-muted"><%= "#{number_to_currency(translate.quota)} * #{user_gift.quantity}" %></span>
+                      <%= number_to_currency(translate.quota * user_gift.quantity.to_f, locale: translate.locale.lang) %><br/>
+                      <span class="text-muted"><%= "#{number_to_currency(translate.quota, locale: translate.locale.lang)} * #{user_gift.quantity}" %></span>
                     </td>
                     <td>
                       <ul class="list-unstyled">
