@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
 
     flash[:message]
 
-    @registrations = Registration.where(email: current_user.email)
+    @registrations = Registration.where(email: current_user.email).where('time > ?', Time.now + 5.hours)
 
     respond_to do |format|
       format.html {render action: :index}
