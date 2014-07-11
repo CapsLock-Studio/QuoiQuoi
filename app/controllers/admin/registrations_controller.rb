@@ -57,7 +57,7 @@ class Admin::RegistrationsController < AdminController
 
     def set_discount
       @discount = 0
-      UserGiftSerial.where(registration_id: @payment.registration.id).each do |user_gift_serial|
+      UserGiftSerial.where(registration_id: @payment.registration_id).each do |user_gift_serial|
         @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @payment.registration.locale_id).first.quota
       end
     end
