@@ -6,6 +6,14 @@
     </h1>
   </div>
   <div class="row">
+    <% if flash[:message] %>
+      <div class="col-sm-12">
+        <div class="alert alert-danger alert-dismissable">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <%= flash[:message] %>
+        </div>
+      </div>
+    <% end %>
     <div class="col-sm-12">
       <div class="box">
         <div class="box-header sea-blue-background">
@@ -97,10 +105,10 @@
                     </td>
                     <td>
                       <label class="label label-default">
-                        <%= course.registrations.collect{|registration| registration.attendance}.inject{|sum, attendance| sum + attendance} || 0 %>
+                        <%= course.registrations.reject{|registration| registration.canceled?}.collect{|registration| registration.attendance}.inject{|sum, attendance| sum + attendance} || 0 %>
                       </label>&nbsp;
                       <label class="label label-warning">
-                        <%= course.registrations.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} || 0 %>
+                        <%= attendance = course.registrations.reject{|registration| registration.canceled?}.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} || 0 %>
                       </label>&nbsp;
                       <label class="label label-success">
                         <%= course.popular %>
@@ -114,15 +122,22 @@
                       <% if course.time > Time.now %>
                         <label class="label label-warning">課程時間未到</label>
                       <% end %>
+                      <% if course.full? || attendance >= course.popular %>
+                        <label class="label label-primary">課程額滿</label>
+                      <% end %>
                     </td>
                     <td class="text-right">
                       <%= link_to(admin_course_registration_path(course), class: 'btn') do %>
                         <i class="icon-eye-open"></i>
                         查看所有報名人
                       <% end %>
-                      <%= link_to(edit_admin_course_registration_path(course), class: 'btn btn-danger', method: :get, data: {confirm: '確定要取消課程嗎?'}) do %>
+                      <%= link_to(full_admin_course_registration_path(course), class: 'btn btn-primary', method: :put, disabled: (course.full? || attendance >= course.popular)) do %>
+                        <i class="icon-group"></i>
+                        額滿
+                      <% end %>
+                      <%= link_to(admin_course_registration_path(course), class: 'btn btn-danger', method: :put, data: {confirm: '確定要取消課程嗎?'}, disabled: course.canceled?) do %>
                         <i class="icon-remove"></i>
-                        取消課程
+                        取消
                       <% end %>
                     </td>
                   </tr>

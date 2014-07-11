@@ -1,0 +1,55 @@
+<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: @user_gift.locale_id).first %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<p>
+  <strong><%= t('mailer.dear') %> </strong><br/>
+  <%= t('mailer.content_for_used_gift_card').html_safe %><br/>
+</p>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td><%= t('no_s') %></td>
+    <td></td>
+    <td><%= t('call_name') %></td>
+    <td><%= t('user_gift.quota') %></td>
+    <td><%= t('used_time') %></td>
+    <td><%= t('used_who') %></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <%= @user_gift_serial.id %>
+    </td>
+    <td>
+      <%= image_tag "http://quoiquoi.tw#{@user_gift.gift.image(:thumb)}" %>
+    </td>
+    <td>
+      <h5>
+        <%= translate.name %>
+      </h5>
+    </td>
+    <td>
+      <%= number_to_currency(translate.quota) %>
+    </td>
+    <td>
+      <%= @user_gift_serial.used_time.strftime('%Y/%m/%d %H:%I:%S') %>
+    </td>
+    <td>
+      <%= @user_gift_serial.email %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
+<%= t('mailer.phone') %>
+<br>
+<br>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
+</body>
+</html>

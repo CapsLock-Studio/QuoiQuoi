@@ -36,7 +36,7 @@
               <%= "#{registration.attendance}/#{@total_attendance}/#{registration.course.popular}" %>
             </td>
             <td>
-              <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= registration.currency %></small>
+              <%= number_to_currency(translate.price, locale: locale.lang) %>
             </td>
           </tr>
           </tbody>
@@ -50,7 +50,7 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(registration.subtotal, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= registration.currency %><%= " / 禮券折抵金額: #{number_to_currency(@discount, locale: locale.lang)}" if @discount > 0 %></small>
+        <%= number_to_currency(registration.subtotal, locale: locale.lang) %>
       </strong>
     </h4>
   </div>

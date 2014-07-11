@@ -3,11 +3,11 @@
   <div class="fullwidthbanner">
     <ul>
       <% @slides.each do |slide| %>
-      <li class="carousel-link" data-target="<%= slide.link %>" data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
-        <!-- THE MAIN IMAGE IN THE FOURTH SLIDE -->
-        <%= image_tag slide.image.url(:large) %>
+        <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
+        <li class="carousel-link" data-target="<%= translate.link %>" data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
+          <!-- THE MAIN IMAGE IN THE FOURTH SLIDE -->
+          <%= image_tag slide.image.url(:large) %>
 
-        <% slide.slide_translates.where(locale_id: session[:locale_id]).each do |translate| %>
           <% descriptions = translate.description.split(/\n/) %>
           <% descriptions.each_with_index do |description, index| %>
             <div class="caption large_text sft hidden-xs"
@@ -19,8 +19,7 @@
               <%= description.gsub(/{/, '<span style="color:#E67E22">').gsub(/}/, '</span>').html_safe %>
             </div>
           <% end %>
-        <% end %>
-      </li>
+        </li>
       <% end %>
     </ul>
 

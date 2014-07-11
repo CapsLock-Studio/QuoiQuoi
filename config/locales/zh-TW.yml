@@ -117,6 +117,7 @@ zh-TW:
     name: '課程名稱'
     received: '已收取費用'
     detail: '課程詳細'
+    cancel: '課程已取消'
 
   course:
     closed: '已關閉課程'
@@ -387,6 +388,7 @@ zh-TW:
   back_to_payment: '返回付款頁面'
   cancel_and_back_to_payment: '取消, 返回付款頁面'
   used_time: '使用日期'
+  used_who: '使用人Email'
   not_used: '尚未使用'
   used: '已使用'
   completed_payment: '付款完成'
@@ -457,6 +459,10 @@ zh-TW:
     suggestion_hint: '如果您有任何其他建議請寄信到 '
     order_information: '您的訂單資訊請到quoi qoui 布知道網站查看 %{link} '
     subject_for_send_gift_card: '[quoi quoi 布知道] 禮券寄送服務 (系統自動寄出請勿回覆)'
+    subject_for_used_gift_card: '[quoi quoi 布知道] 你的quoi quoi禮券已經被使用 (系統自動寄出請勿回覆)'
+    content_for_used_gift_card: '你的quoi quoi禮券已經被使用了, 詳細資訊可到「我的帳戶」查詢<br/>簡要資訊如下'
+    contact_in_24: '有任何問題, 請在24小時內聯絡我們'
+    phone: 'TEL: 02-28097712'
     send_gift_card_part1: '有位客戶購買quoi quoi 布知道的禮券送給你<br/>本封信主要目的是將此禮券轉交給你<br/>這個禮券可以購買我們網站上所有的商品和手作教室的報名'
     send_gift_card_part2: '你只要在付款頁面選擇使用禮券即可使用這個禮券<br/>提醒你禮券沒有找零的功能, 付款時金額不足的部分還需要額外付款<br/>有任何問題, 歡迎聯絡我們'
     any_question: '有任何問題請寄信給我們'

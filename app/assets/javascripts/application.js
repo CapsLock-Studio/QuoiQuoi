@@ -115,7 +115,9 @@
     var calendar = iniCalendarModel();
 
     $('.carousel-link').on('click', function(e) {
-        window.open($(this).data('target'), '_blank');
+        if ($(this).data('target') != '') {
+            window.open($(this).data('target'), '_blank');
+        }
     });
 
     $('.show-calendar').on('click', function(e) {

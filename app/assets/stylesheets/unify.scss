@@ -711,7 +711,7 @@ a[data-toggle=offcanvas] {
   .list-group-item {
     a {
       i {
-        margin-top: 3px;
+        margin-bottom: 3px;
       }
     }
   }
@@ -775,7 +775,7 @@ a[data-toggle=offcanvas] {
   width: 100%;
 
   input {
-    background-color: #EEE;
+    background-color: #FAFAFA;
   }
 
   input:focus {
@@ -788,5 +788,11 @@ a[data-toggle=offcanvas] {
 
   @media (max-width: 767px) {
     margin-bottom: 10px;
+  }
+}
+
+.course {
+  .label {
+    margin-top: 2px;
   }
 }

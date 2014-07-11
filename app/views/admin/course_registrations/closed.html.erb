@@ -28,13 +28,20 @@
                   <th></th>
                   <th>課程編號</th>
                   <th>課程名稱</th>
-                  <th>繳費完成人數</th>
+                  <th>
+                    <label class="label label-default">報名人數</label>&nbsp;
+                    <label class="label label-warning">繳費完成人數</label>&nbsp;
+                    <label class="label label-success">課程人數上限</label>
+                  </th>
                   <th>課程時間</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <% @courses.each do |course| %>
+                  <% translates = course.course_translates.reject{|translate| translate.name.blank?}.collect do |translate|
+                    {name: translate.name, lang: translate.locale.name}
+                  end %>
                   <tr>
                     <td>
                       <%= image_tag course.image.url(:thumb) %>
@@ -43,13 +50,35 @@
                       <%= course.id %>
                     </td>
                     <td>
-                      <%= course.course_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - ') %>
+                      <% translates.each do |translate| %>
+                        <%= translate[:name] %>&nbsp;<span class="label label-default"><%= translate[:lang] %></span><br/>
+                      <% end %>
                     </td>
                     <td>
-                      <%= @total_attendance %>
+                      <label class="label label-default">
+                        <%= course.registrations.reject{|registration| registration.canceled?}.collect{|registration| registration.attendance}.inject{|sum, attendance| sum + attendance} || 0 %>
+                      </label>&nbsp;
+                      <label class="label label-warning">
+                        <%= attendance = course.registrations.reject{|registration| registration.canceled?}.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} || 0 %>
+                      </label>&nbsp;
+                      <label class="label label-success">
+                        <%= course.popular %>
+                      </label>
                     </td>
                     <td>
-                      <%= course.time.strftime('%Y/%m/%d %H:%M') %>
+                      <%= course.time.strftime('%Y/%m/%d %H:%M') %><br/>
+                      <% if course.time < Time.now %>
+                        <label class="label label-success">課程時間已過</label>
+                      <% end %>
+                      <% if course.time > Time.now %>
+                        <label class="label label-warning">課程時間未到</label>
+                      <% end %>
+                      <% if course.full? || attendance >= course.popular %>
+                        <label class="label label-primary">課程額滿</label>
+                      <% end %>
+                      <% if course.canceled? %>
+                        <label class="label label-default">已取消</label>
+                      <% end %>
                     </td>
                     <td class="text-right">
                       <%= link_to(closed_admin_course_registration_path(course), class: 'btn') do %>

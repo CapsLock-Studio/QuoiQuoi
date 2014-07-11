@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710083126) do
+ActiveRecord::Schema.define(version: 20140711044405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20140710083126) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "locale_id"
+    t.string   "link"
   end
 
   add_index "broadcast_translates", ["broadcast_id"], name: "index_broadcast_translates_on_broadcast_id", using: :btree
@@ -111,7 +112,6 @@ ActiveRecord::Schema.define(version: 20140710083126) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sort"
-    t.string   "link"
   end
 
   create_table "commemts", force: true do |t|
@@ -229,8 +229,8 @@ ActiveRecord::Schema.define(version: 20140710083126) do
     t.integer  "attendance"
     t.boolean  "canceled",           default: false
     t.datetime "canceled_time"
-    t.boolean  "closed",             default: false
-    t.datetime "closed_time"
+    t.boolean  "full",               default: false
+    t.datetime "full_time"
   end
 
   create_table "designer_translates", force: true do |t|
@@ -846,6 +846,7 @@ ActiveRecord::Schema.define(version: 20140710083126) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "link"
   end
 
   add_index "slide_translates", ["locale_id"], name: "index_slide_translates_on_locale_id", using: :btree
@@ -853,7 +854,6 @@ ActiveRecord::Schema.define(version: 20140710083126) do
 
   create_table "slides", force: true do |t|
     t.integer  "sort"
-    t.string   "link"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"

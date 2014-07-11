@@ -75,7 +75,7 @@ class Admin::BroadcastsController < AdminController
 
   private
     def broadcast_params
-      params.require(:broadcast).permit(:id, :sort, :link, broadcast_translates_attributes: [:id, :locale_id, :notification])
+      params.require(:broadcast).permit(:id, :sort, broadcast_translates_attributes: [:id, :locale_id, :link, :notification])
     end
 
     def set_broadcast

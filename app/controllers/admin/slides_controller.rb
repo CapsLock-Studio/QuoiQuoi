@@ -86,8 +86,8 @@ class Admin::SlidesController < AdminController
 
   private
     def slide_params
-      params.require(:slide).permit(:id, :link, :image, :sort, :slide_position_id,
-                                    slide_translates_attributes: [:id, :locale_id, :title, :description])
+      params.require(:slide).permit(:id, :image, :sort, :slide_position_id,
+                                    slide_translates_attributes: [:id, :locale_id, :link, :title, :description])
     end
 
     def set_slide

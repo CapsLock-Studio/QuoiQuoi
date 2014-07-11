@@ -36,15 +36,6 @@
             </div>
           </div>
           <div class="col-sm-12">
-            <div class="form-group">
-              <%= f.label :link, '連結' %>
-              <small style="margin-left:10px;">
-                <span class="label label-success">可留空</span>
-              </small>
-              <div class="controls">
-                <%= f.text_field :link, class: 'form-control', placeholder: 'http://' %>
-              </div>
-            </div>
             <%= f.fields_for :slide_translates do |builder| %>
               <div class="box">
                 <div class="box-header">
@@ -59,6 +50,15 @@
                   </div>
                 </div>
                 <div class="box-content">
+                  <div class="form-group">
+                    <%= builder.label :link, '連結' %>
+                    <small style="margin-left:10px;">
+                      <span class="label label-success">可留空</span>
+                    </small>
+                    <div class="controls">
+                      <%= builder.text_field :link, class: 'form-control', placeholder: 'http://' %>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <%= builder.label :description, '敘述文字' %>
                     <span class="label label-primary">如需要上色請用 {文字字串} 的方式包裹 ex: {最新消息}</span>

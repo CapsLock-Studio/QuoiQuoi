@@ -51,6 +51,9 @@
                   </thead>
                   <tbody id="slide-sortable" data-sortable-axis="y" data-sortable-connect=".sortable">
                   <% @slides.each do |slide| %>
+                    <% translates = slide.slide_translates.reject{|translate| translate.description.blank?}.collect do |translate|
+                      {description: translate.description, link: translate.link, locale: translate.locale.lang, lang: translate.locale.name}
+                      end %>
                     <tr>
                       <%= fields_for 'slides[]', slide do |f| %>
                         <%= f.hidden_field :sort, class: 'sort-item' %>
@@ -62,8 +65,8 @@
                         </div>
                       </td>
                       <td>
-                        <% slide.slide_translates.each_with_index do |translate, index| %>
-                          <%= simple_format((translate.description.blank?? 'No Translate' : translate.description).gsub(/{/, '<span style="color:#F8A326">').gsub(/}/, '</span>').html_safe, {}, sanitize: false) %>
+                        <% translates.each_with_index do |translate, index| %>
+                          <%= simple_format((translate[:description].blank?? 'No Translate' : translate[:description]).gsub(/{/, '<span style="color:#F8A326">').gsub(/}/, '</span>').html_safe, {}, sanitize: false) %>
                           <% if index != slide.slide_translates.length - 1 %>
                             <hr/>
                           <% end %>
@@ -73,8 +76,13 @@
                         <%= slide.slide_position.position if slide.slide_position %>
                       </td>
                       <td>
-                        <%= link_to slide.link.blank?? '#' : slide.link, class: "btn btn-default #{slide.link.blank?? 'disabled' : ''}" do %>
-                          <i class="icon-share-alt"></i>
+                        <% translates.each_with_index do |translate, index| %>
+                          <%= link_to translate[:link].blank?? '#' : translate[:link], class: "btn btn-default #{translate[:link].blank?? 'disabled' : ''}" do %>
+                            <i class="icon-share-alt"></i>
+                          <% end %>
+                          <% if index != slide.slide_translates.length - 1 %>
+                            <hr/>
+                          <% end %>
                         <% end %>
                       </td>
                       <td>

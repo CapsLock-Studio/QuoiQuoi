@@ -34,6 +34,8 @@ QuoiQuoi::Application.routes.draw do
         get :cancel, action: :cancel_form
         put :cancel, action: :cancel_one
         patch :cancel, action: :cancel_one
+        put :full, action: :full_register
+        patch :full, action: :full_register
         put :return
         patch :return
 
