@@ -47,7 +47,7 @@
                         <td>
                           <ul class="list-unstyled">
                             <li><%= number_to_currency(registration.subtotal, locale: locale) %></li>
-                            <li><span class="text-muted"><%= "#{translate.price} * #{registration.attendance}" %></span></li>
+                            <li><span class="text-muted"><%= "#{number_to_currency(translate.price, locale: locale)} * #{registration.attendance}" %></span></li>
                           </ul>
                         </td>
                         <td>

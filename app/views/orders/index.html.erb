@@ -6,86 +6,92 @@
       <div class="row">
         <%= render 'layouts/nav_item' %>
       </div>
-      <% @orders.each do |order| %>
-        <% locale = Locale.where(id: order.locale_id).first.lang %>
-        <div class="box">
-          <div class="box-header box-header-small grey-background">
-            <h4>
-              <%= t('no_s') %> <strong class="text-muted"><%= order.id %></strong>
-              <small class="order-time"><%= t('build_time') %>: <strong><%= order.checkout_time.strftime('%Y/%m/%d %H:%M') %></strong></small>
-            </h4>
-          </div>
-          <div class="box-content box-no-padding" style="border:0;">
-            <div class="responsive-table">
-              <div class="scrollable-area">
-                <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
-                  <thead>
+      <% if @orders.length > 0 %>
+        <% @orders.each do |order| %>
+          <% locale = Locale.where(id: order.locale_id).first.lang %>
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <h4>
+                <%= t('no_s') %> <strong class="text-muted"><%= order.id %></strong>
+                <small class="order-time"><%= t('build_time') %>: <strong><%= order.checkout_time.strftime('%Y/%m/%d %H:%M') %></strong></small>
+              </h4>
+            </div>
+            <div class="box-content box-no-padding" style="border:0;">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
+                    <thead>
 
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td class="text-left col-md-6">
-                      <% order.order_products.each do |order_product| %>
-                        <%= image_tag order_product.product.image.url(:thumb) %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if order.closed? %>
-                        <%= t('order.completed') %>
-                      <% elsif order.paid? %>
-                        <% if order.payment.completed? %>
-                          <% if order.delivered? %>
-                            <%= t('order.wait_receiving') %>
-                          <% else %>
-                            <%= t('order.wait_shipping') %>
-                          <% end %>
-                        <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
-                          <%= t('order.wait_remittance') %>
-                        <% else %>
-                          <%= t('order.wait_confirm') %>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td class="text-left col-md-6">
+                        <% order.order_products.each do |order_product| %>
+                          <%= image_tag order_product.product.image.url(:thumb) %>
                         <% end %>
-                      <% else %>
-                        <%= t('order.wait_paying') %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <%= number_to_currency(order.subtotal, locale: locale) %>
-                    </td>
-                    <td>
-                      <ul class="list-unstyled">
+                      </td>
+                      <td>
                         <% if order.closed? %>
-                          <li>
-                            <%= link_to t('detail'), close_order_path(order) %>
-                          </li>
+                          <%= t('order.completed') %>
+                        <% elsif order.paid? %>
+                          <% if order.payment.completed? %>
+                            <% if order.delivered? %>
+                              <%= t('order.wait_receiving') %>
+                            <% else %>
+                              <%= t('order.wait_shipping') %>
+                            <% end %>
+                          <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
+                            <%= t('order.wait_remittance') %>
+                          <% else %>
+                            <%= t('order.wait_confirm') %>
+                          <% end %>
                         <% else %>
-                          <% if order.paid? %>
-                            <% if !order.payment.completed? && (order.payment.amount == 0 || order.payment.identifier.blank?) %>
+                          <%= t('order.wait_paying') %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= number_to_currency(order.subtotal, locale: locale) %>
+                      </td>
+                      <td>
+                        <ul class="list-unstyled">
+                          <% if order.closed? %>
+                            <li>
+                              <%= link_to t('detail'), close_order_path(order) %>
+                            </li>
+                          <% else %>
+                            <% if order.paid? %>
+                              <% if !order.payment.completed? && (order.payment.amount == 0 || order.payment.identifier.blank?) %>
+                                <li>
+                                  <%= link_to t('order.advice'), edit_payment_path(order.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                                </li>
+                              <% elsif order.delivered? %>
+                                <li>
+                                  <%= link_to t('order.received'), close_order_path(order), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
+                                </li>
+                              <% end %>
+                            <% else %>
                               <li>
-                                <%= link_to t('order.advice'), edit_payment_path(order.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
-                              </li>
-                            <% elsif order.delivered? %>
-                              <li>
-                                <%= link_to t('order.received'), close_order_path(order), class: 'btn btn-u btn-u-orange hover-effect', method: :put %>
+                                <%= link_to t('pay'), pay_order_path(order), class: 'btn btn-u btn-u-orange hover-effect' %>
                               </li>
                             <% end %>
-                          <% else %>
                             <li>
-                              <%= link_to t('pay'), pay_order_path(order), class: 'btn btn-u btn-u-orange hover-effect' %>
+                              <%= link_to t('detail'), order_path(order) %>
                             </li>
                           <% end %>
-                          <li>
-                            <%= link_to t('detail'), order_path(order) %>
-                          </li>
-                        <% end %>
-                      </ul>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+                        </ul>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <h4 class="text-center">
+          <i class="fa fa-wd fa-exclamation"></i>&nbsp;<%= t('no_data') %>
+        </h4>
       <% end %>
     </div>
   </div>
