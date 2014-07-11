@@ -10,6 +10,8 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       payment = Payment.new(payment_params)
 
+      remove_exists
+
       amount = 0
       currency = :TWD
       if payment.order
@@ -161,5 +163,11 @@ class PaymentsController < ApplicationController
 
     def set_payment
       @payment = Payment.where(id: params[:id], user_id: (current_user)? current_user.id : nil, completed: false).first
+    end
+
+    def remove_exists
+      Payment.destroy_all(registration_id: payment_params[:registration_id])
+      Payment.destroy_all(order_id: payment_params[:order_id])
+      Payment.destroy_all(user_gift_id: payment_params[:user_gift_id])
     end
 end
