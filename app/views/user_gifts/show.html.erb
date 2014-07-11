@@ -127,7 +127,7 @@
               <i class="fa fa-exclamation"></i>
               <%= t('user_gift.instruction') %>
             </h4>
-            <% gift_translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: @user_gift.locale_id).first %>
+            <% gift_translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: session[:locale_id]).first %>
             <%= simple_format(gift_translate.description) %>
           </div>
         <% elsif @user_gift.payment %>
