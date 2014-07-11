@@ -42,7 +42,7 @@
                       <%= order.name %>
                     </td>
                     <td>
-                      <%= order.payment.pay_time.strftime('%Y/%m/%d %H:%M') if order.paid? && order.payment.completed? %>
+                      <%= order.payment.pay_time.strftime('%Y/%m/%d %H:%M') if order.paid? && order.payment.completed? && order.payment.pay_time %>
                     </td>
                     <td>
                       <% if order.closed? %>
