@@ -59,7 +59,7 @@ en:
     cancel: 'Cancel order'
 
   custom_order:
-    my: 'Orders under communication'
+    my: 'Customization'
     prev: 'Prev'
     next: 'Next'
     finish: 'Finish'
@@ -231,7 +231,7 @@ en:
   nav_item: 'Subitem'
   account: 'Account'
   message_box: 'Message box'
-  profile_management: 'Profile management'
+  profile_management: 'Profile'
   build_time: 'Record date'
   customize: 'Customization'
   personalize: 'Personalization'
