@@ -107,7 +107,7 @@ zh-TW:
 
   registration:
     my: '我的課程'
-    you_have_no_registrations: '你目前沒有報名的課程'
+    you_have_no_registrations: '目前沒有課程'
     full: '報名人數額滿'
     hint: '請填寫正確的聯絡資訊，以免遺漏課程更動通知'
     information: '報名資訊'
