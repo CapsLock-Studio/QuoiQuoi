@@ -140,6 +140,7 @@ en:
     danger: 'Use gift card failed, please contact us to find out the reason.'
     not_found: 'This is not valid serial number'
     oops: 'Oops! this serial used'
+    instruction: 'Instruction'
     information: 'Gift card information'
     quota: 'Quota'
     serial: 'Serial number'
