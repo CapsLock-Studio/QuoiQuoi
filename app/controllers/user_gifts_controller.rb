@@ -96,8 +96,6 @@ class UserGiftsController < ApplicationController
       else
         discount_item = nil
 
-        UserGiftMailer.used_remind(@user_gift_serial.user_gift_id).deliver
-
         begin
           unless params[:order_id].blank?
             discount_item = Order.find(params[:order_id])
@@ -128,6 +126,8 @@ class UserGiftsController < ApplicationController
           else
             @user_gift_serial.email = discount_item.email
           end
+
+          UserGiftMailer.used_remind(@user_gift_serial.user_gift_id, @user_gift_serial.email).deliver
 
           @user_gift_serial.registration_id = params[:registration_id]
 
