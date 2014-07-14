@@ -283,6 +283,7 @@ zh-TW:
   cart: '購物車'
   language: 'Language'
   signin: '登入'
+  right_sign_in: '您已經申請過會員, 請使用申請時選擇的方式登入'
   signout: '登出'
   signin_hint: '沒有帳號嗎? 按下 %{signup_link} 或是使用下面的社群帳號登入帳號'
   signup_hint: '你註冊的Email會作為我們聯絡溝通的管道, 請填入你可以收到信的Email'

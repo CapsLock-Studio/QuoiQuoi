@@ -16,7 +16,7 @@
                 <div class="controls margin-bottom-20">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
-                    <%= f.text_field :name, class: 'form-control', 'placeholder' => t('name'), data: { 'rule-required' => 'true' } %>
+                    <%= f.text_field :name, value: (flash[:name])? flash[:name] : f.object.name, class: 'form-control', 'placeholder' => t('name'), data: { 'rule-required' => 'true' } %>
                   </div>
                 </div>
               </div>
@@ -24,7 +24,7 @@
                 <div class="controls margin-bottom-20">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
-                    <%= f.email_field :email, class: 'form-control', 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
+                    <%= f.email_field :email, value: (flash[:email])? flash[:email] : f.object.email, class: 'form-control', 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
                   </div>
                 </div>
               </div>

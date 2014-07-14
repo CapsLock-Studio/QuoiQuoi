@@ -255,6 +255,7 @@ en:
   language: '語言'
   signin: 'Sign in'
   signout: 'Sign out'
+  right_sign_in: 'You had signed up, please use the right way to sign in.'
   signin_hint: 'No account? To sign up please click %{signup_link} or following icons'
   signup_hint: 'The Email you input will be served as our mutual communication channel. Please input the correct Email address that you can really receive Email.'
   new_password: 'Forget your password?'

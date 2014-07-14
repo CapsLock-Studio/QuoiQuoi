@@ -168,6 +168,7 @@ QuoiQuoi::Application.routes.draw do
     patch 'update_password' => 'user#update_password'
     put 'user' => 'user#update'
     patch 'user' => 'user#update'
+    get 'email' => 'user#email'
   end
 
   resource :home do
