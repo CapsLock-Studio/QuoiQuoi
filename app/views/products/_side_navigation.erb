@@ -1,6 +1,6 @@
 <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
   <ul class="list-group sidebar-nav-v1">
-    <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}/}) do %>
+    <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}(?!\/search)/}) do %>
       <%= link_to t('handmadebag').titleize, products_path %>
     <% end %>
     <%= nav_item(orders_path, {class: 'list-group-item', rule: /^#{order_custom_items_path}.*/}) do %>

@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, except: [:index]
+  before_action :set_product, except: [:index, :search]
 
   # GET /products
   # GET /products.json
@@ -41,6 +41,11 @@ class ProductsController < ApplicationController
 
     #set seo meta
     translate = @product.product_translates.where(locale_id: session[:locale_id]).first
+
+    unless translate.price
+      render json: 'this product is not available in this locale setting'
+    end
+
     @meta_og_title = translate.name
     @meta_og_description = translate.description.gsub(/\n/, '')
     @meta_og_type = 'product'
@@ -73,6 +78,14 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
 
+  end
+
+  def search
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('search')
+    add_breadcrumb t('search_result')
+
+    @product_translates = ProductTranslate.where('name LIKE ? or description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%").order(id: :desc).page(params[:page]).per(12)
   end
 
   private

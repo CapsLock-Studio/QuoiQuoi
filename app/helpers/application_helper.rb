@@ -68,4 +68,20 @@ module ApplicationHelper
       link_to link_path
     end
   end
+
+  def locale_discount(discount, locale = nil)
+    if (locale.nil?)? session[:locale] == 'en' : locale == 'en'
+      discount = (10 - discount) * 10
+    end
+
+    discount.to_i
+  end
+
+  def price_discount(price, discount)
+    if discount > 0
+      price = price * discount / 10
+    end
+
+    price
+  end
 end

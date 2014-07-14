@@ -154,8 +154,11 @@
                           </div>
                         </td>
                         <td class="col-xs-1">
-                          <%= number_to_currency(translate.price, locale: locale) %><br/>
-                          <span class="text-muted">*&nbsp;<%= order_product.quantity %></span>
+                          <%= number_to_currency(order_product.price, locale: locale) %><br/>
+                          <span class="text-muted">*&nbsp;<%= order_product.quantity %></span><br/>
+                          <% if order_product.discount > 0 %>
+                            <small><%= t('order_product.discount', percent: order_product.discount.to_i) %></small>
+                          <% end %>
                         </td>
                       </tr>
                     <% end %>

@@ -98,7 +98,7 @@
                         <tbody>
                         <% @order.order_products.each_with_index do |order_product, index| %>
                           <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
-                          <% @subtotal += translate.price * order_product.quantity %>
+                          <% @subtotal += price_discount(translate.price, order_product.product.discount) * order_product.quantity %>
                           <tr>
                             <td>
                               <%= image_tag order_product.product.image.url(:thumb) %>
@@ -109,7 +109,10 @@
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(translate.price) %>
+                              <%= number_to_currency(order_product.price) %><br/>
+                              <% if order_product.discount > 0 %>
+                                <%= t('order_product.discount', percent: order_product.discount.to_i) %>
+                              <% end %>
                             </td>
                             <td>
                               <%= order_product.quantity %>
@@ -118,7 +121,7 @@
                         <% end %>
                         <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
                           <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
-                          <% @subtotal += translate.price %>
+                          <% @subtotal += price_discount(translate.price, order_product.product.discount) %>
                           <tr>
                             <td>
                               <%= image_tag order_custom_item.image.url(:thumb) %>
@@ -129,7 +132,7 @@
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(translate.price) %>
+                              <%= number_to_currency(price_discount(translate.price, order_product.product.discount)) %>
                             </td>
                             <td>
                               1

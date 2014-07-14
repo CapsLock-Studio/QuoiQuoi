@@ -21,7 +21,7 @@
                     <div class="col-md-12">
                       <%= f.fields_for :order_products do |builder| %>
                         <% translate = ProductTranslate.where(product_id: builder.object.product_id,locale_id: session[:locale_id]).first %>
-                        <% @subtotal += translate.price * builder.object.quantity %>
+                        <% @subtotal += builder.object.price * builder.object.quantity %>
 
                         <div class="row product">
                           <div class="col-md-7">
@@ -35,7 +35,12 @@
                                 <strong>
                                   <%= translate.name %>
                                   <span class="pull-right">
-                                    <%= number_to_currency(translate.price) %>
+                                    <%= number_to_currency(builder.object.price) %><br/>
+                                    <% if builder.object.discount > 0 %>
+                                    <small class="pull-right" style="margin-top: 5px;">
+                                      <%= t('order_product.discount', percent: builder.object.discount.to_i) %>
+                                    </small>
+                                    <% end %>
                                   </span>
                                 </strong>
                               <% end %>
@@ -43,12 +48,12 @@
                             <h5 style="color:#666;">
                               <strong><%= t('quantity') %></strong>
                             </h5>
-                            <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price form-control', data: {width: '100%', price: translate.price} %>
+                            <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price form-control', data: {width: '100%', price: builder.object.price} %>
                             <hr/>
                             <h5 class="margin-bottom-20">
                               <span style="color:#666;"><%= t('subtotal') %></span>
-                              <strong class="pull-right subtotal" data-subtotal="<%= translate.price * builder.object.quantity %>">
-                                <%= number_to_currency(translate.price * builder.object.quantity) %>
+                              <strong class="pull-right subtotal" data-subtotal="<%= builder.object.price * builder.object.quantity %>">
+                                <%= number_to_currency(builder.object.price * builder.object.quantity) %>
                               </strong>
                             </h5>
                             <%= link_to t('actions.delete'), builder.object, method: :delete, class: 'btn btn-default pull-right hover-effect' %>

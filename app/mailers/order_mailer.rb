@@ -1,6 +1,7 @@
 class OrderMailer < ActionMailer::Base
   include Resque::Mailer
   default from: 'admin@quoiquoi.tw'
+  add_template_helper(ApplicationHelper)
 
   def remind(order_id)
     @order = Order.find(order_id)

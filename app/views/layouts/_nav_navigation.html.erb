@@ -5,15 +5,15 @@
   </div>
   <ul class="nav navbar-nav navbar-right">
     <li class="visible-xs">
-      <%= form_tag reports_path, class: 'form-horizontal validate-form', method: :get do %>
-        <div class="input-group col-md-8 col-md-offset-2">
-          <%= text_field_tag 'term', params[:term], class: 'form-control', placeholder: '搜尋' %>
+      <%= form_tag search_products_path, method: :get do %>
+        <div class="input-group">
+          <%= text_field :keyword, '', class: 'form-control', placeholder: t('search') %>
           <span class="input-group-btn">
-              <button type="submit" class="btn btn-default add-on hover-effect">
-                <i class="fa fa-search fa-fw"></i>
-              </button>
-            </span>
-        </div>
+            <button class="btn btn-default hover-effect" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div><!-- /input-group -->
       <% end %>
     </li>
     <%= nav_item(root_path, class: 'hidden-xs hidden-sm') do %>
@@ -82,13 +82,15 @@
     </li>
   </ul>
   <div class="search-open">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="<%= t('search') %>" />
-          <span class="input-group-btn">
-            <button class="btn btn-default hover-effect" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </span>
-    </div><!-- /input-group -->
+    <%= form_tag search_products_path, method: :get do %>
+      <div class="input-group">
+        <%= text_field_tag :keyword, params[:keyword], class: 'form-control', placeholder: t('search') %>
+        <span class="input-group-btn">
+          <button class="btn btn-default hover-effect" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div><!-- /input-group -->
+    <% end %>
   </div>
 </div><!-- /navbar-collapse -->

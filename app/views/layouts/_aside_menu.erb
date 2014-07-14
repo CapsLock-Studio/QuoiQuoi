@@ -28,7 +28,7 @@
           <div>
             <% @menu_orders.order_products.each do |order_product| %>
               <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
-              <% subtotal += translate.price * order_product.quantity %>
+              <% subtotal += order_product.price * order_product.quantity %>
               <div class="search-blocks search-blocks-colored side-menu-block">
                 <div class="col-md-6 search-img">
                   <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
@@ -40,7 +40,7 @@
                   <h4>
                     <%= translate.name %>
                   </h4>
-                  <h5 class="text-muted"><%= "#{number_to_currency(translate.price)} * #{order_product.quantity}" %></h5>
+                  <h5 class="text-muted"><%= "#{number_to_currency(order_product.price)} * #{order_product.quantity}" %></h5>
                 </div>
               </div>
             <% end %>

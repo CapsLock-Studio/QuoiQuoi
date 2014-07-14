@@ -32,6 +32,7 @@
                   <th>商品種類</th>
                   <th>現存數量</th>
                   <th>價格</th>
+                  <th>折扣</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -63,6 +64,13 @@
                       <td>
                         <% translates.each do |translate| %>
                           <%= number_to_currency(translate[:price], locale: translate[:locale]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if product.discount > 0 %>
+                          <%= product.discount.to_i %>折
+                        <% else %>
+                          沒有設定折扣
                         <% end %>
                       </td>
                       <td>
