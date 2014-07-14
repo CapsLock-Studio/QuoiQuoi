@@ -157,9 +157,16 @@
         direction: "vertical"
     });
 
-    $('.youtube-video').on('click', function(){
-        convertPlayer(this);
-    });
+    // when in mobile device, no show preview image
+    if (!window.matchMedia || (window.matchMedia("(max-width: 767px)").matches)) {
+        $('.youtube-video').each(function(){
+            convertPlayer(this);
+        });
+    } else {
+        $('.youtube-video').on('click', function(){
+            convertPlayer(this);
+        });
+    }
 
     $('.wizard').wizard();
     $('.nested-field').each(function(index){
