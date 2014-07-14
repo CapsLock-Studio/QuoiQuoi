@@ -796,3 +796,11 @@ a[data-toggle=offcanvas] {
     margin-top: 2px;
   }
 }
+
+.article-content {
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}

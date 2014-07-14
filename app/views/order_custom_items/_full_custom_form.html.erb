@@ -266,7 +266,7 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title"><i class="fa fa-info"></i><%= t('instructions') %></h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body article-content">
         <% instruction = Instruction.where(locale_id: session[:locale_id]).first %>
         <%= instruction.content.html_safe if instruction %>
       </div>
