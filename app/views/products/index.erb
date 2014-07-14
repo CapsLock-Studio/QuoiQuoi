@@ -7,7 +7,7 @@
         <%= render 'layouts/nav_item' %>
         <% @products.each do |product| %>
           <% translate = product.product_translates.where(locale_id: session[:locale_id]).first %>
-          <% unless translate.name.blank? %>
+          <% if translate.price %>
             <%= link_to product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
               <div class="thumbnails thumbnail-style">
                 <%= image_tag product.image.url(:small), class: 'img-responsive' %>
@@ -15,9 +15,14 @@
                   <h4 style="margin-top: 10px; margin-bottom: 5px;">
                     <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
                   </h4>
-                    <span class="price">
-                      <%= number_to_currency(translate.price) %>
+                  <span class="price">
+                    <%= number_to_currency(price_discount(translate.price, product.discount)) %>
+                  </span>
+                  <% if product.discount > 0 %>
+                    <span class="text-primary">
+                      <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(product.discount)) %>
                     </span>
+                  <% end %>
                 </div>
               </div>
             <% end %>

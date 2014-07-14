@@ -86,7 +86,7 @@ class Admin::ProductsController < AdminController
       @product = Product.find(params[:id])
     end
     def product_params
-      params.require(:product).permit(:id, :image, :product_type_id, :quantity,
+      params.require(:product).permit(:id, :image, :product_type_id, :quantity, :discount,
                                       product_youtubes_attributes: [:_destroy, :id, :link],
                                       product_images_attributes: [:_destroy, :id, :image],
                                       product_translates_attributes: [:id, :price, :name, :description, :locale_id],

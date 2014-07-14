@@ -164,6 +164,10 @@ zh-TW:
 
   product:
     other_products: '其他商品'
+    discount: '%{percent}折優惠中'
+
+  order_product:
+    discount: '%{percent}折優惠'
 
   user_gift:
     success: '禮券扣款成功!'
@@ -259,7 +263,8 @@ zh-TW:
   links: '連結'
   facebook: '臉書'
   weibo: '微博'
-  search: '查詢'
+  search: '查詢商店'
+  search_result: '查詢結果'
   nav_item: '分類項目'
   account: '我的帳號'
   message_box: '訊息匣'
@@ -423,6 +428,7 @@ zh-TW:
   remittance_edit_hint: '請自行轉帳到下列帳戶, 轉帳完成後請登入「我的帳戶」回報已轉帳, 如是報名手作教室者, 可進入「匯款回報」選項回報'
   quoiquoi_website: 'quoi quoi 布知道網站'
   had_account: '你已經有帳號了, 請使用Email與密碼登入'
+  full_price: '原價'
 
   mailer:
     success: '送信成功'

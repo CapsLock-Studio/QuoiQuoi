@@ -171,6 +171,10 @@ en:
 
   product:
     other_products: 'Other products'
+    discount: 'Now in %{percent}% off'
+
+  order_product:
+    discount: '%{percent}% off'
 
   check_out: 'Check out'
   payment: 'PAYMENT'
@@ -229,7 +233,8 @@ en:
   links: 'Links'
   facebook: 'Facebook'
   weibo: 'Weibo'
-  search: 'Search'
+  search: 'Shop Search'
+  search_result: 'Search result'
   nav_item: 'Subitem'
   account: 'Account'
   message_box: 'Message box'
@@ -396,6 +401,8 @@ en:
   remittance_edit_hint: 'Please transfer the money yourself to the following account. After transferring, please advice the remittance on "My account" of our website. If you pay the tuition of our courses, please go to "REMITTANCE ADVICE" item to advice.'
   quoiquoi_website: 'quoi quoi website'
   had_account: 'You already have account, please sign in with email and password.'
+  full_price: 'Full price'
+
 
   mailer:
     success: 'Send mail success.'

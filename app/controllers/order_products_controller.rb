@@ -1,7 +1,12 @@
 class OrderProductsController < ApplicationController
+  include ApplicationHelper
+
   # POST /order_products
   def create
+
     order_product = order_in_cart.order_products.build(order_product_params)
+    order_product.discount = order_product.product.discount
+    order_product.price = price_discount(order_product.product.product_translates.where(locale_id: session[:locale_id]).first.price, order_product.product.discount)
 
     respond_to do |format|
       if order_product.product.quantity - order_product.quantity < 0

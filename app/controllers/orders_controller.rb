@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
     subtotal = 0
 
     @order.order_products.each do |order_product|
-      subtotal += ProductTranslate.where(locale_id: session[:locale_id], product_id: order_product.product_id).first.price * order_product.quantity
+      subtotal += order_product.price * order_product.quantity
     end
     @order.order_custom_items.each do |order_custom_item|
       subtotal += OrderCustomItemTranslate.where(locale_id: session[:locale_id], order_custom_item_id: order_custom_item.id).first.price

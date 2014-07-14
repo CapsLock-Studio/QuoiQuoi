@@ -35,7 +35,11 @@
                 <strong><%= translate.name %></strong>
               </td>
               <td>
-                <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<span class="text-muted"><%= order.currency %></span>
+                <%= number_to_currency(order_product.price, locale: locale.lang) %>
+                <% if order_product.discount > 0 %>
+                  <br/>
+                  <small><%= order_product.discount.to_i %>折優惠</small>
+                <% end %>
               </td>
               <td>
                 <%= order_product.quantity %>

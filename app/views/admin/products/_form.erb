@@ -93,6 +93,13 @@
                                  data: {'rule-required' => true, 'rule-number' => true} %>
               </div>
             </div>
+            <div class="form-group">
+              <%= f.label :discount, '優惠折扣(例如8折請輸入8)' %>
+              <div class="controls">
+                <%= f.text_field :discount, class: 'form-control', placeholder: '請輸入要打幾折',
+                                 data: {'rule-required' => true, 'rule-number' => true} %>
+              </div>
+            </div>
             <%= f.fields_for :product_translates do |builder| %>
               <div class="box">
                 <div class="box-header">

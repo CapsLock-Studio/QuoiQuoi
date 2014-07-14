@@ -65,7 +65,10 @@
               </div>
               <div class="col-md-12 margin-bottom-50">
                 <h4 class="margin-bottom-20">
-                  <strong style="color:#666;" id="product-price" data-price="<%= translate.price %>"><%= number_to_currency(translate.price) %></strong>
+                  <strong id="product-price" data-price="<%= translate.price %>"><%= number_to_currency(price_discount(translate.price, @order_product.product.discount)) %></strong>
+                  <% if @order_product.product.discount > 0 %>
+                    <small><%= t('full_price') %> <%= number_to_currency(translate.price) %>, <%= t('product.discount', percent: locale_discount(@order_product.product.discount)) %></small>
+                  <% end %>
                 </h4>
                 <% if @order_product.product.quantity > 0 %>
                   <label><%= t('quantity') %></label>
@@ -115,7 +118,12 @@
                         <strong>
                           <%= translate.name %>
                         </strong>
-                        <i><%= number_to_currency(translate.price) %></i>
+                        <%= number_to_currency(translate.price) %>
+                      <% if product.discount > 0 %>
+                        <span class="text-primary">
+                          <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(product.discount)) %>
+                        </span>
+                      <% end %>
                     </span>
                   <% end %>
                 </li>

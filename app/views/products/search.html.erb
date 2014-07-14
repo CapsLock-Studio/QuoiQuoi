@@ -1,0 +1,33 @@
+<%= render 'layouts/breadcrumbs', title: t('handmadebag') %>
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'side_navigation' %>
+    <div class="col-md-9 col-sm-9">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+        <% @product_translates.each do |translate| %>
+          <% unless translate.name.blank? %>
+            <%= link_to translate.product.product_type_id.nil?? product_path(translate.product) : product_type_product_path(translate.product.product_type_id, translate.product), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
+              <div class="thumbnails thumbnail-style">
+                <%= image_tag translate.product.image.url(:small), class: 'img-responsive' %>
+                <div class="caption">
+                  <h4 style="margin-top: 10px; margin-bottom: 5px;">
+                    <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
+                  </h4>
+                    <span class="price">
+                      <%= number_to_currency(translate.price) %>
+                    </span>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="border-top: 1px solid #F1F1F1;">
+          <%= paginate @product_translates %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
