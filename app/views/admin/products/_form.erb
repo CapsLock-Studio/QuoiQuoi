@@ -68,8 +68,12 @@
                             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
                           </div>
                         </div>
-                        <div class="youtube-block">
-                          <%= image_tag asset_path('youtube.gif'), class: 'img-responsive' %>
+                        <div class="youtube-preview">
+                          <% if builder.object.link %>
+                            <img class="img-responsive" src="http://img.youtube.com/vi/<%= builder.object.link.gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1') %>/maxresdefault.jpg" />
+                          <% else %>
+                            <%= image_tag asset_path('system/placeholder/youtube.gif'), class: 'img-responsive youtube-preview' %>
+                          <% end %>
                         </div>
                         <%= builder.text_field :link, class: 'form-control youtube-link', placeholder: 'https://' %>
                         <%= builder.hidden_field :id %>

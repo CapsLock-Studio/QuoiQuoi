@@ -804,3 +804,22 @@ a[data-toggle=offcanvas] {
     height: auto;
   }
 }
+
+.youtube-video {
+  position: relative;
+  cursor: pointer;
+
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0.7;
+    color: darken(#CC181E, 10%);
+    margin-top: -30px;
+    margin-left: -30px;
+  }
+
+  &:hover i {
+    opacity: 1;
+  }
+}

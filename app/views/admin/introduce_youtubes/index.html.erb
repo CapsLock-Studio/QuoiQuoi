@@ -54,11 +54,10 @@
                         <%= f.hidden_field :id %>
                       <% end %>
                       <td>
-                        <div class="col-md-4 youtube-link" style="margin-top:20px;" data-link="<%= introduce_youtube.youtube %>">
+                        <div class="col-md-4 youtube-link" style="margin-top:20px;">
                           <div class="youtube-block">
-                            <%= image_tag asset_path('system/placeholder/youtube.gif'), class: 'img-responsive' %>
+                            <img class="img-responsive" src="http://img.youtube.com/vi/<%= introduce_youtube.youtube.gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1') %>/maxresdefault.jpg" />
                           </div>
-                          <%= hidden_field_tag 'youtube-link', introduce_youtube.youtube, class: 'youtube-link' %>
                         </div>
                       </td>
                       <td>

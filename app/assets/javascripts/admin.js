@@ -2,21 +2,6 @@
 // require all js in admin folder
 //= require_tree ./admin
 
-var replaceYoutubeBlock = function(){
-    $('.youtube-link').on('change', function(){
-        convertPreview($(this).val(), $(this).parent('div').find('.youtube-block'));
-    }).each(function(){
-            convertPreview($(this).val(), $(this).parent('div').find('.youtube-block'));
-        });
-
-    function convertPreview(link, youtubeBlock) {
-        if (link.match(/[https|http]+:\/\/www.youtube.com\//)) {
-//            var youtubeBlock = $(element).parent('div').find('.youtube-block');
-            $(youtubeBlock).html('<iframe style="width:100%;height:' + $(youtubeBlock).height() + 'px;" src="' + link.replace(/&.*/, '').replace(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '//www.youtube.com/embed/$1') + '" frameborder="0" allowfullscreen></iframe>');
-        }
-    }
-};
-
 $('.nested-field').each(function(){
     $(this).nestedFields({
         afterInsert: function(item) {
@@ -92,12 +77,6 @@ if (broadcastSortable.length > 0) {
     });
 }
 
-$('.append-youtube').on('click', function(){
-    replaceYoutubeBlock();
-});
-
-replaceYoutubeBlock();
-
 if($("#fileupload").length != 0) {
     $(function () {
         var fileUploadBlock = $('#fileupload');
@@ -128,4 +107,12 @@ if($("#fileupload").length != 0) {
 
 $('.lang-options').on('change', function(){
     $('.decline-btn').attr('href', $('.' + $(this).val()).text());
+});
+
+$('.box').on('change', '.youtube-link', function(){
+    // gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1')
+    if ($(this).val().match(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/)) {
+        var youtubeId = $(this).val().replace(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '$1');
+        $(this).closest('.box').find('img').attr('src', 'http://img.youtube.com/vi/' + youtubeId + '/maxresdefault.jpg');
+    }
 });
