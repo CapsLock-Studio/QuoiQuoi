@@ -1,31 +1,35 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # when user give app authentication omni will call back
+  # or it will return to sign in page and show flash message
   def google_oauth2
-    # You need to implement the method below in your model (e.g. app/models/user.rb)
-    @user = User.find_for_google_oauth2(request.env["omniauth.auth"], current_user)
-
-    if @user.persisted?
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
-      sign_in_and_redirect @user, :event => :authentication
-    else
-      session["devise.google_data"] = request.env["omniauth.auth"]
-      redirect_to new_user_session_url
-    end
+    user_sign_in('google_oauth2')
   end
 
   def facebook
-    # You need to implement the method below in your model (e.g. app/models/user.rb)
-    @user = User.find_for_facebook_oauth(request.env["omniauth.auth"])
-
-    if @user.persisted?
-      sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
-      set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
-    else
-      session["devise.facebook_data"] = request.env["omniauth.auth"]
-      redirect_to new_user_session_url
-    end
+    user_sign_in('facebook')
   end
 
-  def twitter
+  #def twitter
+  #  @user = User.find_or_create_by_twitter(request.env['omniauth.auth'])
+  #
+  #  if @user.email
+  #    redirect_to
+  #  else
+  #    sign_in_and_redirect @user, event: :authentication
+  #  end
+  #end
 
+  private
+  def user_sign_in(provider)
+    @user = User.find_or_create_by_oauth2(request.env['omniauth.auth'])
+
+    if @user.persisted?
+      if @user.provider != provider
+        flash[:alert] = t('right_sign_in')
+        redirect_to new_user_session_url
+      else
+        sign_in_and_redirect @user, event: :authentication
+      end
+    end
   end
 end
