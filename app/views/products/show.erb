@@ -38,8 +38,9 @@
           </div>
           <div class="row">
             <% @order_product.product.product_youtubes.each do |youtube| %>
-              <div class="col-md-12 youtube-link" style="margin-top:20px;" data-link="<%= youtube.link %>">
-                <%= image_tag asset_path('system/placeholder/youtube.gif'), class: 'img-responsive' %>
+              <div class="col-md-12 youtube-video" style="margin-top:20px;" data-youtube-id="<%= youtube.link.gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1') %>">
+                <img class="img-responsive" src="http://img.youtube.com/vi/<%= youtube.link.gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1') %>/maxresdefault.jpg" />
+                <i class="fa fa-youtube-play fa-5x"></i>
               </div>
             <% end %>
           </div>

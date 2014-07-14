@@ -157,8 +157,8 @@
         direction: "vertical"
     });
 
-    $('.youtube-link').each(function(){
-        convertPreview($(this).data('link'), this);
+    $('.youtube-video').on('click', function(){
+        convertPlayer(this);
     });
 
     $('.wizard').wizard();

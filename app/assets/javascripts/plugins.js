@@ -13,18 +13,8 @@ var refreshPrice = function(){
     productPriceBlock.text('$' + (productPrice + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
 };
 
-var convertPreview = function(link, youtubeBlock) {
-//    $(youtubeBlock).find('img').click(function(){
-//        console.log('test');
-//        if (link.match(/[https|http]+:\/\/www.youtube.com\//)) {
-//        var youtubeBlock = $(element).parent('div').find('.youtube-block');
-//            $(youtubeBlock).html('<iframe style="width:100%;height:' + $(youtubeBlock).height() + 'px;" src="' + link.replace(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '//www.youtube.com/embed/$1') + '" frameborder="0" allowfullscreen></iframe>');
-//        }
-//    });
-    if (link.match(/[https|http]+:\/\/www.youtube.com\//)) {
-//        var youtubeBlock = $(element).parent('div').find('.youtube-block');
-        $(youtubeBlock).html('<iframe style="width:100%;height:' + $(youtubeBlock).height() + 'px;" src="' + link.replace(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '//www.youtube.com/embed/$1') + '" frameborder="0" allowfullscreen></iframe>');
-    }
+var convertPlayer = function(youtubeBlock) {
+    $(youtubeBlock).html('<iframe style="width:100%;height:' + $(youtubeBlock).height() + 'px;" src="//www.youtube.com/embed/' + $(youtubeBlock).data('youtube-id') + '?autoplay=1" frameborder="0" allowfullscreen></iframe>');
 };
 
 var bindSelectBox = function(){
