@@ -42,7 +42,7 @@ class CoursesController < ApplicationController
 
     add_breadcrumb t('detail')
 
-    @registration = Registration.all.where(email: (current_user)? current_user.email : nil, course_id: @course.id).first
+    @registration = Registration.all.where(email: (current_user)? current_user.email : nil, course_id: @course.id).order(:id).first
     @recent_courses = Course.all.where('time > ?', Time.now).where.not(id: @course.id).order(:time).limit(8)
 
     unless @registration
