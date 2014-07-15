@@ -13,15 +13,13 @@ class CoursesController < ApplicationController
       format.html do
         # not show any past courses
         if params[:month] && params[:month] != 'new'
-          @courses = @courses.by_month(params[:month])
+          @courses = @courses.by_month(params[:month]).page(params[:page]).per(12).order(:time)
         else
 
           # show now to two months after
           # @courses = @courses.where('time <= ?', Time.now + 2.months)
-          @courses = @courses.order(created_at: :desc).limit(12)
+          @courses = @courses.order(created_at: :desc).limit(12).page(params[:page]).per(13).order(:time)
         end
-
-        @courses = @courses.page(params[:page]).per(12).order(:time)
       end
 
       format.json do
