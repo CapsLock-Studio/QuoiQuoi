@@ -31,11 +31,13 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
-      session[:locale] = params[:locale]
-    end
+      if empty_cart?
+        session[:locale] = params[:locale]
 
-    I18n.locale = session[:locale] || I18n.default_locale
-    session[:locale_id] = Locale.select(:id).where(lang: (session[:locale] || I18n.default_locale))
+        I18n.locale = session[:locale] || I18n.default_locale
+        session[:locale_id] = Locale.select(:id).where(lang: (session[:locale] || I18n.default_locale))
+      end
+    end
   end
 
   # if user is logged in , return current user, else return guest
@@ -70,6 +72,12 @@ class ApplicationController < ActionController::Base
   def order_in_cart
     Order.where(user_id: current_or_guest_user.id, checkout: false).first || create_order(current_or_guest_user.id)
   end
+
+  def empty_cart?
+    order = order_in_cart
+    session[:empty_cart?] = (OrderProduct.distinct.count(conditions: {order_id: order.id}) <= 0 && OrderCustomItem.distinct.count(conditions: {order_id: order.id}) <= 0)
+  end
+  helper_method :empty_cart?
 
   #def current_ability
   #  @current_ability ||= case

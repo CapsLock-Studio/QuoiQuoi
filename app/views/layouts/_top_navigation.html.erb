@@ -1,18 +1,20 @@
 <ul class="top-navigation list-unstyled pull-right" style="padding-left: 100px;">
   <li>
     <div class="top">
-      <a href="#">
+      <a href="#" class="<%= 'disabled' unless empty_cart? %>">
         <i class="fa fa-globe"></i>
         <%= t('language') %>
       </a>
-      <ul class="languages">
-        <%= lang_nav_item('zh-TW') do %>
-          <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
-        <% end %>
-        <%= lang_nav_item('en') do %>
-          <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
-        <% end %>
-      </ul>
+      <% if empty_cart? %>
+        <ul class="languages">
+          <%= lang_nav_item('zh-TW') do %>
+            <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+          <% end %>
+          <%= lang_nav_item('en') do %>
+            <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   </li>
   <li>

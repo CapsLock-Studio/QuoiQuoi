@@ -843,3 +843,16 @@ a[data-toggle=offcanvas] {
 .text-ruby {
   color: #AD2C34;
 }
+
+.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.top {
+  .disabled {
+    &:hover {
+      color: #555;
+    }
+  }
+}
