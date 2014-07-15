@@ -10,8 +10,8 @@
   <strong><%= t('mailer.dear') %> </strong><br/>
   <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %>
 </p>
---------------------------------------------------------------------------------------------------------<br/>
-<%= t('order.no_s') %>&nbsp;C<%= @user_gift.id %>
+<hr/>
+<%= t('order.no_s') %>&nbsp;G<%= @user_gift.id %>
 <h4>
   <%= t('user_gift.information') %>
 </h4>
@@ -30,7 +30,7 @@
   </tr>
   <tr>
     <td>
-      <%= "http://quoiquoi.tw#{@user_gift.gift.image.url(:thumb)}" %>
+      <%= image_tag "http://quoiquoi.tw#{@user_gift.gift.image.url(:thumb)}" %>
     </td>
     <td>
       <%= translate.name %>
@@ -38,11 +38,14 @@
     <td>
       <%= number_to_currency(translate.quota) %>
     </td>
-    <td>
+    <td style="text-align: center;">
       <%= @user_gift.quantity %>
     </td>
   </tr>
 </table>
+<h4>
+  <%= t('total_amount') %>&nbsp;<%= number_to_currency(translate.quota * @user_gift.quantity) %>&nbsp;<%= @user_gift.currency %>
+</h4>
 <h4><%= t('payment_information') %></h4>
 <table>
   <tr>
@@ -77,14 +80,15 @@
   <%= t('quoiquoi_address') %><br/>
   <%= t('quoiquoi_phone') %>
 </p>
---------------------------------------------------------------------------------------------------------
+<hr/>
 <%= t('user_gift.how_to') %>
 <h4>
   <%= translate.name %>
 </h4>
 <%= simple_format(translate.description) %>
 <p>
-  <%= t('mailer.suggestion_hint') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com
+  <%= t('mailer.any_question') %><a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
+  <%= t('sincerely') %>
 </p>
 <br>
 <br>

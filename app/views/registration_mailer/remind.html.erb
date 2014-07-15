@@ -9,7 +9,7 @@
   <strong><%= t('mailer.dear') %>: </strong><br/>
   <%= t('mailer.remind_for_registration_part1').html_safe %><br/>
 </p>
----------------------------------------------------------------------------------------------------------------<br/>
+<hr/>
 <%= t('order.no_s') %>&nbsp;C<%= @registration.id %>
 <h4><%= t('course.information') %></h4>
 <table class="table table-hover">
@@ -32,7 +32,7 @@
       <%= translate.name %>
     </td>
     <td>
-      <%= translate.price %>
+      <%= number_to_currency(translate.price) %>
     </td>
     <td>
       <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
@@ -49,7 +49,7 @@
 <% if @discount > 0 %>
   <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
 <% end %>
-<h3><%= t('total_amount') %> <%= number_to_currency(@registration.subtotal) %></h3>
+<h3><%= t('total_amount') %> <%= number_to_currency(@registration.subtotal) %>&nbsp;<%= @registration.currency %></h3>
 <% if @discount > 0 %>
   <h4><%= t('user_gift.used_information') %></h4>
   <table>
@@ -69,7 +69,7 @@
       </th>
     </tr>
     <% @user_gift_serials.each do |user_gift_serial| %>
-      <% translate = user_gift_serial.user_gift.gift.gift_translates.where(locale_id: user_gift_serial.user_gift.locale_id).first %>
+      <% translate = user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @registration.locale_id).first %>
       <tr>
         <td>
           <%= image_tag "http://quoiquoi.tw#{user_gift_serial.user_gift.gift.image.url(:thumb)}" %>
@@ -124,8 +124,7 @@
   <%= t('quoiquoi_address') %><br/>
   <%= t('quoiquoi_phone') %><br/>
 </p>
----------------------------------------------------------------------------------------------------------------
-<br/>
+<hr/>
 <p>
   <%= t('mailer.any_question') %>&nbsp;<a href="quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@mail.dom<br/>
   <%= t('sincerely') %>
