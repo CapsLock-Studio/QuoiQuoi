@@ -8,6 +8,10 @@ class RegistrationsController < ApplicationController
     flash[:message]
 
     @registrations = Registration.where(email: current_user.email).order(:id)
+
+    @registrations = @registrations.reject { |registration|
+      (registration.course.time < (Time.now + 5.hours))
+    }
   end
 
   def close_index
@@ -16,17 +20,20 @@ class RegistrationsController < ApplicationController
 
     flash[:message]
 
-    @registrations = []
-    registrations = Registration.where(email: current_user.email)
+    @registrations = Registration.where(email: current_user.email)
 
-    registrations.each do |registration|
-      if registration.course.time < Time.now + 5.hours
-        @registrations << registrations
-      end
-    end
+    #respond_to do |format|
+      #format.html {render json: registrations}
+      #format.html {render json: @registration}
+    #end
+
+    @registrations = @registrations.reject { |registration|
+      (registration.course.time >= (Time.now + 5.hours))
+    }
 
     respond_to do |format|
       format.html {render action: :index}
+      #format.html {render json: @registrations}
     end
   end
 
