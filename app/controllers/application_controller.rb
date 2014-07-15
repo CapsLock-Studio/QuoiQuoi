@@ -33,11 +33,11 @@ class ApplicationController < ActionController::Base
     if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
       if empty_cart?
         session[:locale] = params[:locale]
-
-        I18n.locale = session[:locale] || I18n.default_locale
-        session[:locale_id] = Locale.select(:id).where(lang: (session[:locale] || I18n.default_locale))
       end
     end
+
+    I18n.locale = session[:locale] || I18n.default_locale
+    session[:locale_id] = Locale.select(:id).where(lang: (session[:locale] || I18n.default_locale))
   end
 
   # if user is logged in , return current user, else return guest

@@ -63,20 +63,19 @@ class RegistrationsController < ApplicationController
       end
 
       if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed? && !r.canceled?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
-        # if email has registered course can not register again
-        if Registration.count(conditions: {email: registration_params[:email], course_id: @registration.course_id}) <= 0
-          @registration.subtotal = @registration.attendance * translate.price
-          @registration.locale_id = translate.locale.id
-          @registration.currency = translate.locale.currency
+        @registration.subtotal = @registration.attendance * translate.price
+        @registration.locale_id = translate.locale.id
+        @registration.currency = translate.locale.currency
 
-          if @registration.save
-            format.html {redirect_to pay_registration_path(@registration)}
-          else
-            format.html {render json: @registration.errors}
-          end
-        else
+        # if email has registered course can not register again
+        if Registration.count(conditions: {email: registration_params[:email], course_id: @registration.course_id}) > 0
           flash[:message] = t('had_registered_hint')
-          format.html {render action: :new}
+        end
+
+        if @registration.save
+          format.html {redirect_to pay_registration_path(@registration)}
+        else
+          format.html {render json: @registration.errors}
         end
       else
         format.html {render json: 'Over registration max attendance.'}

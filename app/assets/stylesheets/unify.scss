@@ -851,7 +851,7 @@ a[data-toggle=offcanvas] {
 
 .top {
   .disabled {
-    &:hover {
+    &:hover, &:active, &:focus {
       color: #555;
     }
   }

@@ -110,9 +110,6 @@
                             </td>
                             <td>
                               <%= number_to_currency(order_product.price) %><br/>
-                              <% if order_product.discount > 0 %>
-                                <%= t('order_product.discount', percent: order_product.discount.to_i) %>
-                              <% end %>
                             </td>
                             <td>
                               <%= order_product.quantity %>
