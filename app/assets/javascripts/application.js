@@ -175,10 +175,11 @@
     var tooltipInCourse = $('[data-toggle=tooltip]');
 
     tooltipInCourse.tooltip('hide').hover(function(e){
-        if ($(this).data('shown') == true) {
+        var shown = getCookie('tooltip-switch');
+        if (shown == 'true') {
             $(this).tooltip('destroy');
         } else {
-            $(this).data('shown', true);
+            setCookie('tooltip-switch', true, 3);
         }
     });
 
