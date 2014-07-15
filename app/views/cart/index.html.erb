@@ -36,11 +36,6 @@
                                   <%= translate.name %>
                                   <span class="pull-right">
                                     <%= number_to_currency(builder.object.price) %><br/>
-                                    <% if builder.object.discount > 0 %>
-                                    <small class="pull-right" style="margin-top: 5px;">
-                                      <%= t('order_product.discount', percent: builder.object.discount.to_i) %>
-                                    </small>
-                                    <% end %>
                                   </span>
                                 </strong>
                               <% end %>
