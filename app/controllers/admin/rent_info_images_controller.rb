@@ -41,7 +41,11 @@ class Admin::RentInfoImagesController < AdminController
   end
 
   def destroy
-
+    if @rent_info_image.destroy
+      redirect_to action: :index
+    else
+      render json: @rent_info_image.errors
+    end
   end
 
   private
