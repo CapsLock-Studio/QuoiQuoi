@@ -6,7 +6,9 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %> </strong><br/>
-  <%= t('mailer.remind_for_remittance_registration', remittance_link: "<a href=\"http://quoiquoi.tw/payments/#{@registration.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %>&nbsp;<%= "http://quoiquoi.tw/payments/#{@registration.payment.id}/edit" %>
+  <%= t('mailer.remind_for_remittance_registration', remittance_link: "<a href=\"http://quoiquoi.tw/payments/#{@registration.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %><br/>
+  <%= "http://quoiquoi.tw/payments/#{@registration.payment.id}/edit" %>
+  <%= t('mailer.remind_for_remittance_registration_following') %>
 </p>
 <table class="table table-hover">
   <thead>
