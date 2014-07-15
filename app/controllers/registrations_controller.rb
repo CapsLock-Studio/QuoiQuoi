@@ -107,6 +107,15 @@ class RegistrationsController < ApplicationController
     @payment = @registration.build_payment
   end
 
+  def destroy
+    @registration = Registration.find(params[:id])
+    if @registration.destroy
+      redirect_to :back
+    else
+      render json: @registration.errors
+    end
+  end
+
   private
     def registration_params
       params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id)

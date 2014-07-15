@@ -11,7 +11,7 @@
   <%= t('mailer.elector') %>
 </p>
 ------------------------------------------------------------------------------------------------<br/>
-<%= t('order.no_s') %>
+<%= t('order.no_s') %>&nbsp;P<%= @order.id %>
 <h4><%= t('product_information') %></h4>
 <% if @order.order_products.length > 0 %>
   <h4><%= t('products') %></h4>
