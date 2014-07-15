@@ -84,8 +84,9 @@ class OrderMailer < ActionMailer::Base
 
   private
   def set_discount
+    @user_gift_serials = UserGiftSerial.where(order_id: @order.id)
     @discount = 0
-    UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
+    @user_gift_serials.each do |user_gift_serial|
       @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
     end
   end

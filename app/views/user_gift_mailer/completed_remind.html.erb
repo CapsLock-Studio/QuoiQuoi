@@ -10,9 +10,52 @@
   <strong><%= t('mailer.dear') %> </strong><br/>
   <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %>
 </p>
+--------------------------------------------------------------------------------------------------------<br/>
+<%= t('order.no_s') %>
+<h4>
+  <%= t('user_gift.information') %>
+</h4>
+<table>
+  <tr>
+    <th></th>
+    <th>
+      <%= t('call_name') %>
+    </th>
+    <th>
+      <%= t('price') %>
+    </th>
+    <th>
+      <%= t('quantity') %>
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <%= "http://quoiquoi.tw#{@user_gift.gift.image.url(:thumb)}" %>
+    </td>
+    <td>
+      <%= translate.name %>
+    </td>
+    <td>
+      <%= number_to_currency(translate.quota) %>
+    </td>
+    <td>
+      <%= @user_gift.quantity %>
+    </td>
+  </tr>
+</table>
+<p>
+  <%= t('quoiquoi') %><br/>
+  <%= t('quoiquoi_address') %><br/>
+  <%= t('quoiquoi_phone') %>
+</p>
+--------------------------------------------------------------------------------------------------------
+<%= t('user_gift.how_to') %>
+<h4>
+  <%= translate.name %>
+</h4>
 <%= simple_format(translate.description) %>
 <p>
-  <%= t('mailer.any_question') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com
+  <%= t('mailer.suggestion_hint') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com
 </p>
 <br>
 <br>

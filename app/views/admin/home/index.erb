@@ -4,13 +4,6 @@
       <i class='icon-dashboard'></i>
       <span>Dashboard</span>
     </h1>
-    <div class='pull-right'>
-      <div class='btn-group'>
-        <a class="btn btn-white hidden-xs" href="#">上個月</a>
-        <a class="btn btn-white" href="#">上週</a>
-        <a class="btn btn-white " href="#">今日</a>
-      </div>
-    </div>
   </div>
   <div class='alert alert-info alert-dismissable'>
     <a class='close' data-dismiss='alert' href='#'>&times;</a>
@@ -21,7 +14,7 @@
       <div class='box-header'>
         <div class='title'>
           <i class='icon-inbox'></i>
-          新訂單
+          新訂單&nbsp;<span class="text-success">2個月內</span>
         </div>
         <div class='actions'>
           <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -39,7 +32,7 @@
       <div class='box-header'>
         <div class='title'>
           <i class='icon-group'></i>
-          新用戶註冊
+          新用戶註冊&nbsp;<span class="text-success">2個月內</span>
         </div>
         <div class='actions'>
           <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -56,11 +49,11 @@
   </div>
   <hr>
   <div class='row'>
-    <div class='col-sm-12'>
+    <div class='col-sm-8'>
       <div class='box'>
         <div class='box-header'>
           <div class='title'>
-            <div class='icon-inbox'></div>
+            <div class='icon-file-text'></div>
             訂單
           </div>
           <div class='actions'>
@@ -73,52 +66,66 @@
         </div>
         <div class='row'>
           <div class='col-sm-4'>
-            <div class='box-content box-statistic'>
-              <h3 class='title text-error'>191</h3>
-              <small>新訂單</small>
-              <div class='text-error icon-inbox align-right'></div>
-            </div>
+            <%= link_to check_admin_orders_path do %>
+              <div class='box-content box-statistic'>
+                <h3 class='title text-info'><%= @order_wait_confirm_remittance %></h3>
+                <small>待確認匯款</small>
+                <div class='text-info icon-check align-right'></div>
+              </div>
+            <% end %>
           </div>
           <div class='col-sm-4'>
-            <div class='box-content box-statistic'>
-              <h3 class='title text-warning'>311</h3>
-              <small>待確認訂單</small>
-              <div class='text-warning icon-check align-right'></div>
-            </div>
+            <%= link_to deliver_admin_orders_path do %>
+              <div class='box-content box-statistic'>
+                <h3 class='title text-primary'><%= @order_pre_shipping %></h3>
+                <small>待出貨訂單</small>
+                <div class='text-primary icon-truck align-right'></div>
+              </div>
+            <% end %>
           </div>
           <div class='col-sm-4'>
-            <div class='box-content box-statistic'>
-              <h3 class='title text-info'>3</h3>
-              <small>待確認匯款</small>
-              <div class='text-info icon-check align-right'></div>
-            </div>
+            <%= link_to closed_admin_orders_path do %>
+              <div class='box-content box-statistic'>
+                <h3 class='title text-success'><%= @closed_order %></h3>
+                <small>已完成訂單</small>
+                <div class='text-success icon-flag align-right'></div>
+              </div>
+            <% end %>
           </div>
-          <div class='col-sm-4'>
-            <div class='box-content box-statistic'>
-              <h3 class='title text-primary'>3</h3>
-              <small>待出貨訂單</small>
-              <div class='text-primary icon-truck align-right'></div>
-            </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class='box'>
+        <div class='box-header'>
+          <div class='title'>
+            <div class='icon-tasks'></div>
+            客製化訂單
           </div>
-          <div class='col-sm-4'>
-            <div class='box-content box-statistic'>
-              <h3 class='title text-success'>981</h3>
-              <small>已完成訂單</small>
-              <div class='text-success icon-flag align-right'></div>
-            </div>
+          <div class='actions'>
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+            </a>
+
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+            </a>
           </div>
-          <div class='col-sm-4'>
-            <div class='box-content box-statistic'>
-              <h3 class='title text-muted'>0</h3>
-              <small>不接受訂單</small>
-              <div class='text-muted icon-remove align-right'></div>
-            </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-12'>
+            <%= link_to check_admin_order_custom_items_path do %>
+              <div class='box-content box-statistic'>
+                <h3 class='title text-warning'><%= @wait_confirm %></h3>
+                <small>待確認客製化訂單</small>
+                <div class='text-warning icon-check align-right'></div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </div>
   <hr>
+  <!--
   <div class='row'>
     <div class='col-sm-12 col-md-6'>
       <div class='row recent-activity'>
@@ -423,4 +430,5 @@
       </div>
     </div>
   </div>
+  -->
 </div>

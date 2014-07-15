@@ -55,8 +55,8 @@ class Admin::CourseRegistrationsController < AdminController
     @registration = Registration.find(params[:id])
 
     respond_to do |format|
-      if @registration.update_attributes(cancel_params.merge({canceled: true, canceled_time: Time.now}))
-        RegistrationMailer.cancel_remind(@registration.id).deliver
+      if @registration.update_attributes(canceled: true, canceled_time: Time.now)
+        # RegistrationMailer.cancel_remind(@registration.id).deliver
         format.html {redirect_to admin_course_registration_path(@registration.course)}
       else
         render json: @registration.errors
