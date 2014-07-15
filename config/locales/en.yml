@@ -174,7 +174,7 @@ en:
 
   product:
     other_products: 'Other products'
-    discount: 'Now in %{percent}% off'
+    discount: 'Now %{percent}% off'
 
   order_product:
     discount: '%{percent}% off'
@@ -326,7 +326,7 @@ en:
   submit_hint: 'We will think over your order as soon as possible. Please wait for response.'
   other_gift_cards: 'Other gift cards'
   money_name: 'NTD '
-  not_in_stock: 'Not in stock'
+  not_in_stock: 'Sold out'
   had_registered: 'You have registered'
   had_registered_hint: 'You have registered again! If you want to register for others, please continue.'
   recent_course: 'New courses'

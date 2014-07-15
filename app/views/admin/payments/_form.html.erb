@@ -11,19 +11,19 @@
     <div class="form-group">
       <label>匯款金額</label>
       <div class="controls">
-        <%= text_field_tag :amount, @payment.amount, class: 'form-control', disabled: 'disabled' %>
+        <%= text_field_tag :amount, (@payment.amount if @payment), class: 'form-control', disabled: 'disabled' %>
       </div>
     </div>
     <div class="form-group">
       <label>匯款帳號後五碼</label>
       <div class="controls">
-        <%= text_field_tag :identifier, @payment.identifier, class: 'form-control', disabled: 'disabled' %>
+        <%= text_field_tag :identifier, (@payment.identifier if @payment), class: 'form-control', disabled: 'disabled' %>
       </div>
     </div>
     <div class="form-group">
       <label>匯款日期</label>
       <div class="controls">
-        <%= text_field_tag :pay_time, (@payment.pay_time)? @payment.pay_time.strftime('%Y/%m/%d') : '', class: 'form-control', disabled: 'disabled' %>
+        <%= text_field_tag :pay_time, (@payment && @payment.pay_time)? @payment.pay_time.strftime('%Y/%m/%d') : '', class: 'form-control', disabled: 'disabled' %>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@ class Admin::RegistrationsController < AdminController
 
   before_action :remove_duplicate_payment, only: [:show, :check_show]
   before_action :set_check_payment, only: [:show, :check_show]
-  before_action :set_discount, only: [:check_show]
+  before_action :set_discount, only: [:show, :check_show]
 
   def index
     @registrations = Registration.all.order(created_at: :desc)
@@ -45,7 +45,8 @@ class Admin::RegistrationsController < AdminController
 
   private
     def set_check_payment
-      @payment = Payment.where(registration_id: params[:id]).first
+      @registration = Registration.find(params[:id])
+      @payment = @registration.payment
     end
 
     def remove_duplicate_payment
@@ -57,7 +58,7 @@ class Admin::RegistrationsController < AdminController
 
     def set_discount
       @discount = 0
-      UserGiftSerial.where(registration_id: @payment.registration_id).each do |user_gift_serial|
+      UserGiftSerial.where(registration_id: @registration.id).each do |user_gift_serial|
         @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @payment.registration.locale_id).first.quota
       end
     end
