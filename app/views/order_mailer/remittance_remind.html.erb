@@ -6,7 +6,9 @@
 <body>
 <p>
   <strong><%= t('mailer.dear') %>: </strong><br/>
-  <%= t('mailer.remind_for_order', remittance_link: "<a href=\"http://quoiquoi.tw/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %>&nbsp;<%= "http://quoiquoi.tw/payments/#{@order.payment.id}/edit" %>
+  <%= t('mailer.remind_for_order', remittance_link: "<a href=\"http://quoiquoi.tw/payments/#{@order.payment.id}/edit\">#{t('order.advice')}</a>").html_safe %><br/>
+  <%= "http://quoiquoi.tw/payments/#{@order.payment.id}/edit" %><br/>
+  <%= t('mailer.custom_order.following') %>
 </p>
 <% if @order.order_products.length > 0 %>
   <h4><%= t('products') %></h4>
@@ -79,7 +81,7 @@
         <td>
           <%= number_to_currency(order_custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price) %>
         </td>
-        <td>
+        <td style="text-align: center">
           1
         </td>
       </tr>
