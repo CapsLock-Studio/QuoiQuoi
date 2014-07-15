@@ -184,6 +184,14 @@ class UserGiftsController < ApplicationController
     end
   end
 
+  def destroy
+    if @user_gift.destroy
+      redirect_to :back
+    else
+      render json: @user_gift.errors
+    end
+  end
+
   private
     def user_gift_params
       params.require(:user_gift).permit(:id, :gift_id, :quantity)

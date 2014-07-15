@@ -73,7 +73,7 @@
                 <% if @order_product.product.quantity > 0 %>
                   <label><%= t('quantity') %></label>
                   <%= f.select :quantity, options_for_select((1..@order_product.product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
-                  <%= f.button class: 'btn btn-u-lg btn-u-orange btn-u btn-block hover-effect one-page-btn', type: 'submit' do %>
+                  <%= f.button class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn', type: 'submit' do %>
                     <i class="icon-shopping-cart"></i>
                     <span><%= t('add_to_cart') %></span>
                   <% end %>
@@ -87,7 +87,7 @@
               <% unless @order_product.product.product_type %>
                 <div class="col-md-12 margin-bottom-10">
                   <h5><%= t('customize_hint') %></h5>
-                  <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-u-lg btn-default btn-block hover-effect one-page-btn' do %>
+                  <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-lg btn-default btn-block hover-effect one-page-btn' do %>
                     <i class="icon-edit"></i>
                     <span><%= t('customize') %></span>
                   <% end %>

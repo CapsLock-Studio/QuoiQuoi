@@ -12,14 +12,14 @@
           <div class="box">
             <div class="box-header box-header-small grey-background">
               <h4>
-                <%= t('no_s') %> <strong class="text-muted"><%= order.id %></strong>
+                <%= t('no_s') %> <strong class="text-muted">P<%= order.id %></strong>
                 <small class="order-time"><%= t('build_time') %>: <strong><%= order.checkout_time.strftime('%Y/%m/%d %H:%M') %></strong></small>
               </h4>
             </div>
             <div class="box-content box-no-padding" style="border:0;">
               <div class="responsive-table">
                 <div class="scrollable-area">
-                  <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
+                  <table class="table table-bordered text-center table-padding-10" style="margin-bottom:0;">
                     <thead>
 
                     </thead>
@@ -73,9 +73,12 @@
                               <li>
                                 <%= link_to t('pay'), pay_order_path(order), class: 'btn btn-u btn-u-orange hover-effect' %>
                               </li>
+                              <li>
+                                <%= link_to t('cancel'), cancel_order_path(order), method: :put %>
+                              </li>
                             <% end %>
                             <li>
-                              <%= link_to t('detail'), order_path(order) %>
+                              <%= link_to t('detail'), order_path(order), class: 'btn btn-u btn-default hover-effect' %>
                             </li>
                           <% end %>
                         </ul>

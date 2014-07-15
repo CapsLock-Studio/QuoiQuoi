@@ -11,7 +11,7 @@
   <%= t('mailer.user_gift_hint', link: link_to(t('user_gift.my'), user_gift_url(@user_gift)), url: user_gift_url(@user_gift)).html_safe %>
 </p>
 --------------------------------------------------------------------------------------------------------<br/>
-<%= t('order.no_s') %>
+<%= t('order.no_s') %>&nbsp;C<%= @user_gift.id %>
 <h4>
   <%= t('user_gift.information') %>
 </h4>

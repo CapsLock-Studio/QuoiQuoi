@@ -856,3 +856,9 @@ a[data-toggle=offcanvas] {
     }
   }
 }
+
+.list-unstyled {
+  li:not(:last-child) {
+    margin-bottom: 3px;
+  }
+}

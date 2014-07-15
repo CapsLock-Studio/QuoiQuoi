@@ -11,14 +11,14 @@
         <div class="box">
           <div class="box-header box-header-small grey-background">
             <h4>
-              <%= t('no_s') %> <strong class="text-muted"><%= user_gift.id %></strong>
+              <%= t('no_s') %> <strong class="text-muted">G<%= user_gift.id %></strong>
               <small class="order-time"><%= t('build_time') %> <strong><%= user_gift.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
             </h4>
           </div>
           <div class="box-content box-no-padding" style="border:0;">
             <div class="responsive-table">
               <div class="scrollable-area">
-                <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
+                <table class="table table-bordered text-center table-padding-10" style="margin-bottom:0;">
                   <thead>
 
                   </thead>
@@ -48,12 +48,19 @@
                     <td>
                       <ul class="list-unstyled">
                         <% if !user_gift.payment %>
-                          <%= link_to t('pay'), pay_user_gift_path(user_gift), class: 'btn btn-u btn-u-orange hover-effect' %>
+                          <li>
+                            <%= link_to t('pay'), pay_user_gift_path(user_gift), class: 'btn btn-u btn-u-orange hover-effect' %>
+                          </li>
+                          <li>
+                            <%= link_to t('cancel'), user_gift_path(user_gift), method: :delete %>
+                          </li>
                         <% elsif !user_gift.payment.completed? && (user_gift.payment.amount == 0 || user_gift.payment.pay_time.blank?) %>
-                          <%= link_to t('order.advice'), edit_payment_path(user_gift.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                          <li>
+                            <%= link_to t('order.advice'), edit_payment_path(user_gift.payment), class: 'btn btn-u btn-u-orange hover-effect' %>
+                          </li>
                         <% end %>
                         <li>
-                          <%= link_to t('detail'), user_gift_path(user_gift) %>
+                          <%= link_to t('detail'), user_gift_path(user_gift), class: 'btn btn-u btn-default' %>
                         </li>
                       </ul>
                     </td>

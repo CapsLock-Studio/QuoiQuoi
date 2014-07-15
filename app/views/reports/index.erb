@@ -49,23 +49,28 @@
                         <td>
                           <%= "#{t('money_name')}#{number_to_currency(registration.subtotal, locale: locale)}" %>
                         </td>
-                        <td>
+                        <td class="text-center">
                           <% if registration.payment %>
                             <% if registration.payment.completed? %>
-                              <span class="label label-success"><%= t('paid') %></span>
+                              <span class="label label-primary"><%= t('completed_payment') %></span>
+                            <% elsif registration.payment.amount != 0 && !registration.payment.pay_time.nil? %>
+                              <span class="label label-success"><%= t('order.wait_confirm') %></span>
+                            <% else %>
+                              <%= link_to t('order.advice'), edit_payment_path(registration.payment), class: 'btn btn-u btn-default' unless registration.payment.completed? %>
                             <% end %>
                             <% if registration.payment.completed? && registration.canceled? %>
                               <span class="label label-default"><%= t('course.canceled') %></span>
                             <% elsif registration.course.canceled? %>
                               <span class="label label-default"><%= t('course.canceled') %></span>
-                            <% else %>
-                              <%= link_to t('order.advice'), edit_payment_path(registration.payment), class: 'btn btn-default' unless registration.payment.completed? %>
                             <% end %>
                             <% if registration.payment.completed? && registration.returned? %>
                               <span class="label label-default" style="background-color:#000"><%= t('refunded') %></span>
                             <% end %>
+                          <% elsif !registration.canceled? %>
+                            <%= link_to t('pay'), pay_registration_path(registration), class: 'btn btn-u btn-default' %><br/>
+                            <%= link_to t('cancel'), registration_path(registration), method: :delete %>
                           <% else %>
-                            <%= link_to t('pay'), pay_registration_path(registration), class: 'btn btn-default' %>
+                            <span class="label label-default"><%= t('course.canceled') %></span>
                           <% end %>
                         </td>
                       </tr>
