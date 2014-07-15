@@ -47,7 +47,7 @@
       </div>
       <div class="row">
         <div class="col-md-12" style="border-top: 1px solid #F1F1F1;">
-          <%= paginate @courses %>
+          <%= paginate @courses if params[:month] != 'new' %>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
           # show now to two months after
           # @courses = @courses.where('time <= ?', Time.now + 2.months)
-          @courses = @courses.order(created_at: :desc).limit(12).page(params[:page]).per(13).order(:time)
+          @courses = @courses.order(created_at: :desc).page(params[:page]).per(13).order(:time)
         end
       end
 
