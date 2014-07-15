@@ -183,7 +183,7 @@
         }
     });
 
-    if (!window.matchMedia || (window.matchMedia("(max-width: 767px)").matches)) {
+    if (!window.matchMedia || (window.matchMedia("(max-width: 991px)").matches)) {
         tooltipInCourse.tooltip('destroy');
     }
 
