@@ -3,7 +3,7 @@ class Admin::RegistrationsController < AdminController
 
   before_action :remove_duplicate_payment, only: [:show, :check_show]
   before_action :set_check_payment, only: [:show, :check_show]
-  before_action :set_discount, only: [:show, :check_show]
+  before_action :set_discount, only: [:check_show]
 
   def index
     @registrations = Registration.all.order(created_at: :desc)

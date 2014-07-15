@@ -1,3 +1,4 @@
+<% translate = @registration.course.course_translates.where(locale_id: @registration.locale_id).first %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,17 +8,19 @@
 <p>
   <strong><%= t('mailer.dear') %>: </strong><br/>
   <%= t('mailer.remind_for_registration_part1').html_safe %><br/>
-  <%= t('mailer.any_question') %>&nbsp;<a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
-  <%= t('mailer.remind_for_registration_part2').html_safe %>
 </p>
+---------------------------------------------------------------------------------------------------------------<br/>
+<%= t('order.no_s') %>
+<h4><%= t('course.information') %></h4>
 <table class="table table-hover">
   <thead>
   <tr>
-    <td></td>
-    <td><%= t('call_name') %></td>
-    <td><%= t('course_time') %></td>
-    <td><%= t('course.number') %></td>
-    <td><%= t('option') %></td>
+    <th></th>
+    <th><%= t('call_name') %></th>
+    <th><%= t('charge') %></th>
+    <th><%= t('course_time') %></th>
+    <th><%= t('course.number') %></th>
+    <th><%= t('option') %></th>
   </tr>
   </thead>
   <tbody>
@@ -26,9 +29,10 @@
       <%= image_tag "http://quoiquoi.tw#{@registration.course.image.url(:thumb)}" %>
     </td>
     <td>
-      <h5>
-        <%= @registration.course.course_translates.where(locale_id: @registration.locale_id).first.name %>
-      </h5>
+      <%= translate.name %>
+    </td>
+    <td>
+      <%= translate.price %>
     </td>
     <td>
       <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
@@ -37,17 +41,64 @@
       <%= @registration.attendance %>
     </td>
     <td>
-      <%= @registration.course_option.content if @registration.course_option %>
+      <%= (@registration.course_option)? @registration.course_option.content : t('none') %>
     </td>
   </tr>
   </tbody>
 </table>
+<% if @discount > 0 %>
+  <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
+<% end %>
+<h3><%= t('total_amount') %> <%= number_to_currency(@registration.subtotal) %></h3>
+<% if @discount > 0 %>
+  <h4><%= t('user_gift.used_information') %></h4>
+  <table>
+    <tr>
+      <th></th>
+      <th>
+        <%= t('call_name') %>
+      </th>
+      <th>
+        <%= t('price') %>
+      </th>
+      <th>
+        <%= t('used_time') %>
+      </th>
+      <th>
+        <%= t('user_gift.serial') %>
+      </th>
+    </tr>
+    <% @user_gift_serials.each do |user_gift_serial| %>
+      <% translate = user_gift_serial.user_gift.gift.gift_translates.where(locale_id: user_gift_serial.user_gift.locale_id).first %>
+      <tr>
+        <td>
+          <%= image_tag "http://quoiquoi.tw#{user_gift_serial.user_gift.gift.image.url(:thumb)}" %>
+        </td>
+        <td>
+          <%= translate.name %>
+        </td>
+        <td>
+          <%= number_to_currency(translate.quota) %>
+        </td>
+        <td>
+          <%= user_gift_serial.used_time.strftime('%Y/%m/%d') %>
+        </td>
+        <td>
+          <%= user_gift_serial.serial %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<p>
+  <%= t('quoiquoi') %><br/>
+  <%= t('quoiquoi_address') %><br/>
+  <%= t('quoiquoi_phone') %><br/>
+</p>
+---------------------------------------------------------------------------------------------------------------
 <br/>
 <p>
-  <% if @registration.user %>
-    <%= t('completed_hint').html_safe %><br/>
-    <%= link_to t('control_panel'), registrations_url %>&nbsp;<%= registrations_url %><br/>
-  <% end %>
+  <%= t('mailer.any_question') %>&nbsp;<a href="quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@mail.dom<br/>
   <%= t('sincerely') %>
 </p>
 <br/>

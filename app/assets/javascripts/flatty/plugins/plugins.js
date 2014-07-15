@@ -2,7 +2,7 @@
 //= require flatty/plugins/flot/excanvas
 //= require flatty/plugins/flot/flot.min
 //= require flatty/plugins/flot/flot.resize
-//= require flatty/plugins/flot/flot.pie
+//= require flatty/plugins/flot/flot.time
 //= require flatty/plugins/sparklines/jquery.sparkline.min
 //= require flatty/plugins/bootstrap_switch/bootstrapSwitch.min
 // require flatty/plugins/fullcalendar/fullcalendar.min

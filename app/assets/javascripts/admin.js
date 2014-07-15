@@ -116,3 +116,74 @@ $('.box').on('change', '.youtube-link', function(){
         $(this).closest('.box').find('img').attr('src', 'http://img.youtube.com/vi/' + youtubeId + '/maxresdefault.jpg');
     }
 });
+
+
+if ($("#stats-chart1").length !== 0 && $("#stats-chart2").length !== 0) {
+    $.ajax({
+        url: 'admin.json',
+        dataType: 'json',
+        type: 'GET',
+        success: function(data, textStatus, jqXHR){
+            $.plot($("#stats-chart1"), [
+                {
+                    data: data.order_quantity_each_day,
+                    label: "New Orders"
+                }
+            ], {
+                series: {
+                    lines: {
+                        show: true,
+                        lineWidth: 3
+                    },
+                    shadowSize: 0
+                },
+                legend: {
+                    show: false
+                },
+                grid: {
+                    clickable: true,
+                    hoverable: true,
+                    borderWidth: 0,
+                    tickColor: "#f4f7f9"
+                },
+                colors: ["#00acec", "#f8a326"],
+                xaxis: {
+                    mode: "time",
+                    timeformat: "%y/%m/%d"
+                }
+            });
+
+            $.plot($("#stats-chart2"), [
+                {
+                    data: data.new_user_each_day,
+                    label: "New Users"
+                }
+            ], {
+                series: {
+                    lines: {
+                        show: true,
+                        lineWidth: 3
+                    },
+                    shadowSize: 0
+                },
+                legend: {
+                    show: false
+                },
+                grid: {
+                    clickable: true,
+                    hoverable: true,
+                    borderWidth: 0,
+                    tickColor: "#f4f7f9"
+                },
+                colors: ["#f8a326"],
+                xaxis: {
+                    mode: "time",
+                    timeformat: "%Y/%m/%d"
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+}

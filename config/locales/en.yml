@@ -57,6 +57,7 @@ en:
     advice: 'Advice'
     received: 'Received'
     cancel: 'Cancel order'
+    no_s: 'Order No.'
 
   custom_order:
     my: 'Customization'
@@ -94,7 +95,7 @@ en:
 
   course:
     closed: 'Closed courses'
-    past: 'Past courses'
+    past: 'Past course'
     title: 'Courses'
     canceled: 'Course canceled'
     name: 'Course name'
@@ -142,6 +143,7 @@ en:
     oops: 'Oops! this serial used'
     instruction: 'Instruction'
     information: 'Gift card information'
+    used_information: '禮券使用資訊'
     quota: 'Quota'
     serial: 'Serial number'
     confirm: 'I want to use this gift card'
@@ -161,6 +163,7 @@ en:
     click: 'Click to select'
     target_email: "Enter your friend's email address"
     hint: 'You can give your friend the serial number by yourself.'
+    how_to: ''
 
 
   rss:
@@ -240,6 +243,7 @@ en:
   message_box: 'Message box'
   profile_management: 'Profile'
   build_time: 'Record date'
+  product_information: 'Product information'
   customize: 'Customization'
   personalize: 'Personalization'
   personalize_s: 'Personalization'
@@ -403,6 +407,11 @@ en:
   quoiquoi_website: 'quoi quoi website'
   had_account: 'You already have account, please sign in with email and password.'
   full_price: 'Full price'
+  quoiquoi: 'quoi quoi studio'
+  quoiquoi_address: 'Address: No.8, Aly. 2, Ln. 50, Minzu Rd., Tamsui Dist., New Taipei City 25170, Taiwan'
+  quoiquoi_phone: 'TEL: 886-2-28097712'
+  charge: 'Charge'
+  none: 'None'
 
 
   mailer:
@@ -414,7 +423,7 @@ en:
     subject_for_accpet_custom_order: "[quoi quoi studio] Notice that your customization order is accepted (Please don't reply this mail)"
     subject_for_decline_custom_order: "[quoi quoi studio] Decline your customization order (Please don't reply this mail)"
     subject_for_remittance_registration: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
-    subject_for_registration: "[quoi quoi studio] Payment completion for your course (Please don't reply this mail)"
+    subject_for_registration: "[quoi quoi studio] Payment confirmation of your handmade course (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
     subject_for_remittance_gift: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
     subject_for_completed_gift: "[quoi quoi studio] Payment completion for gift card (Please don't reply this mail)"
@@ -424,17 +433,17 @@ en:
     remind_three_days_for_order: ''
     re_remittance: "Thank you for shopping at quoi quoi studio. Your remittance information is wrong.<br/>Please check your remittance and advice again.<br>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     deliver_for_order: "Your order information is in the following."
-    thanks_for_order: "Thank you for shopping at quoi quoi studio.  Your order information is in the following."
+    thanks_for_order: "Thank you for your shopping on quoi quoi website.<br/>This email is to confirm that you have completed the payment.</br>For the order process information, please go to %{link} on our website."
     thanks_for_registration: "Thank you for register quoi quoi studio's course."
     thanks_for_user_gift: 'Thank you for buy our gift card.'
     help_return_tuition: '(please reply this mail to help us return your tuition)'
     remind_for_remittance_registration: "Thank you for registering quoi quoi studio's course.<br/>Mind you, if you don't complete payment within three days, the registration will be canceled.<br/> If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_three_days_for_remittance_registration: ''
-    remind_for_registration_part1: "Thank you for registering quoi quoi studio's course.<br/>You have finished the registration process.<br/>Remind that you don't miss this course and make ready for course requirement."
+    remind_for_registration_part1: "Thank you for registering quoi quoi studio's course.<br/>This email is to confirm that you have completed the payment.<br/>Remind that you don't miss this course and make ready for course requirement."
     remind_for_registration_part2: 'For detailed course information, please surf our website.<br/>The brief course information is in the following.'
     remind_for_user_gift: "Thank you for buying this gift card.<br/>Mind you, if you don't complete payment within three days, this order will be canceled.<br/>If you want to advice remittance please click the 「%{remittance_link}」 to do that."
     remind_three_days_for_user_gift: ''
-    user_gift_hint: 'Thank you for buying our gift card.<br/>For your gift card information, please go to [ %{link} ] on my account of quoi quoi website.&nbsp;%{url}<br/>The instruction of this card is in the following.'
+    user_gift_hint: 'Thank you for your shopping on quoi quoi website.<br/>This email is to confirm that you have completed the payment.<br/>If you want to get your gift card, please go to %{link} on our website.<br/>%{link}<br/>%{url}<br/>The following is your electronic receipt which is regarded as the payment voucher of this order.'
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
@@ -453,6 +462,7 @@ en:
     order_detail: 'Any suggestions are welcome.<br/>For the detailed information, please go to the member account on the quoi quoi website as follows'
     remind_three_days: 'Thank you for buying the quoi quoi products or attending our courses.<br/>We have not received your remittance over last three days.<br/>Please hold your time to transfer the money within future two days.<br/>If we still do not receive the remittance, we will formally cancel your order.<br/>The order information is in the following.'
     subject_for_three_days: "[quoi quoi studio] Remind of prompt remitting the money (Please don't reply this mail)"
+    elector: 'The following is your electronic receipt which is regarded as the payment voucher of this order.'
 
     custom_order:
       mind: 'Remind that full payment must be made before we produce the order.'

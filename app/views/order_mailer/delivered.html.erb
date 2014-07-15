@@ -40,10 +40,6 @@
         </td>
         <td>
           <%= number_to_currency(order_product.price) %>
-          <% if order_product.discount > 0 %>
-            <br/>
-            <small><%= t('order_product.discount', percent: locale_discount(order_product.discount, translate.locale.lang)) %></small>
-          <% end %>
         </td>
         <td style="text-align: center">
           <%= order_product.quantity %>

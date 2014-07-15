@@ -26,7 +26,7 @@ class RegistrationMailer < ActionMailer::Base
 
     set_discount
 
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.remind_three_days'))
+    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_registration'))
   end
 
   def re_remittance_remind(registration_id, amount, identifier, pay_time)
@@ -54,7 +54,8 @@ class RegistrationMailer < ActionMailer::Base
   private
     def set_discount
       @discount = 0
-      UserGiftSerial.where(registration_id: @registration.id).each do |user_gift_serial|
+      @user_gift_serials = UserGiftSerial.where(registration_id: @registration.id)
+      @user_gift_serials.each do |user_gift_serial|
         @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @registration.locale_id).first.quota
       end
     end

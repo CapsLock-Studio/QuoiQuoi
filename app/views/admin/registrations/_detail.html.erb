@@ -50,7 +50,8 @@
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(registration.subtotal, locale: locale.lang) %>
+        <%= number_to_currency(registration.subtotal, locale: locale.lang) %><br/>
+        <small><%= "禮券折抵金額: #{number_to_currency(@discount, locale: locale.lang)}" if @discount > 0 %></small>
       </strong>
     </h4>
   </div>

@@ -90,7 +90,7 @@
                             <% end %>
                           <% end %>
                         <% else %>
-                          <%= link_to(cancel_admin_course_registration_path(registration), class: 'btn btn-danger', method: :get, data: {confirm: '確定要取消該用戶的報名嗎?'}) do %>
+                          <%= link_to(cancel_admin_course_registration_path(registration), class: 'btn btn-danger', method: :put, data: {confirm: '確定要取消該用戶的報名嗎?'}) do %>
                             <i class="icon-remove"></i>
                             取消報名
                           <% end %>
