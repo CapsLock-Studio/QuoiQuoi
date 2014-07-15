@@ -140,6 +140,35 @@
     <% end %>
   </table>
 <% end %>
+<h4><%= t('payment_information') %></h4>
+<table>
+  <tr>
+    <th>
+      <%= t('mean') %>
+    </th>
+    <th>
+      <%= t('time') %>
+    </th>
+    <th>
+      <%= t('amount') %>
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <% if @order.payment.wait? %>
+        <%= t('remittance') %>
+      <% else %>
+        Paypal
+      <% end %>
+    </td>
+    <td>
+      <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
+    </td>
+    <td>
+      <%= number_to_currency(@order.payment.amount) %>
+    </td>
+  </tr>
+</table>
 <h4><%= t('shipping_information') %></h4>
 <table>
   <tr>

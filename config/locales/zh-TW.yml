@@ -225,6 +225,10 @@ zh-TW:
   remitted_date: '匯款日期'
   remitted_amount: '匯款金額'
   amount_payable: '應付金額'
+  mean: '方法'
+  time: '時間'
+  amount: '金額'
+  payment_information: '付款資訊'
   shipping_information: '配送資訊'
   shipping_information_hint: '請填寫正確的配送資訊，訂單送出後即不可更動'
   area: '國家/區域'
@@ -442,7 +446,7 @@ zh-TW:
 
   mailer:
     success: '送信成功'
-    subject_for_order: '[quoi quoi 布知道] 訂購完成通知信 (系統自動寄出請勿回覆)'
+    subject_for_order: '[quoi quoi 布知道] 付款完成確認信 (系統自動寄出請勿回覆)'
     subject_for_remittance_order: '[quoi quoi 布知道] 訂購匯款提醒通知信 (系統自動寄出請勿回覆)'
     subject_for_re_remittance: '[quoi quoi 布知道] 抱歉！你的匯款資料似乎有問題 (系統自動寄出請勿回覆)'
     subject_for_deliver_order: '[quoi quoi 布知道] 你好！您訂購的商品已經寄出 (系統自動寄出請勿回覆)'
@@ -452,7 +456,7 @@ zh-TW:
     subject_for_registration: '[quoi quoi 布知道] 課程報名付款完成確認信 (系統自動寄出請勿回覆)'
     subject_for_cancel_registration: '[quoi quoi 布知道] 非常抱歉! 您報名的課程已經取消了'
     subject_for_remittance_gift: '[quoi quoi 布知道] 購買禮券匯款通知信'
-    subject_for_completed_gift: '[quoi quoi 布知道] 禮券購買完成通知信'
+    subject_for_completed_gift: '[quoi quoi 布知道] 禮券付款完成確認信'
     title_for_order: '非常感謝您訂購quoi quoi 布知道工作室的商品'
     title_for_re_remittance: '抱歉！你的匯款資料似乎有問題 (系統自動寄出請勿回覆)'
     remind_for_order: '非常感謝你訂購quoi quoi 布知道的商品<br/>提醒您, 訂單在三天內未繳費, 我們將取消你的訂單<br/>回報匯款請至 「%{remittance_link}」<br/>以下是你的訂單資訊'
