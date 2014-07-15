@@ -46,6 +46,18 @@ h2 .h2 {
   font-size: 15px;
 }
 
+*::-moz-selection {
+  background: none repeat scroll 0% 0% #FE57A1;
+  color: #FFF;
+  text-shadow: none;
+}
+
+*::selection {
+  background: none repeat scroll 0% 0% #FE57A1;
+  color: #FFF;
+  text-shadow: none;
+}
+
 // override font size end
 
 .breadcrumb > li:last-child {
@@ -826,4 +838,8 @@ a[data-toggle=offcanvas] {
 
 .price {
   margin-right: 5px;
+}
+
+.text-ruby {
+  color: #AD2C34;
 }

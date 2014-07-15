@@ -19,7 +19,7 @@
                     <%= number_to_currency(price_discount(translate.price, product.discount)) %>
                   </span>
                   <% if product.discount > 0 %>
-                    <span class="text-primary">
+                    <span class="text-ruby">
                       <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(product.discount)) %>
                     </span>
                   <% end %>
