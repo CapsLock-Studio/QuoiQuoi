@@ -99,9 +99,10 @@
 <% if @discount > 0 %>
   <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
 <% end %>
-<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %></h3>
+<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nsbp;<%= @order.currency %></h3>
+<br/>
 <% if @discount > 0 %>
-  <h4><%= t('user_gift.used_information') %></h4>
+  <h4><%= t('user_gift.information') %></h4>
   <table>
     <tr>
       <th></th>
@@ -119,7 +120,7 @@
       </th>
     </tr>
     <% @user_gift_serials.each do |user_gift_serial| %>
-      <% translate = user_gift_serial.user_gift.gift.gift_translates.where(locale_id: user_gift_serial.user_gift.locale_id).first %>
+      <% translate = user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first %>
       <tr>
         <td>
           <%= image_tag "http://quoiquoi.tw#{user_gift_serial.user_gift.gift.image.url(:thumb)}" %>
@@ -206,8 +207,6 @@
   <%= t('working_days', workdays: workdays) %><br/>
   <%= t('completed_hint').html_safe %><br/>
   <%= t('mailer.suggestion_hint') %><a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
-  <%= t('mailer.order_detail').html_safe %><br/>
-  <%= link_to t('control_panel'), order_url(@order) %>&nbsp;<%= order_url(@order) %><br/>
   <%= t('sincerely') %>
 </p>
 <br>

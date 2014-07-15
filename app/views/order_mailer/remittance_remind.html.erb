@@ -89,10 +89,10 @@
     </tbody>
   </table>
 <% end %>
+<h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %></label></h4>
 <% if @discount > 0 %>
   <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
 <% end %>
-<h4><%= t('shipping_fee') %><label>&nbsp;<%= number_to_currency(@fee) %></label></h4>
 <h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %></h3>
 <br>
 <br>
