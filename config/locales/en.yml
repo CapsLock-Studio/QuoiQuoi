@@ -199,6 +199,10 @@ en:
   remitted_date: 'Remittance Date'
   remitted_amount: 'Remittance Amount'
   amount_payable: 'Total amount'
+  mean: 'Mean'
+  time: 'Time'
+  amount: 'Amount'
+  payment_information: 'Payment Information'
   shipping_information: 'Shipping information'
   shipping_information_hint: 'Please provide the correct information. It can not be changed once th order is completed.'
   area: 'Country or region'
@@ -416,7 +420,7 @@ en:
 
   mailer:
     success: 'Send mail success.'
-    subject_for_order: "[quoi quoi studio] Remind of order completion (Please don't reply this mail)"
+    subject_for_order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
     subject_for_remittance_order: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
     subject_for_re_remittance: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
     subject_for_deliver_order: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
@@ -426,7 +430,7 @@ en:
     subject_for_registration: "[quoi quoi studio] Payment confirmation of your handmade course (Please don't reply this mail)"
     subject_for_cancel_registration: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
     subject_for_remittance_gift: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
-    subject_for_completed_gift: "[quoi quoi studio] Payment completion for gift card (Please don't reply this mail)"
+    subject_for_completed_gift: "[quoi quoi studio] Payment confirmation of your gift cards (Please don't reply this mail)"
     title_for_order: "Thank you for shopping at quoi quoi studio"
     title_for_re_remittance: "Sorry！Your remittance information wrong (Please don't reply this mail)"
     remind_for_order: "Thank you for shopping at quoi quoi studio. Notice that  this order will be canceled if you don't remit money within three days.<br> If you want to advice remittance please click the 「%{remittance_link}」 to do that.<br/>The order information is in the following."
