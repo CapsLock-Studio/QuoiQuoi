@@ -32,7 +32,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'compass-rails', '~> 2.0.alpha.0'
+gem 'compass-rails'
 gem 'cancan'
 gem 'devise'
 gem 'omniauth'
