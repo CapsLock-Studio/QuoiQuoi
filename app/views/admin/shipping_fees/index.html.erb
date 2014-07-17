@@ -47,13 +47,13 @@
                     </td>
                     <td>
                       <% translates.each_with_index do |translate, index| %>
-                        <%= number_to_currency(translate[:fee], locale: locale) %>
+                        <%= number_to_currency(translate[:fee], locale: translate[:locale]) %>
                         <%= '<br/>'.html_safe if index == 0 %>
                       <% end %>
                     </td>
                     <td>
                       <% translates.reject{|translate| translate[:free_condition].blank?}.each_with_index do |translate, index| %>
-                        <%= number_to_currency(translate[:free_condition], locale: locale) %>
+                        <%= number_to_currency(translate[:free_condition], locale: translate[:locale]) %>
                         <%= '<br/>'.html_safe if index == 0 %>
                       <% end %>
                     </td>
