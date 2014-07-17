@@ -39,7 +39,7 @@
                       <div class="form-group">
                         <%= builder.label :description, '敘述' %>
                         <div class="controls">
-                          <%= builder.text_area :description, class: 'form-control', placeholder: '請輸入招募內容敘述', data: {'rule-required' => true} %>
+                          <%= builder.text_area :description, class: 'form-control autosize', placeholder: '請輸入招募內容敘述', data: {'rule-required' => true} %>
                         </div>
                       </div>
                       <%= builder.hidden_field :locale_id %>
