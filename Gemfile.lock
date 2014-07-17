@@ -226,7 +226,7 @@ DEPENDENCIES
   breadcrumbs_on_rails
   cancan
   coffee-rails (~> 4.0.0)
-  compass-rails (~> 2.0.alpha.0)
+  compass-rails
   devise
   jbuilder (~> 1.2)
   jquery-rails
