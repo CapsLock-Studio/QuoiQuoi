@@ -17,10 +17,10 @@ class ProductsController < ApplicationController
         end
       end
 
-      format.rss do
+      format.xml do
         @products = Product.order(created_at: :desc).limit(50)
 
-        render layout: false
+        render template: 'products/index.atom.builder', layout: false
       end
     end
   end
