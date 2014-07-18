@@ -76,11 +76,11 @@
     <% workdays += order_custom_item.workday %>
       <tr>
         <td>
-          <%= image_tag "http://quoiquoi.tw#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
+          <%= custom_item_image_helper(order_custom_item) %>
         </td>
         <td>
           <h5>
-            <%= t('original_bag') %>
+            <%= custom_item_name_helper(order_custom_item, @order.locale_id) %>
           </h5>
         </td>
         <td>
@@ -99,7 +99,7 @@
 <% if @discount > 0 %>
   <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
 <% end %>
-<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nsbp;<%= @order.currency %></h3>
+<h3><%= t('total_amount') %> <%= number_to_currency(@order.subtotal) %>&nbsp;<%= @order.currency %></h3>
 <br/>
 <% if @discount > 0 %>
   <h4><%= t('user_gift.information') %></h4>

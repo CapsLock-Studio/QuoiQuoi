@@ -70,11 +70,11 @@
     <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
       <tr>
         <td>
-          <%= image_tag "http://quoiquoi.tw#{(order_custom_item.product)? order_custom_item.product.image.url(:thumb) : order_custom_item.image.url(:thumb)}", class: 'img-responsive' %>
+          <%= custom_item_image_helper(order_custom_item) %>
         </td>
         <td>
           <h5>
-            <%= t('original_bag') %>
+            <%= custom_item_name_helper(order_custom_item, @order.locale_id) %>
           </h5>
         </td>
         <td>

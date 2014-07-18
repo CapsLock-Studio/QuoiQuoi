@@ -1,46 +1,46 @@
 <%= render 'layouts/breadcrumbs', title: t('check_out') %>
 <div class="container main-container">
   <div class="row">
-    <div class="col-md-12 reg-page">
+    <div class="col-sm-12 reg-page">
       <div class="item">
         <%= form_for @order, html: {class: 'form-horizontal validate-form'} do |f| %>
           <h4><%= t('shipping_information') %> <small class="text-muted"><%= t('shipping_information_hint') %></small></h4>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
               <div class="box">
                 <div class="box-content">
                   <div class="form-group row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                       <%= f.label :name do %>
                         <%= t('recipient_name') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
-                    <div class="controls col-md-3">
+                    <div class="controls col-sm-3">
                       <%= f.text_field :name, value: current_user.name, class: 'form-control', data: {'rule-required' => true} %>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                       <%= f.label :zip_code do %>
                         <%= t('zip_code') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
-                    <div class="controls col-md-2">
+                    <div class="controls col-sm-2">
                       <%= f.text_field :zip_code, value: current_user.zip_code, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '3', 'rule-maxlength' => '5'} %>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                       <%= f.label :area do %>
                         <%= t('area') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
-                    <div class="controls col-md-12">
+                    <div class="controls col-sm-12">
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-sm-3">
                           <%= f.select :shipping_fee_id, options_for_select(ShippingFee.all.order(:id).collect{|fee|
                             translate = ShippingFeeTranslate.where(shipping_fee_id: fee.id, locale_id: session[:locale_id]).first
                             [fee.area, fee.id, {data: {fee: translate.fee, 'free-condition' => translate.free_condition}}]
@@ -48,30 +48,30 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-sm-12">
                           <small class="text-muted"><%= t('free_shipping_fee', free_condition: number_to_currency(ShippingFeeTranslate.where(locale_id: session[:locale_id]).first.free_condition)) %></small>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                       <%= f.label :address do %>
                         <%= t('address') %>
                         <span class="color-red">*</span>
                       <% end %>
                     </div>
-                    <div class="controls col-md-6">
+                    <div class="controls col-sm-6">
                       <%= f.text_field :address, value: current_user.address, class: 'form-control', data: {'rule-required' => true} %>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                       <%= f.label :phone do %>
                         <%= t('phone_number') %>
                       <% end %>
                     </div>
-                    <div class="controls col-md-3">
+                    <div class="controls col-sm-3">
                       <%= f.text_field :phone, value: current_user.phone, class: 'form-control' %>
                     </div>
                   </div>
@@ -81,11 +81,11 @@
           </div>
           <h4><%= t('products_in_cart') %></h4>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
               <div class="box">
                 <div class="box-content">
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                       <table class="table table-hover">
                         <thead>
                         <tr>
@@ -121,11 +121,11 @@
                           <% @subtotal += translate.price %>
                           <tr>
                             <td>
-                              <%= image_tag order_custom_item.image.url(:thumb) %>
+                              <%= custom_item_image_helper(order_custom_item) %>
                             </td>
                             <td>
                               <h5>
-                                <%= t('original_bag') %>
+                                <%= custom_item_name_helper(order_custom_item) %>
                               </h5>
                             </td>
                             <td>
@@ -143,7 +143,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-sm-12">
                   <% shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: ShippingFee.first.id, locale_id: session[:locale_id]).first %>
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>
@@ -159,7 +159,7 @@
           <hr/>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-              <%= f.button t('submit_order'), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+              <%= f.button t('submit_order'), class: 'btn btn-lg btn-u-orange btn-block hover-effect one-page-btn' %>
               <%= link_to products_path do %>
                 <i class="fa fa-angle-left"></i>
                 <%= t('keep_shopping') %>

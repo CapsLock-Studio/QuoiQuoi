@@ -84,4 +84,28 @@ module ApplicationHelper
 
     price
   end
+
+  def custom_item_name_helper(custom_item, locale_id = nil)
+    name = t('original_bag')
+    if custom_item.product
+      product = ProductTranslate.where(product_id: custom_item.product_id)
+      if locale_id.nil?
+        product = product.where(locale_id: session[:locale_id]).first
+      else
+        product = product.where(locale_id: locale_id).first
+      end
+      name = "#{product.name}(#{t('mended')})"
+    end
+
+    name
+  end
+
+  def custom_item_image_helper(custom_item, style = :thumb, option = '')
+    image_url = custom_item.image.url(style)
+    if !custom_item.image.exists? && custom_item.product
+      image_url = custom_item.product.image.url(style)
+    end
+
+    image_tag "#{root_url}#{image_url}", class: option
+  end
 end
