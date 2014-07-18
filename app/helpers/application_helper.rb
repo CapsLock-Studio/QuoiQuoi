@@ -74,7 +74,7 @@ module ApplicationHelper
       discount = (10 - discount) * 10
     end
 
-    discount.to_i
+    '%g' % discount.to_f
   end
 
   def price_discount(price, discount)

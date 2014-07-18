@@ -64,7 +64,7 @@
                       </td>
                       <td>
                         <% if product.discount > 0 %>
-                          <%= product.discount.to_i %>折
+                          <%= '%g' % product.discount.to_f %>折
                         <% else %>
                           未設定折扣
                         <% end %>
