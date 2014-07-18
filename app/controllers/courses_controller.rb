@@ -54,7 +54,7 @@ class CoursesController < ApplicationController
     translate = @course.course_translates.where(locale_id: session[:locale_id]).first
     @meta_og_title = translate.name
     @meta_og_description = translate.description.gsub(/\n/, '')
-    @meta_og_type = 'product'
+    @meta_og_type = 'course'
     @meta_og_image = "http://quoiquoi.tw#{@course.image.url(:large)}"
 
 
