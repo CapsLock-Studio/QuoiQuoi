@@ -10,11 +10,10 @@ class AdminAbility
       #can [:index, :new, :edit], Admin::Product
       can :manage, Admin
       can :manage, Admin::Locale
-      can :manage, Admin::ProductType
       can :manage, Admin::SlidePosition
-      can :manage, Admin::ArticleType
     else admin.role == 'author'
       can :manage, Admin
+      can :manage, Admin::ArticleType
       can :manage, Admin::Product
       can :manage, Admin::ProductCustomItem
       can :manage, Admin::Course
@@ -48,6 +47,7 @@ class AdminAbility
       can :manage, Admin::InstructionImage
       can :manage, Admin::Area
       can :manage, Admin::Faq
+      can :manage, Admin::ProductType
     end
 
     # for development
