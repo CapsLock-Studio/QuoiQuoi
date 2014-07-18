@@ -20,11 +20,8 @@
           <% @requirements.each do |requirement| %>
             <% requirement.requirement_translates.where(locale_id: session[:locale_id]).each do |translate| %>
               <div class="row">
-                <div class="col-md-2 col-xs-3 text-right">
-                  <%= t('position') %>
-                </div>
-                <div class="col-md-10 col-xs-9">
-                  <%= translate.title %>
+                <div class="col-xs-12">
+                  <h4><%= translate.title %></h4>
                   <%= simple_format(translate.description) %>
                 </div>
               </div>
