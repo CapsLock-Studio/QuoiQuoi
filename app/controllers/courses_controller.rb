@@ -25,8 +25,10 @@ class CoursesController < ApplicationController
       format.json do
       end
 
-      format.rss do
+      format.xml do
         @courses = @courses.limit(50)
+
+        render template: 'courses/index.atom.builder', layout: false
       end
     end
 
