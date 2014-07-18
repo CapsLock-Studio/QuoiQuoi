@@ -176,8 +176,8 @@
     if (shown == 'true' || !window.matchMedia || (window.matchMedia("(max-width: 991px)").matches)) {
         $('[data-toggle=tooltip]').tooltip('destroy');
     } else {
-        setCookie('tooltip-switch', true, 3);
         $('[data-toggle=tooltip]').tooltip('show').hover(function(){
+            setCookie('tooltip-switch', true, 3);
             $(this).tooltip('destroy');
         });
     }
