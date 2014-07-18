@@ -28,20 +28,6 @@
         <% end %>
       <% end %>
 
-      <%= nav_item_with_resource(admin_product_types_path, {rule: /#{admin_product_types_path}.*/}, Admin::ProductType) do %>
-        <%= link_to(admin_product_types_path) do %>
-          <i class="icon-anchor"></i>
-          <span>其他商品種類管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_article_types_path}.*/}, Admin::ArticleType) do %>
-        <%= link_to(admin_article_types_path) do %>
-          <i class="icon-anchor"></i>
-          <span>文章種類管理</span>
-        <% end %>
-      <% end %>
-
       <%= nav_item_with_resource(admin_slide_positions_path, {rule: /#{admin_slide_positions_path}.*/}, Admin::SlidePosition) do %>
         <%= link_to(admin_slide_positions_path) do %>
           <i class="icon-anchor"></i>
@@ -181,13 +167,13 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*)/}, Admin::Product) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) %>" href="#">
+      <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*|#{admin_product_types_path}.*)/}, Admin::Product) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) or is_in(:product_types) %>" href="#">
           <i class="icon-shopping-cart"></i>
           <span>商店內商品管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) %>">
+        <ul class="nav <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) or is_in(:product_types) or is_in(:product_types) %>">
           <%= nav_item_with_resource(admin_products_path, {rule: /#{admin_products_path}.*/}, Admin::Product) do %>
             <%= link_to(admin_products_path) do %>
               <i class="icon-shopping-cart"></i>
@@ -205,6 +191,13 @@
             <%= link_to(admin_gifts_path) do %>
               <i class="icon-gift"></i>
               <span>禮券管理</span>
+            <% end %>
+          <% end %>
+
+          <%= nav_item_with_resource(admin_product_types_path, {rule: /#{admin_product_types_path}.*/}, Admin::ProductType) do %>
+            <%= link_to(admin_product_types_path) do %>
+              <i class="icon-anchor"></i>
+              <span>其他商品種類管理</span>
             <% end %>
           <% end %>
         </ul>
@@ -249,12 +242,28 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(nil, {rule: /#{admin_articles_path}.*/}, Admin::Article) do %>
-        <%= link_to admin_articles_path do %>
-          <i class="icon-book"></i>
-          <span>文章管理</span>
+      <%= nav_item_with_resource('#', {rule: /#{admin_articles_path}.*|#{admin_article_types_path}.*/}, Admin::Article) do %>
+      <a class="dropdown-collapse <%= 'in' if is_in(:articles) or is_in(:article_types) %>" href="#">
+        <i class="icon-globe"></i>
+        <span>文章相關管理</span>
+        <i class="icon-angle-down"></i>
+      </a>
+      <ul class="nav <%= 'in' if is_in(:articles) or is_in(:article_types) %>">
+        <%= nav_item_with_resource(nil, {rule: /#{admin_articles_path}.*/}, Admin::Article) do %>
+          <%= link_to admin_articles_path do %>
+            <i class="icon-book"></i>
+            <span>文章管理</span>
+          <% end %>
         <% end %>
-      <% end %>
+
+        <%= nav_item_with_resource(nil, {rule: /#{admin_article_types_path}.*/}, Admin::ArticleType) do %>
+          <%= link_to(admin_article_types_path) do %>
+            <i class="icon-anchor"></i>
+            <span>文章種類管理</span>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
 
       <%= nav_item_with_resource('#', {rule: /#{admin_travel_information_index_path}.*|#{admin_areas_path}.*/}, Admin::TravelInformation) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:areas) or is_in(:travel_information) %>" href="#">
