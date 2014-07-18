@@ -38,7 +38,7 @@
                 <%= number_to_currency(order_product.price, locale: locale.lang) %>
                 <% if order_product.discount > 0 %>
                   <br/>
-                  <small><%= order_product.discount.to_i %>折優惠</small>
+                  <small><%= '%g' % order_product.discount.to_f %>折優惠</small>
                 <% end %>
               </td>
               <td>

@@ -106,7 +106,7 @@
                       </td>
                       <td>
                         <% translates.each do |translate| %>
-                          <%= number_to_currency(translate[:price], locale: locale) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
+                          <%= number_to_currency(translate[:price], locale: translate[:locale]) %>&nbsp;<small class="text-muted"><%= translate[:currency] %></small><br/>
                         <% end %>
                       </td>
                       <td>
