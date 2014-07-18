@@ -172,19 +172,14 @@
         });
     });
 
-    var tooltipInCourse = $('[data-toggle=tooltip]');
-
-    tooltipInCourse.tooltip('hide').hover(function(e){
-        var shown = getCookie('tooltip-switch');
-        if (shown == 'true') {
+    var shown = getCookie('tooltip-switch');
+    if (shown == 'true' || !window.matchMedia || (window.matchMedia("(max-width: 991px)").matches)) {
+        $('[data-toggle=tooltip]').tooltip('destroy');
+    } else {
+        setCookie('tooltip-switch', true, 3);
+        $('[data-toggle=tooltip]').tooltip('show').hover(function(){
             $(this).tooltip('destroy');
-        } else {
-            setCookie('tooltip-switch', true, 3);
-        }
-    });
-
-    if (!window.matchMedia || (window.matchMedia("(max-width: 991px)").matches)) {
-        tooltipInCourse.tooltip('destroy');
+        });
     }
 
     if ($('#map').length > 0) {
