@@ -443,6 +443,7 @@ zh-TW:
   quoiquoi_phone: '電話：02-28097712'
   charge: '價格'
   none: '無'
+  mended: '修改'
 
   mailer:
     success: '送信成功'

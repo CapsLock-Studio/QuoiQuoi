@@ -29,6 +29,9 @@
                         <% order.order_products.each do |order_product| %>
                           <%= image_tag order_product.product.image.url(:thumb) %>
                         <% end %>
+                        <% order.order_custom_items.each do |custom_item| %>
+                          <%= custom_item_image_helper(custom_item) %>
+                        <% end %>
                       </td>
                       <td>
                         <% if order.closed? %>

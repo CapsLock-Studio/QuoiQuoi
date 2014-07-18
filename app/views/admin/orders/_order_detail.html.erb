@@ -28,7 +28,7 @@
             <tr>
               <td>
                 <%= link_to edit_admin_product_path(order_product.product_id), target: '_blank' do %>
-                  <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
+                  <%= image_tag order_product.product.image.url(:thumb) %>
                 <% end %>
               </td>
               <td>
@@ -54,11 +54,13 @@
             <tr>
               <td>
                 <%= link_to edit_admin_order_custom_item_path(custom_item), target: '_blank' do %>
-                  <%= image_tag custom_item.image.url(:thumb), class: 'img-responsive' %>
+                  <%= custom_item_image_helper(custom_item) %>
                 <% end %>
               </td>
               <td>
-                <strong><%= t('original_bag') %></strong>
+                <strong>
+                  <%= custom_item_name_helper(custom_item, order.locale_id) %>
+                </strong>
               </td>
               <td>
                 <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= order.currency %></small>
