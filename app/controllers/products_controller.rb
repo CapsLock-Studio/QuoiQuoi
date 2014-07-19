@@ -80,14 +80,6 @@ class ProductsController < ApplicationController
 
   end
 
-  def search
-    add_breadcrumb t('home'), :root_path
-    add_breadcrumb t('search')
-    add_breadcrumb t('search_result')
-
-    @product_translates = ProductTranslate.where('name LIKE ? or description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%").order(id: :desc).page(params[:page]).per(12)
-  end
-
   private
 
     def set_product

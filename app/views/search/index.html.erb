@@ -1,0 +1,107 @@
+<%= render 'layouts/breadcrumbs', title: t('handmadebag') %>
+<div class="container main-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="headline">
+            <h4>
+              <%= t('shop') %>
+              <small><%= t('search_result', quantity: @products.length) %></small>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if @products.length > 0 %>
+      <% @products.each do |product| %>
+        <% translate = product.product_translates.where(locale_id: session[:locale_id]).first %>
+        <%= link_to product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'col-md-3 col-sm-6 col-xs-12' do %>
+          <div class="thumbnails thumbnail-style">
+            <%= image_tag product.image.url(:small), class: 'img-responsive' %>
+            <div class="caption">
+              <h4 style="margin-top: 10px; margin-bottom: 5px;">
+                <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
+              </h4>
+                <span class="price">
+                  <%= number_to_currency(price_discount(translate.price, product.discount)) %>
+                </span>
+              <% if product.discount > 0 %>
+                <span class="text-ruby">
+                  <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(product.discount)) %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div class="col-xs-12">
+        <h4 class="text-center">
+          <i class="fa fa-exclamation"></i><%= t('no_data') %>
+        </h4>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="headline">
+            <h4>
+              <%= t('course.title') %>
+              <small><%= t('search_result', quantity: @courses.length) %></small>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if @courses.length > 0 %>
+      <% @courses.each do |course| %>
+        <% attendance = course.registrations.reject{|registration| registration.canceled?}.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} || 0 %>
+        <% translate = course.course_translates.where(locale_id: session[:locale_id]).first %>
+        <% unless translate.name.blank? %>
+          <%= link_to course_path(course, month: course.time.strftime('%m').to_i), class: 'col-md-3 col-sm-6 col-xs-12 course' do %>
+            <div class="thumbnails thumbnail-style">
+              <%= image_tag course.image.url(:small), class: 'img-responsive' %>
+              <div class="caption">
+                <h4 style="margin-top: 10px; margin-bottom: 5px;">
+                  <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
+                </h4>
+                <ul class="list-unstyled">
+                  <li>
+                    <strong>
+                      <%= "#{t('starting_time')}： #{course.time.strftime('%Y/%m/%d %H:%M')} - #{(course.time + course.length.hours).strftime('%H:%M')}" %>
+                    </strong>
+                  </li>
+                  <li>
+                    <%= "#{t('teacher')}： #{translate.teacher}" %>
+                    <% if course.canceled? %>
+                        <span class="label label-default pull-right">
+                          <%= t('registration.cancel') %>
+                        </span>
+                    <% elsif course.time < Time.now + 5.hours %>
+                        <span class="label label-default pull-right">
+                          <%= t('course.past') %>
+                        </span>
+                    <% elsif attendance >= course.popular || course.full? %>
+                        <span class="label label-default pull-right">
+                          <%= t('registration.full') %>
+                        </span>
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div class="col-xs-12">
+        <h4 class="text-center">
+          <i class="fa fa-exclamation"></i><%= t('no_data') %>
+        </h4>
+      </div>
+    <% end %>
+  </div>
+</div>

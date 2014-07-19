@@ -8,6 +8,8 @@ QuoiQuoi::Application.routes.draw do
 
   devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
 
+  get 'search' => 'search#index'
+
   namespace :admin do
     root to: 'home#index'
     resources :home
@@ -176,10 +178,6 @@ QuoiQuoi::Application.routes.draw do
     get 'style2' => 'home#style2'
   end
   resources :products do
-    collection do
-      get 'search'
-    end
-
     resource :order_custom_items
   end
   resources :news
