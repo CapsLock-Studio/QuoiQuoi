@@ -444,6 +444,8 @@ zh-TW:
   charge: '價格'
   none: '無'
   mended: '修改'
+  privacy_statement: '隱私權政策'
+  terms_of_service: '服務條款'
 
   mailer:
     success: '送信成功'

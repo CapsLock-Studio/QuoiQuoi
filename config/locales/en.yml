@@ -417,7 +417,8 @@ en:
   charge: 'Charge'
   none: 'None'
   mended: 'Mended'
-
+  privacy_statement: 'Privacy statement'
+  terms_of_service: 'Terms of service'
 
   mailer:
     success: 'Send mail success.'

@@ -1,0 +1,51 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-user"></i>
+      <span>隱私權政策管理</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '修改隱私權政策', edit_admin_privacy_statement_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            <i class="icon-info"></i>
+            隱私權政策
+          </div>
+          <div class="actions">
+            <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-padding">
+          <div class="row">
+            <% Locale.all.order(id: :desc).each do |locale| %>
+              <div class="col-sm-12">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="title">
+                      <%= locale.name %>
+                    </div>
+                    <div class="actions">
+                      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="form-group">
+                      <%= text_area_tag :privacy_statement, $redis.get("privacy_statement:locale:#{locale.id}"), disabled: true, class: 'autosize form-control' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
