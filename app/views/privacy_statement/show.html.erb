@@ -1,0 +1,8 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12" style="margin-top: 20px;">
+      <%= simple_format $redis.get("privacy_statement:locale:#{Locale.where(id: session[:locale_id]).first.id}") %>
+    </div>
+  </div>
+</div>

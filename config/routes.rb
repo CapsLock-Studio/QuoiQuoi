@@ -12,6 +12,9 @@ QuoiQuoi::Application.routes.draw do
 
   namespace :admin do
     root to: 'home#index'
+    resource :privacy_statement, controller: :privacy_statement
+    resource :term_of_service, controller: :term_of_service
+
     resources :home
     resources :articles do
       resources :article_images
@@ -254,4 +257,7 @@ QuoiQuoi::Application.routes.draw do
   resources :areas do
     resources :travel_information
   end
+
+  resource :terms_of_service, controller: :terms_of_service
+  resource :privacy_statement, controller: :privacy_statement
 end

@@ -1,0 +1,66 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-user"></i>
+      <span>修改隱私權政策</span>
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            <i class="icon-info"></i>
+            隱私權政策
+          </div>
+          <div class="actions">
+            <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-padding">
+          <%= form_tag admin_privacy_statement_path, method: :put do %>
+            <div class="row">
+              <% Locale.all.order(id: :desc).each_with_index do |locale, index| %>
+                <div class="col-sm-12">
+                  <div class="box">
+                    <div class="box-header">
+                      <div class="title">
+                        <%= locale.name %>
+                      </div>
+                      <div class="actions">
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                      </div>
+                    </div>
+                    <div class="box-content">
+                      <div class="form-group">
+                        <%= hidden_field_tag "privacy_statement[#{index}][locale_id]", locale.id %>
+                        <%= text_area_tag "privacy_statement[#{index}][content]", $redis.get("privacy_statement:locale:#{locale.id}"), rows: 10, class: 'autosize form-control' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-actions">
+                  <div class="pull-right">
+                    <%= link_to '取消', admin_privacy_statement_path, class: 'btn btn-lg' %>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                      <i class="icon-save"></i>
+                      儲存
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

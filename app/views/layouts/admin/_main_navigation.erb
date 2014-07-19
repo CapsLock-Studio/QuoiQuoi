@@ -28,6 +28,20 @@
         <% end %>
       <% end %>
 
+      <%= nav_item_with_resource(admin_privacy_statement_path, {rule: /#{admin_privacy_statement_path}.*/}, Admin::Locale) do %>
+        <%= link_to(admin_privacy_statement_path) do %>
+          <i class="icon-user"></i>
+          <span>隱私權政策管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_term_of_service_path, {rule: /#{admin_term_of_service_path}.*/}, Admin::Locale) do %>
+        <%= link_to(admin_term_of_service_path) do %>
+          <i class="icon-user"></i>
+          <span>服務條款管理</span>
+        <% end %>
+      <% end %>
+
       <%= nav_item_with_resource(admin_slide_positions_path, {rule: /#{admin_slide_positions_path}.*/}, Admin::SlidePosition) do %>
         <%= link_to(admin_slide_positions_path) do %>
           <i class="icon-anchor"></i>
