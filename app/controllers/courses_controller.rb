@@ -60,6 +60,17 @@ class CoursesController < ApplicationController
 
   end
 
+  # access able from another controller
+  def set_months
+    @months = []
+    month_first = Time.now.month - 1
+    6.times do |index|
+      @months << ((index + month_first > 12)? month_first + index - 12 : index + month_first)
+    end
+
+    @months
+  end
+
   private
     def set_breadcrumbs
       add_breadcrumb I18n.t('home'), :root_path
@@ -71,14 +82,6 @@ class CoursesController < ApplicationController
         @course = Course.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
-      end
-    end
-
-    def set_months
-      @months = []
-      month_first = Time.now.month - 1
-      6.times do |index|
-        @months << ((index + month_first > 12)? month_first + index - 12 : index + month_first)
       end
     end
 end
