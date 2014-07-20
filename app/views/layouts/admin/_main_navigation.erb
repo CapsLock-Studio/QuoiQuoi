@@ -150,7 +150,7 @@
       <%= nav_item_with_resource('#', nil, Admin::Registration) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>" href="#">
           <i class="icon-check"></i>
-          <span>報名課程管理</span>
+          <span>手作教室報名課程管理</span>
           <i class="icon-angle-down"></i>
         </a>
         <ul class="nav <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>">
@@ -163,7 +163,7 @@
           <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?(?!\/canceled)$/}, Admin::Registration) do %>
             <%= link_to(admin_course_registrations_path) do %>
               <i class="icon-book"></i>
-              <span>課程管理</span>
+              <span>課程狀態管理</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/closed/}, Admin::Registration) do %>

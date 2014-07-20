@@ -85,7 +85,10 @@
         <label class="label label-success">
           <% item_work_days = order.order_custom_items.collect{|item| item.workday}.inject{|sum, attendance| sum + attendance} || 0 %>
           工作天數: <%= (item_work_days > 5)? item_work_days : 5 %> 天
-        </label>
+        </label><br/>
+        <small>
+          付款完成日期 <%= order.payment.pay_time.strftime('%Y/%m/%d') %>
+        </small>
       <% end %>
     </h4>
   </div>
