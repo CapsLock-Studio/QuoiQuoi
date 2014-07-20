@@ -26,7 +26,9 @@ class Admin::HomeController < AdminController
         @order_wait_confirm_remittance = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: nil).reject{|payment| !payment.order}.count
         @order_pre_shipping = Payment.where(completed: true).where.not(order_id: ['', nil]).count
         @closed_order = Order.where(checkout: true, canceled: false, closed: true).count
-        @wait_confirm = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil).where.not(user_id: ['', nil]).count
+        @custom_order_wait_confirm = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil).where.not(user_id: ['', nil]).count
+        @registration_wait_confirm_remittance = Payment.where(canceled: false, completed: false).where.not(registration_id: '', amount: 0, pay_time: nil).count
+        @user_gift__wait_confirm_remittance = Payment.where(canceled: false, completed: false).where.not(user_gift_id: '', amount: 0, pay_time: nil).count
       }
     end
   end
