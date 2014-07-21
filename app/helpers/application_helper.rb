@@ -72,6 +72,8 @@ module ApplicationHelper
   def locale_discount(discount, locale = nil)
     if (locale.nil?)? session[:locale] == 'en' : locale == 'en'
       discount = (10 - discount) * 10
+    elsif (discount * 10) % 10 != 0
+      discount *= 10
     end
 
     '%g' % discount.to_f
