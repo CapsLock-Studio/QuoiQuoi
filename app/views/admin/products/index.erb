@@ -64,7 +64,7 @@
                       </td>
                       <td>
                         <% if product.discount > 0 %>
-                          <%= '%g' % product.discount.to_f %>折
+                          <%= locale_discount(product.discount, locale = 'zh-TW') %>折
                         <% else %>
                           未設定折扣
                         <% end %>
