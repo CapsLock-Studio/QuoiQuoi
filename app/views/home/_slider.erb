@@ -1,4 +1,4 @@
-<div class="carousel slide" id="home-carousel-1">
+<div class="carousel carousel-fade slide" id="home-carousel-1">
   <div class="carousel-inner">
     <% @slides.each_with_index do |slide, index| %>
       <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
