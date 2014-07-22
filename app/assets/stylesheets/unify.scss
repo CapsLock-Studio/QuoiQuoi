@@ -904,6 +904,14 @@ a[data-toggle=offcanvas] {
       z-index: 2;
     }
   }
+
+  &:hover .carousel-indicators li {
+    visibility: visible;
+  }
+  .carousel-indicators li  {
+    border-radius: 6px !important;
+    visibility: hidden;
+  }
 }
 
 .carousel-control .icon-next, .carousel-control .glyphicon-chevron-right {
