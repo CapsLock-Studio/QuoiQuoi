@@ -419,6 +419,8 @@ en:
   mended: 'Mended'
   privacy_statement: 'Privacy statement'
   terms_of_service: 'Terms of service'
+  reference_price: 'Reference price list'
+  remarks: 'Remarks'
 
   mailer:
     success: 'Send mail success.'
