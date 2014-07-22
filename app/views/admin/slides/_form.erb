@@ -23,19 +23,6 @@
             </div>
           </div>
           <div class="col-sm-12">
-            <div class="form-group">
-              <label>輪播文字顯示位置</label>
-              <% @slide_positions.each_with_index do |slide_position, index| %>
-                <div class="checkbox">
-                  <%= f.label("#{:slide_position_id}_#{slide_position.id}", class: 'radio radio-inline') do %>
-                    <%= image_tag slide_position.image.url(:medium) %>
-                    <%= f.radio_button :slide_position_id, slide_position.id, checked: (index == 0)? 'checked' : nil %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <div class="col-sm-12">
             <%= f.fields_for :slide_translates do |builder| %>
               <div class="box">
                 <div class="box-header">
@@ -61,7 +48,7 @@
                   </div>
                   <div class="form-group">
                     <%= builder.label :description, '敘述文字' %>
-                    <span class="label label-primary">如需要上色請用 {文字字串} 的方式包裹 ex: {最新消息}</span>
+                    <span class="label label-primary">當輪播圖片尚有敘述文字時請輸入相同文字於此, 以利網站搜尋優化</span>
                     <div class="controls">
                       <%= builder.text_area :description, class: 'form-control', placeholder: '請輸入敘述' %>
                     </div>

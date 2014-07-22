@@ -7,18 +7,9 @@
         <li class="carousel-link" data-target="<%= translate.link %>" data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
           <!-- THE MAIN IMAGE IN THE FOURTH SLIDE -->
           <%= image_tag slide.image.url(:large) %>
-
-          <% descriptions = translate.description.split(/\n/) %>
-          <% descriptions.each_with_index do |description, index| %>
-            <div class="caption large_text sft hidden-xs"
-                 data-x="<%= slide.slide_position.position if slide.slide_position %>"
-                 data-y="<%= (190 + 40 * index) %>"
-                 data-speed="300"
-                 data-start="<%= (800 + 300 * index) %>"
-                 data-easing="easeOutExpo">
-              <%= description.gsub(/{/, '<span style="color:#E67E22">').gsub(/}/, '</span>').html_safe %>
-            </div>
-          <% end %>
+          <h4 style="display: none;">
+            <%= translate.description %>
+          </h4>
         </li>
       <% end %>
     </ul>
