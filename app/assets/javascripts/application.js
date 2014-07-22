@@ -111,6 +111,7 @@
     initToggleSearchGiftForm();
     initCartCalculate();
     scrolltotop.init();
+
     var calendar = iniCalendarModel();
 
     $('.carousel-link').on('click', function(e) {
@@ -140,26 +141,11 @@
         priceTarget.text(((parseInt(priceTarget.data('price'), 10) * parseInt($(this).val(), 10)) + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
     });
 
-    $('#flexHome').flexslider({
-        animation: "slide",
-        controlNav:false,
-        directionNav:false,
-        touch: true,
-        direction: "vertical"
-    });
-
-    $('#flexHome2').flexslider({
-        animation: "slide",
-        controlNav:false,
-        directionNav:false,
-        touch: true,
-        direction: "vertical"
-    });
-
     $('.youtube-video').on('click', function(){
         convertPlayer(this);
     });
 
+    $('.marquee').marquee(500, 5000);
     $('.wizard').wizard();
     $('.nested-field').each(function(index){
         $(this).nestedFields({

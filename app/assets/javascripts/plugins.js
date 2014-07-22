@@ -209,6 +209,37 @@ var initCartCalculate = function() {
     });
 };
 
+$.fn.marquee = function(animateTime, waitTime) {
+    var marqueeBlock = $(this);
+    var marqueeLength = marqueeBlock.find('li').length;
+    var eachMarginTop = marqueeBlock.height();
+    var marquees = marqueeBlock.find('ul');
+    var scrollUp = function(index, end){
+        marquees.animate({
+            marginTop: eachMarginTop * (0 - index)
+        }, animateTime, function(){
+            if (index == end) {
+                index = 0;
+                marquees.css({
+                    marginTop: index
+                });
+            }
+        });
+
+        setTimeout(function(){
+            scrollUp(index + 1, end);
+        }, waitTime);
+    };
+
+    marqueeBlock.css({
+        height: marqueeBlock.height()
+    }).addClass('active');
+
+    marquees.append(marqueeBlock.find('li:first-child').clone());
+
+    scrollUp(1, marqueeLength);
+};
+
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
