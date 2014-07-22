@@ -1,4 +1,10 @@
-<div class="carousel carousel-fade slide" id="home-carousel-1">
+<div class="carousel carousel-fade slide" id="home-carousel">
+  <ol class="carousel-indicators">
+    <% @slides.each_with_index do |slide, index| %>
+      <li data-target="#home-carousel" data-slide-to="index" class="<%= 'active' if index == 0 %>"></li>
+    <% end %>
+  </ol>
+
   <div class="carousel-inner">
     <% @slides.each_with_index do |slide, index| %>
       <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
@@ -18,10 +24,10 @@
   </div>
 
   <div class="carousel-arrow">
-    <a data-slide="prev" href="#home-carousel-1" class="left carousel-control">
+    <a data-slide="prev" href="#home-carousel" class="left carousel-control">
       <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
-    <a data-slide="next" href="#home-carousel-1" class="right carousel-control">
+    <a data-slide="next" href="#home-carousel" class="right carousel-control">
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
   </div>
