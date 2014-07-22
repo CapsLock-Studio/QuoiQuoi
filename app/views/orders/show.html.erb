@@ -203,18 +203,18 @@
         <% if @order.payment && !@order.payment.completed? && (@order.payment.amount == 0 || @order.payment.identifier.blank?) %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('order.advice'), edit_payment_path(@order.payment), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('order.advice'), edit_payment_path(@order.payment), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
             <%= link_to t('order.cancel'), cancel_order_path(@order), method: :put %>
           </div>
         <% elsif @order.delivered? && !@order.closed? %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('order.received'), close_order_path(@order), method: :put, class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('order.received'), close_order_path(@order), method: :put, class: 'btn btn-lg btn-orange btn-block hover-effect' %>
           </div>
         <% elsif !@order.paid? %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('pay'), pay_order_path(@order), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('pay'), pay_order_path(@order), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
             <%= link_to t('order.cancel'), cancel_order_path(@order), method: :put %>
           </div>
         <% end %>

@@ -20,7 +20,7 @@
         </div>
         <%= simple_format(@message.content) %>
         <hr/>
-        <%= link_to t('message.other'), new_message_path, class: 'btn btn-u-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' %>
+        <%= link_to t('message.other'), new_message_path, class: 'btn btn-orange btn-lg hover-effect btn-block', style: 'color: #FFF;' %>
         <%= link_to messages_path do %>
           <i class="fa fa-angle-left"></i>
           <%= t('message.back') %>
