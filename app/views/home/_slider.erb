@@ -1,19 +1,28 @@
+<div class="carousel slide" id="home-carousel-1">
+  <div class="carousel-inner">
+    <% @slides.each_with_index do |slide, index| %>
+      <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
+      <div class="item <%= 'active' if index == 0 %>">
+        <% if translate.link %>
+          <%= link_to translate.link, target: '_blank' do %>
+            <%= image_tag slide.image.url(:large), class: 'img-responsive', style: 'width:100%;' %>
+          <% end %>
+        <% else %>
+          <%= image_tag slide.image.url(:large), class: 'img-responsive', style: 'width:100%;' %>
+        <% end %>
+        <h4 style="display:none;">
+          <p><%= translate.description %></p>
+        </h4>
+      </div>
+    <% end %>
+  </div>
 
-<div class="fullwidthbanner-container">
-  <div class="fullwidthbanner">
-    <ul>
-      <% @slides.each do |slide| %>
-        <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
-        <li class="carousel-link" data-target="<%= translate.link %>" data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
-          <!-- THE MAIN IMAGE IN THE FOURTH SLIDE -->
-          <%= image_tag slide.image.url(:large) %>
-          <h4 style="display: none;">
-            <%= translate.description %>
-          </h4>
-        </li>
-      <% end %>
-    </ul>
-
-    <div class="tp-bannertimer tp-bottom"></div>
+  <div class="carousel-arrow">
+    <a data-slide="prev" href="#home-carousel-1" class="left carousel-control">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a data-slide="next" href="#home-carousel-1" class="right carousel-control">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
   </div>
 </div>

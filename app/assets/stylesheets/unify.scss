@@ -26,6 +26,15 @@
 @import 'unify/asside_menu';
 @import 'unify/offcanvas';
 
+
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -ms-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+
 // override font size start
 html,
 body {
@@ -861,4 +870,41 @@ a[data-toggle=offcanvas] {
   li:not(:last-child) {
     margin-bottom: 3px;
   }
+}
+
+// Fade transition for carousel items
+.carousel {
+  .item {
+    left: 0 !important;
+    @include transition(all, 0.4s, ease-in-out);
+  }
+  .carousel-control {
+    background-image: none; // remove background gradients on controls
+  }
+  // Fade controls with items
+  .next.left, .prev.right {
+    opacity: 1;
+    z-index: 1;
+  }
+  .active.left, .active.right {
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .carousel-control {
+    visibility: hidden;
+  }
+
+  &:hover .carousel-control {
+    visibility: visible;
+    color: #FFF;
+  }
+}
+
+.carousel-control .icon-next, .carousel-control .glyphicon-chevron-right {
+  right: 25%;
+}
+
+.carousel-control .icon-next, .carousel-control .glyphicon-chevron-left {
+  left: 25%;
 }

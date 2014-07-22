@@ -22,8 +22,8 @@
 // require unify/plugins/modernizr/modernizr-2.5.3.min.js
 // require unify/plugins/parallax-slider/jquery.cslider.js
 // require unify/plugins/respond/respond.js
-//= require unify/plugins/revolution_slider/jquery.themepunch.plugins.min.js
-//= require unify/plugins/revolution_slider/jquery.themepunch.revolution.min.js
+// require unify/plugins/revolution_slider/jquery.themepunch.plugins.min.js
+// require unify/plugins/revolution_slider/jquery.themepunch.revolution.min.js
 // require unify/plugins/revolution_slider/video.js
 //= require unify/plugins/validate/jquery.validate.min
 //= require unify/plugins/validate/additional-methods

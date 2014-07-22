@@ -20,7 +20,6 @@
 //= require flatty/plugins/fullcalendar/fullcalendar.min
 
 //= require unify/theme
-//= require unify/pages/index
 
 //= require jquery.nested-fields.min
 
