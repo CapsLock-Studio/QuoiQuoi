@@ -35,6 +35,9 @@
   transition: $transition-property $transition-time $method;
 }
 
+$colorsHexes: #EC8FC4, #6FDFBB, #F38B2F;
+$colorsNames: 'pink', 'green', 'orange';
+
 // override font size start
 html,
 body {
@@ -924,4 +927,17 @@ a[data-toggle=offcanvas] {
 
 .slides {
   list-style: none;
+}
+
+@for $i from 1 through length($colorsNames) {
+  .btn-#{nth($colorsNames, $i)} {
+    background-color: nth($colorsHexes, $i);
+    color: #FFF;
+    border: none;
+
+    &:hover {
+      background-color: darken(nth($colorsHexes, $i), 10%);
+      color: #FFF;
+    }
+  }
 }
