@@ -925,10 +925,6 @@ a[data-toggle=offcanvas] {
   left: 25%;
 }
 
-.slides {
-  list-style: none;
-}
-
 @for $i from 1 through length($colorsNames) {
   .btn-#{nth($colorsNames, $i)} {
     background-color: nth($colorsHexes, $i);
@@ -938,6 +934,38 @@ a[data-toggle=offcanvas] {
     &:hover {
       background-color: darken(nth($colorsHexes, $i), 10%);
       color: #FFF;
+    }
+  }
+}
+
+.marquee {
+  margin-bottom: 5px;
+
+  li {
+    padding: 5px;
+  }
+
+  ul {
+    margin: 0;
+  }
+
+  h4 {
+    margin: 0;
+  }
+
+  .list-unstyled {
+    li:not(:last-child) {
+      margin-bottom: 0px;
+    }
+  }
+
+  &.active {
+    overflow: hidden;
+  }
+
+  &:not(.active) {
+    li:not(:first-child) {
+      display: none;
     }
   }
 }
