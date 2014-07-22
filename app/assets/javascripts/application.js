@@ -100,7 +100,6 @@
         });
 
     App.init();
-    Index.initRevolutionSlider();
     App.initFancybox();
     App.initBxSlider();
 
