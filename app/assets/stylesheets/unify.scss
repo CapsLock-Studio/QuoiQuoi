@@ -874,30 +874,35 @@ a[data-toggle=offcanvas] {
 
 // Fade transition for carousel items
 .carousel {
-  .item {
-    left: 0 !important;
-    @include transition(all, 0.4s, ease-in-out);
-  }
   .carousel-control {
-    background-image: none; // remove background gradients on controls
-  }
-  // Fade controls with items
-  .next.left, .prev.right {
-    opacity: 1;
-    z-index: 1;
-  }
-  .active.left, .active.right {
-    opacity: 0;
-    z-index: 2;
-  }
-
-  .carousel-control {
+    background-image: none;
     visibility: hidden;
   }
 
   &:hover .carousel-control {
     visibility: visible;
     color: #FFF;
+  }
+
+  .carousel-fade{
+    .carousel-inner .item {
+      opacity: 0;
+      @include transition(opacity, 0.4s, ease-in-out);
+    }
+    .carousel-inner .active {
+      opacity: 1;
+    }
+    .carousel-inner .active.left, .carousel-inner .active.right {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+    .carousel-inner .next.left, .carousel-inner .prev.right {
+      opacity: 1;
+    }
+    .carousel-control {
+      z-index: 2;
+    }
   }
 }
 
