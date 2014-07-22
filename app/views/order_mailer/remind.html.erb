@@ -10,7 +10,7 @@
   <%= order_url(@order) %><br/>
   <%= t('mailer.elector') %>
 </p>
-------------------------------------------------------------------------------------------------<br/>
+<hr>
 <%= t('order.no_s') %>&nbsp;P<%= @order.id %>
 <h4><%= t('product_information') %></h4>
 <% if @order.order_products.length > 0 %>
@@ -158,8 +158,10 @@
     <td>
       <% if @order.payment.wait? %>
         <%= t('remittance') %>
-      <% else %>
+      <% elsif @order.payment.amount != 0 %>
         Paypal
+      <% else %>
+        <%= t('gift') %>
       <% end %>
     </td>
     <td>
@@ -202,7 +204,7 @@
   <%= t('quoiquoi_address') %><br/>
   <%= t('quoiquoi_phone') %>
 </p>
-------------------------------------------------------------------------------------------------
+<hr>
 <p>
   <%= t('working_days', workdays: workdays) %><br/>
   <%= t('completed_hint').html_safe %><br/>
