@@ -9,7 +9,7 @@ class CoursesController < ApplicationController
     flash[:message] = nil
 
     respond_to do |format|
-      @courses = Course.all
+      @courses = Course.where(visible: true)
       format.html do
         # not show any past courses
         if params[:month] && params[:month] != 'new'

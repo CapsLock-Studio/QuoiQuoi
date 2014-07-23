@@ -33,6 +33,14 @@ class Admin::ProductsController < AdminController
     @locales = Locale.all.order(id: :desc)
   end
 
+  def visible
+    if @product.update_attribute(:visible, params[:visible])
+      redirect_to action: :index
+    else
+      render json: @product.errors
+    end
+  end
+
   # POST /products
   # POST /products.json
   def create

@@ -23,6 +23,14 @@ class Admin::GiftsController < AdminController
     add_breadcrumb '修改禮品券'
   end
 
+  def visible
+    if @gift.update_attribute(:visible, params[:visible])
+      redirect_to action: :index
+    else
+      render json: @gift.errors
+    end
+  end
+
   def create
     @gift = Gift.new(gift_params)
 

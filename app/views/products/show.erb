@@ -58,39 +58,48 @@
                 </h3>
                 <%= simple_format(translate.description) %>
               </div>
-              <div class="col-md-12 margin-bottom-10">
-                <div class="header">
-                  <span class="text-muted"><%= t('price') %></span>
-                </div>
-              </div>
-              <div class="col-md-12 margin-bottom-50">
-                <h4 class="margin-bottom-20">
-                  <strong id="product-price" data-price="<%= translate.price %>"><%= number_to_currency(price_discount(translate.price, @order_product.product.discount)) %></strong>
-                  <% if @order_product.product.discount > 0 %>
-                    <small><%= t('full_price') %> <%= number_to_currency(translate.price) %>, <%= t('product.discount', percent: locale_discount(@order_product.product.discount)) %></small>
-                  <% end %>
-                </h4>
-                <% if @order_product.product.quantity > 0 %>
-                  <label><%= t('quantity') %></label>
-                  <%= f.select :quantity, options_for_select((1..@order_product.product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
-                  <%= f.button class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn', type: 'submit' do %>
-                    <i class="icon-shopping-cart"></i>
-                    <span><%= t('add_to_cart') %></span>
-                  <% end %>
-                <% else %>
-                  <%= link_to '#', class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;', disabled: 'disabled' do %>
-                    <i class="icon-shopping-cart"></i>
-                    <span><%= t('not_in_stock') %></span>
-                  <% end %>
-                <% end %>
-              </div>
-              <% unless @order_product.product.product_type %>
+              <% if @order_product.product.visible? %>
                 <div class="col-md-12 margin-bottom-10">
-                  <h5><%= t('customize_hint') %></h5>
-                  <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-lg btn-green btn-block hover-effect one-page-btn' do %>
-                    <i class="icon-edit"></i>
-                    <span><%= t('customize') %></span>
+                  <div class="header">
+                    <span class="text-muted"><%= t('price') %></span>
+                  </div>
+                </div>
+                <div class="col-md-12 margin-bottom-50">
+                  <h4 class="margin-bottom-20">
+                    <strong id="product-price" data-price="<%= translate.price %>"><%= number_to_currency(price_discount(translate.price, @order_product.product.discount)) %></strong>
+                    <% if @order_product.product.discount > 0 %>
+                      <small><%= t('full_price') %> <%= number_to_currency(translate.price) %>, <%= t('product.discount', percent: locale_discount(@order_product.product.discount)) %></small>
+                    <% end %>
+                  </h4>
+                  <% if @order_product.product.quantity > 0 %>
+                    <label><%= t('quantity') %></label>
+                    <%= f.select :quantity, options_for_select((1..@order_product.product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                    <%= f.button class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn', type: 'submit' do %>
+                      <i class="fa fa-shopping-cart"></i>
+                      <span><%= t('add_to_cart') %></span>
+                    <% end %>
+                  <% else %>
+                    <%= link_to '#', class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn', style: 'color: #FFF;', disabled: 'disabled' do %>
+                      <i class="fa fa-shopping-cart"></i>
+                      <span><%= t('not_in_stock') %></span>
+                    <% end %>
                   <% end %>
+                </div>
+                <% unless @order_product.product.product_type %>
+                  <div class="col-md-12 margin-bottom-10">
+                    <h5><%= t('customize_hint') %></h5>
+                    <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-lg btn-green btn-block hover-effect one-page-btn' do %>
+                      <i class="fa fa-edit"></i>
+                      <span><%= t('customize') %></span>
+                    <% end %>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="col-md-12">
+                  <a href="#" class="btn btn-lg btn-default btn-block" disabled="disabled">
+                    <i class="fa fa-exclamation"></i>
+                    <span><%= t('not_for_sale') %></span>
+                  </a>
                 </div>
               <% end %>
               <div class="col-md-12">

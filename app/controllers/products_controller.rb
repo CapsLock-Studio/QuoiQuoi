@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
       format.html do
         add_breadcrumb t('home'), :root_path
 
-        @products = Product.where(product_type_id: params[:product_type_id]).order(id: :desc).page(params[:page]).per(12)
+        @products = Product.where(product_type_id: params[:product_type_id], visible: true).order(id: :desc).page(params[:page]).per(12)
 
         unless @products.first.nil?
           add_breadcrumb @products.first.product_type_id.nil? ? I18n.t('handmadebag') : @products.first.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
       end
 
       format.xml do
-        @products = Product.order(created_at: :desc).limit(50)
+        @products = Product.where(visible: true).order(created_at: :desc).limit(50)
 
         render template: 'products/index.atom.builder', layout: false
       end
@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
     add_breadcrumb t('detail')
 
     @order_product = OrderProduct.new(product_id: @product.id)
-    @other_products = Product.where(product_type_id: @product.product_type_id).order(id: :desc).limit(8)
+    @other_products = Product.where(product_type_id: @product.product_type_id, visible: true).order(id: :desc).limit(8)
 
     #set seo meta
     translate = @product.product_translates.where(locale_id: session[:locale_id]).first

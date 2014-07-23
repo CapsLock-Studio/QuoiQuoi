@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715105316) do
+ActiveRecord::Schema.define(version: 20140723042833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.datetime "canceled_time"
     t.boolean  "full",               default: false
     t.datetime "full_time"
+    t.boolean  "visible",            default: true
   end
 
   create_table "designer_translates", force: true do |t|
@@ -294,6 +295,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.boolean  "visible",            default: true
   end
 
   create_table "instruction_images", force: true do |t|
@@ -640,6 +642,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.float    "discount",           default: 0.0
+    t.boolean  "visible",            default: true
   end
 
   create_table "registrations", force: true do |t|
