@@ -77,6 +77,17 @@
                           <%= link_to(edit_admin_product_path(product), class: 'btn btn-md') do %>
                             <i class='icon-pencil'></i>
                           <% end %>
+
+                          <% if product.visible? %>
+                            <%= link_to(visible_admin_product_path(product, visible: false), class: 'btn btn-info btn-md', method: :put) do %>
+                              <i class="icon-level-down"></i>
+                            <% end %>
+                          <% else %>
+                            <%= link_to(visible_admin_product_path(product, visible: true), class: 'btn btn-primary btn-md', method: :put) do %>
+                              <i class="icon-level-up"></i>
+                            <% end %>
+                          <% end %>
+
                           <%= link_to(admin_product_path(product), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
                             <i class='icon-remove'></i>
                           <% end %>

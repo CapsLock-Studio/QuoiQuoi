@@ -32,6 +32,14 @@ class Admin::CoursesController < AdminController
     add_breadcrumb '修改課程'
   end
 
+  def visible
+    if @course.update_attribute(:visible, params[:visible])
+      redirect_to action: :index
+    else
+      render json: @course.errors
+    end
+  end
+
   # POST /admin/courses
   def create
     @course = Course.new(course_params)
