@@ -11,6 +11,17 @@ class Admin::PaymentsController < AdminController
 
   def show
     add_breadcrumb '詳細付款記錄'
+    @order = Order.find(@payment.order_id)
+
+    @shipping_fee = ShippingFeeTranslate.where(locale_id: @order.locale_id, shipping_fee_id: @order.shipping_fee_id).first
+    if @shipping_fee.free_condition && @order.subtotal > @shipping_fee.free_condition
+      @shipping_fee.fee = 0
+    end
+
+    @discount = 0
+    UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
+      @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
+    end
   end
 
   def new
