@@ -37,7 +37,7 @@
                             <% elsif registration.paid? %>
                               <% if registration.payment.completed? %>
                                 <%= t('registration.received') %>
-                              <% elsif registration.payment.amount == 0 %>
+                              <% elsif !registration.payment.pay_time %>
                                 <%= t('order.wait_remittance') %>
                               <% else %>
                                 <%= t('order.wait_confirm') %>
