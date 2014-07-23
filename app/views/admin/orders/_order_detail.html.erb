@@ -23,7 +23,7 @@
           </tr>
           </thead>
           <tbody>
-          <% order.order_products.each do |order_product| %>
+          <% order.order_products.reject{|object| object.product.nil?}.each do |order_product| %>
             <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: order.locale_id).first %>
             <tr>
               <td>
