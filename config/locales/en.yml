@@ -38,7 +38,7 @@ en:
     login: 'Login Admin'
   view_detail: 'View Detail'
   product_detail: 'Product Detail'
-  starting_time: 'Starting Time'
+  starting_time: 'Time'
   course_time: 'Time'
   teacher: 'Teacher'
   products: 'Products'
