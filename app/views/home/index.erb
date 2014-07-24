@@ -19,7 +19,7 @@
       <!--<% end %>-->
     <!--</div>-->
     <div class="col-md-12 hidden-xs">
-      <div class="marquee">
+      <div class="marquee" id="marquee">
         <ul class="list-unstyled text-center">
           <% @broadcasts.each do |broadcast| %>
             <% translate = broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first %>

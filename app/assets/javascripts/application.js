@@ -145,7 +145,12 @@
         convertPlayer(this);
     });
 
-    // $('.marquee').marquee(500, 5000);
+    var marquee = $('#marquee');
+    if (marquee.length > 0) {
+        setTimeout(function(){
+            marquee.marquee(500, 5000);
+        }, 1000);
+    }
     $('.wizard').wizard();
     $('.nested-field').each(function(index){
         $(this).nestedFields({
