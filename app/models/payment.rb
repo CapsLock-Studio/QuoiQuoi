@@ -18,6 +18,7 @@ class Payment < ActiveRecord::Base
     )
     self.amount = amount
     self.token = response.token
+    self.currency = currency
 
     self.save!
 
