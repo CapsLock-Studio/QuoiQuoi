@@ -212,7 +212,7 @@ var initCartCalculate = function() {
 $.fn.marquee = function(animateTime, waitTime) {
     var marqueeBlock = $(this);
     var marqueeLength = marqueeBlock.find('li').length;
-    var eachMarginTop = marqueeBlock.height();
+    var eachMarginTop = marqueeBlock.find('li').height();
     var marquees = marqueeBlock.find('ul');
     var scrollUp = function(index, end){
         marquees.animate({
