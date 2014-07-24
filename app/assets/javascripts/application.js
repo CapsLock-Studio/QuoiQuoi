@@ -147,9 +147,10 @@
 
     var marquee = $('#marquee');
     if (marquee.length > 0) {
+        // start at 5 seconds after
         setTimeout(function(){
             marquee.marquee(500, 5000);
-        }, 1000);
+        }, 5000);
     }
     $('.wizard').wizard();
     $('.nested-field').each(function(index){
