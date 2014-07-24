@@ -211,6 +211,7 @@ var initCartCalculate = function() {
 
 $.fn.marquee = function(animateTime, waitTime) {
     var marqueeBlock = $(this);
+    var marqueeHeight = marqueeBlock.height();
     var marqueeLength = marqueeBlock.find('li').length;
     var eachMarginTop = marqueeBlock.height();
     var marquees = marqueeBlock.find('ul');
@@ -232,7 +233,7 @@ $.fn.marquee = function(animateTime, waitTime) {
     };
 
     marqueeBlock.css({
-        height: marqueeBlock.height()
+        height: marqueeHeight
     }).addClass('active');
 
     marquees.append(marqueeBlock.find('li:first-child').clone());
