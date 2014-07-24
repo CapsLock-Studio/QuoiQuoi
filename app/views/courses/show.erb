@@ -76,26 +76,26 @@
                   <% end %>
 
                   <% if @course.canceled? %>
-                    <a href="#" class="btn btn-green btn-lg btn-block hover-effect" disabled="disabled">
+                    <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
                       <span><%= t('course.canceled') %></span>
                     </a>
                   <% elsif @course.time > Time.now + 5.hours %>
                     <% if @course.popular <= @course.registrations.collect{|registration| (!registration.canceled? && registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} %>
-                      <a href="#" class="btn btn-green btn-lg btn-block hover-effect" disabled="disabled">
+                      <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
                         <span><%= t('registration.full') %></span>
                       </a>
                     <% elsif current_user && @registration.id && @registration.payment %>
-                      <button type="submit" class="btn btn-green btn-lg btn-block hover-effect">
+                      <button type="submit" class="btn btn-orange btn-lg btn-block hover-effect">
                         <span><%= t('had_registered') %></span>
                       </button>
                     <% else %>
-                      <button type="submit" class="btn btn-green btn-lg btn-block hover-effect">
+                      <button type="submit" class="btn btn-orange btn-lg btn-block hover-effect">
                         <i class="fa fa-edit"></i>
                         <span><%= t('register') %></span>
                       </button>
                     <% end %>
                   <% else %>
-                    <a href="#" class="btn btn-green btn-lg btn-block hover-effect" disabled="disabled">
+                    <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
                       <span><%= t('course.past') %></span>
                     </a>
                   <% end %>
