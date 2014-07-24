@@ -145,7 +145,7 @@
         convertPlayer(this);
     });
 
-    // $('.marquee').marquee(500, 5000);
+    $('.marquee').marquee(500, 5000);
     $('.wizard').wizard();
     $('.nested-field').each(function(index){
         $(this).nestedFields({
