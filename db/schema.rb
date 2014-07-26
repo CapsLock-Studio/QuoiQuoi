@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723161645) do
+ActiveRecord::Schema.define(version: 20140726144357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -877,6 +877,27 @@ ActiveRecord::Schema.define(version: 20140723161645) do
   end
 
   add_index "top_products", ["product_id"], name: "index_top_products_on_product_id", using: :btree
+
+  create_table "top_translates", force: true do |t|
+    t.integer  "top_id"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+  end
+
+  add_index "top_translates", ["locale_id"], name: "index_top_translates_on_locale_id", using: :btree
+  add_index "top_translates", ["top_id"], name: "index_top_translates_on_top_id", using: :btree
+
+  create_table "tops", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sort"
+  end
 
   create_table "travel_informations", force: true do |t|
     t.integer  "area_id"

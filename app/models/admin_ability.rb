@@ -48,6 +48,7 @@ class AdminAbility
       can :manage, Admin::Area
       can :manage, Admin::Faq
       can :manage, Admin::ProductType
+      can :manage, Admin::Top
     end
 
     # for development

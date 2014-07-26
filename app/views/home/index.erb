@@ -24,7 +24,7 @@
           <% @broadcasts.each do |broadcast| %>
             <% translate = broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first %>
             <li>
-              <%= link_to translate.link do %>
+              <%= link_to translate.link, target: '_blank' do %>
                 <h4 class="hover-effect">
                   <i class="fa fa-bullhorn fa-fw"></i>
                   <%= translate.notification %>
@@ -41,10 +41,10 @@
       <!-- Recent Works -->
       <div class="margin-bottom-20 recommend">
         <ul id="list" class="bxslider1">
-          <% @products.each do |product| %>
+          <% @tops.each do |top| %>
             <li>
-              <%= link_to_with_product_type product do %>
-                <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+              <%= link_to top[:link] do %>
+                <%= image_tag top[:image], class: 'img-responsive' %>
               <% end %>
             </li>
           <% end %>
@@ -52,11 +52,11 @@
       </div><!--/row-->
       <!-- End Recent Works -->
     </div>
-    <% @products.each do |product| %>
+    <% @tops.each do |top| %>
       <div class="col-sm-6 col-xs-12 hidden-md hidden-lg">
         <div class="well-sm">
-          <%= link_to_with_product_type product do %>
-            <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+          <%= link_to top[:link] do %>
+            <%= image_tag top[:image], class: 'img-responsive' %>
           <% end %>
         </div>
       </div>

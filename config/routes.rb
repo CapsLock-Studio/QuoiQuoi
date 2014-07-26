@@ -148,6 +148,11 @@ QuoiQuoi::Application.routes.draw do
       resources :instructions
     end
     resources :order_information
+
+    resources :tops do
+      put 'sort', on: :collection
+    end
+
     resources :slides do
       put 'sort', on: :collection
     end
