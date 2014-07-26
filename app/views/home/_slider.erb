@@ -10,7 +10,7 @@
       <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
       <div class="item <%= 'active' if index == 0 %>">
         <% if translate.link %>
-          <%= link_to translate.link do %>
+          <%= link_to translate.lin do %>
             <%= image_tag slide.image.url(:large), class: 'img-responsive', style: 'width:100%;' %>
           <% end %>
         <% else %>
