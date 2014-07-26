@@ -24,7 +24,7 @@
           <% @broadcasts.each do |broadcast| %>
             <% translate = broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first %>
             <li>
-              <%= link_to translate.link, target: '_blank' do %>
+              <%= link_to translate.link do %>
                 <h4 class="hover-effect">
                   <i class="fa fa-bullhorn fa-fw"></i>
                   <%= translate.notification %>
