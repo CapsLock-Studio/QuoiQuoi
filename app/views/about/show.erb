@@ -17,7 +17,7 @@
                   <li>
                     <a>
                       <div class="thumbnail-style">
-                        <%= image_tag designer.photo.url(:medium), class: 'img-responsive' %>
+                        <%= image_tag designer.photo.url(:large), class: 'img-responsive' %>
                         <% designer.designer_translates.where(locale_id: session[:locale_id]).each do |translate| %>
                           <h3><a><%= translate.name %></a> <small><%= translate.position %></small></h3>
                           <%= simple_format translate.introduction %>
