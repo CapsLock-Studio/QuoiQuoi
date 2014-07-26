@@ -323,13 +323,13 @@
         <% end %>
       <% end %>
 
-      <%= nav_item_with_resource('#', {rule: /#{admin_slides_path}.*/}, Admin::Slide) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:slides) or is_in(:broadcasts) %>" href="#">
+      <%= nav_item_with_resource('#', {rule: /#{admin_slides_path}.*|#{admin_broadcasts_path}.*|#{admin_tops_path}.*/}, Admin::Slide) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:slides) or is_in(:broadcasts) or is_in(:tops) %>" href="#">
           <i class="icon-home"></i>
           <span>首頁管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:slides) or is_in(:broadcasts) %>">
+        <ul class="nav <%= 'in' if is_in(:slides) or is_in(:broadcasts) or is_in(:tops) %>">
           <%= nav_item_with_resource(admin_slides_path, {rule: /#{admin_slides_path}.*/}, Admin::Slide) do %>
             <%= link_to(admin_slides_path) do %>
               <i class="icon-picture"></i>
@@ -340,6 +340,13 @@
             <%= link_to(admin_broadcasts_path) do %>
               <i class="icon-bullhorn"></i>
               <span>快訊管理</span>
+            <% end %>
+          <% end %>
+
+          <%= nav_item_with_resource(admin_tops_path, {rule: /#{admin_tops_path}.*/}, Admin::Top) do %>
+            <%= link_to(admin_tops_path) do %>
+              <i class="icon-picture"></i>
+              <span>焦點管理</span>
             <% end %>
           <% end %>
         </ul>

@@ -271,7 +271,7 @@ zh-TW:
   links: '連結'
   facebook: '臉書'
   weibo: '微博'
-  search: '查詢商店、手作教室'
+  search: '查詢'
   search_result: '%{quantity} 個查詢結果'
   nav_item: '分類項目'
   account: '我的帳號'
@@ -449,6 +449,7 @@ zh-TW:
   terms_of_service: '服務條款'
   reference_price: '參考價目表'
   remarks: '備註'
+  others: '其他'
 
   mailer:
     success: '送信成功'

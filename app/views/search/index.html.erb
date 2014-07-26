@@ -104,4 +104,86 @@
       </div>
     <% end %>
   </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="headline">
+            <h4>
+              <%= t('others') %>
+              <small><%= t('search_result', quantity: @articles.length + @travel_informations.length) %></small>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if @travel_informations.length > 0 %>
+      <div class="col-xs-12">
+        <% @travel_informations.each_with_index do |travel_information, index| %>
+          <div class="article">
+            <div class="row">
+              <div class="col-sm-2 col-xs-12">
+                <%= link_to area_travel_information_path(travel_information.area_id, travel_information) do %>
+                  <%= image_tag travel_information.image.url(:medium), class: 'img-responsive' %>
+                <% end %>
+              </div>
+              <div class="col-sm-10 col-xs-12">
+                <div class="article-body">
+                  <%= link_to area_travel_information_path(travel_information.area_id, travel_information) do %>
+                    <h4>
+                      <%= truncate(travel_information.title, length: 42) %>
+                      <small class="pull-right">
+                        <i class="fa fa-clock-o fa-fw"></i>
+                        <%= travel_information.created_at.strftime('%Y/%m/%d') %>
+                      </small>
+                    </h4>
+                  <% end %>
+                  <p class="text-muted">
+                    <%= truncate(strip_tags(travel_information.content), length: 110) %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% if index == 0 %>
+              <hr/>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% elsif @articles.length > 0 %>
+      <div class="col-xs-12">
+        <% @articles.each_with_index do |article, index| %>
+          <div class="article">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="article-body">
+                  <%= link_to article_path(article) do %>
+                    <h4>
+                      <%= truncate(article.title, length: 42) %>
+                      <small class="pull-right">
+                        <i class="fa fa-clock-o fa-fw"></i>
+                        <%= article.created_at.strftime('%Y/%m/%d') %>
+                      </small>
+                    </h4>
+                  <% end %>
+                  <p class="text-muted">
+                    <%= truncate(strip_tags(article.content), length: 110) %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% if index == 0 %>
+              <hr/>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="col-xs-12">
+        <h4 class="text-center">
+          <i class="fa fa-exclamation"></i><%= t('no_data') %>
+        </h4>
+      </div>
+    <% end %>
+  </div>
 </div>

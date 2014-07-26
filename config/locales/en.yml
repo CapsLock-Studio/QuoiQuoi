@@ -240,7 +240,7 @@ en:
   links: 'Links'
   facebook: 'Facebook'
   weibo: 'Weibo'
-  search: 'Shop & Course Search'
+  search: 'Search'
   search_result: '%{quantity} results'
   nav_item: 'Subitem'
   account: 'Account'
@@ -422,6 +422,7 @@ en:
   terms_of_service: 'Terms of service'
   reference_price: 'Reference price list'
   remarks: 'Remarks'
+  others: 'Others'
 
   mailer:
     success: 'Send mail success.'
