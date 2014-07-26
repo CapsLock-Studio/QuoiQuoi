@@ -43,7 +43,7 @@ class UserGiftMailer < ActionMailer::Base
     mail(to: email, subject: t('mailer.subject_for_send_gift_card'))
   end
 
-  def used_remind(user_gift_serial_id, email)
+  def used_remind(user_gift_serial_id)
     @user_gift_serial = UserGiftSerial.find(user_gift_serial_id)
     @user_gift = @user_gift_serial.user_gift
     I18n.locale = Locale.find(@user_gift.locale_id).lang
