@@ -1,22 +1,20 @@
-<% if @contact %>
-  <ul class="list-unstyled who">
-    <li>
-      <i class="fa fa-user fa-fw"></i>
-      <span><%= t('quoiquoi') %></span>
-    </li>
-    <li>
-      <i class="fa fa-home fa-fw"></i>
-      <span><%= @contact.address %></span>
-    </li>
-    <li>
-      <%= mail_to @contact.email do %>
-        <i class="fa fa-envelope-o fa-fw"></i>
-        <span><%= @contact.email %></span>
-      <% end %>
-    </li>
-    <li>
-      <i class="fa fa-phone fa-fw"></i>
-      <span><%= @contact.phone %></span>
-    </li>
-  </ul>
-<% end %>
+<ul class="list-unstyled who">
+  <li>
+    <i class="fa fa-user fa-fw"></i>
+    <span><%= t('quoiquoi') %></span>
+  </li>
+  <li>
+    <i class="fa fa-home fa-fw"></i>
+    <span><%= $redis.get("about:locale:#{session[:locale_id]}:address") %></span>
+  </li>
+  <li>
+    <%= mail_to $redis.get("about:locale:#{session[:locale_id]}:email") do %>
+      <i class="fa fa-envelope-o fa-fw"></i>
+      <span><%= $redis.get("about:locale:#{session[:locale_id]}:email") %></span>
+    <% end %>
+  </li>
+  <li>
+    <i class="fa fa-phone fa-fw"></i>
+    <span><%= $redis.get("about:locale:#{session[:locale_id]}:phone") %></span>
+  </li>
+</ul>

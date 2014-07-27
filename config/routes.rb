@@ -181,6 +181,8 @@ QuoiQuoi::Application.routes.draw do
         get :check
       end
     end
+
+    resource :system, controller: :system
   end
 
   root to: 'home#index'
