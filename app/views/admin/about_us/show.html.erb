@@ -8,8 +8,6 @@
       <div class="btn-group">
         <% if @contact %>
           <%= link_to '修改店家聯絡資訊', edit_admin_about_us_path, class: 'btn btn-primary' %>
-        <% else %>
-          <%= link_to '新增店家聯絡資訊', new_admin_about_us_path, class: 'btn btn-info' %>
         <% end %>
       </div>
     </div>
@@ -27,61 +25,54 @@
           </div>
         </div>
         <div class="box-content box-padding">
-          <% if @contact %>
-            <div class="row">
-              <% @contact.contact_translates.each do |translate| %>
-                <div class="col-sm-6">
-                  <div class="box">
-                    <div class="box-header">
-                      <div class="title">
-                        <%= translate.locale.name %>
-                      </div>
-                      <div class="actions">
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          <div class="row">
+            <% Locale.all.order(id: :desc).each_with_index do |locale, index| %>
+              <div class="col-sm-6">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="title">
+                      <%= locale.name %>
+                    </div>
+                    <div class="actions">
+                      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <div class="controls">
+                        <%= text_field_tag :email, $redis.get("about:locale:#{locale.id}:email"), class: 'form-control', disabled: 'disabled' %>
                       </div>
                     </div>
-                    <div class="box-content">
-                      <div class="form-group">
-                        <label>Email</label>
-                        <div class="controls">
-                          <%= text_field_tag :email, translate.email, class: 'form-control', disabled: 'disabled' %>
-                        </div>
+                    <div class="form-group">
+                      <label>電話</label>
+                      <div class="controls">
+                        <%= text_field_tag :phone, $redis.get("about:locale:#{locale.id}:phone"), class: 'form-control', disabled: 'disabled' %>
                       </div>
-                      <div class="form-group">
-                        <label>電話</label>
-                        <div class="controls">
-                          <%= text_field_tag :phone, translate.phone, class: 'form-control', disabled: 'disabled' %>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>店鋪位置</label>
+                      <div class="controls">
+                        <%= text_area_tag :address, $redis.get("about:locale:#{locale.id}:address"), class: 'form-control autosize', disabled: 'disabled' %>
                       </div>
-                      <div class="form-group">
-                        <label>店鋪位置</label>
-                        <div class="controls">
-                          <%= text_area_tag :address, translate.address, class: 'form-control autosize', disabled: 'disabled' %>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>營業時間</label>
+                      <div class="controls">
+                        <%= text_area_tag :business_hour, $redis.get("about:locale:#{locale.id}:business_hour"), class: 'form-control autosize', disabled: 'disabled' %>
                       </div>
-                      <div class="form-group">
-                        <label>營業時間</label>
-                        <div class="controls">
-                          <%= text_area_tag :business_hour, translate.business_hour, class: 'form-control autosize', disabled: 'disabled' %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>介紹文字</label>
-                        <div class="controls">
-                          <%= text_area_tag :introduction, translate.introduction, class: 'form-control autosize', disabled: 'disabled' %>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>介紹文字</label>
+                      <div class="controls">
+                        <%= text_area_tag :introduction, $redis.get("about:locale:#{locale.id}:introduction"), class: 'form-control autosize', disabled: 'disabled' %>
                       </div>
                     </div>
                   </div>
                 </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="alert alert-info alert-dismissable">
-              <a class="close" data-dismiss="alert" href="#">×</a>
-              目前沒有設定聯絡資訊，請按下 <%= link_to '新增', new_admin_about_us_path %> 設定聯絡資訊
-            </div>
-          <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

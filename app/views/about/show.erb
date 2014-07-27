@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <%= render 'carousel' %>
           <div class="title-box">
-            <%= simple_format(@contact.introduction) %>
+            <%= simple_format($redis.get("about:locale:#{session[:locale_id]}:introduction")) %>
           </div>
         </div>
         <% if @designers.length > 0 %>
@@ -95,7 +95,7 @@
           <div class="headline">
             <h4><%= t('business_hours') %></h4>
           </div>
-          <%= simple_format(@contact.business_hour) %>
+          <%= simple_format($redis.get("about:locale:#{session[:locale_id]}:business_hour")) %>
         </div>
         <div class="col-md-12 margin-bottom-40">
           <div class="headline">

@@ -405,13 +405,13 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource('#', {rule: /#{admin_introduce_image_slides_path}.*|#{admin_introduce_youtubes_path}.*/}, Admin::IntroduceImageSlide) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:introduce_image_slides) or is_in(:introduce_youtubes) or is_in(:questions) %>" href="#">
+      <%= nav_item_with_resource('#', {rule: /#{admin_introduce_image_slides_path}.*|#{admin_introduce_youtubes_path}.*|#{admin_questions_path}.*|#{admin_about_us_path}.*/}, Admin::IntroduceImageSlide) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:introduce_image_slides) or is_in(:introduce_youtubes) or is_in(:questions) or is_in(:about_us) %>" href="#">
           <i class="icon-group"></i>
-          <span>介紹我們管理</span>
+          <span>關於我們管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:introduce_image_slides) or is_in(:introduce_youtubes) %>">
+        <ul class="nav <%= 'in' if is_in(:introduce_image_slides) or is_in(:introduce_youtubes) or is_in(:questions) or is_in(:about_us) %>">
           <%= nav_item_with_resource(nil, {rule: /#{admin_introduce_image_slides_path}.*/}, Admin::IntroduceImageSlide) do  %>
             <%= link_to admin_introduce_image_slides_path do %>
               <i class="icon-picture"></i>
@@ -430,6 +430,13 @@
               <span>FAQ管理</span>
             <% end %>
           <% end %>
+
+          <%= nav_item_with_resource(nil, {rule: /#{admin_about_us_path}.*/}, Admin) do %>
+            <%= link_to admin_about_us_path do %>
+              <i class="icon-info"></i>
+              <span>店家介紹&聯絡資訊管理</span>
+            <% end %>
+          <% end %>
         </ul>
       <% end %>
 
@@ -437,13 +444,6 @@
         <%= link_to(admin_designers_path) do %>
           <i class="icon-user"></i>
           <span>設計師介紹資料管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_about_us_path}.*/}, Admin) do %>
-        <%= link_to admin_about_us_path do %>
-          <i class="icon-info"></i>
-          <span>店家聯絡資訊管理</span>
         <% end %>
       <% end %>
 
@@ -458,6 +458,13 @@
         <%= link_to(admin_shipping_fees_path) do %>
           <i class="icon-globe"></i>
           <span>運費資訊管理</span>
+        <% end %>
+      <% end %>
+
+      <%= nav_item_with_resource(admin_system_path, {rule: /#{admin_system_path}.*/}, Admin) do %>
+        <%= link_to(admin_system_path) do %>
+          <i class="icon-gear"></i>
+          <span>系統設定</span>
         <% end %>
       <% end %>
 
