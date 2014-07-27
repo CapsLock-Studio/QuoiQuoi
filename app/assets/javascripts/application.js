@@ -191,4 +191,11 @@
             title: '布知道(quoi quoi)工作室'
         });
     }
+
+    outdatedBrowser({
+        bgColor: '#FFF'
+    });
+    $('#btnClose').on('click', function(){
+        $('#outdated').remove();
+    });
 })();
