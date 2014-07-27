@@ -9,3 +9,4 @@
 //= require unify/plugins/back-to-top/back-to-top.js
 //= require unify/plugins/bootstrap-select/bootstrap-select.min.js
 //= require unify/plugins/fuelux/wizard.js
+//= require unify/plugins/outdated-browser/outdatedBrowser.min.js
