@@ -450,6 +450,11 @@ zh-TW:
   reference_price: '參考價目表'
   remarks: '備註'
   others: '其他'
+  outdated:
+    title: '你的瀏覽器已經過時！'
+    content: '快更新你的瀏覽器以獲得正確的網頁顯示'
+    hint: '的網路使用者用這個瀏覽器'
+    get: '取得最新版本'
 
   mailer:
     success: '送信成功'
