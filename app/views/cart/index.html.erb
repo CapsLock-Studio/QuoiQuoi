@@ -40,6 +40,13 @@
                                 </strong>
                               <% end %>
                             </h5>
+                            <% options = ProductOption.where(product_id: builder.object.product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]} %>
+                            <% if options.length > 0 %>
+                              <h5 style="color:#666;">
+                                <strong><%= t('option') %></strong>
+                              </h5>
+                              <%= builder.select :product_option_id, options, {selected: builder.object.product_option_id}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                            <% end %>
                             <h5 style="color:#666;">
                               <strong><%= t('quantity') %></strong>
                             </h5>

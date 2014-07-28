@@ -18,6 +18,6 @@ class CartController < ApplicationController
 
   private
     def order_params
-      params.fetch(:order, {}).permit(:id, order_products_attributes: [:id, :quantity])
+      params.fetch(:order, {}).permit(:id, order_products_attributes: [:id, :quantity, :product_option_id])
     end
 end

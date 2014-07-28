@@ -180,6 +180,7 @@ var initOffcanvas = function(){
     });
 };
 
+// TO-DO: need to add hover change image function, however, add hover but not work well, i don't know why.
 var initChangeFocusImageShow = function() {
     $('[data-toggle="preview-change"]').on('click', function(e){
         e.preventDefault();
