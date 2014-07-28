@@ -428,6 +428,7 @@ en:
     content: 'Update your browser to view this website correctly.'
     hint: 'PEOPLE ARE USING THIS BROWSER'
     get: 'DOWNLOAD'
+  view_cart: 'View cart'
 
   mailer:
     success: 'Send mail success.'

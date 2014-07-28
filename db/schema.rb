@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726144357) do
+ActiveRecord::Schema.define(version: 20140728064637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -493,12 +493,14 @@ ActiveRecord::Schema.define(version: 20140726144357) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price",      default: 0.0
-    t.float    "discount",   default: 0.0
+    t.float    "price",             default: 0.0
+    t.float    "discount",          default: 0.0
+    t.integer  "product_option_id"
   end
 
   add_index "order_products", ["order_id"], name: "index_order_products_on_order_id", using: :btree
   add_index "order_products", ["product_id"], name: "index_order_products_on_product_id", using: :btree
+  add_index "order_products", ["product_option_id"], name: "index_order_products_on_product_option_id", using: :btree
 
   create_table "orders", force: true do |t|
     t.float    "subtotal"
@@ -596,6 +598,17 @@ ActiveRecord::Schema.define(version: 20140726144357) do
   end
 
   add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
+
+  create_table "product_options", force: true do |t|
+    t.integer  "product_id"
+    t.string   "content"
+    t.integer  "locale_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_options", ["locale_id"], name: "index_product_options_on_locale_id", using: :btree
+  add_index "product_options", ["product_id"], name: "index_product_options_on_product_id", using: :btree
 
   create_table "product_translates", force: true do |t|
     t.integer  "locale_id"

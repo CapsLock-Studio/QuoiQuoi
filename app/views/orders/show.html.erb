@@ -149,7 +149,8 @@
                               <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
                             </div>
                             <div class="col-md-10 col-sm-8 hidden-xs">
-                              <%= translate.name %>
+                              <%= translate.name %><br/>
+                              <small><%= order_product.product_option.content if order_product.product_option %></small>
                             </div>
                           </div>
                         </td>

@@ -455,6 +455,7 @@ zh-TW:
     content: '快更新你的瀏覽器以獲得正確的網頁顯示'
     hint: '的網路使用者用這個瀏覽器'
     get: '取得最新版本'
+  view_cart: '查看購物車'
 
   mailer:
     success: '送信成功'

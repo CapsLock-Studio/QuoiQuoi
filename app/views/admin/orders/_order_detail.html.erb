@@ -19,7 +19,7 @@
             <th>名稱</th>
             <th>金額</th>
             <th>客戶訂購數量</th>
-            <th>扣除訂購數量後商品剩餘數量</th>
+            <th>目前剩餘數量</th>
           </tr>
           </thead>
           <tbody>
@@ -32,7 +32,10 @@
                 <% end %>
               </td>
               <td>
-                <strong><%= translate.name %></strong>
+                <h5>
+                  <%= translate.name %><br/>
+                  <small><%= order_product.product_option.content if order_product.product_option %></small>
+                </h5>
               </td>
               <td>
                 <%= number_to_currency(order_product.price, locale: locale.lang) %>

@@ -67,12 +67,10 @@
 
                 <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
                   <%= f.hidden_field :course_id %>
-                  <% if @course.course_options.length > 0 %>
+                  <% options = CourseOption.where(course_id: @course.id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]} %>
+                  <% if options.length > 0 %>
                     <label><%= t('option') %></label>
-                    <% options = CourseOption.where(course_id: @course.id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]} %>
-                    <% if options.length > 0 %>
-                      <%= f.select :course_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
-                    <% end %>
+                    <%= f.select :course_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
                   <% end %>
 
                   <% if @course.canceled? %>

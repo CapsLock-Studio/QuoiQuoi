@@ -97,6 +97,7 @@ class Admin::ProductsController < AdminController
       params.require(:product).permit(:id, :image, :product_type_id, :quantity, :discount,
                                       product_youtubes_attributes: [:_destroy, :id, :link],
                                       product_images_attributes: [:_destroy, :id, :image],
+                                      product_options_attributes: [:_destroy, :id, :content, :locale_id],
                                       product_translates_attributes: [:id, :price, :name, :description, :locale_id],
                                       product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image,
                                                                         product_custom_item_translates_attributes: [:id, :name, :locale_id
