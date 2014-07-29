@@ -60,12 +60,12 @@
                     });
                 }
 
-//                $('.bxslider1').bxSlider({
-//                    minSlides: 3,
-//                    maxSlides: 3,
-//                    slideWidth: 360,
-//                    slideMargin: 10
-//                });
+                $('.bxslider1').bxSlider({
+                    minSlides: 3,
+                    maxSlides: 3,
+                    slideWidth: 360,
+                    slideMargin: 10
+                });
 //
 //                $('.bxslider2').bxSlider({
 //                    minSlides: 2,
