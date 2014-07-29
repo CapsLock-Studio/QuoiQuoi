@@ -76,7 +76,9 @@ class Admin::OtherProductsController < AdminController
     @product = Product.find(params[:id])
   end
   def product_params
-    params.require(:product).permit(:id, :quantity, :image, :discount, product_translates_attributes: [:id, :price, :name, :description, :locale_id],
+    params.require(:product).permit(:id, :quantity, :image, :discount,
+                                    product_options_attributes: [:_destroy, :id, :content, :locale_id],
+                                    product_translates_attributes: [:id, :price, :name, :description, :locale_id],
                                     product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image])
   end
 end
