@@ -8,12 +8,8 @@
         <div class="control-title">
           <%= t('language') %>
         </div>
-        <%= lang_nav_item('zh-TW', :div) do %>
-          <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
-        <% end %>
-        <%= lang_nav_item('en', :div) do %>
-          <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
-        <% end %>
+        <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+        <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
       </li>
       <li class="divider"></li>
       <li>
