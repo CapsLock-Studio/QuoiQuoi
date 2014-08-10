@@ -24,7 +24,7 @@
           </a>
         <% end %>
         <ul class="list-unstyled article">
-          <% type.articles.order(created_at: :desc).limit(5).each do |article| %>
+          <% type.articles.order(updated_at: :desc).limit(5).each do |article| %>
             <li>
               <%= link_to truncate(article.title, length: 22), article_path(article.id) %>
             </li>

@@ -7,7 +7,7 @@ class AreasController < ApplicationController
     add_breadcrumb t('tourist_attractions'), :areas_path
     add_breadcrumb @area.name
 
-    @articles = TravelInformation.where(area_id: params[:id]).order(created_at: :desc)
+    @articles = TravelInformation.where(area_id: params[:id]).order(updated_at: :desc)
   end
 
   private
