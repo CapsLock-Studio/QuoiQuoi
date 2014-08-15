@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12" style="margin-top: 20px;">
-      <%= simple_format $redis.get("privacy_statement:locale:#{Locale.where(id: session[:locale_id]).first.id}") %>
+      <%= simple_format $redis.get("privacy_statement:locale:#{session[:locale_id]}") %>
     </div>
   </div>
 </div>

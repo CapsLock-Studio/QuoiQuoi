@@ -180,6 +180,7 @@ var initOffcanvas = function(){
     });
 };
 
+// TO-DO: need to add hover change image function, however, add hover but not work well, i don't know why.
 var initChangeFocusImageShow = function() {
     $('[data-toggle="preview-change"]').on('click', function(e){
         e.preventDefault();
@@ -207,6 +208,38 @@ var initCartCalculate = function() {
 
         $('.total-amount').text(totalAmount.toFixed(2));
     });
+};
+
+$.fn.marquee = function(animateTime, waitTime) {
+    var marqueeBlock = $(this);
+    var marqueeHeight = marqueeBlock.height();
+    var marqueeLength = marqueeBlock.find('li').length;
+    var eachMarginTop = marqueeBlock.height();
+    var marquees = marqueeBlock.find('ul');
+    var scrollUp = function(index, end){
+        marquees.animate({
+            marginTop: eachMarginTop * (0 - index)
+        }, animateTime, function(){
+            if (index == end) {
+                index = 0;
+                marquees.css({
+                    marginTop: index
+                });
+            }
+        });
+
+        setTimeout(function(){
+            scrollUp(index + 1, end);
+        }, waitTime);
+    };
+
+    marqueeBlock.css({
+        height: marqueeHeight
+    }).addClass('active');
+
+    marquees.append(marqueeBlock.find('li:first-child').clone());
+
+    scrollUp(1, marqueeLength);
 };
 
 function setCookie(cname, cvalue, exdays) {

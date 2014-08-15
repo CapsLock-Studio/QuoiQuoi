@@ -84,29 +84,28 @@ class Admin::OrdersController < AdminController
 
   end
 
-  private
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    def set_shipping_fee
-      @shipping_fee = ShippingFeeTranslate.where(locale_id: @order.locale_id, shipping_fee_id: @order.shipping_fee_id).first
-      if @shipping_fee.free_condition && @order.subtotal > @shipping_fee.free_condition
-        @shipping_fee.fee = 0
-      end
+  def set_shipping_fee
+    @shipping_fee = ShippingFeeTranslate.where(locale_id: @order.locale_id, shipping_fee_id: @order.shipping_fee_id).first
+    if @shipping_fee.free_condition && @order.subtotal > @shipping_fee.free_condition
+      @shipping_fee.fee = 0
     end
+  end
 
-    def set_discount
-      @discount = 0
-      UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
-        @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
-      end
+  def set_discount
+    @discount = 0
+    UserGiftSerial.where(order_id: @order.id).each do |user_gift_serial|
+      @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
     end
+  end
 
-    def remove_order_dulicate
-      payments = Payment.where(order_id: @order.id).order(:created_at)
-      if payments.length > 1
-        payments.first.destroy
-      end
+  def remove_order_dulicate
+    payments = Payment.where(order_id: @order.id).order(:created_at)
+    if payments.length > 1
+      payments.first.destroy
     end
+  end
 end

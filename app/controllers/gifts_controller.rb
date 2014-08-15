@@ -3,7 +3,7 @@ class GiftsController < ApplicationController
     add_breadcrumb t('home'), root_path
     add_breadcrumb t('gift')
 
-    @gifts = Gift.all
+    @gifts = Gift.where(visible: true)
   end
 
   def show

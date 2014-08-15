@@ -44,7 +44,6 @@
                   <tr>
                     <th>圖片</th>
                     <th>敘述</th>
-                    <th>文字顯示位置</th>
                     <th>連結</th>
                     <th></th>
                   </tr>
@@ -66,14 +65,11 @@
                       </td>
                       <td>
                         <% translates.each_with_index do |translate, index| %>
-                          <%= simple_format((translate[:description].blank?? 'No Translate' : translate[:description]).gsub(/{/, '<span style="color:#F8A326">').gsub(/}/, '</span>').html_safe, {}, sanitize: false) %>
+                          <%= simple_format((translate[:description].blank?? 'No Translate' : translate[:description]), {}, sanitize: false) %>
                           <% if index != slide.slide_translates.length - 1 %>
                             <hr/>
                           <% end %>
                         <% end %>
-                      </td>
-                      <td>
-                        <%= slide.slide_position.position if slide.slide_position %>
                       </td>
                       <td>
                         <% translates.each_with_index do |translate, index| %>

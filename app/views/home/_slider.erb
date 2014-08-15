@@ -1,28 +1,34 @@
+<div class="carousel carousel-fade slide" id="home-carousel">
+  <ol class="carousel-indicators">
+    <% @slides.each_with_index do |slide, index| %>
+      <li data-target="#home-carousel" data-slide-to="index" class="<%= 'active' if index == 0 %>"></li>
+    <% end %>
+  </ol>
 
-<div class="fullwidthbanner-container">
-  <div class="fullwidthbanner">
-    <ul>
-      <% @slides.each do |slide| %>
-        <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
-        <li class="carousel-link" data-target="<%= translate.link %>" data-transition="papercut" data-slotamount="1" data-masterspeed="300" data-thumb="<%= asset_path slide.image.url(:thumb) %>">
-          <!-- THE MAIN IMAGE IN THE FOURTH SLIDE -->
-          <%= image_tag slide.image.url(:large) %>
-
-          <% descriptions = translate.description.split(/\n/) %>
-          <% descriptions.each_with_index do |description, index| %>
-            <div class="caption large_text sft hidden-xs"
-                 data-x="<%= slide.slide_position.position if slide.slide_position %>"
-                 data-y="<%= (190 + 40 * index) %>"
-                 data-speed="300"
-                 data-start="<%= (800 + 300 * index) %>"
-                 data-easing="easeOutExpo">
-              <%= description.gsub(/{/, '<span style="color:#E67E22">').gsub(/}/, '</span>').html_safe %>
-            </div>
+  <div class="carousel-inner">
+    <% @slides.each_with_index do |slide, index| %>
+      <% translate = slide.slide_translates.where(locale_id: session[:locale_id]).first %>
+      <div class="item <%= 'active' if index == 0 %>">
+        <% if translate.link %>
+          <%= link_to translate.link do %>
+            <%= image_tag slide.image.url(:large), class: 'img-responsive', style: 'width:100%;' %>
           <% end %>
-        </li>
-      <% end %>
-    </ul>
+        <% else %>
+          <%= image_tag slide.image.url(:large), class: 'img-responsive', style: 'width:100%;' %>
+        <% end %>
+        <h4 style="display:none;">
+          <p><%= translate.description %></p>
+        </h4>
+      </div>
+    <% end %>
+  </div>
 
-    <div class="tp-bannertimer tp-bottom"></div>
+  <div class="carousel-arrow">
+    <a data-slide="prev" href="#home-carousel" class="left carousel-control">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a data-slide="next" href="#home-carousel" class="right carousel-control">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
   </div>
 </div>

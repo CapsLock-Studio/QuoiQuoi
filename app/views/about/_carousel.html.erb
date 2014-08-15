@@ -3,7 +3,7 @@
     <% @introduce_image_slides.each_with_index do |introduce_image_slide, index| %>
       <div class="item <%= 'active' if index == 0 %>">
         <%= link_to introduce_image_slide.image.url(:large), target: '_blank' do %>
-          <%= image_tag introduce_image_slide.image.url(:medium), class: 'img-responsive', style: 'width:100%;' %>
+          <%= image_tag introduce_image_slide.image.url(:large), class: 'img-responsive', style: 'width:100%;' %>
         <% end %>
       </div>
     <% end %>

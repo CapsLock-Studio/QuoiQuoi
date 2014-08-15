@@ -127,7 +127,7 @@ class UserGiftsController < ApplicationController
             @user_gift_serial.email = discount_item.email
           end
 
-          UserGiftMailer.used_remind(@user_gift_serial.user_gift_id).deliver
+          UserGiftMailer.used_remind(@user_gift_serial.id).deliver
 
           @user_gift_serial.registration_id = params[:registration_id]
 

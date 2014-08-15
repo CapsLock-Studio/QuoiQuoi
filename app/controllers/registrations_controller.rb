@@ -104,6 +104,13 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('payment')
 
     @registration = Registration.find(params[:id])
+
+    if @registration.payment && @registration.payment.completed?
+      redirect_to registrations_path
+    elsif @registration.payment
+      @registration.payment.destroy
+    end
+
     @payment = @registration.build_payment
   end
 

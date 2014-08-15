@@ -1,0 +1,96 @@
+<%= form_tag sort_admin_tops_path, method: :put do %>
+  <div class="col-xs-12">
+    <div class="page-header page-header-with-buttons">
+      <h1 class="pull-left">
+        <i class="icon-bullhorn"></i>
+        <span>焦點管理</span>
+      </h1>
+      <div class="pull-right">
+        <div class="btn-group">
+          <div class="btn-toolbar">
+            <%= submit_tag '儲存順序', class: 'btn' %>
+            <%= link_to '新增焦點', new_admin_top_path, class: 'btn btn-info' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <% if !params[:sorted].nil? and params[:sorted] %>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Successed!</strong> 修改順序成功
+          </div>
+        <% end %>
+        <% if !params[:sorted].nil? and !params[:sorted] %>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Update Failed!</strong> 修改順序失敗，請聯絡程式維護者
+          </div>
+        <% end %>
+        <% if params[:sorted].nil? %>
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            焦點選定最多顯示六個, 不足六個將以 <strong>最新產品 > 最新課程</strong> 的順序填上
+          </div>
+        <% end %>
+        <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+          <div class="box-header sea-blue-background">
+            <div class="title">焦點列表</div>
+            <div class="actions">
+              <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+              <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+            </div>
+          </div>
+          <div class="box-content box-no-padding">
+            <div class="responsive-table">
+              <div class="scrollable-table sortable-container">
+                <table class="table" style="margin-bottom:0;">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody id="broadcast-sortable">
+                  <% @tops.each do |top| %>
+                    <% translates = top.top_translates.collect do |translate|
+                      {link: translate.link, locale: translate.locale.lang, lang: translate.locale.name}
+                    end %>
+                    <tr>
+                      <td>
+                        <%= image_tag top.image.url(:medium), style: 'width: 300px;' %>
+                        <%= fields_for 'tops[]', top do |f| %>
+                          <%= f.hidden_field :sort, class: 'sort-item' %>
+                          <%= f.hidden_field :id %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <% translates.each_with_index do |translate, index| %>
+                          <%= link_to "#{translate[:lang]}連結 - #{translate[:link]}", translate[:link] %>
+                          <br/>
+                        <% end %>
+                      </td>
+                      <td>
+                        <div class='text-right'>
+                          <%= link_to(edit_admin_top_path(top), class: 'btn btn-md') do %>
+                            <i class='icon-pencil'></i>
+                          <% end %>
+                          <%= link_to(admin_top_path(top), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                            <i class='icon-remove'></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

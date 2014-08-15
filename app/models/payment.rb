@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to :user
   belongs_to :order
-  belongs_to :registration, dependent: :destroy
+  belongs_to :registration
   belongs_to :user_gift
 
   validates :token, uniqueness: true
@@ -18,6 +18,7 @@ class Payment < ActiveRecord::Base
     )
     self.amount = amount
     self.token = response.token
+    self.currency = currency
 
     self.save!
 

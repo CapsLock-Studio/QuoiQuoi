@@ -9,14 +9,14 @@
     </div>
   </div>
   <div class="box-content">
-    <%= form_for(@contact, url: admin_about_us_path, html: { class: 'form validate-form' }) do |f| %>
+    <%= form_tag(admin_about_us_path, method: :put, html: { class: 'form validate-form' }) do %>
       <div class="row">
-        <%= f.fields_for :contact_translates do |builder| %>
+        <% Locale.all.order(id: :desc).each_with_index do |locale, index| %>
           <div class="col-sm-6">
             <div class="box">
               <div class="box-header">
                 <div class="title">
-                  <%= @contact.contact_translates[builder.index].locale.name %>
+                  <%= locale.name %>
                   <small style="margin-left:10px;">
                     <span class="label label-danger">不可留空</span>
                   </small>
@@ -27,38 +27,40 @@
               </div>
               <div class="box-content">
                 <div class="form-group">
-                  <%= builder.label :email, 'Email' %>
+                  <label>Email</label>
                   <div class="controls">
-                    <%= builder.text_field :email, class: 'form-control',
+                    <%= text_field_tag "about[#{index}][email]", $redis.get("about:locale:#{locale.id}:email"), class: 'form-control',
                                            placeholder: '請輸入Email', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :phone, '電話' %>
+                  <label>電話</label>
                   <div class="controls">
-                    <%= builder.text_field :phone, class: 'form-control', placeholder: '請輸入電話號碼',
-                                           data: {'rule-required' => true} %>
+                    <%= text_field_tag "about[#{index}][phone]", $redis.get("about:locale:#{locale.id}:phone"), class: 'form-control',
+                                       placeholder: '請輸入電話', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :address, '地址' %>
+                  <label>地址</label>
                   <div class="controls">
-                    <%= builder.text_area :address, class: 'form-control', placeholder: '請輸入店鋪位置', data: {'rule-required' => true} %>
+                    <%= text_area_tag "about[#{index}][address]", $redis.get("about:locale:#{locale.id}:address"), class: 'form-control',
+                                      placeholder: '請輸入店鋪位置', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :business_hour, '營業時間' %>
+                  <label>營業時間</label>
                   <div class="controls">
-                    <%= builder.text_area :business_hour, class: 'form-control autosize', rows: 3, placeholder: '請輸入營業時間', data: {'rule-required' => true} %>
+                    <%= text_area_tag "about[#{index}][business_hour]", $redis.get("about:locale:#{locale.id}:business_hour"), class: 'form-control autosize',
+                                      rows: 3, placeholder: '請輸入營業時間', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :introduction, '介紹文字' %>
+                  <label>介紹文字</label>
                   <div class="controls">
-                    <%= builder.text_area :introduction, class: 'form-control autosize', row: 6, placeholder: '請簡單介紹QuoiQuoi', data: {'rule-required' => true} %>
+                    <%= text_area_tag "about[#{index}][introduction]", $redis.get("about:locale:#{locale.id}:introduction"), class: 'form-control autosize', row: 6, placeholder: '請簡單介紹QuoiQuoi', data: {'rule-required' => true} %>
                   </div>
                 </div>
-                <%= builder.hidden_field :locale_id %>
+                <%= hidden_field_tag "about[#{index}][locale_id]", locale.id %>
               </div>
             </div>
           </div>
@@ -68,10 +70,10 @@
         <div class="col-sm-12">
           <div class="pull-right">
             <%= link_to '取消', admin_about_us_path, class: 'btn btn-lg' %>
-            <%= f.button(class: 'btn btn-primary btn-lg') do %>
+            <button type="submit" class="btn btn-primary btn-lg">
               <i class="icon-save"></i>
               儲存
-            <% end %>
+            </button>
           </div>
         </div>
       </div>

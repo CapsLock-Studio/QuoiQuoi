@@ -271,7 +271,7 @@ zh-TW:
   links: '連結'
   facebook: '臉書'
   weibo: '微博'
-  search: '查詢商店、手作教室'
+  search: '查詢'
   search_result: '%{quantity} 個查詢結果'
   nav_item: '分類項目'
   account: '我的帳號'
@@ -279,6 +279,7 @@ zh-TW:
   profile_management: '個人資料管理'
   build_time: '建立時間'
   customize: '現貨修改'
+  not_for_sale: '商品已下架'
   personalize: '量身訂製手作包'
   personalize_s: '量身訂製'
   home: '首頁'
@@ -446,6 +447,15 @@ zh-TW:
   mended: '修改'
   privacy_statement: '隱私權政策'
   terms_of_service: '服務條款'
+  reference_price: '參考價目表'
+  remarks: '備註'
+  others: '其他'
+  outdated:
+    title: '你的瀏覽器已經過時！'
+    content: '快更新你的瀏覽器以獲得正確的網頁顯示'
+    hint: '的網路使用者用這個瀏覽器'
+    get: '取得最新版本'
+  view_cart: '查看購物車'
 
   mailer:
     success: '送信成功'

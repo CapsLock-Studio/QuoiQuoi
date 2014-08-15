@@ -2,7 +2,7 @@
     var App = function () {
         function handleBootstrap() {
             $('.carousel').carousel({
-                interval: 15000,
+                interval: 7000,
                 pause: 'hover'
             });
             $('.tooltips').tooltip();
@@ -44,12 +44,21 @@
             },
 
             initBxSlider: function () {
-                $('.bxslider').bxSlider({
-                    minSlides: 4,
-                    maxSlides: 4,
-                    slideWidth: 360,
-                    slideMargin: 10
-                });
+                if (shown == 'true' || !window.matchMedia || (window.matchMedia("(max-width: 767px)").matches)) {
+                    $('.bxslider').bxSlider({
+                        minSlides: 2,
+                        maxSlides: 2,
+                        slideWidth: 360,
+                        slideMargin: 10
+                    });
+                } else {
+                    $('.bxslider').bxSlider({
+                        minSlides: 4,
+                        maxSlides: 4,
+                        slideWidth: 360,
+                        slideMargin: 10
+                    });
+                }
 
                 $('.bxslider1').bxSlider({
                     minSlides: 3,
@@ -57,13 +66,13 @@
                     slideWidth: 360,
                     slideMargin: 10
                 });
-
-                $('.bxslider2').bxSlider({
-                    minSlides: 2,
-                    maxSlides: 2,
-                    slideWidth: 360,
-                    slideMargin: 10
-                });
+//
+//                $('.bxslider2').bxSlider({
+//                    minSlides: 2,
+//                    maxSlides: 2,
+//                    slideWidth: 360,
+//                    slideMargin: 10
+//                });
             }
 
         };
@@ -100,7 +109,6 @@
         });
 
     App.init();
-    Index.initRevolutionSlider();
     App.initFancybox();
     App.initBxSlider();
 
@@ -112,6 +120,7 @@
     initToggleSearchGiftForm();
     initCartCalculate();
     scrolltotop.init();
+
     var calendar = iniCalendarModel();
 
     $('.carousel-link').on('click', function(e) {
@@ -141,26 +150,17 @@
         priceTarget.text(((parseInt(priceTarget.data('price'), 10) * parseInt($(this).val(), 10)) + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
     });
 
-    $('#flexHome').flexslider({
-        animation: "slide",
-        controlNav:false,
-        directionNav:false,
-        touch: true,
-        direction: "vertical"
-    });
-
-    $('#flexHome2').flexslider({
-        animation: "slide",
-        controlNav:false,
-        directionNav:false,
-        touch: true,
-        direction: "vertical"
-    });
-
     $('.youtube-video').on('click', function(){
         convertPlayer(this);
     });
 
+    var marquee = $('#marquee');
+    if (marquee.length > 0) {
+        // start at 5 seconds after
+        setTimeout(function(){
+            marquee.marquee(500, 5000);
+        }, 5000);
+    }
     $('.wizard').wizard();
     $('.nested-field').each(function(index){
         $(this).nestedFields({
@@ -200,4 +200,11 @@
             title: '布知道(quoi quoi)工作室'
         });
     }
+
+    outdatedBrowser({
+        bgColor: '#FFF'
+    });
+    $('#btnClose').on('click', function(){
+        $('#outdated').remove();
+    });
 })();

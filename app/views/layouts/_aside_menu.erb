@@ -41,6 +41,7 @@
                     <%= translate.name %>
                   </h4>
                   <h5 class="text-muted"><%= "#{number_to_currency(order_product.price)} * #{order_product.quantity}" %></h5>
+                  <h5><%= order_product.product_option.content if order_product.product_option %></h5>
                 </div>
               </div>
             <% end %>
@@ -67,7 +68,7 @@
                 <h4 class="text-right margin-bottom-20">
                   <%= t('total_amount') %>: <%= number_to_currency(subtotal) %>
                 </h4>
-                <%= link_to t('check_out'), cart_path, class: 'btn btn-u-orange btn-block btn-lg hover-effect navbar-toggle-aside-menu', style: 'color:#FFF;' %>
+                <%= link_to t('view_cart'), cart_path, class: 'btn btn-orange btn-block btn-lg hover-effect navbar-toggle-aside-menu', style: 'color:#FFF;' %>
               </div>
             </div>
           </div>

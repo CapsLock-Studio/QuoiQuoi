@@ -26,6 +26,11 @@ QuoiQuoi::Application.routes.draw do
     resources :article_images
     resources :article_types
     resources :products do
+      member do
+        put :visible
+        patch :visible
+      end
+
       resources :product_custom_items
     end
 
@@ -33,7 +38,12 @@ QuoiQuoi::Application.routes.draw do
     resources :questions
 
     resources :product_types
-    resources :courses
+    resources :courses do
+      member do
+        put :visible
+        patch :visible
+      end
+    end
     resources :course_registrations do
       member do
         get :cancel, action: :cancel_form
@@ -63,7 +73,12 @@ QuoiQuoi::Application.routes.draw do
     resources :travel_photos
     resources :areas
 
-    resources :other_products
+    resources :other_products do
+      member do
+        put :visible
+        patch :visible
+      end
+    end
     resources :designers
     resources :rent_infos
     resources :rent_info_images
@@ -133,6 +148,11 @@ QuoiQuoi::Application.routes.draw do
       resources :instructions
     end
     resources :order_information
+
+    resources :tops do
+      put 'sort', on: :collection
+    end
+
     resources :slides do
       put 'sort', on: :collection
     end
@@ -146,7 +166,12 @@ QuoiQuoi::Application.routes.draw do
       resources :messages
     end
 
-    resources :gifts
+    resources :gifts do
+      member do
+        put :visible
+        patch :visible
+      end
+    end
     resources :user_gifts do
       member do
         get :check, action: :check_show
@@ -156,6 +181,8 @@ QuoiQuoi::Application.routes.draw do
         get :check
       end
     end
+
+    resource :system, controller: :system
   end
 
   root to: 'home#index'

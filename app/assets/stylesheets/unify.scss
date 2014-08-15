@@ -7,8 +7,6 @@
 
 @import 'flatty/plugins/fullcalendar/fullcalendar';
 
-@import 'unify/jquery/jquery_ui';
-
 @import 'unify/responsive';
 
 @import 'unify/style';
@@ -25,6 +23,18 @@
 
 @import 'unify/asside_menu';
 @import 'unify/offcanvas';
+
+
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -ms-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+
+$colorsHexes: #EC8FC4, #6FDFBB, #F38B2F, #74C2FF;
+$colorsNames: 'pink', 'green', 'orange', 'blue';
 
 // override font size start
 html,
@@ -860,5 +870,100 @@ a[data-toggle=offcanvas] {
 .list-unstyled {
   li:not(:last-child) {
     margin-bottom: 3px;
+  }
+}
+
+// Fade transition for carousel items
+.carousel {
+  .carousel-control {
+    background-image: none;
+    visibility: hidden;
+  }
+
+  &:hover .carousel-control {
+    visibility: visible;
+    color: #FFF;
+  }
+
+  .carousel-fade{
+    .carousel-inner .item {
+      opacity: 0;
+      @include transition(opacity, 0.4s, ease-in-out);
+    }
+    .carousel-inner .active {
+      opacity: 1;
+    }
+    .carousel-inner .active.left, .carousel-inner .active.right {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+    .carousel-inner .next.left, .carousel-inner .prev.right {
+      opacity: 1;
+    }
+    .carousel-control {
+      z-index: 2;
+    }
+  }
+
+  &:hover .carousel-indicators li {
+    visibility: visible;
+  }
+  .carousel-indicators li  {
+    border-radius: 6px !important;
+    visibility: hidden;
+  }
+}
+
+.carousel-control .icon-next, .carousel-control .glyphicon-chevron-right {
+  right: 25%;
+}
+
+.carousel-control .icon-next, .carousel-control .glyphicon-chevron-left {
+  left: 25%;
+}
+
+@for $i from 1 through length($colorsNames) {
+  .btn-#{nth($colorsNames, $i)} {
+    background-color: nth($colorsHexes, $i);
+    color: #FFF;
+    border: none;
+
+    &:hover {
+      background-color: darken(nth($colorsHexes, $i), 10%);
+      color: #FFF;
+    }
+  }
+}
+
+.marquee {
+  margin-bottom: 5px;
+
+  li {
+    padding: 5px;
+  }
+
+  ul {
+    margin: 0;
+  }
+
+  h4 {
+    margin: 0;
+  }
+
+  .list-unstyled {
+    li:not(:last-child) {
+      margin-bottom: 0px;
+    }
+  }
+
+  &.active {
+    overflow: hidden;
+  }
+
+  &:not(.active) {
+    li:not(:first-child) {
+      display: none;
+    }
   }
 }

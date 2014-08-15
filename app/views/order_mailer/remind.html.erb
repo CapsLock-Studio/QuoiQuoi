@@ -10,7 +10,7 @@
   <%= order_url(@order) %><br/>
   <%= t('mailer.elector') %>
 </p>
-------------------------------------------------------------------------------------------------<br/>
+<hr>
 <%= t('order.no_s') %>&nbsp;P<%= @order.id %>
 <h4><%= t('product_information') %></h4>
 <% if @order.order_products.length > 0 %>
@@ -39,7 +39,8 @@
         </td>
         <td>
           <h5>
-            <%= translate.name %>
+            <%= translate.name %><br/>
+            <small><%= order_product.product_option.content if order_product.product_option %></small>
           </h5>
         </td>
         <td>
@@ -141,35 +142,37 @@
     <% end %>
   </table>
 <% end %>
-<h4><%= t('payment_information') %></h4>
-<table>
-  <tr>
-    <th>
-      <%= t('mean') %>
-    </th>
-    <th>
-      <%= t('time') %>
-    </th>
-    <th>
-      <%= t('amount') %>
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <% if @order.payment.wait? %>
-        <%= t('remittance') %>
-      <% else %>
-        Paypal
-      <% end %>
-    </td>
-    <td>
-      <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
-    </td>
-    <td>
-      <%= number_to_currency(@order.payment.amount) %>
-    </td>
-  </tr>
-</table>
+<% if @order.payment.amount != 0 %>
+  <h4><%= t('payment_information') %></h4>
+  <table>
+    <tr>
+      <th>
+        <%= t('mean') %>
+      </th>
+      <th>
+        <%= t('time') %>
+      </th>
+      <th>
+        <%= t('amount') %>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <% if @order.payment.wait? %>
+          <%= t('remittance') %>
+        <% else %>
+          Paypal
+        <% end %>
+      </td>
+      <td>
+        <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
+      </td>
+      <td>
+        <%= number_to_currency(@order.payment.amount) %>
+      </td>
+    </tr>
+  </table>
+<% end %>
 <h4><%= t('shipping_information') %></h4>
 <table>
   <tr>
@@ -202,7 +205,7 @@
   <%= t('quoiquoi_address') %><br/>
   <%= t('quoiquoi_phone') %>
 </p>
-------------------------------------------------------------------------------------------------
+<hr>
 <p>
   <%= t('working_days', workdays: workdays) %><br/>
   <%= t('completed_hint').html_safe %><br/>

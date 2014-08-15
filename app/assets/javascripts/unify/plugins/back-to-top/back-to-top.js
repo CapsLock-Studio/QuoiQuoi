@@ -23,6 +23,7 @@ var scrolltotop={
 			dest=jQuery('#'+dest).offset().top;
 		else
 			dest=0;
+
 		this.$body.animate({scrollTop: dest}, this.setting.scrollduration);
 	},
 
@@ -55,7 +56,7 @@ var scrolltotop={
             var topcontrol = $('#topcontrol');
             var button = (topcontrol.length > 0) ? topcontrol : $('<div id="topcontrol">' + scrolltotop.controlHTML + '</div>');
 			mainobj.cssfixedsupport=!iebrws || iebrws && document.compatMode=="CSS1Compat" && window.XMLHttpRequest; //not IE or IE7+ browsers in standards mode
-			mainobj.$body=(window.opera)? (document.compatMode=="CSS1Compat"? $('html') : $('body')) : $('html,body');
+			mainobj.$body=$('html,body');
 			mainobj.$control=button
 				.css({position:mainobj.cssfixedsupport? 'fixed' : 'absolute', bottom:mainobj.controlattrs.offsety, right:mainobj.controlattrs.offsetx, opacity:0, cursor:'pointer'})
 				.attr({title:'Scroll Back to Top'})

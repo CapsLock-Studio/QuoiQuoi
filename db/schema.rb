@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715105316) do
+ActiveRecord::Schema.define(version: 20140729025640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.datetime "canceled_time"
     t.boolean  "full",               default: false
     t.datetime "full_time"
+    t.boolean  "visible",            default: true
   end
 
   create_table "designer_translates", force: true do |t|
@@ -294,6 +295,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.boolean  "visible",            default: true
   end
 
   create_table "instruction_images", force: true do |t|
@@ -491,12 +493,14 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price",      default: 0.0
-    t.float    "discount",   default: 0.0
+    t.float    "price",             default: 0.0
+    t.float    "discount",          default: 0.0
+    t.integer  "product_option_id"
   end
 
   add_index "order_products", ["order_id"], name: "index_order_products_on_order_id", using: :btree
   add_index "order_products", ["product_id"], name: "index_order_products_on_product_id", using: :btree
+  add_index "order_products", ["product_option_id"], name: "index_order_products_on_product_option_id", using: :btree
 
   create_table "orders", force: true do |t|
     t.float    "subtotal"
@@ -524,7 +528,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "payments", force: true do |t|
-    t.integer  "amount",          default: 0
+    t.float    "amount",          default: 0.0
     t.string   "token"
     t.string   "identifier"
     t.integer  "user_id"
@@ -595,6 +599,17 @@ ActiveRecord::Schema.define(version: 20140715105316) do
 
   add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
 
+  create_table "product_options", force: true do |t|
+    t.integer  "product_id"
+    t.string   "content"
+    t.integer  "locale_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_options", ["locale_id"], name: "index_product_options_on_locale_id", using: :btree
+  add_index "product_options", ["product_id"], name: "index_product_options_on_product_id", using: :btree
+
   create_table "product_translates", force: true do |t|
     t.integer  "locale_id"
     t.string   "name"
@@ -640,6 +655,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.float    "discount",           default: 0.0
+    t.boolean  "visible",            default: true
   end
 
   create_table "registrations", force: true do |t|
@@ -652,7 +668,7 @@ ActiveRecord::Schema.define(version: 20140715105316) do
     t.string   "name"
     t.string   "phone"
     t.integer  "attendance",       default: 0
-    t.integer  "subtotal",         default: 0
+    t.float    "subtotal",         default: 0.0
     t.boolean  "returned",         default: false
     t.datetime "returned_time"
     t.boolean  "canceled",         default: false
@@ -874,6 +890,27 @@ ActiveRecord::Schema.define(version: 20140715105316) do
   end
 
   add_index "top_products", ["product_id"], name: "index_top_products_on_product_id", using: :btree
+
+  create_table "top_translates", force: true do |t|
+    t.integer  "top_id"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+  end
+
+  add_index "top_translates", ["locale_id"], name: "index_top_translates_on_locale_id", using: :btree
+  add_index "top_translates", ["top_id"], name: "index_top_translates_on_top_id", using: :btree
+
+  create_table "tops", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sort"
+  end
 
   create_table "travel_informations", force: true do |t|
     t.integer  "area_id"
