@@ -67,7 +67,8 @@
                   <th>旅遊地區</th>
                   <th>標題</th>
                   <th>內文</th>
-                  <th>文章建立日期</th>
+                  <th>建立日期</th>
+                  <th>修改日期</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -84,13 +85,16 @@
                       <label class="label label-success"><%= travel_information.area.name %></label>
                     </td>
                     <td>
-                      <%= truncate(travel_information.title, length: 20) %>
+                      <%= truncate(travel_information.title, length: 10) %>
                     </td>
                     <td>
-                      <%= truncate(strip_tags(travel_information.content), length: 30) %>
+                      <%= truncate(strip_tags(travel_information.content), length: 25) %>
                     </td>
                     <td>
                       <%= travel_information.created_at.strftime('%Y/%m/%d %H:%M') %>
+                    </td>
+                    <td>
+                      <%= travel_information.updated_at.strftime('%Y/%m/%d %H:%M') %>
                     </td>
                     <td>
                       <div class='text-right'>

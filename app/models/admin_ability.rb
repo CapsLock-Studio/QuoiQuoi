@@ -31,7 +31,6 @@ class AdminAbility
       can :manage, Admin::RentInfo
       can :manage, Admin::RentIntro
       can :manage, Admin::RentInfoImage
-      can :manage, Admin::Contact
       can :manage, Admin::IntroduceImageSlide
       can :manage, Admin::IntroduceYoutube
       can :manage, Admin::Requirement
@@ -48,6 +47,7 @@ class AdminAbility
       can :manage, Admin::Area
       can :manage, Admin::Faq
       can :manage, Admin::ProductType
+      can :manage, Admin::Top
     end
 
     # for development

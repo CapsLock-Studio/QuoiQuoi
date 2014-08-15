@@ -6,13 +6,13 @@
         <div class="col-md-12">
           <%= render 'carousel' %>
           <div class="title-box">
-            <%= simple_format(@contact.introduction) %>
+            <%= simple_format($redis.get("about:locale:#{session[:locale_id]}:introduction")) %>
           </div>
         </div>
         <% if @designers.length > 0 %>
           <div class="col-md-12">
             <div class="row">
-              <ul id="list" class="bxslider">
+              <ul class="bxslider">
                 <% @designers.each do |designer| %>
                   <li>
                     <a>
@@ -63,14 +63,14 @@
           </div>
           <hr/>
         <% end %>
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <%= render 'youtube' %>
         </div>
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <div class="headline"><h4>FAQ</h4></div>
           <%= render 'about/faq', faqs: @faqs, removeable: false %>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-7">
           <%= render 'contacts/form' %>
         </div>
       </div>
@@ -95,7 +95,7 @@
           <div class="headline">
             <h4><%= t('business_hours') %></h4>
           </div>
-          <%= simple_format(@contact.business_hour) %>
+          <%= simple_format($redis.get("about:locale:#{session[:locale_id]}:business_hour")) %>
         </div>
         <div class="col-md-12 margin-bottom-40">
           <div class="headline">

@@ -93,11 +93,13 @@ class PaymentsController < ApplicationController
     payment = Payment.where(token: params[:token]).all.first
 
     respond_to do |format|
-      payment.cancel!
+      payment.destroy
       if payment.order
-        format.html {redirect_to close_orders_path}
+        format.html {redirect_to pay_order_path(payment.order)}
       elsif payment.registration
-        format.html {redirect_to close_registrations_path}
+        format.html {redirect_to pay_registration_path(payment.registration)}
+      elsif payment.user_gift
+        format.html {redirect_to pay_user_gift_path(payment.user_gift)}
       else
         format.html {render json: 'Paypal payment error!'}
       end
@@ -157,7 +159,17 @@ class PaymentsController < ApplicationController
 
     def paypal_api_error(e)
       respond_to do |format|
-        format.html {render json: e.response.details}
+        flash[:message] = e.response.details[0].long_message
+        flash[:status] = 'danger'
+        payment = Payment.where(token: params[:token]).all.first
+        payment.destroy
+        if payment.order
+          format.html {redirect_to pay_order_path(payment.order)}
+        elsif payment.registration
+          format.html {redirect_to pay_registration_path(payment.registration)}
+        elsif payment.user_gift
+          format.html {redirect_to pay_user_gift_path(payment.user_gift)}
+        end
       end
     end
 

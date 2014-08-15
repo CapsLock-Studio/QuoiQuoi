@@ -101,7 +101,7 @@
                       </td>
                       <td>
                         <% translates.each do |translate| %>
-                          <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= translate[:name] %><br/>
+                          <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= truncate(translate[:name], length: 15) %><br/>
                         <% end %>
                       </td>
                       <td>
@@ -139,6 +139,17 @@
                           <%= link_to(edit_admin_course_path(course), class: 'btn btn-md') do %>
                             <i class='icon-pencil'></i>
                           <% end %>
+
+                          <% if course.visible? %>
+                            <%= link_to(visible_admin_course_path(course, visible: false), class: 'btn btn-info btn-md', method: :put) do %>
+                              <i class="icon-level-down"></i>
+                            <% end %>
+                          <% else %>
+                            <%= link_to(visible_admin_course_path(course, visible: true), class: 'btn btn-primary btn-md', method: :put) do %>
+                              <i class="icon-level-up"></i>
+                            <% end %>
+                          <% end %>
+
                           <%= link_to(admin_course_path(course), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？ 取消課程請報名課程管理'}) do %>
                             <i class='icon-remove'></i>
                           <% end %>

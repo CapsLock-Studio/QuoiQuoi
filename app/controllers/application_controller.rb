@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_product_types
   before_action :set_side_menu_orders
-  before_action :set_contact
   before_action :set_article_types
   before_action :configure_devise_params, if: :devise_controller?
   before_action :set_default_seo_properties
@@ -37,7 +36,7 @@ class ApplicationController < ActionController::Base
     end
 
     I18n.locale = session[:locale] || I18n.default_locale
-    session[:locale_id] = Locale.select(:id).where(lang: (session[:locale] || I18n.default_locale))
+    session[:locale_id] = Locale.select(:id).where(lang: (session[:locale] || I18n.default_locale)).first.id
   end
 
   # if user is logged in , return current user, else return guest
@@ -90,14 +89,6 @@ class ApplicationController < ActionController::Base
 
   def set_product_types
     @product_types = ProductType.all
-  end
-
-  def set_contact
-    begin
-      @contact = Contact.find(1).contact_translates.where(locale_id: session[:locale_id]).first
-    rescue ActiveRecord::RecordNotFound
-      @contact = nil
-    end
   end
 
   def set_article_types
@@ -162,9 +153,9 @@ class ApplicationController < ActionController::Base
     end
 
     def set_default_seo_properties
-      @meta_og_description = 'quoi quoi 布知道打造專屬於每一個客人自己的包包，經過耐心的溝通，妳所想要的就會呈現在妳的眼前。'
+      @meta_og_description = $redis.get('seo:description')
       @meta_og_image = "http://quoiquoi.tw#{ActionController::Base.helpers.asset_path('logo-large.jpg')}"
-      @meta_og_title = '手作包現貨, 量身定製手作包, 手作教室一切手作的都好都在quoi quoi 布知道'
+      @meta_og_title = $redis.get('seo:title')
       @meta_og_type = 'website'
     end
 end

@@ -33,7 +33,7 @@ class OrderCustomItemsController < ApplicationController
       @materials = Material.all.page(params[:page]).per(16)
 
       if params[:product_id]
-        @product_custom_items = ProductCustomItem.where(product_id: params[:product_id]).page(params[:page]).per(16)
+        @product_custom_items = ProductCustomItem.where(product_id: params[:product_id]).page(params[:page]).per(99)
       else
         @order_information = OrderInformation.where(locale_id: session[:locale_id])
       end

@@ -18,5 +18,8 @@ class SearchController < ApplicationController
         @courses << translate.course
       end
     end
+
+    @articles = Article.where('title LIKE ? or content LIKE ?', "%#{params[:keyword]}%", "#{params[:keyword]}").order(id: :desc)
+    @travel_informations = TravelInformation.where('title LIKE ? or content LIKE ?', "%#{params[:keyword]}%", "#{params[:keyword]}").order(id: :desc)
   end
 end

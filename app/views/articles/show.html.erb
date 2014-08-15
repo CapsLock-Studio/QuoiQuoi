@@ -26,9 +26,9 @@
         </strong>
         <small class="pull-right"><i class="fa fa-clock-o"></i>&nbsp;<%= @article.updated_at.strftime('%Y/%m/%d') %></small>
       </h3>
-      <p class="article-content">
-        <%= @article.content %>
-      </p>
+      <div class="article-content">
+        <%= @article.content.html_safe %>
+      </div>
     </div>
   </div>
 </div>

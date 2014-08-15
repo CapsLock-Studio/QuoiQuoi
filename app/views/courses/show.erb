@@ -58,49 +58,55 @@
               </ul>
               <%= simple_format(translate.description) %>
             </div>
-            <div class="col-md-12 margin-bottom-10">
-              <h4 class="margin-bottom-20">
-                <strong style="color:#666;"><%= number_to_currency(translate.price) %></strong>
-                <small><%= translate.note %></small>
-              </h4>
+            <% if @course.visible? %>
+              <div class="col-md-12 margin-bottom-10">
+                <h4 class="margin-bottom-20">
+                  <strong style="color:#666;"><%= number_to_currency(translate.price) %></strong>
+                  <small><%= translate.note %></small>
+                </h4>
 
-              <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
-                <%= f.hidden_field :course_id %>
-                <% if @course.course_options.length > 0 %>
-                  <label><%= t('option') %></label>
+                <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
+                  <%= f.hidden_field :course_id %>
                   <% options = CourseOption.where(course_id: @course.id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]} %>
                   <% if options.length > 0 %>
+                    <label><%= t('option') %></label>
                     <%= f.select :course_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
                   <% end %>
-                <% end %>
 
-                <% if @course.canceled? %>
-                  <a href="#" class="btn btn-default btn-lg btn-block hover-effect" disabled="disabled">
-                    <span><%= t('course.canceled') %></span>
-                  </a>
-                <% elsif @course.time > Time.now + 5.hours %>
-                  <% if @course.popular <= @course.registrations.collect{|registration| (!registration.canceled? && registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} %>
-                    <a href="#" class="btn btn-default btn-lg btn-block hover-effect" disabled="disabled">
-                      <span><%= t('registration.full') %></span>
+                  <% if @course.canceled? %>
+                    <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
+                      <span><%= t('course.canceled') %></span>
                     </a>
-                  <% elsif current_user && @registration.id && @registration.payment %>
-                    <button type="submit" class="btn btn-default btn-lg btn-block hover-effect">
-                      <span><%= t('had_registered') %></span>
-                    </button>
+                  <% elsif @course.time > Time.now + 5.hours %>
+                    <% if @course.full? || @course.popular <= @course.registrations.collect{|registration| (!registration.canceled? && registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} %>
+                      <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
+                        <span><%= t('registration.full') %></span>
+                      </a>
+                    <% elsif current_user && @registration.id && @registration.payment %>
+                      <button type="submit" class="btn btn-orange btn-lg btn-block hover-effect">
+                        <span><%= t('had_registered') %></span>
+                      </button>
+                    <% else %>
+                      <button type="submit" class="btn btn-orange btn-lg btn-block hover-effect">
+                        <i class="fa fa-edit"></i>
+                        <span><%= t('register') %></span>
+                      </button>
+                    <% end %>
                   <% else %>
-                    <button type="submit" class="btn btn-default btn-lg btn-block hover-effect">
-                      <i class="icon-edit"></i>
-                      <span><%= t('register') %></span>
-                    </button>
+                    <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
+                      <span><%= t('course.past') %></span>
+                    </a>
                   <% end %>
-                <% else %>
-                  <a href="#" class="btn btn-default btn-lg btn-block hover-effect" disabled="disabled">
-                    <span><%= t('course.past') %></span>
-                  </a>
                 <% end %>
-              <% end %>
-
-            </div>
+              </div>
+            <% else %>
+              <div class="col-md-12">
+                <a href="#" class="btn btn-lg btn-default btn-block" disabled="disabled">
+                  <i class="fa fa-exclamation"></i>
+                  <span><%= t('not_for_sale') %></span>
+                </a>
+              </div>
+            <% end %>
             <div class="col-md-12">
               <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@course.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
             </div>

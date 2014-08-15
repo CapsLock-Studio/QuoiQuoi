@@ -60,6 +60,17 @@
                         <%= link_to(edit_admin_gift_path(gift), class: 'btn btn-md') do %>
                           <i class='icon-pencil'></i>
                         <% end %>
+
+                        <% if gift.visible? %>
+                          <%= link_to(visible_admin_gift_path(gift, visible: false), class: 'btn btn-info btn-md', method: :put) do %>
+                            <i class="icon-level-down"></i>
+                          <% end %>
+                        <% else %>
+                          <%= link_to(visible_admin_gift_path(gift, visible: true), class: 'btn btn-primary btn-md', method: :put) do %>
+                            <i class="icon-level-up"></i>
+                          <% end %>
+                        <% end %>
+
                         <%= link_to(admin_gift_path(gift), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
                           <i class='icon-remove'></i>
                         <% end %>

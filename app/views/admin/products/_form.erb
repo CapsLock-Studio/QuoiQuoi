@@ -100,6 +100,34 @@
                                  data: {'rule-required' => true, 'rule-number' => true} %>
               </div>
             </div>
+            <div class="nested-field text-right">
+              <div class="form-group">
+                <a href="#" class="add btn btn-u">
+                  新增現貨選項
+                </a>
+              </div>
+              <div class="items">
+                <%= f.nested_fields_for :product_options do |builder| %>
+                  <div class="form-group item">
+                    <div class="row">
+                      <div class="col-md-2" style="padding-right: 0">
+                        <%= builder.select :locale_id, Locale.all.order(id: :desc).collect{|locale| [locale.name, locale.id]}, {selected: builder.object.locale_id}, {class: 'form-control'} %>
+                      </div>
+                      <div class="col-md-9" style="padding-right: 0;">
+                        <%= builder.text_field :content, class: 'form-control', placeholder: '選項內容' %>
+                        <%= builder.hidden_field :id %>
+                        <%= builder.hidden_field :_destroy %>
+                      </div>
+                      <div class="col-md-1" style="padding-left: 0;">
+                        <a class="btn remove btn-xs btn-link" href="#" style="padding-top: 7px;">
+                          <i class="icon-remove"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
             <%= f.fields_for :product_translates do |builder| %>
               <div class="box">
                 <div class="box-header">

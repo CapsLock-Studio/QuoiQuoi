@@ -1,55 +1,50 @@
-<div class="one-page">
-  <div class="one-page-inner">
-    <div class="container">
-      <!--=== Slider ===-->
+<div class="container" style="margin-top: 10px;">
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="col-md-12">
       <%= render 'slider' %>
-      <!--=== End Slider ===-->
+    </div>
+  </div>
+  <!--=== End Slider ===-->
 
-      <!--<div class="row">-->
-      <!--<div class="col-md-8 col-md-offset-2">-->
-      <!--<span style="text-align:center">布知道工作室精緻手工包</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <div class="row">
-        <!--<div class="col-md-3 md-margin-bottom-20">-->
-          <!--<%= link_to(orders_path, class: 'btn btn-block hover-effect order-button') do %>-->
-            <!--<i class="icon-ok"></i>-->
-            <!--<span>訂製手工包</span>-->
-          <!--<% end %>-->
-        <!--</div>-->
-        <div class="col-md-12 hidden-xs">
-          <div class="flexHome">
-            <div id="flexHome">
-              <ul class="slides">
-                <% @broadcasts.each do |broadcast| %>
-                  <% translate = broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first %>
-                  <li>
-                    <%= link_to translate.link do %>
-                      <h4 class="hover-effect">
-                        <i class="fa fa-bullhorn fa-fw"></i>
-                        <%= translate.notification %>
-                      </h4>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <!--<div class="row">-->
+  <!--<div class="col-md-8 col-md-offset-2">-->
+  <!--<span style="text-align:center">布知道工作室精緻手工包</span>-->
+  <!--</div>-->
+  <!--</div>-->
+  <div class="row">
+    <!--<div class="col-md-3 md-margin-bottom-20">-->
+    <!--<%= link_to(orders_path, class: 'btn btn-block hover-effect order-button') do %>-->
+      <!--<i class="icon-ok"></i>-->
+      <!--<span>訂製手工包</span>-->
+      <!--<% end %>-->
+    <!--</div>-->
+    <div class="col-md-12 hidden-xs">
+      <div class="marquee" id="marquee">
+        <ul class="list-unstyled text-center">
+          <% @broadcasts.each do |broadcast| %>
+            <% translate = broadcast.broadcast_translates.where(locale_id: session[:locale_id]).first %>
+            <li>
+              <%= link_to translate.link do %>
+                <h4 class="hover-effect">
+                  <i class="fa fa-bullhorn fa-fw"></i>
+                  <%= translate.notification %>
+                </h4>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
-</div>
-<div class="container">
   <div class="row">
     <div class="col-md-12 hidden-xs hidden-sm">
       <!-- Recent Works -->
       <div class="margin-bottom-20 recommend">
-        <ul id="list" class="bxslider1">
-          <% @products.each do |product| %>
+        <ul class="bxslider1">
+          <% @tops.each do |top| %>
             <li>
-              <%= link_to_with_product_type product do %>
-                <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+              <%= link_to top[:link] do %>
+                <%= image_tag top[:image], class: 'img-responsive' %>
               <% end %>
             </li>
           <% end %>
@@ -57,11 +52,11 @@
       </div><!--/row-->
       <!-- End Recent Works -->
     </div>
-    <% @products.each do |product| %>
+    <% @tops.each do |top| %>
       <div class="col-sm-6 col-xs-12 hidden-md hidden-lg">
         <div class="well-sm">
-          <%= link_to_with_product_type product do %>
-            <%= image_tag product.image.url(:medium), class: 'img-responsive' %>
+          <%= link_to top[:link] do %>
+            <%= image_tag top[:image], class: 'img-responsive' %>
           <% end %>
         </div>
       </div>

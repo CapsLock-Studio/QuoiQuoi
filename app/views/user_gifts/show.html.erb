@@ -149,13 +149,13 @@
         <% if @user_gift.payment && (@user_gift.payment.amount == 0 || @user_gift.payment.identifier.blank?) %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('order.advice'), edit_payment_path(@user_gift.payment), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('order.advice'), edit_payment_path(@user_gift.payment), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
             <%= link_to t('user_gift.cancel'), user_gift_path(@user_gift), method: :delete %>
           </div>
         <% elsif !@user_gift.payment %>
           <hr/>
           <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('payment'), pay_user_gift_path(@user_gift), class: 'btn btn-u btn-u-lg btn-u-orange btn-block hover-effect' %>
+            <%= link_to t('payment'), pay_user_gift_path(@user_gift), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
             <%= link_to t('user_gift.cancel'), user_gift_path(@user_gift), method: :delete %>
           </div>
         <% end %>

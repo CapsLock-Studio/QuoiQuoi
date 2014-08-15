@@ -45,14 +45,14 @@ module ApplicationHelper
     end
   end
 
-  def lang_nav_item(language, &block)
+  def lang_nav_item(language, tag = :li, &block)
     options ||= {}
     options[:class] = 'active' if I18n.locale == language.to_sym
 
     if block_given?
-      content_tag_string(:li, capture(&block), options, true)
+      content_tag_string(tag, capture(&block), options, true)
     else
-      content_tag_string(:li, nil, options, true)
+      content_tag_string(tag, nil, options, true)
     end
   end
 
@@ -72,6 +72,8 @@ module ApplicationHelper
   def locale_discount(discount, locale = nil)
     if (locale.nil?)? session[:locale] == 'en' : locale == 'en'
       discount = (10 - discount) * 10
+    elsif (discount * 10) % 10 != 0
+      discount *= 10
     end
 
     '%g' % discount.to_f

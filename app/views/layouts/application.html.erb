@@ -3,6 +3,10 @@
 <head>
   <title>quoi quoi 布知道</title>
   <meta charset="UTF-8">
+  <meta name="description" content="<%= @meta_og_description %>" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:domain" content="quoiquoi.tw" />
+  <meta name="twitter:creator" content="@quoiquoi">
   <meta property="og:title" content="<%= @meta_og_title %>" />
   <meta property="og:url" content="<%= request.original_url %>" />
   <meta property="og:description" content="<%= @meta_og_description %>" />
@@ -68,6 +72,10 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- outdate browser handle start -->
+<%= render 'layouts/outdate_hint' %>
+<!-- outdate browser handle end -->
 
 <%= javascript_include_tag 'unify', data: {'turbolinks-eval' => false} %>
 <%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=true', data: {'turbolinks-eval' => false} %>

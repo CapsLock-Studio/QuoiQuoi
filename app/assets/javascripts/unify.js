@@ -13,14 +13,12 @@
 //= require unify/jquery/jquery.min
 //= require unify/jquery/jquery.mobile.custom.min
 // require unify/jquery/jquery-migrate.min
-//= require unify/jquery/jquery-ui.min
 //= require jquery_ujs
 //= require unify/plugins/plugins
 
 //= require flatty/plugins/fullcalendar/fullcalendar.min
 
 //= require unify/theme
-//= require unify/pages/index
 
 //= require jquery.nested-fields.min
 

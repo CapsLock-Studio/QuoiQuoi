@@ -124,10 +124,9 @@ class OrdersController < ApplicationController
       redirect_to order_path(@order)
     elsif @order.payment
       @order.payment.destroy
-      @payment = @order.build_payment
-    else
-      @payment = @order.build_payment
     end
+
+    @payment = @order.build_payment
   end
 
   private
