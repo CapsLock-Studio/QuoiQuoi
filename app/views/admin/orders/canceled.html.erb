@@ -38,9 +38,14 @@
                     </td>
                     <td>
                       <ul class="list-unstyled">
-                        <% order.order_products.each do |order_product| %>
+                        <% order.order_products.reject{|order_product| order_product.product.nil?}.each do |order_product| %>
                           <li>
-                            <%= link_to order_product.product.product_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' - '), product_path(order_product.product), target: '_blank' %>
+                            <%= link_to order_product.product.product_translates.where(locale_id: Locale.where(lang: 'zh-TW').first.id).first.name, edit_admin_product_path(order_product.product), target: '_blank' %>
+                          </li>
+                        <% end %>
+                        <% order.order_custom_items.each do |order_custom_item| %>
+                          <li>
+                            <%= link_to '', admin_order_custom_item_path(order_custom_item), target: '_blank' %>
                           </li>
                         <% end %>
                       </ul>

@@ -39,7 +39,11 @@ class Admin::ProductCustomItemsController < AdminController
   end
 
   def destroy
-
+    if @product_custom_item.destroy
+      redirect_to action: :index
+    else
+      render json: @product_custom_item.errors
+    end
   end
 
   private
