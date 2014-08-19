@@ -1,6 +1,6 @@
 <ul class="list-group sidebar-nav-v1">
   <% @areas.each do |area| %>
-    <%= nav_item(nil, {rule: /^#{area_path(area)}.*/,class: 'list-group-item'}) do %>
+    <%= nav_item(nil, {rule: /#{area_path(area)}(\/\d+)?$|#{area_travel_information_index_path(area)}(\/\d+)?$/,class: 'list-group-item'}) do %>
       <%= link_to area_path(area) do %>
         <%= area.name %>
         <i class="fa fa-angle-right pull-right"></i>
