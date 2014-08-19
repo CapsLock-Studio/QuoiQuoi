@@ -127,7 +127,8 @@
 	position: absolute;
 	background: #fcfcfc; 
 	border-top: solid 2px #eee;
-	box-shadow: 0 1px 3px #ddd; 
+	box-shadow: 0 1px 3px #ddd;
+  z-index: 10;
 }
 
 .header .navbar .nav > li > a.search {
