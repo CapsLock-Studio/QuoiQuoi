@@ -19,7 +19,12 @@ class SearchController < ApplicationController
       end
     end
 
+<<<<<<< HEAD
     @articles = Article.where('lower(title) LIKE ? or lower(content) LIKE ?', "%#{params[:keyword].downcase}%", "%#{params[:keyword].downcase}%").order(id: :desc)
     @travel_informations = TravelInformation.where('lower(title) LIKE ? or lower(content) LIKE ?', "%#{params[:keyword].downcase}%", "%#{params[:keyword].downcase}%").order(id: :desc)
+=======
+    @articles = Article.where('title LIKE ? or content LIKE ?', "%#{params[:keyword]}%", "#{params[:keyword]}").order(id: :desc)
+    @travel_informations = TravelInformation.where('title LIKE ? or content LIKE ?', "%#{params[:keyword]}%", "#{params[:keyword]}").order(id: :desc)
+>>>>>>> 7fc626e01b4757d782dcd99afd0dcc83c74b19f3
   end
 end
