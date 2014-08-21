@@ -9,7 +9,7 @@ class OrderMailer < ActionMailer::Base
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
       @fee = 0
     end
 
@@ -28,7 +28,7 @@ class OrderMailer < ActionMailer::Base
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
       @fee = 0
     end
 
@@ -43,7 +43,7 @@ class OrderMailer < ActionMailer::Base
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
       @fee = 0
     end
 
@@ -58,7 +58,7 @@ class OrderMailer < ActionMailer::Base
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
       @fee = 0
     end
 
@@ -73,7 +73,7 @@ class OrderMailer < ActionMailer::Base
 
     shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
     @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal > shipping_fee.free_condition)
+    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
       @fee = 0
     end
 
