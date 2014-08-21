@@ -6,7 +6,7 @@ class Admin::CoursesController < AdminController
 
   # GET /admin/courses
   def index
-    @search_filter = params[:search_filter] || %w[not_completed completed]
+    @search_filter = params[:search_filter] || %w[not_completed]
     query_condition = []
     query_condition << 'time < ?' unless @search_filter.include?('not_completed')
     query_condition << Time.now unless @search_filter.include?('not_completed')
