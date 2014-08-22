@@ -16,9 +16,11 @@ class Admin::RegistrationsController < AdminController
 
     @total_attendance = 0
 
-    payments = Payment.where.not(registration_id: '')
+    payments = Payment.where(completed: true).where.not(registration_id: '')
     payments.each do |payment|
-      @total_attendance += payment.registration.attendance
+      if payment.registration.course_id == @registration.course_id
+        @total_attendance += payment.registration.attendance
+      end
     end
 
     respond_to do |format|
