@@ -121,7 +121,7 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       #format.html {render json: @payment}
-      if @payment.update_attributes(payment_params.merge({token: Base64.encode64("#{Time.now}#{(0..3).map{('a'..'z').to_a[rand(26)]}.join}")}))
+      if @payment.update_attributes(payment_params.merge({token: Base64.encode64("#{Time.now}#{(0..3).map{('a'..'z').to_a[rand(26)]}.join}"), wait: true}))
         redirect_uri = orders_path
         if @payment.order
           @payment.update_attributes(currency: @payment.order.currency)
