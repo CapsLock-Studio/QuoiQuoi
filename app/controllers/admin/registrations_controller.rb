@@ -4,6 +4,7 @@ class Admin::RegistrationsController < AdminController
   before_action :remove_duplicate_payment, only: [:show, :check_show]
   before_action :set_check_payment, only: [:show, :check_show]
   before_action :set_discount, only: [:show, :check_show]
+  before_action :set_total_attendance, only: [:show, :check_show]
 
   def index
     @registrations = Registration.all.order(created_at: :desc)
@@ -13,15 +14,6 @@ class Admin::RegistrationsController < AdminController
     add_breadcrumb '首頁', :admin_root_path
     add_breadcrumb '所有報名課程記錄', :admin_registrations_path
     add_breadcrumb '詳細報名課程記錄'
-
-    @total_attendance = 0
-
-    payments = Payment.where(completed: true).where.not(registration_id: '')
-    payments.each do |payment|
-      if payment.registration.course_id == @registration.course_id
-        @total_attendance += payment.registration.attendance
-      end
-    end
 
     respond_to do |format|
       format.html {render action: :check_show}
@@ -36,13 +28,6 @@ class Admin::RegistrationsController < AdminController
     add_breadcrumb '首頁', :admin_root_path
     add_breadcrumb '所有報名課程匯款', :check_admin_registrations_path
     add_breadcrumb '詳細報名課程匯款'
-
-    @total_attendance = 0
-
-    payments = Payment.where(completed: false).where.not(registration_id: '', amount: 0)
-    payments.each do |payment|
-      @total_attendance += payment.registration.attendance
-    end
   end
 
   private
@@ -62,6 +47,17 @@ class Admin::RegistrationsController < AdminController
       @discount = 0
       UserGiftSerial.where(registration_id: @registration.id).each do |user_gift_serial|
         @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @payment.registration.locale_id).first.quota
+      end
+    end
+
+    def set_total_attendance
+      @total_attendance = 0
+
+      payments = Payment.where(completed: true).where.not(registration_id: ['', nil])
+      payments.each do |payment|
+        if payment.registration.course_id == @registration.course_id
+          @total_attendance += payment.registration.attendance
+        end
       end
     end
 end
