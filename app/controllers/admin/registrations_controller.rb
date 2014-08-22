@@ -55,7 +55,7 @@ class Admin::RegistrationsController < AdminController
 
       payments = Payment.where(completed: true).where.not(registration_id: ['', nil])
       payments.each do |payment|
-        if payment.registration.course_id == @registration.course_id
+        if payment.registration && payment.registration.course_id == @registration.course_id
           @total_attendance += payment.registration.attendance
         end
       end
