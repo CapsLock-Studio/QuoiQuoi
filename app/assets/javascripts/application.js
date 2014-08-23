@@ -155,7 +155,7 @@
     });
 
     $('[data-dismiss="disable"]').on('click', function(){
-        $($(this).data('target')).attr('disabled', 'disabled');
+        $($(this).data('target')).prop('disabled', $(this).prop('checked'));
     });
 
     var marquee = $('#marquee');
