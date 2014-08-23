@@ -50,7 +50,7 @@
               </h3>
               <ul class="list-unstyled">
                 <li>
-                  <span><%= t('course_time') %></span>:&nbsp;<strong><%= "#{@course.time.strftime('%Y/%m/%d %H:%M')} - #{(@course.time + @course.length.hours).strftime('%H:%M')}" %></strong>
+                  <span><%= t('course_time') %></span>:&nbsp;<strong><%= "#{@course.time.strftime('%Y/%m/%d %H:%M')} - #{(@course.time + @course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[@course.time.strftime('%u').to_i - 1]})" %></strong>
                 </li>
                 <li>
                   <span><%= t('teacher') %></span>:&nbsp;<strong><%= translate.teacher %></strong>

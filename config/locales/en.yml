@@ -34,6 +34,9 @@ en:
             current_password:
               invalid: 'Current password confirm failed.'
 
+  date:
+    day_names: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
   footer:
     login: 'Login Admin'
   view_detail: 'View Detail'
@@ -196,6 +199,7 @@ en:
   bank_name: "Beneficiary's bank name"
   bank_address: "Beneficiary's bank address"
   your_account: 'The last five number of your account'
+  no_account: ''
   remitted_date: 'Remittance Date'
   remitted_amount: 'Remittance Amount'
   amount_payable: 'Total amount'
@@ -423,6 +427,7 @@ en:
   reference_price: 'Reference price list'
   remarks: 'Remarks'
   others: 'Others'
+  payment_completed: 'Your payment has been completed.'
   outdated:
     title: 'Your browser is out-of-date!'
     content: 'Update your browser to view this website correctly.'

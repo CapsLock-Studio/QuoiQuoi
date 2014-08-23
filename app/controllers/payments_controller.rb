@@ -109,6 +109,7 @@ class PaymentsController < ApplicationController
   def edit
     flash[:message] = t('remittance_edit_hint')
     flash[:status] = 'warning'
+
     begin
       @remittance_translate = Remittance.find(1).remittance_translates.where(locale_id: session[:locale_id]).first
     rescue ActiveRecord::RecordNotFound
@@ -174,7 +175,25 @@ class PaymentsController < ApplicationController
     end
 
     def set_payment
-      @payment = Payment.where(id: params[:id], user_id: (current_user)? current_user.id : nil, completed: false).first
+      @payment = Payment.where(id: params[:id]).first
+
+      if @payment.completed?
+        # show the message let users know their payment complete
+        flash[:status] = 'success'
+        flash[:message] = t('payment_completed')
+
+        if @payment.order
+          redirect_to order_path(@payment.order)
+        elsif @payment.registration
+          if @payment.registration.user
+            redirect_to course_path(@payment.registration.course)
+          else
+            redirect_to action: :show
+          end
+        elsif @payment.user_gift
+          redirect_to user_gift_path(@payment.user_gift)
+        end
+      end
     end
 
     def remove_exists

@@ -60,6 +60,9 @@ zh-TW:
         strip_insignificant_zeros: false
         unit: "NT$"
 
+  date:
+    day_names: ['一', '二', '三', '四', '五', '六', '日']
+
   footer:
     login: '管理登入'
   item: '項目'
@@ -222,6 +225,7 @@ zh-TW:
   bank_name: '銀行名稱'
   bank_address: '銀行地址'
   your_account: '匯款帳號末五碼'
+  no_account: '<label><input type="checkbox" data-dismiss="disable" data-target="input.no-account" /> 如果使用無摺存款請勾選</label>'
   remitted_date: '匯款日期'
   remitted_amount: '匯款金額'
   amount_payable: '應付金額'
@@ -432,6 +436,7 @@ zh-TW:
   option: '選項'
   enter: '確認'
   person: '人'
+  payment_completed: '你的付款已經完成'
   customizations: '客製化商品'
   personalized_products: '客製化商品'
   check_hint: '非常感謝您對quoi quoi 布知道的支持, 在此通知您所訂購的商品我們已經寄出去了!<br/>還需要請您估算大約送達時間注意記得收取商品<br/>如果您沒有收到我們寄出的商品, 請使用後面的信箱連結通知我們'
