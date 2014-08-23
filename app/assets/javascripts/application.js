@@ -154,6 +154,10 @@
         convertPlayer(this);
     });
 
+    $('[data-dismiss="disable"]').on('click', function(){
+        $($(this).data('target')).attr('disabled', 'disabled');
+    });
+
     var marquee = $('#marquee');
     if (marquee.length > 0) {
         // start at 5 seconds after

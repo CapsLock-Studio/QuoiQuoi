@@ -34,7 +34,8 @@
                   <% end %>
                 </div>
                 <div class="controls col-md-8">
-                  <%= f.text_field :identifier, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '5', 'rule-maxlength' => '5'} %>
+                  <%= f.text_field :identifier, class: 'form-control no-account', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '5', 'rule-maxlength' => '5'} %>
+                  <%= t('no_account').html_safe %>
                 </div>
               </div>
               <div class="form-group row">

@@ -19,7 +19,7 @@
                   <ul class="list-unstyled">
                     <li>
                       <strong>
-                        <%= "#{t('starting_time')}： #{course.time.strftime('%Y/%m/%d %H:%M')} - #{(course.time + course.length.hours).strftime('%H:%M')}" %>
+                        <%= "#{t('starting_time')}： #{course.time.strftime('%Y/%m/%d %H:%M')}-#{(course.time + course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[course.time.strftime('%u').to_i - 1]})" %>
                       </strong>
                     </li>
                     <li>
