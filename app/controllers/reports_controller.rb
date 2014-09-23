@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   # GET /reports
   def index
+    @website_title = "#{t('report_remittance')} | #{@website_title}"
     @registrations = Registration.where(email: params[:email])
   end
 

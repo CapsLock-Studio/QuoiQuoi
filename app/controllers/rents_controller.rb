@@ -9,6 +9,7 @@ class RentsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('rent')
 
+    @website_title = "#{t('rent')} | #{@website_title}"
     @rent_infos = RentInfo.all.order(:id)
     @rent_intros = RentIntro.all.order(:id)
     @rent_info_images = RentInfoImage.all.order(:id)

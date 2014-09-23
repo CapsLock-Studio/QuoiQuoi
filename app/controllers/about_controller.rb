@@ -8,6 +8,7 @@ class AboutController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('about_us')
 
+    @website_title = "#{t('about_us')} | #{@website_title}"
     @designers = Designer.all
     @introduce_image_slides = IntroduceImageSlide.all
     @introduce_youtubes = IntroduceYoutube.all
