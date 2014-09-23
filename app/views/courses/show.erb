@@ -56,7 +56,9 @@
                   <span><%= t('teacher') %></span>:&nbsp;<strong><%= translate.teacher %></strong>
                 </li>
               </ul>
-              <%= simple_format(translate.description) %>
+              <div class="article-content">
+                <%= translate.description.html_safe %>
+              </div>
             </div>
             <% if @course.visible? %>
               <div class="col-md-12 margin-bottom-10">
@@ -67,10 +69,10 @@
 
                 <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
                   <%= f.hidden_field :course_id %>
-                  <% options = CourseOption.where(course_id: @course.id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]} %>
+                  <% options = CourseOption.where(course_id: @course.id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, data: {subtext: number_to_currency(option.price)}]} %>
                   <% if options.length > 0 %>
                     <label><%= t('option') %></label>
-                    <%= f.select :course_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                    <%= f.select :course_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
                   <% end %>
 
                   <% if @course.canceled? %>

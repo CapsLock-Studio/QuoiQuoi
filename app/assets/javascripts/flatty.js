@@ -3,12 +3,11 @@
 //= require flatty/jquery/jquery.mobile.custom.min
 //= require flatty/jquery/jquery-migrate.min
 //= require flatty/jquery/jquery-ui.min
-//= require jquery_ujs
+//= require turbolinks
 //= require flatty/bootstrap/bootstrap.min
 //= require flatty/plugins/plugins
-//= require flatty/theme
+//= require jquery_ujs
 //= require flatty/confirm
-//= require turbolinks
 //= require jquery.nested-fields.min
 
 // change flatty theme.js document.ready to document.on 'page:change', ->

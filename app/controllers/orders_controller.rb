@@ -147,7 +147,7 @@ class OrdersController < ApplicationController
 
     def set_shipping_fee
       @shipping_fee = ShippingFeeTranslate.where(locale_id: @order.locale_id, shipping_fee_id: @order.shipping_fee_id).first
-      if @shipping_fee.free_condition && @shipping_fee.free_condition < @order.subtotal
+      if @shipping_fee.free_condition && @shipping_fee.free_condition <= @order.subtotal
         @shipping_fee.fee = 0
       end
     end

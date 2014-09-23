@@ -91,20 +91,29 @@
               </div>
               <div class="items">
                 <%= f.nested_fields_for :course_options do |builder| %>
-                  <div class="form-group item">
-                    <div class="row">
-                      <div class="col-md-2" style="padding-right: 0">
-                        <%= builder.select :locale_id, Locale.all.order(id: :desc).collect{|locale| [locale.name, locale.id]}, {selected: builder.object.locale_id}, {class: 'form-control'} %>
+                  <div class="item">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-5" style="padding-right: 0">
+                          <%= builder.select :locale_id, Locale.all.order(id: :desc).collect{|locale| [locale.name, locale.id]}, {selected: builder.object.locale_id}, {class: 'form-control'} %>
+                        </div>
+                        <div class="col-md-6" style="padding-right: 0">
+                          <%= builder.text_field :price, class: 'form-control', placeholder: '選項價格' %>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0;">
+                          <a class="btn remove btn-xs btn-link" href="#" style="padding-top: 7px;">
+                            <i class="icon-remove"></i>
+                          </a>
+                        </div>
                       </div>
-                      <div class="col-md-9" style="padding-right: 0;">
-                        <%= builder.text_field :content, class: 'form-control', placeholder: '選項內容' %>
-                        <%= builder.hidden_field :id %>
-                        <%= builder.hidden_field :_destroy %>
-                      </div>
-                      <div class="col-md-1" style="padding-left: 0;">
-                        <a class="btn remove btn-xs btn-link" href="#" style="padding-top: 7px;">
-                          <i class="icon-remove"></i>
-                        </a>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12" style="">
+                          <%= builder.text_field :content, class: 'form-control', placeholder: '選項內容' %>
+                          <%= builder.hidden_field :id %>
+                          <%= builder.hidden_field :_destroy %>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -149,7 +158,7 @@
                   <div class="form-group">
                     <%= builder.label :description, '課程敘述' %>
                     <div class="controls">
-                      <%= builder.text_area :description, class: 'form-control autosize', placeholder: '請輸入敘述' %>
+                      <%= builder.text_area :description, class: 'form-control wysihtml5-less', placeholder: '請輸入敘述', rows: 14 %>
                     </div>
                   </div>
                   <div class="form-group">
@@ -177,5 +186,20 @@
         </div>
       </fieldset>
     <% end %>
+  </div>
+</div>
+
+<div class="ajax-upload-insert-image-modal modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h4 class="modal-title"><i class="icon-exclamation"></i> 此處不支援上傳圖片</h4>
+      </div>
+
+      <div class="modal-body text-right">
+        <a href="#" class="btn btn-default" data-dismiss="modal">確定</a>
+      </div>
+    </div>
   </div>
 </div>

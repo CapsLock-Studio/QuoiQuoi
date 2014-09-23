@@ -59,6 +59,7 @@ zh-TW:
         significant: false
         strip_insignificant_zeros: false
         unit: "NT$"
+        negative_format: "%u -%n"
 
   date:
     day_names: ['一', '二', '三', '四', '五', '六', '日']
@@ -434,6 +435,7 @@ zh-TW:
   completed_hint: '我們會儘速處理您的訂單, 在此感謝你的耐心等候<br/>客製化產品如果有原本訂製要求以外的額外要求, 我們將針對此額外要求另外收取修改費用<br/>另外如果你購買的產品很多, 需要在不同時間分開寄送, 請通知我們'
   sincerely: '最後再次獻上我們誠摯的感謝, 祝您有美好的一天'
   option: '選項'
+  option_price: '選項價格'
   enter: '確認'
   person: '人'
   payment_completed: '你的付款已經完成'

@@ -9,6 +9,7 @@ class Admin::SystemController < AdminController
 
   def update
     $redis.set('seo:title', seo_params[:title])
+    $redis.set('seo:og:title', seo_params[:og][:title])
     $redis.set('seo:description', seo_params[:description])
 
     redirect_to action: :show
@@ -16,6 +17,6 @@ class Admin::SystemController < AdminController
 
   private
   def seo_params
-    params.require(:seo).permit(:title, :description)
+    params.require(:seo).permit(:title, :description, og: [:title])
   end
 end

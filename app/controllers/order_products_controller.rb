@@ -6,27 +6,27 @@ class OrderProductsController < ApplicationController
 
     order_product = order_in_cart.order_products.build(order_product_params)
     order_product.discount = order_product.product.discount
-    order_product.price = price_discount(order_product.product.product_translates.where(locale_id: session[:locale_id]).first.price, order_product.product.discount)
+    price = order_product.product.product_translates.where(locale_id: session[:locale_id]).first.price
+    if order_product.product_option
+      price += order_product.product_option.price
+    end
+    order_product.price = price_discount(price, order_product.product.discount)
 
-    respond_to do |format|
-      if order_product.product.quantity - order_product.quantity < 0
-        format.html {render json: 'Products are sold out'}
-      elsif order_product.save
-        format.html {redirect_to cart_path}
-      else
-        format.html {render json: order_product.errors}
-      end
+    if order_product.product.quantity - order_product.quantity < 0
+      render json: 'Products are sold out'
+    elsif order_product.save
+      redirect_to cart_path
+    else
+      render json: order_product.errors
     end
   end
 
   def destroy
     order_product = order_in_cart.order_products.find(params[:id])
-    respond_to do |format|
-      if order_product.destroy
-        format.html {redirect_to cart_path}
-      else
-        format.html {render json: order_product}
-      end
+    if order_product.destroy
+      redirect_to cart_path
+    else
+      render json: order_product
     end
   end
 

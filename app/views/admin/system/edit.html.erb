@@ -20,9 +20,13 @@
         </div>
         <div class="box-content">
           <%= form_tag admin_system_path, method: :put do %>
-            <label for="seo-title">網站標題(請控制在100字以內)</label>
+            <label for="website-title">網站名稱(請盡可能簡短)</label>
             <div class="form-group">
               <%= text_field_tag 'seo[title]', $redis.get('seo:title'), class: 'form-control' %>
+            </div>
+            <label for="seo-title">網站標題(請控制在100字以內)</label>
+            <div class="form-group">
+              <%= text_field_tag 'seo[og][title]', $redis.get('seo:og:title'), class: 'form-control' %>
             </div>
             <label for="seo-description">網站敘述(請控制在140字以內)</label>
             <div class="form-group">

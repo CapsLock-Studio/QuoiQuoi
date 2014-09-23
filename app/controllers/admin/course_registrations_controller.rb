@@ -4,7 +4,7 @@ class Admin::CourseRegistrationsController < AdminController
   add_breadcrumb '首頁', :admin_root_path
 
   def index
-    @search_filter = params[:search_filter] || %w[not_completed completed]
+    @search_filter = params[:search_filter] || %w[not_completed]
     query_condition = []
     query_condition << 'time < ?' unless @search_filter.include?('not_completed')
     query_condition << Time.now unless @search_filter.include?('not_completed')

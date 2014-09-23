@@ -1,7 +1,7 @@
 <div class="carousel carousel-fade slide" id="home-carousel">
   <ol class="carousel-indicators">
     <% @slides.each_with_index do |slide, index| %>
-      <li data-target="#home-carousel" data-slide-to="index" class="<%= 'active' if index == 0 %>"></li>
+      <li data-target="#home-carousel" data-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
     <% end %>
   </ol>
 

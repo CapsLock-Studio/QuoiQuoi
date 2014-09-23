@@ -67,6 +67,12 @@
           </h5>
         </td>
         <td>
+          <% if order_product.product_option %>
+            <h5>
+              <%= number_to_currency(translate.price) %><br/>
+              <small><%= number_to_currency(order_product.product_option.price) %></small>
+            </h5>
+          <% end %>
           <%= number_to_currency(order_product.price) %>
         </td>
         <td style="text-align: center">

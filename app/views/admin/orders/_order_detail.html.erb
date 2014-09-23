@@ -44,7 +44,13 @@
                 </h5>
               </td>
               <td>
-                <%= number_to_currency(order_product.price, locale: locale.lang) %>
+                <% if order_product.product_option %>
+                  <h5>
+                    <%= number_to_currency(translate.price) %><br/>
+                    <small><%= number_to_currency(order_product.product_option.price) %></small>
+                  </h5>
+                <% end %>
+                <%= number_to_currency(order_product.price) %>
                 <% if order_product.discount > 0 %>
                   <br/>
                   <small><%= '%g' % order_product.discount.to_f %>折優惠</small>

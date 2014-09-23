@@ -110,7 +110,13 @@
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(order_product.price) %><br/>
+                              <% if order_product.product_option %>
+                                <h5>
+                                  <%= number_to_currency(translate.price) %><br/>
+                                  <small><%= number_to_currency(order_product.product_option.price) %></small>
+                                </h5>
+                              <% end %>
+                              <%= number_to_currency(order_product.price) %>
                             </td>
                             <td>
                               <%= order_product.quantity %>
@@ -149,10 +155,10 @@
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>
                     <strong class="text-muted subtotal" data-price="<%= @subtotal %>">
-                      <%= (@subtotal > shipping_fee.free_condition)? number_to_currency(@subtotal) : number_to_currency(@subtotal + shipping_fee.fee) %>
+                      <%= (@subtotal >= shipping_fee.free_condition)? number_to_currency(@subtotal) : number_to_currency(@subtotal + shipping_fee.fee) %>
                     </strong>
                   </h4>
-                  <span class="text-muted pull-right">(<%= t('shipping_fee') %>: <span class="shipping-fee-subtotal"><%= (@subtotal > shipping_fee.free_condition)? number_to_currency(0) : number_to_currency(shipping_fee.fee) %></span>)</span>
+                  <span class="text-muted pull-right">(<%= t('shipping_fee') %>: <span class="shipping-fee-subtotal"><%= (@subtotal >= shipping_fee.free_condition)? number_to_currency(0) : number_to_currency(shipping_fee.fee) %></span>)</span>
                 </div>
               </div>
             </div>

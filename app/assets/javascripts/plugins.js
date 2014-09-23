@@ -86,7 +86,7 @@ var initChangeFee = function() {
         if (freeCondition != null) {
 
             // 結帳金額大於免運費條件免運費
-            if (subtotal > freeCondition) {
+            if (subtotal >= freeCondition) {
                 subtotalFeeElement.text('$0.00');
                 subtotalElement.text('$' + (subtotal + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
             }
@@ -196,17 +196,34 @@ var initToggleSearchGiftForm = function() {
 };
 
 var initCartCalculate = function() {
+    $('.option-price').on('change', function(e){
+        var productAndOptionPrice = parseFloat($(this).find('option:selected').data('price'));
+        var parentElement = $(this).parent('div');
+        var productPriceBlock = parentElement.find('.product-price');
+        var totalAmountBlock = $('.total-amount');
+        var subtotal = productPriceBlock.val() * productAndOptionPrice;
+        var totalAmount = 0;
+
+        productPriceBlock.data('price', parseFloat($(this).find('option:selected').data('price')));
+        parentElement.find('.subtotal').text(parentElement.find('.subtotal').text().getCurrency() + subtotal.format()).data('subtotal', subtotal);
+
+        $('.subtotal').each(function(e){
+            totalAmount += parseFloat($(this).data('subtotal'));
+        });
+        totalAmountBlock.text(totalAmountBlock.text().getCurrency() + totalAmount.format());
+    });
     $('.product-price').on('change', function(e){
         var productBlock = $(this).closest('.product');
+        var totalAmountBlock = $('.total-amount');
         var subtotal = parseFloat($(this).data('price')) * $(this).val();
-        productBlock.find('.subtotal').text('$' + subtotal.toFixed(2)).data('subtotal', subtotal);
+        productBlock.find('.subtotal').text(productBlock.find('.subtotal').text().getCurrency() + subtotal.format()).data('subtotal', subtotal);
 
         var totalAmount = 0;
         $('.subtotal').each(function(e){
             totalAmount += parseFloat($(this).data('subtotal'));
         });
 
-        $('.total-amount').text(totalAmount.toFixed(2));
+        totalAmountBlock.text(totalAmountBlock.text().getCurrency() + totalAmount.format());
     });
 };
 
@@ -259,3 +276,11 @@ function getCookie(cname) {
     }
     return "";
 }
+
+String.prototype.getCurrency = function() {
+    return this.toString().replace(/(\w*\$[\s\r\n]*)[\w,.]*/g, '$1');
+}
+
+Number.prototype.format = function(){
+    return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+};

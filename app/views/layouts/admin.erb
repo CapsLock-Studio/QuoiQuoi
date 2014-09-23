@@ -4,7 +4,6 @@
   <title>quoiquoi 布知道 - 後台管理系統</title>
   <%= stylesheet_link_tag    'flatty', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'flatty', 'data-turbolinks-track' => true %>
   <%= favicon_link_tag 'favicon.ico' %>
 </head>
 <body class="fixed-navigation contrast-orange">
@@ -25,6 +24,8 @@
     </div>
   </section>
 </div>
+<%= javascript_include_tag 'flatty', data: {'turbolinks-track' => true, 'turbolinks-eval' => false} %>
+<%= javascript_include_tag 'flatty/theme', data: {'turbolinks-track' => true} %>
 <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
 </body>
 </html>
