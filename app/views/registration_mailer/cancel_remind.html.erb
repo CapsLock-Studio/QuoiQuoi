@@ -20,7 +20,7 @@
     <td><%= t('call_name') %></td>
     <td><%= t('course_time') %></td>
     <td><%= t('course.number') %></td>
-    <td><%= t('option') %></td>
+    <td><%= "#{t('option')} / #{t('option_price')}" %></td>
   </tr>
   </thead>
   <tbody>
@@ -39,7 +39,7 @@
     <td style="text-align: center">
       <%= @registration.attendance %></td>
     <td>
-      <%= @registration.course_option.content if @registration.course_option %>
+      <%= (@registration.course_option)? "#{@registration.course_option.content} / #{@registration.course_option.price}" : t('none') %>
     </td>
   </tr>
   </tbody>

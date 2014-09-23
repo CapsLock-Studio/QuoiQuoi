@@ -70,7 +70,11 @@ class RegistrationsController < ApplicationController
       end
 
       if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed? && !r.canceled?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
-        @registration.subtotal = @registration.attendance * translate.price
+        course_tuition = translate.price
+        if @registration.course_option
+          course_tuition += @registration.course_option.price
+        end
+        @registration.subtotal = @registration.attendance * course_tuition
         @registration.locale_id = translate.locale.id
         @registration.currency = translate.locale.currency
 

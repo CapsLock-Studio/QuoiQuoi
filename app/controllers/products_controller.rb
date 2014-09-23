@@ -11,10 +11,18 @@ class ProductsController < ApplicationController
         add_breadcrumb t('home'), :root_path
 
         @products = Product.where(product_type_id: params[:product_type_id], visible: true).order(id: :desc).page(params[:page]).per(12)
+        product_type_name = nil
 
-        unless @products.first.nil?
-          add_breadcrumb @products.first.product_type_id.nil? ? I18n.t('handmadebag') : @products.first.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name.upcase
+        if params[:product_type_id]
+          product_type_name = ProductType.find(params[:product_type_id]).product_type_translates.find_by_locale_id(session[:locale_id]).name
+        else
+          product_type_name = I18n.t('handmadebag')
         end
+
+        add_breadcrumb product_type_name
+
+        # append to title name for seo
+        @website_title = "#{product_type_name} | #{@website_title}"
       end
 
       format.xml do
@@ -46,6 +54,7 @@ class ProductsController < ApplicationController
       render json: 'this product is not available in this locale setting'
     end
 
+    @website_title = "#{translate.name} | #{@website_title}"
     @meta_og_title = translate.name
     @meta_og_description = translate.description.gsub(/\n/, '')
     @meta_og_type = 'product'

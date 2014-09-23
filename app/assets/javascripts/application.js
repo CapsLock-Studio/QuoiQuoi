@@ -147,8 +147,17 @@
 
     $('.refresh-price-source').on('change', function(){
         var priceTarget = $('.refresh-price-target');
-        priceTarget.text(((parseInt(priceTarget.data('price'), 10) * parseInt($(this).val(), 10)) + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
+        var subtotal = parseFloat(priceTarget.data('price')) * parseInt($(this).val(), 10);
+        priceTarget.text(priceTarget.text().getCurrency() + subtotal.format());
+
     });
+
+    $('.course-option-price').on('change', function(){{
+        var priceTarget = $('.refresh-price-target');
+        var tuition = $(this).find('option:selected').data('price');
+        var subtotal = parseFloat(tuition) * parseInt($('.refresh-price-source').val(), 10);
+        priceTarget.data('price', tuition).text(priceTarget.text().getCurrency() + subtotal.format());
+    }});
 
     $('.youtube-video').on('click', function(){
         convertPlayer(this);

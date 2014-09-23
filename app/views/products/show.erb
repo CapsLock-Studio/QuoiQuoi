@@ -56,7 +56,7 @@
                     <%= translate.name %>
                   </strong>
                 </h3>
-                <%= simple_format(translate.description) %>
+                <%= translate.description.html_safe %>
               </div>
               <% if @order_product.product.visible? %>
                 <div class="col-md-12 margin-bottom-10">
@@ -71,10 +71,10 @@
                       <small><%= t('full_price') %> <%= number_to_currency(translate.price) %>, <%= t('product.discount', percent: locale_discount(@order_product.product.discount)) %></small>
                     <% end %>
                   </h4>
-                  <% options = ProductOption.where(product_id: @order_product.product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id]} %>
+                  <% options = ProductOption.where(product_id: @order_product.product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, {data: {subtext: number_to_currency(option.price)}}]} %>
                   <% if options.length > 0 %>
                     <label><%= t('option') %></label>
-                    <%= f.select :product_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                    <%= f.select :product_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
                   <% end %>
                   <% if @order_product.product.quantity > 0 %>
                     <label><%= t('quantity') %></label>

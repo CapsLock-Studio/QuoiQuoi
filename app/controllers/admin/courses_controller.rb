@@ -81,7 +81,7 @@ class Admin::CoursesController < AdminController
     def course_params
       params.require(:course).permit(:id, :image, :price, :time, :length, :popular, :attendance,
                                      course_images_attributes: [:_destroy, :id, :course_id, :image],
-                                     course_options_attributes: [:_destroy, :id, :content, :locale_id],
+                                     course_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
                                      course_translates_attributes: [:_destroy, :id, :price, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
     end
 end

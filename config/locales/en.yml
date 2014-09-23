@@ -407,6 +407,7 @@ en:
   completed_hint: 'We will deal with this order and deliver the products as soon as possible.<br/>Thank you for your patience.<br>Each customization order will be hand produced according to your requirement.<br/>If you still have additional requirement, we will charge for this extra mend.<br/>Moreover, if you buy many products and want to arrange different shipping time for each product'
   sincerely: 'Yours Sincerely,'
   option: 'Option'
+  option_price: 'Option price'
   enter: 'Enter'
   person: 'Person'
   customizations: 'Customizations'

@@ -155,8 +155,13 @@
                           </div>
                         </td>
                         <td class="col-xs-1">
-                          <%= number_to_currency(order_product.price, locale: locale) %><br/>
-                          <span class="text-muted">*&nbsp;<%= order_product.quantity %></span><br/>
+                          <% if order_product.product_option %>
+                            <h5>
+                              <%= number_to_currency(translate.price) %><br/>
+                              <small><%= number_to_currency(order_product.product_option.price) %></small>
+                            </h5>
+                          <% end %>
+                          <%= number_to_currency(order_product.price) %>&nbsp;<span class="text-muted">*&nbsp;<%= order_product.quantity %></span>
                         </td>
                       </tr>
                     <% end %>

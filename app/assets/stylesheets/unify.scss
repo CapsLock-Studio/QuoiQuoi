@@ -968,3 +968,20 @@ a[data-toggle=offcanvas] {
     }
   }
 }
+
+.bootstrap-select.btn-group {
+  .dropdown-menu {
+    li:not(.disabled) {
+      & > a {
+        &:hover small, &:focus small {
+          color: #999;
+        }
+      }
+    }
+    li.active:not(.disabled) {
+      & > a small {
+        color: #999;
+      }
+    }
+  }
+}

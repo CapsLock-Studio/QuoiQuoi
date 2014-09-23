@@ -19,9 +19,13 @@
           </div>
         </div>
         <div class="box-content">
+          <label for="website-title">網站名稱(請盡可能簡短)</label>
+          <div class="form-group">
+            <input id="website-title" disabled="disabled" class="form-control" value="<%= $redis.get('seo:title') %>" />
+          </div>
           <label for="seo-title">網站標題(請控制在100字以內)</label>
           <div class="form-group">
-            <input id="seo-title" disabled="disabled" class="form-control" value="<%= $redis.get('seo:title') %>" />
+            <input id="seo-title" disabled="disabled" class="form-control" value="<%= $redis.get('seo:og:title') %>" />
           </div>
           <label for="seo-description">網站敘述(請控制在140字以內)</label>
           <div class="form-group">

@@ -29,6 +29,8 @@ class OrderCustomItemsController < ApplicationController
     add_breadcrumb t('home'), root_path
     add_breadcrumb t('personalize')
 
+    @website_title = "#{t('personalize')} | #{@website_title}"
+
     respond_to do |format|
       @materials = Material.all.page(params[:page]).per(16)
 
