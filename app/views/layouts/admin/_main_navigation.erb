@@ -225,12 +225,18 @@
       <% end %>
 
       <%= nav_item_with_resource('#', {rule: /#{admin_materials_path}.*|#{admin_order_information_index_path}/}, Admin::Material) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:materials) or is_in(:order_information) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:materials) or is_in(:material_types) or is_in(:order_information) or is_in(:instructions) %>" href="#">
           <i class="icon-heart-empty"></i>
           <span>訂製手工包說明管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:materials) or is_in(:order_information) or is_in(:instructions) %>">
+        <ul class="nav <%= 'in' if is_in(:materials) or is_in(:material_types) or is_in(:order_information) or is_in(:instructions) %>">
+          <%= nav_item_with_resource(admin_material_types_path, {rule: /^#{admin_material_types_path}(\/\d+)?(?!\/material)/}, Admin::Material) do %>
+            <%= link_to(admin_material_types_path) do %>
+              <i class="icon-tag"></i>
+              <span>布料類別管理</span>
+            <% end %>
+          <% end %>
           <%= nav_item_with_resource(admin_materials_path, {rule: /#{admin_materials_path}.*/}, Admin::Material) do %>
             <%= link_to(admin_materials_path) do %>
               <i class="icon-picture"></i>

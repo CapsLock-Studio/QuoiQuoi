@@ -161,6 +161,7 @@ QuoiQuoi::Application.routes.draw do
       put 'sort', on: :collection
     end
     resources :materials
+    resources :material_types
 
     resources :users do
       resources :messages
