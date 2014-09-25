@@ -10,4 +10,7 @@
 //= require flatty/confirm
 //= require jquery.nested-fields.min
 
-// change flatty theme.js document.ready to document.on 'page:change', ->
+// settings
+bootbox.setDefaults({
+    locale: 'zh_TW'
+});

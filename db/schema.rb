@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922084835) do
+ActiveRecord::Schema.define(version: 20140924071556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -357,6 +357,22 @@ ActiveRecord::Schema.define(version: 20140922084835) do
 
   add_index "material_translates", ["material_id"], name: "index_material_translates_on_material_id", using: :btree
 
+  create_table "material_type_translates", force: true do |t|
+    t.integer  "material_type_id"
+    t.integer  "locale_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "material_type_translates", ["locale_id"], name: "index_material_type_translates_on_locale_id", using: :btree
+  add_index "material_type_translates", ["material_type_id"], name: "index_material_type_translates_on_material_type_id", using: :btree
+
+  create_table "material_types", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "materials", force: true do |t|
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -364,7 +380,10 @@ ActiveRecord::Schema.define(version: 20140922084835) do
     t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "material_types_id"
   end
+
+  add_index "materials", ["material_types_id"], name: "index_materials_on_material_types_id", using: :btree
 
   create_table "messages", force: true do |t|
     t.integer  "user_id"
