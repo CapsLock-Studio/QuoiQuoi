@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140924071556) do
+ActiveRecord::Schema.define(version: 20140925093246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -371,6 +371,7 @@ ActiveRecord::Schema.define(version: 20140924071556) do
   create_table "material_types", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "visible",    default: true
   end
 
   create_table "materials", force: true do |t|
@@ -380,10 +381,9 @@ ActiveRecord::Schema.define(version: 20140924071556) do
     t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "material_types_id"
+    t.boolean  "visible",            default: true
+    t.integer  "material_type_id"
   end
-
-  add_index "materials", ["material_types_id"], name: "index_materials_on_material_types_id", using: :btree
 
   create_table "messages", force: true do |t|
     t.integer  "user_id"

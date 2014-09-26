@@ -116,8 +116,8 @@
                 <div class="col-md-12">
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>:
-                    <strong class="text-muted refresh-price-target" data-price="<%= translate.price + @registration.course_option.price %>">
-                      <%= number_to_currency(translate.price + @registration.course_option.price) %>
+                    <strong class="text-muted refresh-price-target" data-price="<%= (@registration.course_option)? translate.price + @registration.course_option.price : translate.price %>">
+                      <%= number_to_currency((@registration.course_option)? translate.price + @registration.course_option.price : translate.price) %>
                     </strong>
                   </h4>
                 </div>

@@ -2,7 +2,11 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <%= image_tag @product.image.url(:thumb), class: 'well-sm' %>
-      <span>現貨修改可選項目 - <%= @product.product_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join('/') %></span>
+      現貨修改可選項目&nbsp;
+      <small>現貨名稱:&nbsp;</small>
+      <span class="label label-danger">
+        <%= @product.product_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join('/') %>
+      </span>
     </h1>
     <div class="pull-right">
       <div class="btn-group">
@@ -21,11 +25,11 @@
                   <%= item.product_custom_item_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' / ') %>
                 </div>
                 <div class="actions">
-                  <%= link_to(admin_product_product_custom_item_path(@product, item), class: 'btn btn-xs btn-link', method: :delete) do %>
-                    <i class="icon-remove"></i>
-                  <% end %>
                   <%= link_to(edit_admin_product_product_custom_item_path(@product, item), class: 'btn btn-xs btn-link') do %>
                     <i class="icon-pencil"></i>
+                  <% end %>
+                  <%= link_to(admin_product_product_custom_item_path(@product, item), class: 'btn btn-xs btn-link', method: :delete, data: {confirm: '確定要刪除這個項目嗎?'}) do %>
+                    <i class="icon-remove"></i>
                   <% end %>
                 </div>
               </div>

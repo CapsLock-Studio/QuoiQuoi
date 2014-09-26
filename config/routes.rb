@@ -160,8 +160,21 @@ QuoiQuoi::Application.routes.draw do
     resources :broadcasts do
       put 'sort', on: :collection
     end
-    resources :materials
-    resources :material_types
+
+    resources :materials do
+      member do
+        put :visible
+        patch :visible
+      end
+    end
+    resources :material_types do
+      member do
+        put :visible
+        patch :visible
+      end
+
+      resources :materials
+    end
 
     resources :users do
       resources :messages
