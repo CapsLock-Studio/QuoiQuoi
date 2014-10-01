@@ -34,7 +34,7 @@ class Admin::CourseRegistrationsController < AdminController
   # full course
   def full_register
     @course = Course.find(params[:id])
-    if @course.update_attributes(full: true, full_time: Time.now)
+    if @course.update_attributes(full: params[:full], full_time: Time.now)
       redirect_to action: :index
     else
       render json: @course.errors
