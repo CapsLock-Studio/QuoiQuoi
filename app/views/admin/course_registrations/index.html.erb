@@ -131,10 +131,21 @@
                         <i class="icon-eye-open"></i>
                         查看所有報名人
                       <% end %>
-                      <%= link_to(full_admin_course_registration_path(course), class: 'btn btn-primary', method: :put, disabled: (course.full? || attendance >= course.popular)) do %>
-                        <i class="icon-group"></i>
-                        額滿
+
+                      <% if attendance >= course.popular %>
+                        <%= link_to(full_admin_course_registration_path(course), class: 'btn btn-inverse', method: :put, disabled: true) do %>
+                          報名上限額滿
+                        <% end %>
+                      <% elsif course.full? %>
+                        <%= link_to(full_admin_course_registration_path(course, full: false), class: 'btn btn-primary', method: :put) do %>
+                          取消額滿
+                        <% end %>
+                      <% else %>
+                        <%= link_to(full_admin_course_registration_path(course, full: true), class: 'btn btn-info', method: :put) do %>
+                          設定額滿
+                        <% end %>
                       <% end %>
+
                       <%= link_to(admin_course_registration_path(course), class: 'btn btn-danger', method: :put, data: {confirm: '確定要取消課程嗎?'}, disabled: course.canceled?) do %>
                         <i class="icon-remove"></i>
                         取消
