@@ -39,10 +39,10 @@
                   <tr>
                     <td><%= message.id %></td>
                     <td>
-                      <%= "#{message.name}- #{message.email}" %>
+                      <%= "#{message.name}<br/>#{message.email}".html_safe %>
                     </td>
                     <td>
-                      <%= truncate(message.content, length: 100) %>
+                      <%= truncate(message.content, length: 25) %>
                     </td>
                     <td>
                       <%= message.created_at.strftime('%Y/%m/%d %H:%I:%S') %>
