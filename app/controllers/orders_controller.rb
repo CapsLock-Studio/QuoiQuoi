@@ -120,13 +120,21 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/pay
   def pay_show
-    if @order.payment && @order.payment.completed?
-      redirect_to order_path(@order)
-    elsif @order.payment
-      @order.payment.destroy
-    end
+    if @order.payment
 
-    @payment = @order.build_payment
+      # if payment completed redirect to registrations page, not allow user to choose pay way again
+      # then, if the payment is not completed, we need to delete uncompleted payment and let user to choose pay way again
+      if @order.payment.completed?
+        redirect_to order_path(@order)
+      else
+        @order.payment.destroy
+        @payment = @order.build_payment
+      end
+    else
+
+      # has not choose pay way yet
+      @payment = @order.build_payment
+    end
   end
 
   private
