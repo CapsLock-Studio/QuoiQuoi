@@ -108,14 +108,22 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('payment')
 
     @registration = Registration.find(params[:id])
+    if @registration.payment
 
-    if @registration.payment && @registration.payment.completed?
-      redirect_to registrations_path
-    elsif @registration.payment
-      @registration.payment.destroy
+      # if payment completed redirect to registrations page, not allow user to choose pay way again
+      # then, if the payment is not completed, we need to delete uncompleted payment and let user to choose pay way again
+      if @registration.payment.completed?
+        redirect_to registrations_path
+      else
+        # delete all exists payment and rebuild one
+        @registration.payment.destroy
+        @payment = @registration.build_payment
+      end
+    else
+
+      # has not choose pay way yet
+      @payment = @registration.build_payment
     end
-
-    @payment = @registration.build_payment
   end
 
   def destroy
