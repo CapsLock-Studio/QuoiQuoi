@@ -100,7 +100,7 @@
                     </td>
                     <td>
                       <% translates.each do |translate| %>
-                        <%= truncate(translate[:name]) %>&nbsp;<span class="label label-default"><%= translate[:lang] %></span><br/>
+                        <span class="label label-default"><%= translate[:lang] %></span>&nbsp;<%= truncate(translate[:name]) %><br/>
                       <% end %>
                     </td>
                     <td>
