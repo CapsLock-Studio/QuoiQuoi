@@ -224,7 +224,7 @@ en:
   submit_message: 'Send the message'
   report: 'REPORT'
   chose_your_material: 'Choose the materials'
-  choose_additional: 'Choose the modes, accessories and materials'
+  choose_additional: 'Choose the modes, accessories'
   no_options: 'Sorry, there is no options.'
   no_message: 'No message.'
   original_bag: 'Original personalized bag'
@@ -429,6 +429,7 @@ en:
   remarks: 'Remarks'
   others: 'Others'
   payment_completed: 'Your payment has been completed.'
+  paypal_hint: ""
   outdated:
     title: 'Your browser is out-of-date!'
     content: 'Update your browser to view this website correctly.'

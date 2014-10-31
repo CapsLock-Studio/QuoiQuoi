@@ -254,7 +254,7 @@ zh-TW:
   submit_message: '送出訊息'
   report: '回報'
   chose_your_material: '選擇你喜歡的布料'
-  choose_additional: '選擇你喜歡的樣式、配件或布料'
+  choose_additional: '選擇你喜歡的樣式、配件'
   no_options: '抱歉, 現在沒有可以選擇的項目'
   no_message: '沒有留言'
   original_bag: '訂製原創包'
@@ -457,6 +457,8 @@ zh-TW:
   reference_price: '參考價目表'
   remarks: '備註'
   others: '其他'
+  paypal_hint: '提醒您！選擇Paypal刷信用卡，將多一筆國外交易手續費&nbsp;<span class="text-danger">*</span>'
+
   outdated:
     title: '你的瀏覽器已經過時！'
     content: '快更新你的瀏覽器以獲得正確的網頁顯示'
