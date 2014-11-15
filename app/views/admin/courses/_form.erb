@@ -17,7 +17,7 @@
               <div class="col-sm-12">
                 <div class="box image-preview-box">
                   <%= image_tag f.object.image.url(:large), class: 'img-responsive' %>
-                  <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+                  <%= f.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
                 </div>
                 <a href="#" class="add btn btn-u pull-right">
                   新增圖片
@@ -25,17 +25,14 @@
               </div>
             </div>
             <div class="row">
-              <div class="items">
+              <div class="list-items items">
                 <%= f.nested_fields_for :course_images do |builder| %>
-                  <div class="col-sm-4 item">
+                  <div class="list-item-3 item">
                     <div class="box image-preview-box">
-                      <div class="box-header">
+                      <div class="box-header box-header-small">
                         <div class="actions">
-                          <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
-                          </a>
-
-                          <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                          </a>
+                          <a class="btn remove btn-xs btn-link"><i class="icon-remove"></i></a>
+                          <a class="btn box-collapse btn-xs btn-link"><i></i></a>
                         </div>
                       </div>
                       <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
@@ -120,67 +117,69 @@
                 <% end %>
               </div>
             </div>
-            <%= f.fields_for :course_translates do |builder| %>
-              <div class="box">
-                <div class="box-header">
-                  <div class="title">
-                    <%= @course.course_translates[builder.index].locale.name %>
-                    <small style="margin-left:10px;">
-                      <span class="label label-success">可留空</span>
-                    </small>
-                  </div>
-                  <div class="actions">
-                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-                  </div>
-                </div>
-                <div class="box-content">
-                  <div class="form-group">
-                    <%= builder.label :price, "課程價格(#{@course.course_translates[builder.index].locale.currency})" %>
-                    <div class="controls">
-                      <%= builder.text_field :price, class: 'form-control',
-                                             placeholder: '請輸入價格', data: {number: true} %>
+            <div class="tabbable">
+              <ul class="nav nav-tabs nav-responsive">
+                <% f.object.course_translates.each_with_index do |translate, index| %>
+                  <li class="<%= 'active' if index == 0 %>">
+                    <a href="#<%= translate.locale_id %>" data-toggle="tab">
+                      資訊 <label class="label label-success"><%= translate.locale.name %></label> <span class="badge badge-success">可以留空</span>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+              <div class="tab-content">
+                <% f.object.course_translates.each_with_index do |translate, index| %>
+                  <%= f.fields_for :course_translates, translate do |field| %>
+                    <div class="tab-pane <%= 'active' if index == 0 %>" id="<%= translate.locale.id %>">
+                      <div class="form-group">
+                        <%= field.label :price, "課程價格(#{translate.locale.currency})" %>
+                        <div class="controls">
+                          <%= field.text_field :price, class: 'form-control',
+                                                 placeholder: '請輸入價格', data: {number: true} %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :teacher, '上課老師' %>
+                        <div class="controls">
+                          <%= field.text_field :teacher, class: 'form-control',
+                                                 placeholder: '請輸入老師名字' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :name, '課程名稱' %>
+                        <div class="controls">
+                          <%= field.text_field :name, class: 'form-control',
+                                                 placeholder: '請輸入名稱' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :description, '課程敘述' %>
+                        <div class="controls">
+                          <%= field.text_area :description, class: 'form-control wysihtml5-less-image', placeholder: '請輸入敘述', rows: 14 %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :note, '課程備註' %>
+                        <div class="controls">
+                          <%= field.text_field :note, class: 'form-control', placeholder: '請輸入備註' %>
+                        </div>
+                      </div>
+                      <%= field.hidden_field :locale_id %>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <%= builder.label :teacher, '上課老師' %>
-                    <div class="controls">
-                      <%= builder.text_field :teacher, class: 'form-control',
-                                             placeholder: '請輸入老師名字' %>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <%= builder.label :name, '課程名稱' %>
-                    <div class="controls">
-                      <%= builder.text_field :name, class: 'form-control',
-                                             placeholder: '請輸入名稱' %>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <%= builder.label :description, '課程敘述' %>
-                    <div class="controls">
-                      <%= builder.text_area :description, class: 'form-control wysihtml5-less', placeholder: '請輸入敘述', rows: 14 %>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <%= builder.label :note, '課程備註' %>
-                    <div class="controls">
-                      <%= builder.text_field :note, class: 'form-control', placeholder: '請輸入備註' %>
-                    </div>
-                  </div>
-                  <%= builder.hidden_field :locale_id %>
-                </div>
+                  <% end %>
+                <% end %>
               </div>
-            <% end %>
+            </div>
           </div>
         </div>
         <div class="row form-actions">
           <div class="col-sm-12">
             <div class="pull-right">
-              <%= link_to '取消', admin_courses_path, class: 'btn btn-lg' %>
-              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+              <%= link_to '取消', admin_courses_path, class: 'btn' %>
+              <button type="submit" class="btn btn-primary">
                 <i class="icon-save"></i>
                 儲存
-              <% end %>
+              </button>
             </div>
           </div>
         </div>
@@ -189,16 +188,28 @@
   </div>
 </div>
 
-<div class="ajax-upload-insert-image-modal modal fade">
-  <div class="modal-dialog">
+<!-- because needs multi editor, so the modal template inhere -->
+<div id="insert-image-model" class="bootstrap-wysihtml5-insert-image-modal modal fade">
+  <div class="modal-dialog" style="width:auto;">
     <div class="modal-content">
       <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h4 class="modal-title"><i class="icon-exclamation"></i> 此處不支援上傳圖片</h4>
+        <h3 class="modal-title">
+          插入圖片
+          <span class="badge badge-important">敘述內的圖片在顯示上將自動貼齊寬度</span>
+        </h3>
       </div>
 
-      <div class="modal-body text-right">
-        <a href="#" class="btn btn-default" data-dismiss="modal">確定</a>
+      <div class="modal-body">
+        <div class="box">
+          <div class="box-content">
+            <%= render 'admin/templates/image_upload' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
       </div>
     </div>
   </div>

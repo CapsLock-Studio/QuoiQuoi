@@ -70,9 +70,7 @@
 
         "image": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
-            return "<li>" +
-                "<div class='bootstrap-wysihtml5-insert-image-modal modal fade'>" +
-                "<div class='modal-dialog'>" +
+            var regularModel = "<div class='modal-dialog'>" +
                 "<div class='modal-content'>" +
                 "<div class='modal-header'>" +
                 "<a class='close' data-dismiss='modal'>&times;</a>" +
@@ -86,7 +84,12 @@
                 "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.image.insert + "</a>" +
                 "</div>" +
                 "</div>" +
-                "</div>" +
+                "</div>";
+            var specifyModel = $('#insert-image-model');
+
+            return "<li>" +
+                "<div class='bootstrap-wysihtml5-insert-image-modal modal fade'>" +
+                ((specifyModel.length > 0) ? specifyModel.html() : regularModel) +
                 "</div>" +
                 "<a class='btn btn-default btn" + size + "' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "' tabindex='-1'><i class='icon-picture'></i></a>" +
                 "</li>";
@@ -137,6 +140,28 @@
         }
         this.toolbar = this.createToolbar(el, toolbarOpts);
         this.editor =  this.createEditor(options);
+
+        // because frame height will not set properly, so we set it to fixed min height,
+        // when user start to edit content will fit the correct editor height
+        this.editor.observe("load", function () {
+            var $iframe = $(this.composer.iframe);
+            var $body = $(this.composer.element);
+            $iframe.css({
+                'min-height': '400px'
+            });
+            $body
+                .css({
+                    'min-height': 0,
+                    'line-height': '20px',
+                    'overflow': 'hidden'
+                })
+                .bind('keypress keyup keydown paste change focus blur', function(e) {
+                    var height = Math.min($body[0].scrollHeight, $body.height());
+                    // a little extra height to prevent spazzing out when creating newlines
+                    var extra = e.type == "blur" ? 0 : 20 ;
+                    $iframe.height(height + extra);
+                });
+        });
 
         window.editor = this.editor;
 
@@ -238,7 +263,7 @@
 
         initInsertImage: function(toolbar) {
             var self = this;
-            var insertImageModal = $('.ajax-upload-insert-image-modal');
+            var insertImageModal = toolbar.find('.bootstrap-wysihtml5-insert-image-modal');
             var urlInput = insertImageModal.find('.bootstrap-wysihtml5-insert-image-url');
             var caretBookmark;
 
@@ -248,6 +273,9 @@
 
             insertImageModal.on('hide', function() {
                 self.editor.currentView.element.focus();
+            }).on('click', '.ajax-upload-insert-image-button', function(){
+                // if there is no ajax-upload button in there, this function will not work
+                self.editor.composer.commands.exec('insertImage', $(this).data('url'));
             });
 
             toolbar.find('a[data-wysihtml5-command=insertImage]').click(function() {
