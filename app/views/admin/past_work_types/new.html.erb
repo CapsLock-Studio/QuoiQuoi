@@ -1,0 +1,79 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-tag"></i>
+      過去作品管理
+    </h1>
+  </div>
+  <div class="box">
+    <div class="box-header">
+      <div class="title">
+
+      </div>
+      <div class="actions">
+        <a class="btn btn-xs btn-link box-collapse"><i></i></a>
+      </div>
+    </div>
+    <div class="box-content">
+      <%= form_for [:admin, @past_work_type], html: {class: 'form validate-form col-xs-12'} do |form| %>
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="box image-preview-box">
+              <%= image_tag form.object.thumbnail.url('300x225'), class: 'img-responsive', style: 'width:100%;' %>
+              <%= form.file_field :thumbnail, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
+            </div>
+          </div>
+          <div class="col-xs-9">
+            <div class="box image-preview-box">
+              <%= image_tag form.object.image.url('960x260'), class: 'img-responsive', style: 'width: 100%' %>
+              <%= form.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
+            </div>
+          </div>
+          <%= form.fields_for :past_work_type_translates do |field| %>
+            <div class="col-xs-6">
+              <div class="box">
+                <div class="box-header">
+                  <div class="title">
+                    <%= field.object.locale.name %>
+                  </div>
+                  <div class="actions">
+                    <a class="btn btn-xs btn-link box-collapse"><i></i></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="form-group">
+                    <%= field.label :name, '類別名稱' %>&nbsp;<span class="label label-danger">不可留空</span>
+                    <div class="controls">
+                      <%= field.text_field :name, class: 'form-control', data: {'rule-required' => true} %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= field.label :description, '類別簡易敘述(250字內，請盡簡)' %>&nbsp;<span class="label label-success">可留空</span>
+                    <div class="controls">
+                      <%= field.text_area :description, class: 'form-control autosize', rows: 4 %>
+                    </div>
+                  </div>
+                  <%= field.hidden_field :id %>
+                  <%= field.hidden_field :locale_id %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-actions form-actions-padding">
+              <div class="btn-toolbar text-right">
+                <%= link_to '取消', admin_past_work_types_path, class: 'btn btn-default' %>
+                <button type="submit" class="btn btn-primary">
+                  <i class="icon-save"></i>
+                  儲存
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

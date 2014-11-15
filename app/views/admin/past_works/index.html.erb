@@ -1,0 +1,75 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <%= render 'past_work_type_info' %>
+    </h1>
+    <div class="btn-toolbar pull-right">
+      <%= link_to(admin_past_work_types_path, class: 'btn btn-default') do %>
+        <i class="icon-chevron-left"></i>
+        回到類別列表
+      <% end %>
+      <%= link_to '新增過去作品', new_admin_past_work_type_past_work_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box">
+    <div class="box-header">
+      <div class="title">
+        過去作品列表
+      </div>
+      <div class="actions">
+        <a class="btn btn-xs btn-link box-collapse"><i></i></a>
+      </div>
+    </div>
+    <div class="box-content">
+      <div class="responsive-table">
+        <table class="data-table table table-striped">
+          <thead>
+          <tr>
+            <th>編號</th>
+            <th>預覽圖</th>
+            <th>名稱</th>
+            <th>完成時間</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @past_work_type.past_works.each do |past_work| %>
+          <tr>
+            <td><%= past_work.id %></td>
+            <td><%= image_tag past_work.image.url(:thumb) %></td>
+            <td>
+              <% past_work.past_work_translates.order(:id).each do |translate| %>
+                <label class="label label-default"><%=translate.locale.name %></label>
+                <%= translate.name %>
+                <br/>
+              <% end %>
+            </td>
+            <td>
+              <%= past_work.completion_time.strftime('%Y/%m/%d') %>
+            </td>
+            <td class="text-right">
+              <%= link_to(edit_admin_past_work_path(past_work), class: 'btn btn-default') do %>
+                <i class="icon-pencil"></i>
+              <% end %>
+              <%= %>
+              <% if past_work.visible? %>
+                <%= link_to(visible_admin_past_work_path(past_work, visible: false), class: 'btn btn-info', method: :put) do %>
+                  <i class="icon-level-down"></i>
+                <% end %>
+              <% else %>
+                <%= link_to(visible_admin_past_work_path(past_work, visible: true), class: 'btn btn-primary', method: :put) do %>
+                  <i class="icon-level-up"></i>
+                <% end %>
+              <% end %>
+              <%= link_to(admin_past_work_path(past_work), class: 'btn btn-danger', method: :delete, data: {confirm: '確定要刪除嗎？'}) do %>
+                <i class="icon-remove"></i>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

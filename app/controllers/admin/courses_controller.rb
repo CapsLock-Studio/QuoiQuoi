@@ -1,5 +1,6 @@
 class Admin::CoursesController < AdminController
   before_action :set_course, except: [:index, :new, :create]
+  before_action :delete_empty_course, except: [:create, :update]
 
   add_breadcrumb '首頁', :admin_root_path
   add_breadcrumb '課程列表', :admin_courses_path
@@ -20,16 +21,22 @@ class Admin::CoursesController < AdminController
   def new
     add_breadcrumb '新增課程'
 
-    @course = Course.new
+    @course = Course.create
 
     Locale.all.order(id: :desc).each do |locale|
-      @course.course_translates.build(locale_id: locale.id)
+      @course.course_translates.create(locale_id: locale.id)
     end
+
+    @article = @course
+    @image_addition = CourseAdditionImage.new(course_id: @course.id)
   end
 
   # GET /admin/courses/edit
   def edit
     add_breadcrumb '修改課程'
+
+    @article = @course
+    @image_addition = CourseAdditionImage.new(course_id: @course.id)
   end
 
   def visible
@@ -74,14 +81,19 @@ class Admin::CoursesController < AdminController
   end
 
   private
-    def set_course
-      @course = Course.find(params[:id])
-    end
+  def set_course
+    @course = Course.find(params[:id])
+  end
 
-    def course_params
-      params.require(:course).permit(:id, :image, :price, :time, :length, :popular, :attendance,
-                                     course_images_attributes: [:_destroy, :id, :course_id, :image],
-                                     course_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
-                                     course_translates_attributes: [:_destroy, :id, :price, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
-    end
+  def course_params
+    params.require(:course).permit(:id, :image, :price, :time, :length, :popular, :attendance,
+                                   course_images_attributes: [:_destroy, :id, :course_id, :image],
+                                   course_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
+                                   course_translates_attributes: [:_destroy, :id, :price, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
+  end
+
+  def delete_empty_course
+    # delete empty course record
+    Course.all.destroy_all(time: nil)
+  end
 end

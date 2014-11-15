@@ -39,4 +39,10 @@ class User < ActiveRecord::Base
 
     user
   end
+
+  def self.create_guest_user
+    user = User.new(name: 'guest', email: "guest_#{SecureRandom.hex(5)}@quoiquoi.tw")
+    user.save!(validate: false)
+    user
+  end
 end

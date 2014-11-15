@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, except: [:index, :search]
+  before_action :set_product_type, only: [:index]
 
   # GET /products
   # GET /products.json
@@ -10,8 +11,7 @@ class ProductsController < ApplicationController
       format.html do
         add_breadcrumb t('home'), :root_path
 
-        @products = Product.where(product_type_id: params[:product_type_id], visible: true).order(id: :desc).page(params[:page]).per(12)
-        product_type_name = nil
+        @products = get_products
 
         if params[:product_type_id]
           product_type_name = ProductType.find(params[:product_type_id]).product_type_translates.find_by_locale_id(session[:locale_id]).name
@@ -25,8 +25,52 @@ class ProductsController < ApplicationController
         @website_title = "#{product_type_name} | #{@website_title}"
       end
 
+      format.json do
+        helpers = ApplicationController.helpers
+        products = get_products
+
+        render(
+            json:
+                {
+                    items: products.collect do |product|
+                      [
+                          {
+                              key: 'url',
+                              value: polymorphic_path([@product_type, product])
+                          },
+                          {
+                              key: 'name',
+                              value: helpers.truncate(product.product_translate.name, length: (session[:locale] == 'en')? 38 : 20)
+                          },
+                          {
+                              key: 'image',
+                              value: product.image.url(:small)
+                          },
+                          {
+                              key: 'price',
+                              value: helpers.number_to_currency(helpers.price_discount(product.product_translate.price, product.discount))
+                          },
+                          {
+                              key: 'discount',
+                              value: t('product.discount', percent: helpers.locale_discount(product.discount, session[:locale_id]))
+                          },
+                          {
+                              key: 'visible',
+                              value: (product.discount > 0)? '' : 'hidden'
+                          }
+                      ]
+                    end,
+                    nextPage: (products.total_pages > products.current_page) ? polymorphic_path([@product_type, :products], page: ((params[:page] || 1).to_i + 1), format: :json) : nil
+                }
+        )
+      end
+
       format.xml do
-        @products = Product.where(visible: true).order(created_at: :desc).limit(50)
+        @products = Product.includes(:product_translate)
+                           .where(product_translates: {locale_id: session[:locale_id]},
+                                  visible: true)
+                           .where.not(product_translates: {name: '', description: '', price: nil})
+                           .order(id: :desc).limit(50)
 
         render template: 'products/index.atom.builder', layout: false
       end
@@ -40,15 +84,12 @@ class ProductsController < ApplicationController
     if @product.product_type_id.nil?
       add_breadcrumb t('handmadebag'), products_path
     else
-      add_breadcrumb @product.product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name
+      add_breadcrumb ProductTypeTranslate.find_by_locale_id_and_product_type_id(session[:locale_id], params[:product_type_id]).name, product_type_products_path(@product.product_type_id)
     end
-    add_breadcrumb t('detail')
-
-    @order_product = OrderProduct.new(product_id: @product.id)
-    @other_products = Product.where(product_type_id: @product.product_type_id, visible: true).order(id: :desc).limit(8)
 
     #set seo meta
-    translate = @product.product_translates.where(locale_id: session[:locale_id]).first
+    translate = @product.product_translates.find_by_locale_id(session[:locale_id])
+    add_breadcrumb translate.name
 
     unless translate.price
       render json: 'this product is not available in this locale setting'
@@ -92,6 +133,22 @@ class ProductsController < ApplicationController
   private
 
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.includes(:product_translate)
+                        .where(product_translates: {locale_id: session[:locale_id]})
+                        .find(params[:id])
+    end
+
+    def set_product_type
+      @product_type = ProductType.find_by_id(params[:product_type_id])
+    end
+
+    def get_products
+      Product.includes(:product_translate)
+             .where(product_type_id: params[:product_type_id],
+                    product_translates: {locale_id: session[:locale_id]},
+                    visible: true)
+             .where.not(product_translates: {name: '', description: '', price: nil})
+             .order(id: :desc)
+             .page(params[:page]).per(24)
     end
 end

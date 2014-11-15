@@ -32,7 +32,9 @@ class OrderCustomItemsController < ApplicationController
     @website_title = "#{t('personalize')} | #{@website_title}"
 
     respond_to do |format|
-      @materials = Material.all.page(params[:page]).per(16)
+      # @materials = Material.all.page(params[:page]).per(16)
+      # show materials by category
+      @material_types = MaterialType.all.order(:id)
 
       if params[:product_id]
         @product_custom_items = ProductCustomItem.where(product_id: params[:product_id]).page(params[:page]).per(99)

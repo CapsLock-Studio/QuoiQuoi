@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="box-content box-padding">
-    <%= form_for([:admin, @product], html: { class: 'form validate-form', multipart: true }) do |f| %>
+    <%= form_for([:admin, @product], controller: :other_products, html: { class: 'form validate-form', multipart: true }) do |f| %>
       <fieldset>
         <div class="row">
           <div class="col-sm-6">
@@ -18,7 +18,7 @@
                 <div class="col-sm-12">
                   <div class="box image-preview-box">
                     <%= image_tag f.object.image.url(:large), class: 'img-responsive' %>
-                    <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+                    <%= f.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
                   </div>
                   <a href="#" class="add btn btn-u pull-right">
                     新增圖片
@@ -26,21 +26,20 @@
                 </div>
               </div>
               <div class="row">
-                <div class="items">
+                <div class="list-items items">
                   <%= f.nested_fields_for :product_images do |builder| %>
-                    <div class="col-sm-4 item">
+                    <div class="list-item-3 item">
                       <div class="box image-preview-box">
-                        <div class="box-header">
+                        <div class="box-header box-header-small">
                           <div class="actions">
-                            <a class="btn remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
-                            </a>
-
-                            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                            <a class="btn remove btn-xs btn-link"><i class="icon-remove"></i></a>
+                            <a class="btn box-collapse btn-xs btn-link"><i></i>
                             </a>
                           </div>
                         </div>
                         <%= image_tag builder.object.image.url(:large), class: 'img-responsive' %>
                         <%= builder.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+
                         <%= builder.hidden_field :id %>
                         <%= builder.hidden_field :_destroy %>
                       </div>
@@ -52,9 +51,8 @@
           </div>
           <div class="col-sm-6">
             <div class="form-group">
-              <%= f.select(:product_type_id, ProductType.all.collect do |product_type|
-                [product_type.product_type_translates.collect{|translate| translate.name}.join(' - '), product_type.id]
-               end.insert(0, '請選擇商品種類'), {include_blank: false}, {class: 'form-control'}) %>
+              <%= f.label :product_type_id, '商品類別' %>
+              <%= f.select(:product_type_id, @product_type_options, {include_blank: false}, {class: 'form-control select2'}) %>
             </div>
           </div>
           <div class="col-sm-6">
@@ -109,58 +107,88 @@
                 <% end %>
               </div>
             </div>
-            <%= f.fields_for :product_translates do |builder| %>
-              <div class="box">
-                <div class="box-header">
-                  <div class="title">
-                    <%= @product.product_translates[builder.index].locale.name %>
-                    <small style="margin-left:10px;">
-                      <span class="label label-success">可留空</span>
-                    </small>
-                  </div>
-                  <div class="actions">
-                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-                  </div>
-                </div>
-                <div class="box-content">
-                  <div class="form-group">
-                    <%= builder.label :price, "價格(#{@product.product_translates[builder.index].locale.currency})" %>
-                    <div class="controls">
-                      <%= builder.text_field :price, class: 'form-control',
-                                             placeholder: '請輸入價格', data: {number: true} %>
+            <div class="tabbable">
+              <ul class="nav nav-tabs nav-responsive">
+                <% f.object.product_translates.each_with_index do |translate, index| %>
+                  <li class="<%= 'active' if index == 0 %>">
+                    <a href="#<%= translate.locale.id %>" data-toggle="tab">
+                      資訊 <label class="label label-success"><%= translate.locale.name %></label> <span class="badge badge-success">可留空</span>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+              <div class="tab-content">
+                <% f.object.product_translates.each_with_index do |translate, index| %>
+                  <%= f.fields_for :product_translates, translate do |field| %>
+                    <div class="tab tab-pane <%= 'active' if index == 0 %>" id="<%= translate.locale.id %>">
+                      <div class="form-group">
+                        <%= field.label :price, "價格(#{translate.locale.currency})" %>
+                        <div class="controls">
+                          <%= field.text_field :price, class: 'form-control',
+                                                 placeholder: '請輸入價格', data: {number: true} %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :name, '商品名稱' %>
+                        <div class="controls">
+                          <%= field.text_field :name, class: 'form-control',
+                                                 placeholder: '請輸入名稱' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :description, '商品敘述' %>
+                        <div class="controls">
+                          <%= field.text_area :description, class: 'form-control wysihtml5-less-image', placeholder: '請輸入敘述', rows: 14 %>
+                        </div>
+                      </div>
+
+                      <%= field.hidden_field :locale_id %>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <%= builder.label :name, '商品名稱' %>
-                    <div class="controls">
-                      <%= builder.text_field :name, class: 'form-control',
-                                             placeholder: '請輸入名稱' %>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <%= builder.label :description, '商品敘述' %>
-                    <div class="controls">
-                      <%= builder.text_area :description, class: 'form-control wysihtml5-less', placeholder: '請輸入敘述', rows: 14 %>
-                    </div>
-                  </div>
-                  <%= builder.hidden_field :locale_id %>
-                </div>
+                  <% end %>
+                <% end %>
               </div>
-            <% end %>
+            </div>
           </div>
         </div>
         <div class="row form-actions">
           <div class="col-sm-12">
             <div class="pull-right">
-              <%= link_to '取消', admin_products_path, class: 'btn btn-lg' %>
-              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+              <%= link_to '取消', admin_other_products_path, class: 'btn' %>
+              <button type="submit" class="btn btn-primary">
                 <i class="icon-save"></i>
                 儲存
-              <% end %>
+              </button>
             </div>
           </div>
         </div>
       </fieldset>
     <% end %>
+  </div>
+</div>
+
+<!-- because needs multi editor, so the modal template inhere -->
+<div id="insert-image-model" class="bootstrap-wysihtml5-insert-image-modal modal fade">
+  <div class="modal-dialog" style="width:auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3 class="modal-title">
+          插入圖片
+          <span class="badge badge-important">敘述內的圖片在顯示上將自動貼齊寬度</span>
+        </h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="box">
+          <div class="box-content">
+            <%= render 'admin/templates/image_upload' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,13 +1,23 @@
 <div class="col-xs-12">
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
-      <i class="icon-picture"></i>
-      <span>訂製手工包 - 布料管理</span>
+      <i class="icon-tag"></i>
+      布料管理&nbsp;
+      <small>
+        類別:&nbsp;
+      </small>
+      <span class="label label-danger">
+        <%= @material_type.material_type_translates.order(:locale_id).collect{|translate| translate.name}.join(' / ') %>
+      </span>
     </h1>
     <div class="pull-right">
       <div class="btn-group">
         <div class="btn-toolbar">
-          <%= link_to '新增布料', new_admin_material_path, class: 'btn btn-info' %>
+          <%= link_to admin_material_types_path, class: 'btn btn-default' do %>
+            <i class="icon-chevron-left"></i>
+            回到布料類別列表
+          <% end %>
+          <%= link_to '新增布料', new_admin_material_type_material_path(@material_type), class: 'btn btn-info' %>
         </div>
       </div>
     </div>
@@ -23,11 +33,20 @@
                   <%= material.material_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' / ') %>
                 </div>
                 <div class="actions">
-                  <%= link_to(admin_material_path(material), class: 'btn btn-xs btn-link', method: :delete) do %>
-                    <i class="icon-remove"></i>
-                  <% end %>
-                  <%= link_to(edit_admin_material_path(material), class: 'btn btn-xs btn-link') do %>
+                  <%= link_to(edit_admin_material_type_material_path(@material_type, material), class: 'btn btn-xs btn-link') do %>
                     <i class="icon-pencil"></i>
+                  <% end %>
+                  <% if material.visible %>
+                    <%= link_to(visible_admin_material_path(material, visible: false), method: :put, class: 'btn btn-xs btn-link') do %>
+                      <i class="icon-level-down"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to(visible_admin_material_path(material, visible: true), method: :put, class: 'btn btn-xs btn-link') do %>
+                      <i class="icon-level-up"></i>
+                    <% end %>
+                  <% end %>
+                  <%= link_to(admin_material_path(material), class: 'btn btn-xs btn-link', method: :delete, data: {confirm: '確定要刪除這個布料嗎?'}) do %>
+                    <i class="icon-remove"></i>
                   <% end %>
                 </div>
               </div>

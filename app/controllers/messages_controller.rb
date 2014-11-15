@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @messages = Message.where(user_id: current_user.id).order(id: :desc).page(params[:page]).per(12)
+    @messages = Message.where(user_id: current_user.id).order(id: :desc).page(params[:page]).per(24)
   end
 
   def show

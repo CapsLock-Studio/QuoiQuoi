@@ -2,6 +2,7 @@ class Admin::ProductsController < AdminController
   authorize_resource
 
   before_action :set_product, except: [:index, :new, :create]
+  before_action :delete_empty_product, except: [:create, :update]
 
   # breadcrumbs
   add_breadcrumb '首頁', :admin_root_path
@@ -21,16 +22,21 @@ class Admin::ProductsController < AdminController
   def new
     add_breadcrumb '新增商品'
 
-    @product = Product.new
+    @product = Product.create
     @locales = Locale.all.order(id: :desc)
     @locales.each do |locale|
-      @product.product_translates.build(locale_id: locale.id)
+      @product.product_translates.create(locale_id: locale.id)
     end
 
+    @article = @product
+    @image_addition = ProductAdditionImage.new(product_id: @product.id)
   end
   # GET /products/1/edit
   def edit
     @locales = Locale.all.order(id: :desc)
+
+    @article = @product
+    @image_addition = ProductAdditionImage.new(product_id: @product.id)
   end
 
   def visible
@@ -90,18 +96,23 @@ class Admin::ProductsController < AdminController
   end
 
   private
-    def set_product
-      @product = Product.find(params[:id])
-    end
-    def product_params
-      params.require(:product).permit(:id, :image, :product_type_id, :quantity, :discount,
-                                      product_youtubes_attributes: [:_destroy, :id, :link],
-                                      product_images_attributes: [:_destroy, :id, :image],
-                                      product_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
-                                      product_translates_attributes: [:id, :price, :name, :description, :locale_id],
-                                      product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image,
-                                                                        product_custom_item_translates_attributes: [:id, :name, :locale_id
-                                                                        ]
-                                      ])
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:id, :image, :product_type_id, :quantity, :discount,
+                                    product_youtubes_attributes: [:_destroy, :id, :link],
+                                    product_images_attributes: [:_destroy, :id, :image],
+                                    product_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
+                                    product_translates_attributes: [:id, :price, :name, :description, :locale_id],
+                                    product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image,
+                                                                      product_custom_item_translates_attributes: [:id, :name, :locale_id
+                                                                      ]
+                                    ])
+  end
+
+  def delete_empty_product
+    Product.all.destroy_all(quantity: nil)
+  end
 end

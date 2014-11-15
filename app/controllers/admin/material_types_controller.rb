@@ -1,6 +1,6 @@
 class Admin::MaterialTypesController < AdminController
   authorize_resource :material
-  before_action :set_material_type, only: [:edit, :update, :destroy]
+  before_action :set_material_type, only: [:edit, :update, :visible, :collapsed, :all, :destroy]
   before_action :set_material_types, only: [:index, :edit]
 
   def index
@@ -31,6 +31,30 @@ class Admin::MaterialTypesController < AdminController
   def update
     if @material_type.update_attributes(material_type_params)
       redirect_to action: :index
+    else
+      render json: @material_type.errors
+    end
+  end
+
+  def visible
+    if @material_type.update_attribute(:visible, params[:visible])
+      redirect_to action: :index
+    else
+      render json: @material_type.errors
+    end
+  end
+
+  def collapsed
+    if @material_type.update_attribute(:collapsed, params[:collapsed])
+      redirect_to action: :index
+    else
+      render json: @material_type.errors
+    end
+  end
+
+  def all
+    if @material_type.update_attribute(:all, params[:all])
+      redirect_to :back
     else
       render json: @material_type.errors
     end

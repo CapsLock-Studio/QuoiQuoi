@@ -1,0 +1,29 @@
+@mixin list-item {
+  padding: 0 15px;
+  vertical-align: top;
+  display: inline-block;
+  font-size: initial;
+}
+
+.list-items {
+  font-size: 0;
+  padding: 0;
+
+  .list-item-3 {
+    width: 25%;
+
+    @include list-item;
+  }
+
+  .list-item-4 {
+    width: 33.3%;
+
+    @include list-item;
+  }
+
+  .list-item-6 {
+    width: 50%;
+
+    @include list-item;
+  }
+}

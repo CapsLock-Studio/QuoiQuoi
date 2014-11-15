@@ -1,7 +1,7 @@
 <% translate = CourseTranslate.where(course_id: registration.course_id, locale_id: registration.locale_id).first %>
 <% locale = Locale.where(id: registration.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-  <div class="box-header sea-blue-background">
+  <div class="box-header">
     <div class="title">課程詳細內容</div>
     <div class="actions">
       <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>

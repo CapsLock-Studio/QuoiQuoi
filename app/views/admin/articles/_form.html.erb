@@ -13,7 +13,7 @@
       <fieldset>
         <div class="form-group">
           <%= f.label :article_type_id, '文章種類' %>
-          <%= f.select :article_type_id, options_for_select(ArticleType.all.collect{|article_type| [article_type.name, article_type.id]}), {}, {class: 'form-control select2'} %>
+          <%= f.select :article_type_id, @article_type_options, {}, {class: 'form-control select2'} %>
         </div>
         <div class="form-group">
           <%= f.label :title, '文章標題' %>
@@ -25,18 +25,18 @@
         <div class="form-group">
           <%= f.label :content, '文章內容' %>
           <div class="controls">
-            <%= f.text_area :content, class: 'form-control wysihtml5', rows: 50,
+            <%= f.text_area :content, class: 'form-control wysihtml5',
                                    placeholder: '請輸入文章內容', data: {'rule-required' => true} %>
           </div>
         </div>
         <div class="row form-actions">
           <div class="col-sm-12">
             <div class="pull-right">
-              <%= link_to '取消', admin_articles_path, class: 'btn btn-lg' %>
-              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+              <%= link_to '取消', admin_articles_path, class: 'btn btn-default' %>
+              <button class="btn btn-primary" type="submit">
                 <i class="icon-save"></i>
                 儲存
-              <% end %>
+              </button>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="ajax-upload-insert-image-modal modal fade">
+<div id="insert-image-model" class="bootstrap-wysihtml5-insert-image-modal modal fade">
   <div class="modal-dialog" style="width:auto;">
     <div class="modal-content">
       <div class="modal-header">

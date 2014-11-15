@@ -9,7 +9,11 @@
       </span>
     </h1>
     <div class="pull-right">
-      <div class="btn-group">
+      <div class="btn-toolbar">
+        <%= link_to admin_products_path, class: 'btn btn-default' do %>
+          <i class="icon-chevron-left"></i>
+          回到現貨列表
+        <% end %>
         <%= link_to '新增項目', new_admin_product_product_custom_item_path(@product), class: 'btn btn-info' %>
       </div>
     </div>

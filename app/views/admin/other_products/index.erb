@@ -11,12 +11,45 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="title">
+            查詢條件
+          </div>
+          <div class="actions">
+            <a class="btn btn-link btn-xs box-collapse"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="row">
+            <%= form_tag admin_other_products_path, method: :get do %>
+              <% ProductType.all.each do |type| %>
+                <div class="col-xs-2">
+                  <label class="label label-success"><%= type.product_type_translates.collect{|translate| translate.name}.join(' / ') %></label>
+                  <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+                    <%= check_box_tag 'filter[]', type.id, @filter.include?(type.id) %>
+                  </div>
+                </div>
+              <% end %>
+              <div class="col-sm-4 text-right pull-right">
+                <div class="btn-toolbar">
+                  <button type="submit" class="btn btn-inverse">
+                    <i class="icon-search"></i>
+                    查詢
+                  </button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-        <div class="box-header sea-blue-background">
+        <div class="box-header">
           <div class="title">商品列表</div>
           <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
           </div>
         </div>
@@ -56,7 +89,9 @@
                         <% end %>
                       </td>
                       <td>
-                        <%= product.product_type.product_type_translates.reject{|type| type.nil?}.collect{|type| type.name}.join(' - ') %>
+                        <label class="label label-success">
+                          <%= product.product_type.product_type_translates.reject{|type| type.blank?}.collect{|type| type.name}.join(' / ') %>
+                        </label>
                       </td>
                       <td>
                         <%= product.quantity %>

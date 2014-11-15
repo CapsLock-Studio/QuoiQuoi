@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
           <%= f.label :area_id, '文章種類' %>
-          <%= f.select :area_id, Area.all.collect{|area| [area.name, area.id]}, {selected: @travel_information.area_id}, {class: 'form-control select2'} %>
+          <%= f.select :area_id, Area.all.collect{|area| ["#{area.id}. #{area.name}", area.id]}, {selected: @travel_information.area_id}, {class: 'form-control select2'} %>
         </div>
         <div class="form-group">
           <%= f.label :title, '文章標題' %>
@@ -36,11 +36,11 @@
         <div class="row form-actions">
           <div class="col-sm-12">
             <div class="pull-right">
-              <%= link_to '取消', admin_travel_information_index_path, class: 'btn btn-lg' %>
-              <%= f.button(class: 'btn btn-primary btn-lg') do %>
+              <%= link_to '取消', admin_travel_information_index_path, class: 'btn btn-default' %>
+              <button type="submit" class="btn btn-primary">
                 <i class="icon-save"></i>
                 儲存
-              <% end %>
+              </button>
             </div>
           </div>
         </div>
@@ -49,18 +49,21 @@
   </div>
 </div>
 
-<div class="ajax-upload-insert-image-modal modal fade">
+<!-- because needs multi editor, so the modal template inhere -->
+<div id="insert-image-model" class="bootstrap-wysihtml5-insert-image-modal modal fade">
   <div class="modal-dialog" style="width:auto;">
     <div class="modal-content">
       <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3 class="modal-title">插入圖片</h3>
+        <h3 class="modal-title">
+          插入圖片
+        </h3>
       </div>
 
       <div class="modal-body">
         <div class="box">
           <div class="box-content">
-            <%= render 'image_upload' %>
+            <%= render 'admin/templates/image_upload' %>
           </div>
         </div>
       </div>
@@ -70,4 +73,4 @@
       </div>
     </div>
   </div>
-</div>
+</div></div>

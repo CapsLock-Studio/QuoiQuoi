@@ -1,0 +1,141 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <%= render 'past_work_type_info' %>
+    </h1>
+  </div>
+  <div class="box">
+    <div class="box-header">
+      <div class="title">
+
+      </div>
+      <div class="actions">
+        <a class="btn btn-xs btn-link box-collapse"><i></i></a>
+      </div>
+    </div>
+    <div class="box-content">
+      <%= form_for([:admin, @past_work], html: {class: 'form validate-form'}) do |form| %>
+        <div class="row">
+          <div class="col-xs-6 nested-field">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="nested-field">
+                  <div class="box image-preview-box">
+                    <%= image_tag form.object.image.url(:large), class: 'img-responsive' %>
+                    <%= form.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
+                  </div>
+                  <a class="btn add btn-default pull-right">新增圖片</a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="list-items items">
+                <%= form.nested_fields_for(:past_work_images) do |field| %>
+                  <div class="list-item-3 item">
+                    <div class="box box-preview-image">
+                      <div class="box-header box-header-small">
+                        <div class="actions">
+                          <a class="btn btn-xs btn-link remove"><i class="icon-remove"></i></a>
+                          <a class="btn btn-xs btn-link box-collapse"><i></i></a>
+                        </div>
+                      </div>
+                      <%= image_tag field.object.image.url(:large), class: 'img-responsive' %>
+                      <%= field.file_field :image, title: '選擇圖片', class: 'btn btn-block' %>
+
+                      <%= field.hidden_field :id %>
+                      <%= field.hidden_field :_destroy %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-group">
+              <%= form.label :completion_time, '作品完成時間' %>
+              <div class="controls">
+                <div class="datetimepicker input-group">
+                  <%= form.text_field :completion_time, class: 'form-control', value: form.object.completion_time.blank?? '' : form.object.completion_time.strftime('%Y/%m/%d %H:%M'),
+                                      placeholder: '請輸入作品完成時間(年/月/日) ',
+                                      data: {'rule-required' => true, 'rule-date' => true, format: 'yyyy/MM/dd'} %>
+                  <span class="input-group-addon">
+                  <span class="icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></span>
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="tabbable">
+              <ul class="nav nav-responsive nav-tabs">
+                <% form.object.past_work_translates.each_with_index do |translate, index| %>
+                  <li class="<%= 'active' if index == 0 %>">
+                    <a href="#<%= translate.locale.id %>" data-toggle="tab">
+                      介紹 <label class="label label-success"><%= translate.locale.name %></label> <span class="badge badge-success">可以留空</span>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+              <div class="tab-content">
+                <% form.object.past_work_translates.each_with_index do |translate, index| %>
+                  <%= form.fields_for :past_work_translates, translate do |field| %>
+                    <div class="tab-pane <%= 'active' if index == 0 %>" id="<%= field.object.locale.id  %>">
+                      <div class="form-group">
+                        <%= field.label :name, '名稱' %>
+                        <div class="controls">
+                          <%= field.text_field :name, class: 'form-control' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <%= field.label :description, '敘述' %>
+                        <%= field.text_area :description, class: 'form-control wysihtml5-less-image' %>
+                      </div>
+                    </div>
+
+                    <%= field.hidden_field :locale_id %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-actions form-actions-padding text-right">
+              <%= link_to '取消', admin_past_work_type_past_works_path(@past_work.past_work_type), class: 'btn btn-default' %>
+              <button class="btn btn-primary" type="submit">
+                <i class="icon-save"></i>
+                儲存
+              </button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- because needs multi editor, so the modal template inhere -->
+<div id="insert-image-model" class="bootstrap-wysihtml5-insert-image-modal modal fade">
+  <div class="modal-dialog" style="width:auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3 class="modal-title">
+          插入圖片
+          <span class="badge badge-important">敘述內的圖片在顯示上將自動貼齊寬度</span>
+        </h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="box">
+          <div class="box-content">
+            <%= render 'admin/templates/image_upload' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+      </div>
+    </div>
+  </div>
+</div>

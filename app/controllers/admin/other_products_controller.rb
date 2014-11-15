@@ -2,6 +2,7 @@ class Admin::OtherProductsController < AdminController
   authorize_resource :product
 
   before_action :set_product, except: [:index, :new, :create]
+  before_action :delete_empty_product, except: [:update]
 
   # breadcrumbs
   add_breadcrumb '首頁', :admin_root_path
@@ -10,7 +11,10 @@ class Admin::OtherProductsController < AdminController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.where.not(product_type_id: nil)
+    # if filter is blank, set up default values.
+    # at last, we need to covert array contents all to integer.
+    @filter = (params[:filter] || ProductType.all.collect{|type| type.id}).collect{|filter| filter.to_i}
+    @products = Product.where(product_type_id: @filter)
   end
   # GET /products/1
   # GET /products/1.json
@@ -21,16 +25,22 @@ class Admin::OtherProductsController < AdminController
   def new
     add_breadcrumb '新增商品'
 
-    @product = Product.new
-    @locales = Locale.all.order(id: :desc)
-    @locales.each do |locale|
-      @product.product_translates.build(locale_id: locale.id)
+    @product = Product.create
+    Locale.all.each do |locale|
+      @product.product_translates.create(locale_id: locale.id)
     end
 
+    @product_type_options = get_product_type_options
+
+    @article = @product
+    @image_addition = ProductAdditionImage.new(product_id: @product.id)
   end
   # GET /products/1/edit
   def edit
-    @locales = Locale.all.order(id: :desc)
+    @product_type_options = get_product_type_options
+
+    @article = @product
+    @image_addition = ProductAdditionImage.new(product_id: @product.id)
   end
 
   def visible
@@ -72,13 +82,24 @@ class Admin::OtherProductsController < AdminController
   end
 
   private
+  def delete_empty_product
+    Product.all.destroy_all(quantity: nil)
+  end
+
   def set_product
     @product = Product.find(params[:id])
   end
+
   def product_params
     params.require(:product).permit(:id, :quantity, :image, :discount,
                                     product_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
                                     product_translates_attributes: [:id, :price, :name, :description, :locale_id],
                                     product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image])
+  end
+
+  def get_product_type_options
+    ProductType.all.collect do |product_type|
+      ["#{product_type.id}. #{product_type.product_type_translates.collect{|translate| translate.name}.join(' / ')}", product_type.id]
+    end
   end
 end

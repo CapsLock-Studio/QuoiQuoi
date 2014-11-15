@@ -1,0 +1,102 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'products/side_navigation' %>
+    <div class="col-sm-9">
+      <div class="row margin-bottom-40">
+        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12">
+          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue' do %>
+            <%= t('order.personalize') %>
+            <i class="fa fa-angle-right"></i>
+          <% end %>
+          <div class="headline">
+            <h4>
+              <%= @past_work_type.past_work_type_translates.find_by_locale_id(session[:locale_id]).name %>
+            </h4>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-xs-12 nopadding">
+              <div class="well-sm" style="margin-top:0;padding-top:0;">
+                <a class="mediumnail fancybox-button zoomer" href="<%= asset_path @past_work.image.url(:large) %>">
+                  <span class="overlay-zoom main-image">
+                    <%= image_tag @past_work.image.url(:medium), class: 'img-responsive' %>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <ul class="list-items">
+              <li class="list-item-3 nopadding">
+                <a href="#" class="active"
+                   data-toggle="preview-change"
+                   data-large="<%= asset_path @past_work.image.url(:large) %>"
+                   data-medium="<%= asset_path @past_work.image.url(:medium) %>">
+                  <div class="well-sm">
+                    <%= image_tag @past_work.image.url(:thumb), class: 'img-responsive' %>
+                  </div>
+                </a>
+              </li>
+              <% @past_work.past_work_images.each do |product_image| %>
+                <li class="list-item-3 nopadding">
+                  <a href="#" class=""
+                     data-toggle="preview-change"
+                     data-large="<%= asset_path product_image.image.url(:large) %>"
+                     data-medium="<%= asset_path product_image.image.url(:medium) %>">
+                    <div class="well-sm">
+                      <%= image_tag product_image.image.url(:thumb), class: 'img-responsive' %>
+                    </div>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-md-12 margin-bottom-50">
+              <h3 style="color:#666;">
+                <strong>
+                  <%= @past_work.past_work_translate.name %>
+                </strong>
+              </h3>
+              <%== Sanitize.fragment(@past_work.past_work_translate.description, Sanitize::Config::ALLOWED) %>
+            </div>
+            <div class="col-md-12">
+              <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@past_work.image.url(:large)}", text: "#{t('share_text')}#{@past_work.past_work_translate.name}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="headline">
+            <h4><%= t('product.other_products') %></h4>
+          </div>
+          <div class="margin-bottom-40">
+            <ul id="list" class="bxslider">
+              <% @past_work.others(session[:locale_id], 8).each do |past_work| %>
+                <li>
+                  <%= link_to past_work_type_past_work_path(@past_work_type, past_work) do %>
+                    <em class="overflow-hidden">
+                      <%= image_tag past_work.image.url(:small), style: 'width:100%;' %>
+                    </em>
+                    <span>
+                        <strong>
+                          <%= past_work.past_work_translate.name %>
+                        </strong><br/>
+                      <span>
+                        <%= "#{t('completion_date')}: #{past_work.completion_time.strftime('%Y/%m/%d')}" %>
+                      </span>
+                    </span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div><!--/row-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

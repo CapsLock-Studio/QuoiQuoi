@@ -10,7 +10,7 @@
         <div class="article-body">
           <%= link_to area_travel_information_path(article.area_id, article) do %>
             <h4>
-              <%= truncate(article.title, length: 42) %>
+              <%= truncate(article.title, length: 40) %>
               <small class="pull-right">
                 <i class="fa fa-clock-o fa-fw"></i>
                 <%= article.updated_at.strftime('%Y/%m/%d') %>
@@ -18,7 +18,7 @@
             </h4>
           <% end %>
           <p class="text-muted">
-            <%= truncate(strip_tags(article.content), length: 110) %>
+            <%= truncate(strip_tags(article.content), length: 96) %>
           </p>
         </div>
       </div>

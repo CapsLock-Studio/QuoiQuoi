@@ -62,6 +62,7 @@ en:
     cancel: 'Cancel order'
     no_s: 'Order No.'
 
+    personalize: "Order"
   custom_order:
     my: 'Customization'
     prev: 'Prev'
@@ -493,3 +494,8 @@ en:
       mind: 'Remind that full payment must be made before we produce the order.'
       add_to_cart: 'If you want to pay the bill, please go to'
       following: 'The order information is in the following.'
+  more: "More"
+  no_content: "Sorry, no content"
+  load_more: "Load more..."
+  past_works: "Past Works"
+  completion_date: "Completion Date"
