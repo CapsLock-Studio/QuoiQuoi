@@ -184,6 +184,8 @@ var initOffcanvas = function(){
 var initChangeFocusImageShow = function() {
     $('[data-toggle="preview-change"]').on('click', function(e){
         e.preventDefault();
+        $('[data-toggle="preview-change"]').removeClass('active');
+        $(this).addClass('active');
         $('.fancybox-button').attr('href', $(this).data('large')).find('img').attr('src', $(this).data('medium'));
     });
 };
@@ -226,6 +228,40 @@ var initCartCalculate = function() {
         totalAmountBlock.text(totalAmountBlock.text().getCurrency() + totalAmount.format());
     });
 };
+
+var initLoadMore = function() {
+    $('.load-more').on('click', function(e){
+        // disable default action of archor
+        e.preventDefault();
+
+        var template = $('#more-template');
+
+        $.ajax({
+            url: $(this).attr('href'),
+            type: 'GET',
+            dataType: 'json',
+            success: function(data, textStatus, jqXHR){
+                for (var i = 0; i < data.items.length; i++) {
+                    var item = template.html();
+                    for (var j = 0; j < data.items[i].length; j++) {
+                        // fill the data into template
+                        item = item.replace('{{' + data.items[i][j].key + '}}', data.items[i][j].value);
+                    }
+                    $(item).insertBefore(template);
+                }
+
+                if (data.nextPage != null) {
+                    $('.load-more').attr('href', data.nextPage);
+                } else {
+                    $('.load-more').hide();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+
+            }
+        });
+    });
+}
 
 $.fn.marquee = function(animateTime, waitTime) {
     var marqueeBlock = $(this);
