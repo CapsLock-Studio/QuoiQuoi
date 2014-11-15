@@ -17,7 +17,7 @@ class CoursesController < ApplicationController
       format.json do
         render(
             json:
-              if params[:page]
+              (if params[:page]
                 courses = get_courses
                 {
                     items: courses.collect do |course|
@@ -60,7 +60,7 @@ class CoursesController < ApplicationController
                       url: course_path(course, month: course.time.strftime('%m'))
                   }
                 end
-              end
+              end)
         )
       end
 
