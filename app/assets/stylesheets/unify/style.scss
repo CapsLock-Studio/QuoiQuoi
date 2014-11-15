@@ -404,8 +404,8 @@ a.thumbnail {
 	text-decoration: none;
 }
 
-.sidebar-nav-v1 li.active,
-.sidebar-nav-v1 li.active:hover {
+.sidebar-nav-v1 li.active > a,
+.sidebar-nav-v1 li.active:hover > a {
 	background: #f5f5f5;
 	border-color: #ddd;
 }
@@ -473,4 +473,9 @@ a.thumbnail {
 .nopadding {
   padding: 0 !important;
   margin: 0 !important;
+}
+
+.breadcrumb {
+  margin: 0;
+  top: 0;
 }
