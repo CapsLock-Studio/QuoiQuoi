@@ -586,53 +586,8 @@ a.read-more:hover {
 }
 
 /*FancyBox Hover Effect*/
-.zoomer:hover .overlay-zoom .zoom-icon{
-   -webkit-transform: scale(1);
-   -moz-transform: scale(1);
-   -o-transform: scale(1);
-   -ms-transform: scale(1);
-   transform: scale(1);
-   opacity:0.4;   
-   filter: alpha(opacity = 50);
-}
-
-.overlay-zoom {
-   display: block;
-   cursor: pointer;
-   width: 100%;
-   height: 100%;
-   position: relative;     
-   -webkit-transition: all 0.1s ease-in-out;
-   -moz-transition: all 0.1s ease-in-out;
-   -o-transition: all 0.1s ease-in-out;
-   -ms-transition: all 0.1s ease-in-out;
-   transition: all 0.1s ease-in-out;
-   z-index: 90;
-}
-
-.overlay-zoom .zoom-icon {
-   background-image:image_url("unify/overlay-icon.png");
-   background-color: #000;
-   background-repeat: no-repeat;
-   background-position: 50%;
-   position: absolute;
-   width: inherit;
-   height: inherit;
-   opacity: 0; 
-   z-index: 100;
-   filter: alpha(opacity = 0);
-   top:0;   
-   -webkit-transition: all 0.4s ease-in-out;
-   -moz-transition: all 0.4s ease-in-out;
-   -o-transition: all 0.4s ease-in-out;
-   -ms-transition: all 0.4s ease-in-out;
-   transition: all 0.4s ease-in-out;
-   -webkit-transform: scale(0);
-   -moz-transform: scale(0);
-   -o-transform: scale(0);
-   -ms-transform: scale(0);
-   transform: scale(0);
-   -webkit-backface-visibility: hidden;
+.zoomer {
+  cursor: zoom-in;
 }
 
 /*Main Slider (Parallax)
