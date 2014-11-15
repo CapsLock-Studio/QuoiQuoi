@@ -9,6 +9,15 @@
         "image": false, //Button to insert an image. Default true,
         "color": false //Button to change color of font
     });
+    $('.wysihtml5-less-image').wysihtml5({
+        "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+        "emphasis": true, //Italics, bold, etc. Default true
+        "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+        "html": false, //Button which allows you to edit the generated HTML. Default false
+        "link": true, //Button to insert a link. Default true
+        "image": true, //Button to insert an image. Default true,
+        "color": false //Button to change color of font
+    });
 
     $('.nested-field').each(function(){
         $(this).nestedFields({
@@ -32,28 +41,37 @@
 
     $('body').on('change', '.file-input-wrapper input[type=file]', function(){
         if (this.files && this.files[0]) {
-            var image =  $(this).parent().prev('img');
+            var $this = $(this);
+            var image =  $this.parent().prev('img');
+
             if (image.length <= 0) {
-                image = $(this).parent().prev('.crop').find('img');
+                image = $this.parent().prev('.crop').find('img');
             }
 
             var fileReader = new FileReader();
             fileReader.onload = function(e) {
-                if (image.parent('.crop').length <= 0) {
-                    image.wrap('<div class="crop"></div>' );
-                    image.parent('.crop').css({
-                        width: image.width() + 'px',
-                        height: image.height() + 'px',
-                        'background-size': 'cover',
-                        'background-position': 'center',
-                        'background-repeat': 'no-repeat'
-                    });
+
+                // there is two ways to show image preview for user
+                // if the input field has class 'fit-placeholder-size', the preview image will fill the size of placeholder image
+                if ($this.hasClass('fit-placeholder-size')) {
+                    if (image.parent('.crop').length <= 0) {
+                        image.wrap('<div class="crop"></div>' );
+                        image.parent('.crop').css({
+                            width: image.width() + 'px',
+                            height: image.height() + 'px',
+                            'background-size': 'cover',
+                            'background-position': 'center',
+                            'background-repeat': 'no-repeat'
+                        });
+                    }
+                    image.css({
+                        display: 'none'
+                    }).parent('.crop').css({
+                            'background-image': 'url(' + e.target.result + ')'
+                        });
+                } else {
+                    image.attr('src', e.target.result);
                 }
-                image.css({
-                    display: 'none'
-                }).parent('.crop').css({
-                        'background-image': 'url(' + e.target.result + ')'
-                    });
             };
             fileReader.readAsDataURL(this.files[0]);
         }
@@ -85,33 +103,26 @@
         });
     }
 
-    if($("#fileupload").length != 0) {
-        $(function () {
-            var fileUploadBlock = $('#fileupload');
+    $('.fileupload').each(function(i){
+        var fileUploadBlock = $(this);
 
-            // Initialize the jQuery File Upload widget:
-            fileUploadBlock.fileupload();
-            //
-            // Load existing files:
-            $.getJSON(fileUploadBlock.prop('action'), function (files) {
-                var fu = $('#fileupload').data('blueimpFileupload'),
-                    template;
-                fu._adjustMaxNumberOfFiles(-files.length);
-                console.log(files);
-                template = fu._renderDownload(files)
-                    .appendTo(fileUploadBlock.find('.files'));
-                // Force reflow:
-                fu._reflow = fu._transition && template.length &&
-                    template[0].offsetWidth;
-                template.addClass('in');
-                $('#loading').remove();
-            });
-
-            $('.ajax-upload-insert-image-modal').on('click', '.ajax-upload-insert-image-button', function(){
-                editor.composer.commands.exec( 'insertImage', $(this).data('url'));
-            });
+        // Initialize the jQuery File Upload widget:
+        fileUploadBlock.fileupload();
+        //
+        // Load existing files:
+        $.getJSON(fileUploadBlock.attr('action'), function (files) {
+            var fu = fileUploadBlock.data('blueimpFileupload'),
+                template;
+            fu._adjustMaxNumberOfFiles(-files.length);
+            template = fu._renderDownload(files)
+                .appendTo(fileUploadBlock.find('.files'));
+            // Force reflow:
+            fu._reflow = fu._transition && template.length &&
+                template[0].offsetWidth;
+            template.addClass('in');
+            $('#loading').remove();
         });
-    }
+    });
 
     $('.lang-options').on('change', function(){
         $('.decline-btn').attr('href', $('.' + $(this).val()).text());
