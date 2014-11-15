@@ -13,6 +13,7 @@
 //= require unify/jquery/jquery.min
 //= require unify/jquery/jquery.mobile.custom.min
 // require unify/jquery/jquery-migrate.min
+// require unify/bootstrap/bootstrap.min
 //= require jquery_ujs
 //= require unify/plugins/plugins
 

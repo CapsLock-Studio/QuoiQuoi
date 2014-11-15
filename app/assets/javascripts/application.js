@@ -7,6 +7,15 @@
             });
             $('.tooltips').tooltip();
             $('.popovers').popover();
+
+            $('.nav-dropdown-menu').on('show.bs.dropdown', function(e){
+                // ADD SLIDEDOWN ANIMATION TO DROPDOWN //
+                $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+            }).on('hide.bs.dropdown', function(e){
+                    // ADD SLIDEUP ANIMATION TO DROPDOWN //
+                    $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+                });
+
         }
 
         function handleSearch() {
@@ -31,15 +40,11 @@
 
             initFancybox: function () {
                 $(".fancybox-button").fancybox({
-                    groupAttr: 'data-rel',
+                    padding: 0,
                     prevEffect: 'none',
                     nextEffect: 'none',
                     closeBtn: true,
-                    helpers: {
-                        title: {
-                            type: 'inside'
-                        }
-                    }
+                    parent: 'body'
                 });
             },
 
@@ -119,7 +124,16 @@
     initChangeFocusImageShow();
     initToggleSearchGiftForm();
     initCartCalculate();
+    initLoadMore();
     scrolltotop.init();
+
+    $('img').on('load', function(){
+        $(this).animate({opacity: 1}, 500);
+    }).each(function(){
+            if (!this.complete) {
+                $(this).css({opacity: 0});
+            }
+        });
 
     var calendar = iniCalendarModel();
 
@@ -166,6 +180,10 @@
     $('[data-dismiss="disable"]').on('click', function(){
         $($(this).data('target')).prop('disabled', $(this).prop('checked'));
     });
+
+//    $('.collapse-trigger').on('click', function(){
+//        $(this).closest('.collapse-box').toggleClass('collapsed');
+//    });
 
     var marquee = $('#marquee');
     if (marquee.length > 0) {
