@@ -9,35 +9,40 @@
           <div class="row">
             <div class="col-xs-12 nopadding">
               <div class="well-sm" style="margin-top:0;padding-top:0;">
-                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path @order_product.product.image.url(:large) %>">
+                <a class="mediumnail fancybox-button zoomer" href="<%= asset_path @product.image.url(:large) %>">
                   <span class="overlay-zoom main-image">
-                    <%= image_tag @order_product.product.image.url(:medium), class: 'img-responsive' %>
-                    <div class="zoom-icon"></div>
+                    <%= image_tag @product.image.url(:medium), class: 'img-responsive' %>
                   </span>
                 </a>
               </div>
             </div>
-            <a href="#" class="col-xs-4 nopadding"
-               data-toggle="preview-change"
-               data-large="<%= asset_path @order_product.product.image.url(:large) %>"
-               data-medium="<%= asset_path @order_product.product.image.url(:medium) %>">
-              <div class="well-sm">
-                <%= image_tag @order_product.product.image.url(:thumb), class: 'img-responsive' %>
-              </div>
-            </a>
-            <% @order_product.product.product_images.each do |product_image| %>
-              <a href="#" class="col-xs-4 nopadding"
-                 data-toggle="preview-change"
-                 data-large="<%= asset_path product_image.image.url(:large) %>"
-                 data-medium="<%= asset_path product_image.image.url(:medium) %>">
-                <div class="well-sm">
-                  <%= image_tag product_image.image.url(:thumb), class: 'img-responsive' %>
-                </div>
-              </a>
-            <% end %>
+            <ul class="list-items">
+              <li class="list-item-3 nopadding">
+                <a href="#" class="active"
+                   data-toggle="preview-change"
+                   data-large="<%= asset_path @product.image.url(:large) %>"
+                   data-medium="<%= asset_path @product.image.url(:medium) %>">
+                  <div class="well-sm">
+                    <%= image_tag @product.image.url(:thumb), class: 'img-responsive' %>
+                  </div>
+                </a>
+              </li>
+              <% @product.product_images.each do |product_image| %>
+                <li class="list-item-3 nopadding">
+                  <a href="#" class=""
+                     data-toggle="preview-change"
+                     data-large="<%= asset_path product_image.image.url(:large) %>"
+                     data-medium="<%= asset_path product_image.image.url(:medium) %>">
+                    <div class="well-sm">
+                      <%= image_tag product_image.image.url(:thumb), class: 'img-responsive' %>
+                    </div>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
           </div>
           <div class="row">
-            <% @order_product.product.product_youtubes.each do |youtube| %>
+            <% @product.product_youtubes.each do |youtube| %>
               <div class="col-md-12 youtube-video" style="margin-top:20px;" data-youtube-id="<%= youtube.link.gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1') %>">
                 <img class="img-responsive" src="http://img.youtube.com/vi/<%= youtube.link.gsub(/[https|http]+:\/\/www\.youtube\.com\/watch\?v=([\w\d]+)/, '\1') %>/maxresdefault.jpg" />
                 <i class="fa fa-youtube-play fa-5x"></i>
@@ -46,19 +51,18 @@
           </div>
         </div>
         <div class="col-sm-6 col-xs-12">
-          <%= form_for @order_product do |f| %>
+          <%= form_for @product.order_products.build do |f| %>
             <%= f.hidden_field :product_id %>
-            <% translate = @order_product.product.product_translates.select([:name, :description, :price]).where(locale_id: session[:locale_id]).first %>
             <div class="row">
               <div class="col-md-12 margin-bottom-50">
                 <h3 style="color:#666;">
                   <strong>
-                    <%= translate.name %>
+                    <%= @product.product_translate.name %>
                   </strong>
                 </h3>
-                <%= translate.description.html_safe %>
+                <%== Sanitize.fragment(@product.product_translate.description, Sanitize::Config::ALLOWED) %>
               </div>
-              <% if @order_product.product.visible? %>
+              <% if @product.visible? %>
                 <div class="col-md-12 margin-bottom-10">
                   <div class="header">
                     <span class="text-muted"><%= t('price') %></span>
@@ -66,19 +70,19 @@
                 </div>
                 <div class="col-md-12 margin-bottom-50">
                   <h4 class="margin-bottom-20">
-                    <strong id="product-price" data-price="<%= translate.price %>"><%= number_to_currency(price_discount(translate.price, @order_product.product.discount)) %></strong>
-                    <% if @order_product.product.discount > 0 %>
-                      <small><%= t('full_price') %> <%= number_to_currency(translate.price) %>, <%= t('product.discount', percent: locale_discount(@order_product.product.discount)) %></small>
+                    <strong id="product-price" data-price="<%= @product.product_translate.price %>"><%= number_to_currency(price_discount(@product.product_translate.price, @product.discount)) %></strong>
+                    <% if @product.discount > 0 %>
+                      <small><%= t('full_price') %> <%= number_to_currency(@product.product_translate.price) %>, <%= t('product.discount', percent: locale_discount(@product.discount)) %></small>
                     <% end %>
                   </h4>
-                  <% options = ProductOption.where(product_id: @order_product.product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, {data: {subtext: number_to_currency(option.price)}}]} %>
-                  <% if options.length > 0 %>
+                  <% options = ProductOption.where(product_id: @product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, {data: {subtext: number_to_currency(option.price)}}]} %>
+                  <% if options.size > 0 %>
                     <label><%= t('option') %></label>
                     <%= f.select :product_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
                   <% end %>
-                  <% if @order_product.product.quantity > 0 %>
+                  <% if @product.quantity > 0 %>
                     <label><%= t('quantity') %></label>
-                    <%= f.select :quantity, options_for_select((1..@order_product.product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                    <%= f.select :quantity, options_for_select((1..@product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
                     <%= f.button class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn', type: 'submit' do %>
                       <i class="fa fa-shopping-cart"></i>
                       <span><%= t('add_to_cart') %></span>
@@ -90,10 +94,10 @@
                     <% end %>
                   <% end %>
                 </div>
-                <% unless @order_product.product.product_type %>
+                <% unless @product.product_type %>
                   <div class="col-md-12 margin-bottom-10">
                     <h5><%= t('customize_hint') %></h5>
-                    <%= link_to new_product_order_custom_items_path(@order_product.product), class: 'btn btn-lg btn-blue btn-block hover-effect one-page-btn' do %>
+                    <%= link_to new_product_order_custom_items_path(@product), class: 'btn btn-lg btn-blue btn-block hover-effect one-page-btn' do %>
                       <i class="fa fa-edit"></i>
                       <span><%= t('customize') %></span>
                     <% end %>
@@ -108,7 +112,7 @@
                 </div>
               <% end %>
               <div class="col-md-12">
-                <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@order_product.product.image.url(:large)}", text: "#{t('share_text')}#{translate.name}" %>
+                <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@product.image.url(:large)}", text: "#{t('share_text')}#{@product.product_translate.name}" %>
               </div>
             </div>
           <% end %>
@@ -121,8 +125,7 @@
           </div>
           <div class="margin-bottom-40">
             <ul id="list" class="bxslider">
-              <% @other_products.each do |product| %>
-              <% translate = product.product_translates.where(locale_id: session[:locale_id]).first %>
+              <% @product.others(session[:locale_id], 8).each do |product| %>
                 <li>
                   <%= link_to_with_product_type product do %>
                     <em class="overflow-hidden">
@@ -130,9 +133,9 @@
                     </em>
                     <span>
                         <strong>
-                          <%= translate.name %>
+                          <%= product.product_translate.name %>
                         </strong><br/>
-                        <%= number_to_currency(translate.price) %>
+                        <%= number_to_currency(product.product_translate.price) %>
                       <% if product.discount > 0 %>
                         <span class="text-ruby">
                           <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(product.discount)) %>

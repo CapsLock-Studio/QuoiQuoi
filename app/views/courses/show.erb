@@ -14,30 +14,35 @@
                 <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="<%= translate.name %>" href="<%= asset_path @course.image.url(:large) %>">
                   <span class="overlay-zoom">
                     <%= image_tag @course.image.url(:medium), class: 'img-responsive' %>
-                    <div class="zoom-icon"></div>
                   </span>
                 </a>
               </div>
             </div>
 
-            <a href="#" class="col-xs-4 nopadding"
-               data-toggle="preview-change"
-               data-large="<%= asset_path @course.image.url(:large) %>"
-               data-medium="<%= asset_path @course.image.url(:medium) %>">
-              <div class="well-sm">
-                <%= image_tag @course.image.url(:thumb), class: 'img-responsive' %>
-              </div>
-            </a>
-            <% @course.course_images.each do |course_image| %>
-              <a href="#" class="col-xs-4 nopadding"
-                 data-toggle="preview-change"
-                 data-large="<%= asset_path course_image.image.url(:large) %>"
-                 data-medium="<%= asset_path course_image.image.url(:medium) %>">
-                <div class="well-sm">
-                  <%= image_tag course_image.image.url(:thumb), class: 'img-responsive' %>
-                </div>
-              </a>
-            <% end %>
+            <ul class="list-items">
+              <li class="list-item-3 nopadding">
+                <a href="#" class="active"
+                   data-toggle="preview-change"
+                   data-large="<%= asset_path @course.image.url(:large) %>"
+                   data-medium="<%= asset_path @course.image.url(:medium) %>">
+                  <div class="well-sm">
+                    <%= image_tag @course.image.url(:thumb), class: 'img-responsive' %>
+                  </div>
+                </a>
+              </li>
+              <% @course.course_images.each do |course_image| %>
+                <li class="list-item-3 nopadding">
+                  <a href="#" class=""
+                     data-toggle="preview-change"
+                     data-large="<%= asset_path course_image.image.url(:large) %>"
+                     data-medium="<%= asset_path course_image.image.url(:medium) %>">
+                    <div class="well-sm">
+                      <%= image_tag course_image.image.url(:thumb), class: 'img-responsive' %>
+                    </div>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
           </div>
         </div>
         <div class="col-sm-6 col-xs-12">
@@ -57,7 +62,7 @@
                 </li>
               </ul>
               <div class="article-content">
-                <%= translate.description.html_safe %>
+                <%== Sanitize.fragment(translate.description, Sanitize::Config::ALLOWED) %>
               </div>
             </div>
             <% if @course.visible? %>

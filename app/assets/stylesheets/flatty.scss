@@ -1,8 +1,10 @@
+// @import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
 @import 'flatty/bootstrap/bootstrap';
 @import 'flatty/plugins/plugins';
 @import 'flatty/jquery/jquery_ui';
 @import 'flatty/light-theme';
 @import 'flatty/theme-colors';
+@import 'images_list';
 
 .ui-state-highlight {
   border: dashed 3px;
@@ -12,4 +14,8 @@
   img {
     max-width: 100%;
   }
+}
+
+.btn-transparent {
+  opacity: 0.3;
 }
