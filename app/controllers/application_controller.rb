@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
-      if @order.empty?
+      if @order_in_cart.nil? || @order_in_cart.empty?
         session[:locale] = params[:locale]
       end
     end

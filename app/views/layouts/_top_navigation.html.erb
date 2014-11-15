@@ -1,7 +1,7 @@
 <ul class="top-navigation list-unstyled pull-right" style="padding-left: 100px;">
   <li>
     <div class="top">
-      <a href="#" class="<%= 'disabled' if @order_in_cart.nil? || !@order_in_cart.in_cart_empty? %>">
+      <a href="#" class="<%= 'disabled' if !@order_in_cart.nil? && !@order_in_cart.in_cart_empty? %>">
         <i class="fa fa-globe"></i>
         <%= t('language') %>
       </a>
