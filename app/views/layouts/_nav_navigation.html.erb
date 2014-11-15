@@ -21,7 +21,7 @@
         <i class="glyphicon glyphicon-home"></i>
       <% end %>
     <% end %>
-    <%= nav_item(products_path, {rule: /#{:products}.*|#{order_custom_items_path}.*|#{order_products_path}.*|#{gifts_path}.*/}) do %>
+    <%= nav_item(products_path, {class: 'nav-dropdown-menu', rule: /#{:products}.*|#{order_custom_items_path}.*|#{order_products_path}.*|#{gifts_path}.*/}) do %>
       <a href="#" class="btn btn-link" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
         <%= t('shop') %>
         <i class="fa fa-angle-down"></i>
@@ -31,11 +31,12 @@
           <%= link_to t('handmadebag'), products_path, class: 'btn btn-link' %>
         </li>
         <li>
-          <%= link_to t('personalize'), new_order_custom_item_path, class: 'btn btn-link' %>
+          <%= link_to t('personalize'), past_work_types_path, class: 'btn btn-link' %>
+
         </li>
         <% @product_types.each do |product_type| %>
           <li>
-            <%= link_to product_type.product_type_translates.where(locale_id: session[:locale_id]).first.name, product_type_products_path(product_type), class: 'btn btn-link' %>
+            <%= link_to product_type.product_type_translate.name, product_type_products_path(product_type), class: 'btn btn-link' %>
           </li>
         <% end %>
         <li>
@@ -44,7 +45,7 @@
       </ul>
     <% end %>
     <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>
-      <%= link_to t('course.title').upcase, courses_path(month: 'new'), class: 'btn btn-link' %>
+      <%= link_to t('course.title'), courses_path(month: 'new'), class: 'btn btn-link' %>
     <% end %>
     <%= nav_item(nil, {rule: /#{reports_path}/}) do %>
       <%= link_to t('report_remittance'), reports_path, class: 'btn btn-link' %>
@@ -68,13 +69,10 @@
         <i class="fa fa-shopping-cart">
           <strong class="hidden-sm" style="margin-left:5px;">
             <%= t('cart') %>
-            <% if @menu_orders %>
-              <% number = @menu_orders.order_products.length + @menu_orders.order_custom_items.length %>
-              <% if number > 0 %>
+            <% if !@order_in_cart.nil? && @order_in_cart.quantity > 0 %>
               <span class="badge badge-orange">
-                <%= number %>
+                <%= @order_in_cart.quantity %>
               </span>
-              <% end %>
             <% end %>
           </strong>
         </i>

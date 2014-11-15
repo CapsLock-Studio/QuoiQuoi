@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925093246) do
+ActiveRecord::Schema.define(version: 20141105210753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,18 @@ ActiveRecord::Schema.define(version: 20140925093246) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "course_addition_images", force: true do |t|
+    t.integer  "course_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_addition_images", ["course_id"], name: "index_course_addition_images_on_course_id", using: :btree
 
   create_table "course_images", force: true do |t|
     t.integer  "course_id"
@@ -372,6 +384,8 @@ ActiveRecord::Schema.define(version: 20140925093246) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "visible",    default: true
+    t.boolean  "collapsed",  default: false
+    t.boolean  "all",        default: true
   end
 
   create_table "materials", force: true do |t|
@@ -462,7 +476,6 @@ ActiveRecord::Schema.define(version: 20140925093246) do
     t.integer  "product_id"
     t.string   "design"
     t.string   "style"
-    t.integer  "material_id"
     t.string   "description"
     t.string   "response"
     t.integer  "workday"
@@ -484,7 +497,6 @@ ActiveRecord::Schema.define(version: 20140925093246) do
     t.integer  "locale_id"
   end
 
-  add_index "order_custom_items", ["material_id"], name: "index_order_custom_items_on_material_id", using: :btree
   add_index "order_custom_items", ["order_id"], name: "index_order_custom_items_on_order_id", using: :btree
   add_index "order_custom_items", ["product_id"], name: "index_order_custom_items_on_product_id", using: :btree
 
@@ -547,6 +559,83 @@ ActiveRecord::Schema.define(version: 20140925093246) do
   add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
+  create_table "past_work_addition_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "past_work_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "past_work_addition_images", ["past_work_id"], name: "index_past_work_addition_images_on_past_work_id", using: :btree
+
+  create_table "past_work_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "past_work_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "past_work_images", ["past_work_id"], name: "index_past_work_images_on_past_work_id", using: :btree
+
+  create_table "past_work_translates", force: true do |t|
+    t.integer  "locale_id"
+    t.integer  "past_work_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "past_work_translates", ["locale_id"], name: "index_past_work_translates_on_locale_id", using: :btree
+  add_index "past_work_translates", ["past_work_id"], name: "index_past_work_translates_on_past_work_id", using: :btree
+
+  create_table "past_work_type_translates", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "past_work_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locale_id"
+  end
+
+  add_index "past_work_type_translates", ["locale_id"], name: "index_past_work_type_translates_on_locale_id", using: :btree
+  add_index "past_work_type_translates", ["past_work_type_id"], name: "index_past_work_type_translates_on_past_work_type_id", using: :btree
+
+  create_table "past_work_types", force: true do |t|
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "sort"
+    t.boolean  "visible",                default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "past_works", force: true do |t|
+    t.date     "completion_time"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean  "visible",            default: true
+    t.integer  "past_work_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "past_works", ["past_work_type_id"], name: "index_past_works_on_past_work_type_id", using: :btree
+
   create_table "payments", force: true do |t|
     t.float    "amount",          default: 0.0
     t.string   "token"
@@ -566,6 +655,18 @@ ActiveRecord::Schema.define(version: 20140925093246) do
   end
 
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
+
+  create_table "product_addition_images", force: true do |t|
+    t.integer  "product_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_addition_images", ["product_id"], name: "index_product_addition_images_on_product_id", using: :btree
 
   create_table "product_custom_item_translates", force: true do |t|
     t.integer  "product_custom_item_id"
@@ -618,6 +719,18 @@ ActiveRecord::Schema.define(version: 20140925093246) do
   end
 
   add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
+
+  create_table "product_material_types", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "material_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "visible",          default: true
+    t.boolean  "collapsed",        default: false
+  end
+
+  add_index "product_material_types", ["material_type_id"], name: "index_product_material_types_on_material_type_id", using: :btree
+  add_index "product_material_types", ["product_id"], name: "index_product_material_types_on_product_id", using: :btree
 
   create_table "product_options", force: true do |t|
     t.integer  "product_id"

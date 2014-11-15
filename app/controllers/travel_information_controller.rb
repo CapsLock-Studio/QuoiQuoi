@@ -6,6 +6,7 @@ class TravelInformationController < ApplicationController
     @areas = Area.where(locale_id: session[:locale_id]).order(:id)
     @travel_information = TravelInformation.find(params[:id])
 
-    add_breadcrumb @travel_information.area.name
+    add_breadcrumb @travel_information.area.name, area_path(@travel_information.area_id)
+    add_breadcrumb @travel_information.title
   end
 end

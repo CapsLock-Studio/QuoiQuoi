@@ -1,0 +1,2 @@
+module Admin::PastWorkTranslatesHelper
+end

@@ -25,6 +25,12 @@
             </div>
           </div>
           <div class="col-sm-6">
+            <div class="form-group">
+              <%= f.label :material_type_id, '布料類別' %>
+              <div class="controls">
+                <%= f.select :material_type_id, MaterialType.order(:id).collect{|type| [type.id, type.id]}, {selected: params[:material_type_id]}, {class: 'form-control'} %>
+              </div>
+            </div>
             <%= f.fields_for :material_translates do |builder| %>
               <div class="box">
                 <div class="box-header">
@@ -55,7 +61,7 @@
         <div class="row form-actions">
           <div class="col-sm-12">
             <div class="pull-right">
-              <%= link_to '取消', admin_materials_path, class: 'btn btn-lg' %>
+              <%= link_to '取消', :back, class: 'btn btn-lg' %>
               <%= f.button(class: 'btn btn-primary btn-lg') do %>
                 <i class="icon-save"></i>
                 儲存

@@ -23,13 +23,16 @@ class Admin::TravelInformationController < AdminController
   def new
     add_breadcrumb '新增文章'
 
-    @travel_information = TravelInformation.new
-    @travel_information.save
+    @travel_information = TravelInformation.create
+    @article = @travel_information
+    @image_addition = TravelPhoto.new
   end
 
   # GET /admin/travel_informationss/1/edit
   def edit
     add_breadcrumb '修改文章'
+    @article = @travel_information
+    @image_addition = TravelPhoto.new
   end
 
   # POST /admin/travel_informationss
@@ -82,6 +85,6 @@ class Admin::TravelInformationController < AdminController
   end
 
   def delete_blank_travel_information
-    TravelInformation.where(area_id: [nil, '']).destroy_all
+    TravelInformation.all.destroy_all(area_id: nil)
   end
 end

@@ -1,0 +1,61 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'products/side_navigation' %>
+    <div class="col-md-9 col-sm-9">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12">
+          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue' do %>
+            <%= t('order.personalize') %>
+            <i class="fa fa-angle-right"></i>
+          <% end %>
+          <div class="headline">
+            <h4>
+              <%= t('past_works') %>
+            </h4>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="articles">
+            <% @past_work_types.each do |past_work_type| %>
+              <div class="article">
+                <div class="row">
+                  <div class="col-sm-3 col-xs-12">
+                    <%= link_to past_work_type_past_works_path(past_work_type) do %>
+                      <%= image_tag past_work_type.thumbnail.url('300x225'), class: 'img-responsive' %>
+                    <% end %>
+                  </div>
+                  <div class="col-sm-9 col-xs-12">
+                    <div class="article-body">
+                      <%= link_to past_work_type_past_works_path(past_work_type), class: 'margin-bottom-10' do %>
+                        <h4>
+                          <%= past_work_type.past_work_type_translate.name %>
+                        </h4>
+                        <%= simple_format(past_work_type.past_work_type_translate.description, {}, wrapper_tag: 'small') %>
+                      <% end %>
+                      <ul class="list-inline inline-block">
+                        <% past_work_type.past_works.where(visible: true).order(id: :desc).limit(7).each_with_index do |past_work, index| %>
+                          <li class="<%= 'hidden-xs' if index >= 4 %> <%= 'hidden-md' if index >= 6 %>">
+                            <%= link_to(past_work_type_past_work_path(past_work_type, past_work)) do %>
+                              <%= image_tag past_work.image(:thumb), class: 'small-thumb' %>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                      <%= link_to_if(past_work_type.past_works.size > 0, "#{t('more')}...", past_work_type_past_works_path(past_work_type), class: 'more') do %>
+                        <h3 class="text-muted">
+                          <i class="fa fa-frown-o"></i><%= t('no_content') %>
+                        </h3>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

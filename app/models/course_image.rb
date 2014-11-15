@@ -1,6 +1,7 @@
 class CourseImage < ActiveRecord::Base
+  default_scope ->(){ order(:id) }
   belongs_to :course
 
-  has_attached_file :image, styles: {thumb: '100x75#', small: '300x225#', medium: '500x375#', large: '1000x750#'}, default_url: '/system/placeholder/:style.gif'
+  has_attached_file :image, styles: {thumb: '100', small: '300', medium: '500', large: '1000'}, default_url: '/system/placeholder/general.gif'
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 end

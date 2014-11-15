@@ -2,17 +2,40 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-tag"></i>
-      <span>布料類別管理</span>
+      <span>布料管理</span>
     </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增布料類別', new_admin_material_type_path, class: 'btn btn-info' %>
+      </div>
+    </div>
   </div>
   <div class="row">
-    <div class="col-sm-10">
+    <div class="col-sm-12">
+      <div class="alert alert-info alert-dismissable">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <h4><i class="icon-exclamation icon-fixed-width"></i>想要訂製手作包的訪客在進入選擇布料時</h4>
+        <p>
+          「預設展開」的布料類別將會展開所有類別下布料顯示，「顯示於完全客製訂做」的布料類別將在完全客製化的頁面顯示<br/>
+        </p>
+      </div>
+      <p class="text-right">
+        <a class="btn btn-success"><i class="icon-folder-open"></i></a> - 設為「預設展開」
+        <a class="btn btn-warning"><i class="icon-unlock"></i></a> - 設為「顯示於完全客製訂做」
+      </p>
+    </div>
+    <div class="col-sm-12">
       <div class="box bordered-box" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="title">
+            布料類別名稱列表
+          </div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
         <div class="box-content">
-          <h5 class="clearfix">
-            布料名稱列表
-            <%= link_to '新增布料類別', new_admin_material_type_path, class: 'btn btn-info pull-right' %>
-          </h5>
           <table class="table table-striped data-table">
             <thead>
             <tr>
@@ -41,11 +64,44 @@
                 <% end %>
               </td>
               <td class="text-right">
-                <%= link_to edit_admin_material_type_path(material_type), class: 'btn' do %>
+
+                <%= link_to '查看此類別下的布料', admin_material_type_materials_path(material_type), class: 'btn btn-default' %>
+                <%= link_to edit_admin_material_type_path(material_type), class: 'btn btn-default' do %>
                   <i class="icon-pencil"></i>
                 <% end %>
+
+                <% if material_type.visible? %>
+                  <%= link_to(visible_admin_material_type_path(material_type, visible: false), class: 'btn btn-info btn-md', method: :put) do %>
+                    <i class="icon-level-down"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to(visible_admin_material_type_path(material_type, visible: true), class: 'btn btn-primary btn-md', method: :put) do %>
+                    <i class="icon-level-up"></i>
+                  <% end %>
+                <% end %>
+
                 <%= link_to admin_material_type_path(material_type), class: 'btn btn-danger', data: {confirm: '確定要刪除這個類別嗎?'}, method: :delete do %>
                   <i class="icon-remove"></i>
+                <% end %>
+
+                <% if material_type.all? %>
+                  <%= link_to all_admin_material_type_path(material_type, all: false), class: 'btn btn-warning btn-transparent', method: :put do %>
+                    <i class="icon-lock"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to all_admin_material_type_path(material_type, all: true), class: 'btn btn-warning', method: :put do %>
+                    <i class="icon-unlock"></i>
+                  <% end %>
+                <% end %>
+
+                <% if material_type.collapsed? %>
+                  <%= link_to collapsed_admin_material_type_path(material_type, collapsed: false), class: 'btn btn-success', method: :put do %>
+                    <i class="icon-folder-open icon-fixed-width"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to collapsed_admin_material_type_path(material_type, collapsed: true), class: 'btn btn-success btn-transparent', method: :put do %>
+                    <i class="icon-folder-close icon-fixed-width"></i>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

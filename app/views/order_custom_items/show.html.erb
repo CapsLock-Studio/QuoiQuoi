@@ -185,15 +185,15 @@
                         <td class="col-xs-4"><%= t('style') %></td>
                         <td><%= @order_custom_item.style %></td>
                       </tr>
-                      <tr>
-                        <td class="col-xs-4"><%= t('material') %></td>
-                        <td>
-                          <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
-                            <%= image_tag order_custom_item_material.material.image.url(:thumb) %>
-                          <% end %>
-                        </td>
-                      </tr>
                     <% end %>
+                    <tr>
+                      <td class="col-xs-4"><%= t('material') %></td>
+                      <td>
+                        <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
+                          <%= image_tag order_custom_item_material.material.image.url(:thumb) %>
+                        <% end %>
+                      </td>
+                    </tr>
                     <tr>
                       <td class="col-xs-4"><%= t('description') %></td>
                       <td>

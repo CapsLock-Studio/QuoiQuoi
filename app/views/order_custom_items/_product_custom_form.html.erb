@@ -11,6 +11,9 @@
         <li class="hover-effect" data-target="#step3">
           <span class="step">3</span>
         </li>
+        <li class="hover-effect" data-target="#step4">
+          <span class="step">4</span>
+        </li>
       </ul>
       <div class="actions">
         <button type="button" class="btn btn-mini btn-prev" disabled="disabled">
@@ -70,7 +73,6 @@
                         <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(product_custom_item.image.url(:large)) %>">
                                 <span class="overlay-zoom">
                                   <%= image_tag product_custom_item.image.url(:medium), class: 'img-responsive' %>
-                                  <span class="zoom-icon"></span>
                                 </span>
                         </a>
                       </div>
@@ -83,6 +85,65 @@
         </div>
       </div>
       <div class="step-pane" id="step2">
+        <h4><%= t('chose_your_material') %> <span class="text-danger">*</span></h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box select-boxes" data-name="material_id">
+              <div class="items">
+                <%= f.nested_fields_for :order_custom_item_materials, class: 'material-id' do |builder| %>
+                  <%= builder.hidden_field :material_id, class: 'material_id' %>
+                <% end %>
+              </div>
+              <div class="box-content">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <% if @order_custom_item.product.product_material_types.length <= 0 %>
+                      <h4 class="text-center">
+                        <i class="fa fa-exclamation fa-fw"></i>
+                        <%= t('no_options') %>
+                      </h4>
+                    <% else %>
+                      <% @order_custom_item.product.product_material_types.where(visible: true).each_with_index do |product_material_type, index| %>
+                        <% material_type = product_material_type.material_type %>
+                        <div class="collapse-box">
+                          <a class="header <%= 'collapsed' unless product_material_type.collapsed? %>" data-toggle="collapse" href="#collapse-<%= index %>">
+                            <i class="fa fa-chevron-down fa-fw"></i>
+                            <%= material_type.material_type_translates.find_by_locale_id(session[:locale_id]).name %>
+                          </a>
+                          <div class="content collapse <%= 'in' unless product_material_type.collapsed? %>" id="collapse-<%= index %>">
+                            <div class="row">
+                              <% material_type.materials.where(visible: true).each do |material| %>
+                                <div class="col-sm-3 col-xs-4">
+                                  <div class="box image-preview-box select-box">
+                                    <div class="box-header box-header-small" style="cursor:pointer" data-id="<%= material.id %>">
+                                      <div class="title">
+                                        <%= material.material_translates.find_by_locale_id(session[:locale_id]).name %>
+                                      </div>
+                                      <div class="actions">
+                                        <i class="fa fa-square-o fa-2x text-muted"></i>
+                                      </div>
+                                    </div>
+                                    <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path(material.image.url(:large)) %>">
+                                <span class="overlay-zoom">
+                                  <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
+                                </span>
+                                    </a>
+                                  </div>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-pane" id="step3">
         <h4><%= t('description_hint') %></h4>
         <div class="row">
           <div class="col-md-12">
@@ -136,7 +197,7 @@
           </div>
         </div>
       </div>
-      <div class="step-pane" id="step3">
+      <div class="step-pane" id="step4">
         <h4><%= t('your_contact') %> <small class="text-muted"><%= t('your_contact_hint') %></small></h4>
         <div class="row">
           <div class="col-md-12">

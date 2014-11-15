@@ -7,47 +7,48 @@ class AdminAbility
 
     if admin.role == 'admin'
       #can :index, :home
-      #can [:index, :new, :edit], Admin::Product
+      #can [:index, :new, :edit], Product
       can :manage, Admin
-      can :manage, Admin::Locale
-      can :manage, Admin::SlidePosition
+      can :manage, Locale
+      can :manage, SlidePosition
     else admin.role == 'author'
       can :manage, Admin
-      can :manage, Admin::ArticleType
-      can :manage, Admin::Product
-      can :manage, Admin::ProductCustomItem
-      can :manage, Admin::Course
-      can :manage, Admin::Order
-      can :manage, Admin::OrderCustomItem
-      can :manage, Admin::Slide
-      can :manage, Admin::Broadcast
-      can :manage, Admin::Material
-      can :manage, Admin::Payment
-      can :manage, Admin::Gift
-      can :manage, Admin::UserGift
-      can :manage, Admin::Message
-      can :manage, Admin::Registration
-      can :manage, Admin::Designer
-      can :manage, Admin::RentInfo
-      can :manage, Admin::RentIntro
-      can :manage, Admin::RentInfoImage
-      can :manage, Admin::IntroduceImageSlide
-      can :manage, Admin::IntroduceYoutube
-      can :manage, Admin::Requirement
-      can :manage, Admin::RequirementIntro
-      can :manage, Admin::Article
-      can :manage, Admin::ArticleImage
-      can :manage, Admin::Remittance
-      can :manage, Admin::ShippingFee
-      can :manage, Admin::TravelInformation
-      can :manage, Admin::TravelPhoto
-      can :manage, Admin::OrderInformation
-      can :manage, Admin::Instruction
-      can :manage, Admin::InstructionImage
-      can :manage, Admin::Area
-      can :manage, Admin::Faq
-      can :manage, Admin::ProductType
-      can :manage, Admin::Top
+      can :manage, ArticleType
+      can :manage, Product
+      can :manage, ProductCustomItem
+      can :manage, ProductMaterialType
+      can :manage, Course
+      can :manage, Order
+      can :manage, OrderCustomItem
+      can :manage, Slide
+      can :manage, Broadcast
+      can :manage, Material
+      can :manage, Payment
+      can :manage, Gift
+      can :manage, UserGift
+      can :manage, Message
+      can :manage, Registration
+      can :manage, Designer
+      can :manage, RentInfo
+      can :manage, RentIntro
+      can :manage, RentInfoImage
+      can :manage, IntroduceImageSlide
+      can :manage, IntroduceYoutube
+      can :manage, Requirement
+      can :manage, RequirementIntro
+      can :manage, Article
+      can :manage, ArticleImage
+      can :manage, Remittance
+      can :manage, ShippingFee
+      can :manage, TravelInformation
+      can :manage, TravelPhoto
+      can :manage, OrderInformation
+      can :manage, Instruction
+      can :manage, InstructionImage
+      can :manage, Area
+      can :manage, Faq
+      can :manage, ProductType
+      can :manage, Top
     end
 
     # for development

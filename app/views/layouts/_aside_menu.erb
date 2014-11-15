@@ -15,7 +15,7 @@
             </button>
           </div>
         </div>
-        <% if @menu_orders && (@menu_orders.order_products.length > 0 || @menu_orders.order_custom_items.length > 0) %>
+        <% if @order_in_cart && !@order_in_cart.in_cart_empty? %>
           <div class="box-content">
             <div class="row">
               <div class="col-md-12">
@@ -26,7 +26,7 @@
             </div>
           </div>
           <div>
-            <% @menu_orders.order_products.each do |order_product| %>
+            <% @order_in_cart.order_products.each do |order_product| %>
               <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
               <% subtotal += order_product.price * order_product.quantity %>
               <div class="search-blocks search-blocks-colored side-menu-block">
@@ -45,7 +45,7 @@
                 </div>
               </div>
             <% end %>
-            <% @menu_orders.order_custom_items.each do|order_custom_item| %>
+            <% @order_in_cart.order_custom_items.each do|order_custom_item| %>
               <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
               <% subtotal += translate.price %>
               <div class="search-blocks search-blocks-colored side-menu-block">

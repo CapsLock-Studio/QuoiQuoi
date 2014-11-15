@@ -1,10 +1,11 @@
-<% @rent_info_images.each do |rent_info_image| %>
-  <div class="col-xs-4">
-    <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path rent_info_image.image.url(:large) %>">
+<div class="list-items">
+  <% @rent_info_images.each do |rent_info_image| %>
+    <div class="list-item-3">
+      <a class="thumbnail fancybox-button zoomer" data-rel="fancybox-button" href="<%= asset_path rent_info_image.image.url(:large) %>">
             <span class="overlay-zoom">
               <%= image_tag rent_info_image.image.url(:thumb), class: 'img-responsive', style: 'width:100%;' %>
-              <div class="zoom-icon"></div>
             </span>
-    </a>
-  </div>
-<% end %>
+      </a>
+    </div>
+  <% end %>
+</div>

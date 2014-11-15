@@ -23,13 +23,17 @@ class Admin::ArticlesController < AdminController
   def new
     add_breadcrumb '新增文章'
 
-    @article = Article.new
-    @article.save
+    @article_type_options = get_article_type_options
+    @article = Article.create
+    @image_addition = ArticleImage.new
   end
 
   # GET /admin/articles/1/edit
   def edit
     add_breadcrumb '修改文章'
+
+    @article_type_options = get_article_type_options
+    @image_addition = ArticleImage.new
   end
 
   # POST /admin/articles
@@ -77,11 +81,17 @@ class Admin::ArticlesController < AdminController
     @article = Article.find(params[:id])
   end
 
+  def get_article_type_options
+    ArticleType.all.order(:id).collect do |article_type|
+      ["#{article_type.id}. #{article_type.name}", article_type.id]
+    end
+  end
+
   def article_params
     params.require(:article).permit(:id, :article_type_id, :title, :content)
   end
 
   def delete_blank_article
-    Article.where(article_type_id: [nil, '']).destroy_all
+    Article.where(article_type_id: nil).destroy_all
   end
 end

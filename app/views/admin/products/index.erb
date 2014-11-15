@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-        <div class="box-header sea-blue-background">
+        <div class="box-header">
           <div class="title">商品列表</div>
           <div class="actions">
             <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
@@ -71,24 +71,30 @@
                       </td>
                       <td>
                         <div class='text-right'>
-                          <%= link_to(admin_product_product_custom_items_path(product), class: 'btn btn-md') do %>
-                            現貨修改可選項目
-                          <% end %>
-                          <%= link_to(edit_admin_product_path(product), class: 'btn btn-md') do %>
+                          <div style="margin-bottom: 5px;">
+                            <%= link_to(admin_product_product_custom_items_path(product), class: 'btn') do %>
+                              現貨修改可選項目
+                            <% end %>
+                            <%= link_to(admin_product_product_material_types_path(product), class: 'btn') do %>
+                              現貨修改布料
+                            <% end %>
+                          </div>
+
+                          <%= link_to(edit_admin_product_path(product), class: 'btn') do %>
                             <i class='icon-pencil'></i>
                           <% end %>
 
                           <% if product.visible? %>
-                            <%= link_to(visible_admin_product_path(product, visible: false), class: 'btn btn-info btn-md', method: :put) do %>
+                            <%= link_to(visible_admin_product_path(product, visible: false), class: 'btn btn-info', method: :put) do %>
                               <i class="icon-level-down"></i>
                             <% end %>
                           <% else %>
-                            <%= link_to(visible_admin_product_path(product, visible: true), class: 'btn btn-primary btn-md', method: :put) do %>
+                            <%= link_to(visible_admin_product_path(product, visible: true), class: 'btn btn-primary', method: :put) do %>
                               <i class="icon-level-up"></i>
                             <% end %>
                           <% end %>
 
-                          <%= link_to(admin_product_path(product), class: 'btn btn-danger btn-md', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
+                          <%= link_to(admin_product_path(product), class: 'btn btn-danger', method: :delete, data: {confirm: '你確定要刪除嗎？'}) do %>
                             <i class='icon-remove'></i>
                           <% end %>
                         </div>

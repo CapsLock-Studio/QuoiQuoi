@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  completion_time: 2014-10-21
+  image: 
+  visible: false
+  past_work_type_id: 
+
+two:
+  completion_time: 2014-10-21
+  image: 
+  visible: false
+  past_work_type_id: 

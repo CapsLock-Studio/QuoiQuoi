@@ -90,6 +90,7 @@ zh-TW:
     cancel: '取消訂單'
     no_s: '訂單編號'
 
+    personalize: "我想訂製"
   custom_order:
     my: '我的訂製要求'
     prev: '上一步'
@@ -522,3 +523,8 @@ zh-TW:
       mind: '提醒您, 接受你的訂單後, 需要先付款完成我們才會著手製作喔!'
       add_to_cart: '如果你想要完成付款, 請點擊後面的連結去結賬'
       following: '以下是你的訂單資訊'
+  more: "看更多"
+  no_content: "現在沒有內容喔"
+  load_more: "我想看更多..."
+  past_works: "過去的作品"
+  completion_date: "完成時間"

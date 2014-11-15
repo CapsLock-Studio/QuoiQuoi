@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
     add_breadcrumb I18n.t('check_out')
 
     @subtotal = 0
-    @order = order_in_cart
+    @order = @order_in_cart
   end
 
   # GET /orders/1

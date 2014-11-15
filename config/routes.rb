@@ -6,7 +6,7 @@ QuoiQuoi::Application.routes.draw do
     put 'admin' => 'devise/registrations#update', as: 'admin_registration'
   end
 
-  devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
+  devise_for :users, controllers: {sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks'}
 
   get 'search' => 'search#index'
 
@@ -32,6 +32,53 @@ QuoiQuoi::Application.routes.draw do
       end
 
       resources :product_custom_items
+
+      # This is one way to shallow nesting resource from http://weblog.jamisbuck.org/2007/2/5/nesting-resources
+      # The article is written by Jamis on February 05, 2007 @ 01:00 PM
+      # However newest Rails support the "shallow" keyword to make easier
+      #resources :product_material_types, name_prefix: 'product_'
+      resources :product_material_types, shallow: true do
+        member do
+          put :visible
+          patch :visible
+
+          put :collapsed
+          patch :collapsed
+        end
+      end
+
+      resources :product_addition_images, shallow: true
+    end
+
+    #resources :product_material_types do
+    #  member do
+    #    put :visible
+    #    patch :visible
+    #
+    #    put :collapsed
+    #    patch :collapsed
+    #  end
+    #end
+
+    resources :past_work_types do
+      member do
+        put :visible
+        patch :visible
+      end
+
+      collection do
+        put :sort
+        patch :sort
+      end
+
+      resources :past_works, shallow: true do
+        member do
+          put :visible
+          patch :visible
+        end
+
+        resources :past_work_addition_images, shallow: true
+      end
     end
 
     resources :board
@@ -43,6 +90,8 @@ QuoiQuoi::Application.routes.draw do
         put :visible
         patch :visible
       end
+
+      resources :course_addition_images, shallow: true
     end
     resources :course_registrations do
       member do
@@ -171,6 +220,12 @@ QuoiQuoi::Application.routes.draw do
       member do
         put :visible
         patch :visible
+
+        put :collapsed
+        patch :collapsed
+
+        put :all
+        patch :all
       end
 
       resources :materials
@@ -198,6 +253,7 @@ QuoiQuoi::Application.routes.draw do
 
     resource :system, controller: :system
   end
+  ###### namespace admin end ######
 
   root to: 'home#index'
 
@@ -279,6 +335,10 @@ QuoiQuoi::Application.routes.draw do
       get :close, action: :close_show
       get :pay, action: :pay_show
     end
+  end
+
+  resources :past_work_types do
+    resources :past_works
   end
 
   resources :product_types do

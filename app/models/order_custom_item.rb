@@ -1,7 +1,6 @@
 class OrderCustomItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product
-  belongs_to :material
   belongs_to :user
 
   has_many :order_custom_item_images, dependent: :destroy
