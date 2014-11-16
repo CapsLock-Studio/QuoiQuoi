@@ -1,9 +1,8 @@
 class Course < ActiveRecord::Base
-  scope :by_month, lambda {|month| where('extract(month from time) = ?', month)}
-
   has_many :course_images, dependent: :destroy
   accepts_nested_attributes_for :course_images, allow_destroy: true
 
+  has_one :course_translate
   has_many :course_translates, dependent: :destroy
   has_many :locales, through: :course_translates
   accepts_nested_attributes_for :course_translates
@@ -34,7 +33,7 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def self.not_blank_translates(locale_id)
-    where('id NOT IN (?)', CourseTranslate.select(:course_id).where('locale_id = ? AND (name = \'\' OR description = \'\' OR price IS NULL)', locale_id))
+  def self.by_month(month)
+    self.where('extract(month from time) = ?', month)
   end
 end
