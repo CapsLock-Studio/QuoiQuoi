@@ -21,11 +21,10 @@ class CoursesController < ApplicationController
                 courses = get_courses
                 {
                     items: courses.collect do |course|
-                      course_translate = course.course_translates.find_by_locale_id(session[:locale_id])
                       [
                           {
                               key: 'name',
-                              value: ApplicationController.helpers.truncate(course_translate.name, length: (session[:locale] == 'en')? 38 : 20)
+                              value: ApplicationController.helpers.truncate(course.course_translate.name, length: (session[:locale] == 'en')? 38 : 20)
                           },
                           {
                               key: 'time',
@@ -33,7 +32,7 @@ class CoursesController < ApplicationController
                           },
                           {
                               key: 'teacher',
-                              value: course_translate.teacher
+                              value: course.course_translate.teacher
                           },
                           {
                               key: 'url',
@@ -51,15 +50,16 @@ class CoursesController < ApplicationController
                     end,
                     nextPage: (courses.total_pages > courses.current_page)? courses_path(month: params[:month], page: ((params[:page] || 1).to_i + 1), format: :json) : nil
                 }
-              else
-                Course.where(visible: true).collect do |course|
-                  course_translate = course.course_translates.find_by_locale_id(session[:locale_id])
-                  {
-                      title: course_translate.name,
-                      start: course.time.strftime('%Y-%m-%d'),
-                      url: course_path(course, month: course.time.strftime('%m'))
-                  }
-                end
+               else
+                Course.includes(:course_translate)
+                      .where(course_translates: {locale_id: session[:locale_id]}, visible: true)
+                      .where.not(course_translates: {name: '', description: '', price: nil}).collect do |course|
+                        {
+                            title: course.course_translate.name,
+                            start: course.time.strftime('%Y-%m-%d'),
+                            url: course_path(course, month: course.time.strftime('%m'))
+                        }
+                      end
               end)
         )
       end
@@ -124,16 +124,18 @@ class CoursesController < ApplicationController
     end
 
     def get_courses
-      courses = Course.where(visible: true).not_blank_translates(session[:locale_id])
+      courses = Course.includes(:course_translate, :registrations)
+                      .where(course_translates: {locale_id: session[:locale_id]}, visible: true)
+                      .where.not(course_translates: {name: '', description: '', price: nil})
 
       # not show any past courses
       if params[:month] && params[:month] != 'new'
-        courses.by_month(params[:month]).page(params[:page]).per(24).order(:time)
+        courses.by_month(params[:month]).order('courses.time ASC').page(params[:page]).per(24)
       else
 
         # show now to two months after
         # @courses = @courses.where('time <= ?', Time.now + 2.months)
-        courses.order(id: :desc).page(params[:page]).per(24)
+        courses.order('courses.id DESC').page(params[:page]).per(24).page(params[:page]).per(24)
       end
     end
 end
