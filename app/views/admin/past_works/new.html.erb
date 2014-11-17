@@ -16,46 +16,18 @@
     <div class="box-content">
       <%= form_for([:admin, @past_work], html: {class: 'form validate-form'}) do |form| %>
         <div class="row">
-          <div class="col-xs-6 nested-field">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="nested-field">
-                  <div class="box image-preview-box">
-                    <%= image_tag form.object.image.url(:large), class: 'img-responsive' %>
-                    <%= form.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
-                  </div>
-                  <a class="btn add btn-default pull-right">新增圖片</a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="list-items items">
-                <%= form.nested_fields_for(:past_work_images) do |field| %>
-                  <div class="list-item-3 item">
-                    <div class="box box-preview-image">
-                      <div class="box-header box-header-small">
-                        <div class="actions">
-                          <a class="btn btn-xs btn-link remove"><i class="icon-remove"></i></a>
-                          <a class="btn btn-xs btn-link box-collapse"><i></i></a>
-                        </div>
-                      </div>
-                      <%= image_tag field.object.image.url(:large), class: 'img-responsive' %>
-                      <%= field.file_field :image, title: '選擇圖片', class: 'btn btn-block' %>
-
-                      <%= field.hidden_field :id %>
-                      <%= field.hidden_field :_destroy %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
+          <div class="col-xs-3">
+            <div class="box image-preview-box">
+              <%= image_tag form.object.image.url(:large), class: 'img-responsive' %>
+              <%= form.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-9">
             <div class="form-group">
               <%= form.label :completion_time, '作品完成時間' %>
               <div class="controls">
                 <div class="datetimepicker input-group">
-                  <%= form.text_field :completion_time, class: 'form-control', value: form.object.completion_time.blank?? '' : form.object.completion_time.strftime('%Y/%m/%d %H:%M'),
+                  <%= form.text_field :completion_time, class: 'form-control', value: form.object.completion_time.blank?? '' : form.object.completion_time.strftime('%Y/%m/%d'),
                                       placeholder: '請輸入作品完成時間(年/月/日) ',
                                       data: {'rule-required' => true, 'rule-date' => true, format: 'yyyy/MM/dd'} %>
                   <span class="input-group-addon">
@@ -86,7 +58,7 @@
                       </div>
                       <div class="form-group">
                         <%= field.label :description, '敘述' %>
-                        <%= field.text_area :description, class: 'form-control wysihtml5-less-image' %>
+                        <%= field.text_area :description, class: 'form-control wysihtml5' %>
                       </div>
                     </div>
 

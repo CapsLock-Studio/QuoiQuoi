@@ -40,7 +40,7 @@
             <td>
               <% past_work.past_work_translates.order(:id).each do |translate| %>
                 <label class="label label-default"><%=translate.locale.name %></label>
-                <%= translate.name %>
+                <%= truncate(translate.name, length: 40) %>
                 <br/>
               <% end %>
             </td>
