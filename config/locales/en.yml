@@ -494,6 +494,13 @@ en:
       mind: 'Remind that full payment must be made before we produce the order.'
       add_to_cart: 'If you want to pay the bill, please go to'
       following: 'The order information is in the following.'
+    remind_before_start: "[quoi quoi studio] Remind of attending handmade class (Please don't reply this mail)"
+    dear_student: "Dear students"
+    remind_before_start_content: "We remind you of attending the tomorrow handmade course at quoi quoi studio.<br/>
+                                  Please don't miss this course and make ready for the course requirement.<br/>
+                                  For the course information, please go to our website.<br/>
+                                  %{url}<br/>
+                                  The brief course information is in the following."
   more: "More"
   no_content: "Sorry, no content"
   load_more: "Load more..."

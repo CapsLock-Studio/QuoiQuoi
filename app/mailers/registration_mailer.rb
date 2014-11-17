@@ -51,6 +51,15 @@ class RegistrationMailer < ActionMailer::Base
     mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: "#{t('mailer.subject_for_cancel_registration')} #{t('mailer.help_return_tuition') if @registration.payment && @registration.payment.completed?}")
   end
 
+  def remind_before_start(registration_id)
+    @registration = Registration.find(registration_id)
+    I18n.locale = Locale.find(@registration.locale_id).lang
+
+    set_discount
+
+    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: "#{t('mailer.remind_before_start') if @registration.payment && @registration.payment.completed?}")
+  end
+
   private
     def set_discount
       @discount = 0

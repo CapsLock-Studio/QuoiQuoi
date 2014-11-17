@@ -1,0 +1,137 @@
+<% translate = @registration.course.course_translates.where(locale_id: @registration.locale_id).first %>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<p>
+  <strong><%= t('mailer.dear_student') %>: </strong><br/>
+  <%= t('mailer.remind_before_start_content', url: course_url(@registration.course_id)).html_safe %><br/>
+</p>
+<hr/>
+<%= t('order.no_s') %>&nbsp;C<%= @registration.id %>
+<h4><%= t('course.information') %></h4>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th></th>
+    <th><%= t('call_name') %></th>
+    <th><%= t('charge') %></th>
+    <th><%= t('course_time') %></th>
+    <th><%= t('course.number') %></th>
+    <td><%= "#{t('option')} / #{t('option_price')}" %></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <%= image_tag "http://quoiquoi.tw#{@registration.course.image.url(:thumb)}" %>
+    </td>
+    <td>
+      <%= translate.name %>
+    </td>
+    <td>
+      <%= number_to_currency(translate.price) %>
+    </td>
+    <td>
+      <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')}" %>
+    </td>
+    <td style="text-align: center">
+      <%= @registration.attendance %>
+    </td>
+    <td>
+      <%= (@registration.course_option)? "#{@registration.course_option.content} / #{@registration.course_option.price}" : t('none') %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<% if @discount > 0 %>
+  <h4><%= t('user_gift.discount') %><label>&nbsp;<%= number_to_currency(@discount) %></label></h4>
+<% end %>
+<h3><%= t('total_amount') %> <%= number_to_currency(@registration.subtotal) %>&nbsp;<%= @registration.currency %></h3>
+<% if @discount > 0 %>
+  <h4><%= t('user_gift.used_information') %></h4>
+  <table>
+    <tr>
+      <th></th>
+      <th>
+        <%= t('call_name') %>
+      </th>
+      <th>
+        <%= t('price') %>
+      </th>
+      <th>
+        <%= t('used_time') %>
+      </th>
+      <th>
+        <%= t('user_gift.serial') %>
+      </th>
+    </tr>
+    <% @user_gift_serials.each do |user_gift_serial| %>
+      <% translate = user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @registration.locale_id).first %>
+      <tr>
+        <td>
+          <%= image_tag "http://quoiquoi.tw#{user_gift_serial.user_gift.gift.image.url(:thumb)}" %>
+        </td>
+        <td>
+          <%= translate.name %>
+        </td>
+        <td>
+          <%= number_to_currency(translate.quota) %>
+        </td>
+        <td>
+          <%= user_gift_serial.used_time.strftime('%Y/%m/%d') %>
+        </td>
+        <td>
+          <%= user_gift_serial.serial %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<% if @registration.payment.amount != 0 %>
+  <h4><%= t('payment_information') %></h4>
+  <table>
+    <tr>
+      <th>
+        <%= t('mean') %>
+      </th>
+      <th>
+        <%= t('time') %>
+      </th>
+      <th>
+        <%= t('amount') %>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <% if @registration.payment.wait? %>
+          <%= t('remittance') %>
+        <% else %>
+          Paypal
+        <% end %>
+      </td>
+      <td>
+        <%= @registration.payment.pay_time.strftime('%Y/%m/%d') %>
+      </td>
+      <td>
+        <%= number_to_currency(@registration.payment.amount) %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+<p>
+  <%= t('quoiquoi') %><br/>
+  <%= "#{t('quoiquoi_address')}#{$redis.get("about:locale:#{@registration.locale_id}:address")}" %><br/>
+  <%= "#{t('quoiquoi_phone')}#{$redis.get("about:locale:#{@registration.locale_id}:phone")}" %>
+</p>
+<hr/>
+<p>
+  <%= t('mailer.any_question') %><a href="mailto:<%= $redis.get("about:locale:#{@registration.locale_id}:email") %>">&nbsp;Email</a>&nbsp;-&nbsp;<%= $redis.get("about:locale:#{@registration.locale_id}:email") %><br/>
+  <%= t('sincerely') %>
+</p>
+<br/>
+<a href="http://quoiquoi.tw">quoiquoi 布知道</a>
+</body>
+</html>
