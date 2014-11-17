@@ -6,6 +6,8 @@ class OrderCustomItem < ActiveRecord::Base
   has_many :order_custom_item_images, dependent: :destroy
   has_many :order_custom_item_materials, dependent: :destroy
   has_many :order_custom_item_product_custom_items, dependent: :destroy
+
+  has_one :order_custom_item_translate
   has_many :order_custom_item_translates, dependent: :destroy
 
   accepts_nested_attributes_for :order_custom_item_images, allow_destroy: true

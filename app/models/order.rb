@@ -28,4 +28,25 @@ class Order < ActiveRecord::Base
   def quantity
     self.order_products.count + self.order_custom_items.count
   end
+
+  # Order.includes(:order_custom_items, :order_products).find(317).amount <======= For test
+  def amount
+    subtotal = self.order_custom_items_subtotal + self.order_products_subtotal
+    shipping_fee = ShippingFeeTranslate.find_by_shipping_fee_id_and_locale_id(self.shipping_fee_id, self.locale_id)
+
+    if shipping_fee.free_condition.blank? || subtotal < shipping_fee.free_condition
+      subtotal + shipping_fee.fee
+    else
+      subtotal
+    end
+  end
+
+  def order_custom_items_subtotal
+    self.order_custom_items.includes(:order_custom_item_translate)
+                           .where(order_custom_item_translates: {locale_id: self.locale_id}).sum(:price)
+  end
+
+  def order_products_subtotal
+    self.order_products.map{|order_product| order_product.price * order_product.quantity}.sum
+  end
 end
