@@ -523,6 +523,13 @@ zh-TW:
       mind: '提醒您, 接受你的訂單後, 需要先付款完成我們才會著手製作喔!'
       add_to_cart: '如果你想要完成付款, 請點擊後面的連結去結賬'
       following: '以下是你的訂單資訊'
+    remind_before_start: "[quoi quoi 布知道] 提醒上課通知信 (系統自動寄出請勿回覆)"
+    dear_student: "親愛的學員"
+    remind_before_start_content: "提醒你明天要上quoi quoi 布知道的課程，<br/>
+                                  如果上課要攜帶工具，請記得準備齊全。<br/>
+                                  關於課程詳細內容，請至我們網頁觀看。<br/>
+                                  %{url}<br/>
+                                  以下是你的課程資訊："
   more: "看更多"
   no_content: "現在沒有內容喔"
   load_more: "我想看更多..."
