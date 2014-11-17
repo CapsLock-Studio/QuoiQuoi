@@ -123,12 +123,12 @@
 <% end %>
 <p>
   <%= t('quoiquoi') %><br/>
-  <%= t('quoiquoi_address') %><br/>
-  <%= t('quoiquoi_phone') %><br/>
+  <%= "#{t('quoiquoi_address')}#{$redis.get("about:locale:#{@registration.locale_id}:address")}" %><br/>
+  <%= "#{t('quoiquoi_phone')}#{$redis.get("about:locale:#{@registration.locale_id}:phone")}" %>
 </p>
 <hr/>
 <p>
-  <%= t('mailer.any_question') %>&nbsp;<a href="quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@mail.dom<br/>
+  <%= t('mailer.any_question') %><a href="mailto:<%= $redis.get("about:locale:#{@registration.locale_id}:email") %>">&nbsp;Email</a>&nbsp;-&nbsp;<%= $redis.get("about:locale:#{@registration.locale_id}:email") %><br/>
   <%= t('sincerely') %>
 </p>
 <br/>
