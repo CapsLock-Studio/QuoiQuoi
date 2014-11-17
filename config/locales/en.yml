@@ -62,7 +62,7 @@ en:
     cancel: 'Cancel order'
     no_s: 'Order No.'
 
-    personalize: "Order"
+    personalize: "To order"
   custom_order:
     my: 'Customization'
     prev: 'Prev'
@@ -419,8 +419,8 @@ en:
   had_account: 'You already have account, please sign in with email and password.'
   full_price: 'Full price'
   quoiquoi: 'quoi quoi studio'
-  quoiquoi_address: 'Address: No.8, Aly. 2, Ln. 50, Minzu Rd., Tamsui Dist., New Taipei City 25170, Taiwan'
-  quoiquoi_phone: 'TEL: 886-2-28097712'
+  quoiquoi_address: 'Address: '
+  quoiquoi_phone: 'TEL: '
   charge: 'Charge'
   none: 'None'
   mended: 'Mended'

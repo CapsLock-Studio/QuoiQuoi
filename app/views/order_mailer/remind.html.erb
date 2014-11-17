@@ -208,14 +208,14 @@
 </table>
 <p>
   <%= t('quoiquoi') %><br/>
-  <%= t('quoiquoi_address') %><br/>
-  <%= t('quoiquoi_phone') %>
+  <%= "#{t('quoiquoi_address')}#{$redis.get("about:locale:#{@order.locale_id}:address")}" %><br/>
+  <%= "#{t('quoiquoi_phone')}#{$redis.get("about:locale:#{@order.locale_id}:phone")}" %>
 </p>
 <hr>
 <p>
   <%= t('working_days', workdays: workdays) %><br/>
   <%= t('completed_hint').html_safe %><br/>
-  <%= t('mailer.suggestion_hint') %><a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
+  <%= t('mailer.suggestion_hint') %><a href="mailto:<%= $redis.get("about:locale:#{@order.locale_id}:email") %>">Email</a>&nbsp;-&nbsp;<%= $redis.get("about:locale:#{@order.locale_id}:email") %><br/>
   <%= t('sincerely') %>
 </p>
 <br>
