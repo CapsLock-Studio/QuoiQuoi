@@ -19,13 +19,13 @@
         <div class="row">
           <div class="col-xs-3">
             <div class="box image-preview-box">
-              <%= image_tag form.object.thumbnail.url('300x225'), class: 'img-responsive', style: 'width:100%;' %>
+              <%= image_tag form.object.thumbnail.url(:medium), class: 'img-responsive', style: 'width:100%;' %>
               <%= form.file_field :thumbnail, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
             </div>
           </div>
           <div class="col-xs-9">
             <div class="box image-preview-box">
-              <%= image_tag form.object.image.url('960x260'), class: 'img-responsive', style: 'width: 100%' %>
+              <%= image_tag form.object.image.url(:large), class: 'img-responsive', style: 'width: 100%' %>
               <%= form.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
             </div>
           </div>
