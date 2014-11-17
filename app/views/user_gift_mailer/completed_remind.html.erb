@@ -77,8 +77,8 @@
 </table>
 <p>
   <%= t('quoiquoi') %><br/>
-  <%= t('quoiquoi_address') %><br/>
-  <%= t('quoiquoi_phone') %>
+  <%= "#{t('quoiquoi_address')}#{$redis.get("about:locale:#{@user_gift.locale_id}:address")}" %><br/>
+  <%= "#{t('quoiquoi_phone')}#{$redis.get("about:locale:#{@user_gift.locale_id}:phone")}" %>
 </p>
 <hr/>
 <%= t('user_gift.how_to') %>
@@ -87,7 +87,7 @@
 </h4>
 <%= simple_format(translate.description) %>
 <p>
-  <%= t('mailer.any_question') %><a href="mailto:quoiquoistudio@gmail.com">Email</a>&nbsp;-&nbsp;quoiquoistudio@gmail.com<br/>
+  <%= t('mailer.any_question') %><a href="mailto:<%= $redis.get("about:locale:#{@user_gift.locale_id}:email") %>">&nbsp;Email</a>&nbsp;-&nbsp;<%= $redis.get("about:locale:#{@user_gift.locale_id}:email") %><br/>
   <%= t('sincerely') %>
 </p>
 <br>
