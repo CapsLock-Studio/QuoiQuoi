@@ -3,7 +3,7 @@
     <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}(?!\/search)/}) do %>
       <%= link_to t('handmadebag').titleize, products_path %>
     <% end %>
-    <%= nav_item(past_work_types_path, {class: 'list-group-item'}) do %>
+    <%= nav_item(nil, {class: 'list-group-item', rule: /^#{past_work_types_path}$|^#{new_order_custom_item_path}$/}) do %>
       <%= link_to t('personalize').titleize, past_work_types_path %>
       <ul class="nav">
         <% (@past_work_types || []).each do |past_work_type| %>
