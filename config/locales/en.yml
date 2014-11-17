@@ -62,7 +62,7 @@ en:
     cancel: 'Cancel order'
     no_s: 'Order No.'
 
-    personalize: "Order"
+    personalize: "To order"
   custom_order:
     my: 'Customization'
     prev: 'Prev'
