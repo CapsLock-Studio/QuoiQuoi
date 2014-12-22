@@ -117,7 +117,10 @@ class CoursesController < ApplicationController
 
     def set_course
       begin
-        @course = Course.find(params[:id])
+        @course = Course.includes(:course_translate, :course_options)
+                        .where(course_translates: {locale_id: session[:locale_id]})
+                        .order('course_options.id')
+                        .find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
       end
