@@ -133,9 +133,14 @@ class ProductsController < ApplicationController
   private
 
     def set_product
-      @product = Product.includes(:product_translate)
-                        .where(product_translates: {locale_id: session[:locale_id]})
-                        .find(params[:id])
+      begin
+        @product = Product.includes(:product_translate, :product_options)
+                          .where(product_translates: {locale_id: session[:locale_id]})
+                          .order('product_options.id')
+                          .find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to action: :index
+      end
     end
 
     def set_product_type
