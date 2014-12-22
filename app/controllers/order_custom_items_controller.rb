@@ -2,6 +2,7 @@ class OrderCustomItemsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create, :material]
   before_action :set_order_custom_item, except: [:index, :new, :create, :material]
 
+
   # GET /order_custom_items
   def index
     add_breadcrumb t('home'), :root_path
@@ -14,6 +15,11 @@ class OrderCustomItemsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('custom_order.my'), :order_custom_items_path
     add_breadcrumb t('detail')
+
+    if @order_custom_item.user_id != current_user.id
+      flash.now[:status] = 'warning'
+      flash.now[:message] = t('wrong_user_warning')
+    end
   end
 
   # GET /order_custom_items/material
@@ -128,6 +134,8 @@ class OrderCustomItemsController < ApplicationController
     end
 
     def set_order_custom_item
-      @order_custom_item = OrderCustomItem.where(id: params[:id], user_id: current_user.id).first
+      @order_custom_item = OrderCustomItem.includes(:order_custom_item_translate)
+                                          .where(order_custom_item_translates: {locale_id: session[:locale_id]})
+                                          .find(params[:id])
     end
 end
