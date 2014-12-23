@@ -63,27 +63,20 @@ class OrderCustomItemsController < ApplicationController
 
   # POST /order_custom_items
   def create
-    respond_to do |format|
-      locale = Locale.find(session[:locale_id])
-      @order_custom_item = OrderCustomItem.new(order_custom_item_params)
-      @order_custom_item.locale_id = locale.id
-      if current_user.nil?
-        if @order_custom_item.save
-          session[:temp] = @order_custom_item.id
-          flash[:alert] = t('devise.failure.unauthenticated')
-          flash[:email] = params[:email]
-          format.html {redirect_to new_user_session_path}
-        else
-          format.html {render json: @order_custom_item.errors}
-        end
+    @order_custom_item = OrderCustomItem.create(order_custom_item_params.merge({locale_id: session[:locale_id]}))
+
+    if current_user.nil?
+      session[:temp] = @order_custom_item.id
+      flash[:alert] = t('devise.failure.unauthenticated')
+      flash[:email] = params[:email]
+      redirect_to new_user_session_path
+    else
+      #format.html {render json: order_custom_item_params}
+      @order_custom_item.user_id = current_user.id
+      if @order_custom_item.save
+        redirect_to order_custom_item_path(@order_custom_item)
       else
-        #format.html {render json: order_custom_item_params}
-        @order_custom_item.user_id = current_user.id
-        if @order_custom_item.save
-          format.html {redirect_to order_custom_item_path(@order_custom_item)}
-        else
-          format.html {render json: @order_custom_item.errors}
-        end
+        render json: @order_custom_item.errors
       end
     end
   end
@@ -134,8 +127,10 @@ class OrderCustomItemsController < ApplicationController
     end
 
     def set_order_custom_item
-      @order_custom_item = OrderCustomItem.includes(:order_custom_item_translate)
-                                          .where(order_custom_item_translates: {locale_id: session[:locale_id]})
+      #@order_custom_item = OrderCustomItem.includes(:order_custom_item_translate)
+      #                                    .where(order_custom_item_translates: {locale_id: session[:locale_id]})
+      #                                    .find(params[:id])
+      @order_custom_item = OrderCustomItem.joins("LEFT OUTER JOIN order_custom_item_translates ON (order_custom_items.id = order_custom_item_translates.order_custom_item_id AND order_custom_item_translates.locale_id = #{session[:locale_id]})")
                                           .find(params[:id])
     end
 end
