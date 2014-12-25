@@ -127,10 +127,12 @@ class OrderCustomItemsController < ApplicationController
     end
 
     def set_order_custom_item
-      #@order_custom_item = OrderCustomItem.includes(:order_custom_item_translate)
-      #                                    .where(order_custom_item_translates: {locale_id: session[:locale_id]})
-      #                                    .find(params[:id])
-      @order_custom_item = OrderCustomItem.joins("LEFT OUTER JOIN order_custom_item_translates ON (order_custom_items.id = order_custom_item_translates.order_custom_item_id AND order_custom_item_translates.locale_id = #{session[:locale_id]})")
-                                          .find(params[:id])
+      begin
+        @order_custom_item = OrderCustomItem.includes(:order_custom_item_translate)
+                                            .where(order_custom_item_translates: {locale_id: session[:locale_id]})
+                                            .find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        @order_custom_item = OrderCustomItem.find(params[:id])
+      end
     end
 end
