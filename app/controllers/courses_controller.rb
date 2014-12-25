@@ -121,6 +121,11 @@ class CoursesController < ApplicationController
                         .where(course_translates: {locale_id: session[:locale_id]})
                         .order('course_options.id')
                         .find(params[:id])
+
+        #  -------- this way will delete current records --------
+        # trim the course_options
+        #@course.course_options = @course.course_options.where(locale_id: session[:locale_id])
+
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
       end
