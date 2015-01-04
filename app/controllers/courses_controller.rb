@@ -101,7 +101,7 @@ class CoursesController < ApplicationController
   # access able from another controller
   def set_months
     @months = []
-    month_first = Time.now.month - 1
+    month_first = (Time.now.month - 1 <= 0)? 12 : Time.now.month - 1
     6.times do |index|
       @months << ((index + month_first > 12)? month_first + index - 12 : index + month_first)
     end
