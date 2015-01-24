@@ -16,8 +16,9 @@ class OrdersController < ApplicationController
     add_breadcrumb I18n.t('cart'), :cart_path
     add_breadcrumb I18n.t('check_out')
 
-    @subtotal = 0
-    @order = @order_in_cart
+    # default values
+    @order_in_cart.locale_id = session[:locale_id]
+    @order_in_cart.shipping_fee = ShippingFee.first
   end
 
   # GET /orders/1
