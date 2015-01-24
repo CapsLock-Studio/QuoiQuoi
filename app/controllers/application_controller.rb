@@ -26,10 +26,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
-      if @order_in_cart.nil? || @order_in_cart.empty?
-        session[:locale] = params[:locale]
-      end
+    if is_locale_changed?
+      session[:locale] = params[:locale]
     end
 
     I18n.locale = session[:locale] || I18n.default_locale
@@ -68,19 +66,29 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def set_order_in_cart
-      if session[:guest_user_id]
-        @order_in_cart = Order.in_cart(session[:guest_user_id])
-      elsif user_signed_in?
-        @order_in_cart = Order.in_cart(current_user.id)
-      end
+  def set_order_in_cart
+    if session[:guest_user_id]
+      @order_in_cart = Order.in_cart(session[:guest_user_id])
+    elsif user_signed_in?
+      @order_in_cart = Order.in_cart(current_user.id)
     end
 
-    def set_default_seo_properties
-      @website_title = $redis.get('seo:title')
-      @meta_og_description = $redis.get('seo:description')
-      @meta_og_image = "http://quoiquoi.tw#{ActionController::Base.helpers.asset_path('logo-large.jpg')}"
-      @meta_og_title = $redis.get('seo:og:title')
-      @meta_og_type = 'website'
+    if is_locale_changed? && @order_in_cart && @order_in_cart.in_cart_empty?
+      @order_in_cart.locale_id = session[:locale_id]
+      @order_in_cart.currency = Locale.select(:id, :currency).find(session[:locale_id]).currency
+      @order_in_cart.save
     end
+  end
+
+  def set_default_seo_properties
+    @website_title = $redis.get('seo:title')
+    @meta_og_description = $redis.get('seo:description')
+    @meta_og_image = "http://quoiquoi.tw#{ActionController::Base.helpers.asset_path('logo-large.jpg')}"
+    @meta_og_title = $redis.get('seo:og:title')
+    @meta_og_type = 'website'
+  end
+
+  def is_locale_changed?
+    (!params[:locale].nil? && I18n.available_locales.include?(params[:locale].to_sym))
+  end
 end

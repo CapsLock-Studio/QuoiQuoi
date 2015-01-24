@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, except: [:index, :new, :close_index]
+  before_action :set_order, only: [:show, :cancel, :close_show, :close, :pay_show, :update]
   before_action :authenticate_user!
   before_action :set_discount, only: [:show, :close_show]
   before_action :set_shipping_fee, only: [:show, :close_show]
@@ -16,8 +16,9 @@ class OrdersController < ApplicationController
     add_breadcrumb I18n.t('cart'), :cart_path
     add_breadcrumb I18n.t('check_out')
 
-    @subtotal = 0
-    @order = @order_in_cart
+    # default values
+    @order_in_cart.locale_id = session[:locale_id]
+    @order_in_cart.shipping_fee = ShippingFee.first
   end
 
   # GET /orders/1
@@ -29,21 +30,6 @@ class OrdersController < ApplicationController
 
   # PUT/PATCH /orders/1
   def update
-    # summary subtotal
-    subtotal = 0
-
-    @order.order_products.each do |order_product|
-      subtotal += order_product.price * order_product.quantity
-    end
-    @order.order_custom_items.each do |order_custom_item|
-      subtotal += OrderCustomItemTranslate.where(locale_id: session[:locale_id], order_custom_item_id: order_custom_item.id).first.price
-    end
-
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: params[:order][:shipping_fee_id], locale_id: session[:locale_id]).first
-    subtotal += shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && subtotal > shipping_fee.free_condition
-      subtotal -= shipping_fee.fee
-    end
 
     respond_to do |format|
       @order.order_products.each do |order_product|
@@ -55,8 +41,12 @@ class OrdersController < ApplicationController
         end
       end
 
-      locale = Locale.find(session[:locale_id])
-      if @order.update_attributes(order_params.merge({checkout: true, subtotal: subtotal, checkout_time: Time.now, locale_id: locale.id, currency: locale.currency}))
+      @order.shipping_fee_id = order_params[:shipping_fee_id]
+      @order.checkout = true
+      @order.checkout_time = Time.now
+      @order.subtotal = @order.get_subtotal
+
+      if @order.save && @order.update_attributes(order_params)
         format.html {redirect_to pay_order_path(@order)}
       else
         format.html {render json: @order.errors}
@@ -139,7 +129,7 @@ class OrdersController < ApplicationController
 
   private
     def set_order
-      @order = Order.where(id: params[:id], user_id: current_user.id).first
+      @order = Order.find_by_id_and_user_id(params[:id], current_user.id)
     end
 
     def order_params
