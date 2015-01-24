@@ -4,7 +4,7 @@ class OrderProductsController < ApplicationController
   def create
 
     if @order_in_cart.nil?
-      @order_in_cart = Order.in_cart((user_signed_in?)? current_user.id : (session[:guest_user_id] = User.create_guest_user.id))
+      @order_in_cart = Order.create_cart((user_signed_in?)? current_user.id : (session[:guest_user_id] = User.create_guest_user.id), session[:locale_id])
     end
 
     order_product = @order_in_cart.order_products.build(order_product_params)
