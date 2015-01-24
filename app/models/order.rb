@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
     self.order_products.size <= 0 && self.order_custom_items.size <= 0
   end
 
-  def self.in_cart(user_id, locale_id = nil)
+  def self.in_cart(user_id)
     self.where(user_id: user_id, checkout: false).order(:created_at).last
   end
 
@@ -43,6 +43,10 @@ class Order < ActiveRecord::Base
     else
       subtotal
     end
+  end
+
+  def get_raw_subtotal
+    (self.order_custom_items_subtotal + self.order_products_subtotal)
   end
 
   def order_custom_items_subtotal
