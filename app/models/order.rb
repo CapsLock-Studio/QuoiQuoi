@@ -21,8 +21,12 @@ class Order < ActiveRecord::Base
     self.order_products.size <= 0 && self.order_custom_items.size <= 0
   end
 
-  def self.in_cart(user_id)
-    self.where(user_id: user_id, checkout: false).order(:created_at).last || Order.create({closed: false, user_id: user_id, checkout: false})
+  def self.in_cart(user_id, locale_id = nil)
+    self.where(user_id: user_id, checkout: false).order(:created_at).last
+  end
+
+  def self.create_cart(user_id, locale_id)
+    self.create({closed: false, user_id: user_id, checkout: false, locale_id: locale_id, currency: Locale.find(locale_id).currency})
   end
 
   def quantity
@@ -30,7 +34,7 @@ class Order < ActiveRecord::Base
   end
 
   # Order.includes(:order_custom_items, :order_products).find(317).amount <======= For test
-  def amount
+  def get_subtotal
     subtotal = self.order_custom_items_subtotal + self.order_products_subtotal
     shipping_fee = ShippingFeeTranslate.find_by_shipping_fee_id_and_locale_id(self.shipping_fee_id, self.locale_id)
 
