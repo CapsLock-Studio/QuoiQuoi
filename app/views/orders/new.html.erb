@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-12 reg-page">
       <div class="item">
-        <%= form_for @order, html: {class: 'form-horizontal validate-form'} do |f| %>
+        <%= form_for @order_in_cart, html: {class: 'form-horizontal validate-form'} do |f| %>
           <h4><%= t('shipping_information') %> <small class="text-muted"><%= t('shipping_information_hint') %></small></h4>
           <div class="row">
             <div class="col-sm-12">
@@ -96,23 +96,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% @order.order_products.each_with_index do |order_product, index| %>
-                          <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
-                          <% @subtotal += order_product.price * order_product.quantity %>
+                        <% @order_in_cart.order_products.each_with_index do |order_product, index| %>
                           <tr>
                             <td>
                               <%= image_tag order_product.product.image.url(:thumb) %>
                             </td>
                             <td>
                               <h5>
-                                <%= translate.name %><br/>
+                                <%= order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).name %><br/>
                                 <small><%= order_product.product_option.content if order_product.product_option %></small>
                               </h5>
                             </td>
                             <td>
                               <% if order_product.product_option %>
                                 <h5>
-                                  <%= number_to_currency(translate.price) %><br/>
+                                  <%= number_to_currency(order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).price) %><br/>
                                   <small><%= number_to_currency(order_product.product_option.price) %></small>
                                 </h5>
                               <% end %>
@@ -123,9 +121,7 @@
                             </td>
                           </tr>
                         <% end %>
-                        <% @order.order_custom_items.each_with_index do |order_custom_item, index| %>
-                          <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
-                          <% @subtotal += translate.price %>
+                        <% @order_in_cart.order_custom_items.each_with_index do |order_custom_item, index| %>
                           <tr>
                             <td>
                               <%= custom_item_image_helper(order_custom_item) %>
@@ -136,7 +132,7 @@
                               </h5>
                             </td>
                             <td>
-                              <%= number_to_currency(translate.price) %>
+                              <%= number_to_currency(order_custom_item.order_custom_item_translates.find_by_locale_id(@order_in_cart.locale_id).price) %>
                             </td>
                             <td>
                               1
@@ -151,14 +147,24 @@
               </div>
               <div class="row">
                 <div class="col-sm-12">
-                  <% shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: ShippingFee.first.id, locale_id: session[:locale_id]).first %>
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>
-                    <strong class="text-muted subtotal" data-price="<%= @subtotal %>">
-                      <%= (@subtotal >= shipping_fee.free_condition)? number_to_currency(@subtotal) : number_to_currency(@subtotal + shipping_fee.fee) %>
+                    <strong class="text-muted subtotal" data-price="<%= @order_in_cart.get_raw_subtotal %>">
+                      <%= number_to_currency(@order_in_cart.get_subtotal) %>
                     </strong>
                   </h4>
-                  <span class="text-muted pull-right">(<%= t('shipping_fee') %>: <span class="shipping-fee-subtotal"><%= (@subtotal >= shipping_fee.free_condition)? number_to_currency(0) : number_to_currency(shipping_fee.fee) %></span>)</span>
+                  <span class="text-muted pull-right">
+                    (<%= t('shipping_fee') %>:&nbsp;
+                    <span class="shipping-fee-subtotal">
+                      <% if @order_in_cart.shipping_fee.shipping_fee_translates.find_by_locale_id(@order_in_cart.locale_id).free_condition &&
+                          (@order_in_cart.get_raw_subtotal >= @order_in_cart.shipping_fee.shipping_fee_translates.find_by_locale_id(@order_in_cart.locale_id).free_condition) %>
+                        <%= number_to_currency(0) %>
+                      <% else %>
+                        <%= number_to_currency(@order_in_cart.shipping_fee.shipping_fee_translates.find_by_locale_id(@order_in_cart.locale_id).fee) %>
+                      <% end %>
+                    </span>
+                    )
+                  </span>
                 </div>
               </div>
             </div>
