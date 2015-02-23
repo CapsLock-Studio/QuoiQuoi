@@ -6,7 +6,11 @@ QuoiQuoi::Application.routes.draw do
     put 'admin' => 'devise/registrations#update', as: 'admin_registration'
   end
 
-  devise_for :users, controllers: {sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks'}
+  devise_for :users, controllers: {
+      sessions: 'users/sessions',
+      registrations: 'users/registrations',
+      omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
   get 'search' => 'search#index'
 

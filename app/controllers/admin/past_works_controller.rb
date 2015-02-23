@@ -40,11 +40,19 @@ class Admin::PastWorksController < AdminController
   end
 
   def visible
-
+    if @past_work.update_column(:visible, params[:visible])
+      redirect_to :back
+    else
+      render @past_work.errors
+    end
   end
 
   def destroy
-
+    if @past_work.destroy
+      redirect_to :back
+    else
+      render json: @past_work.errors
+    end
   end
 
   private

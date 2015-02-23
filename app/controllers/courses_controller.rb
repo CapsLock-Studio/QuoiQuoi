@@ -101,7 +101,7 @@ class CoursesController < ApplicationController
   # access able from another controller
   def set_months
     @months = []
-    month_first = Time.now.month - 1
+    month_first = (Time.now.month - 1 <= 0)? 12 : Time.now.month - 1
     6.times do |index|
       @months << ((index + month_first > 12)? month_first + index - 12 : index + month_first)
     end
@@ -117,7 +117,15 @@ class CoursesController < ApplicationController
 
     def set_course
       begin
-        @course = Course.find(params[:id])
+        @course = Course.includes(:course_translate, :course_options)
+                        .where(course_translates: {locale_id: session[:locale_id]})
+                        .order('course_options.id')
+                        .find(params[:id])
+
+        #  -------- this way will delete current records --------
+        # trim the course_options
+        #@course.course_options = @course.course_options.where(locale_id: session[:locale_id])
+
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
       end

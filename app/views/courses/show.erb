@@ -74,10 +74,10 @@
 
                 <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
                   <%= f.hidden_field :course_id %>
-                  <% options = CourseOption.where(course_id: @course.id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, data: {subtext: number_to_currency(option.price)}]} %>
-                  <% if options.length > 0 %>
+                  <% if @course.course_options.where(locale_id: session[:locale_id]).size > 0 %>
                     <label><%= t('option') %></label>
-                    <%= f.select :course_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
+                    <%= f.select :course_option_id, @course.course_options.where(locale_id: session[:locale_id]).collect{|option| [option.content, option.id, data: {subtext: number_to_currency(option.price)}]},
+                                 {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
                   <% end %>
 
                   <% if @course.canceled? %>

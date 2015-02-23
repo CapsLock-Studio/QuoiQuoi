@@ -1,4 +1,4 @@
-class Users::SessionsController < Devise::SessionsController
+class Users::RegistrationsController < Devise::RegistrationsController
   def create
 
     # Same as session create, because user will pick up cart un guest then sign in or they was guest then sign up.

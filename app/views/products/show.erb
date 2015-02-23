@@ -75,10 +75,10 @@
                       <small><%= t('full_price') %> <%= number_to_currency(@product.product_translate.price) %>, <%= t('product.discount', percent: locale_discount(@product.discount)) %></small>
                     <% end %>
                   </h4>
-                  <% options = ProductOption.where(product_id: @product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, {data: {subtext: number_to_currency(option.price)}}]} %>
-                  <% if options.size > 0 %>
+                  <% if @product.product_options.where(locale_id: session[:locale_id]).size > 0 %>
                     <label><%= t('option') %></label>
-                    <%= f.select :product_option_id, options, {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
+                    <%= f.select :product_option_id, @product.product_options.where(locale_id: session[:locale_id]).collect{|option| [option.content, option.id, {data: {subtext: number_to_currency(option.price)}}]},
+                                 {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
                   <% end %>
                   <% if @product.quantity > 0 %>
                     <label><%= t('quantity') %></label>
