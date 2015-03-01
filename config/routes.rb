@@ -100,6 +100,9 @@ QuoiQuoi::Application.routes.draw do
       end
 
       resources :course_addition_images, shallow: true
+      resources :course_option_groups, shallow: true do
+        resources :course_options, shallow: true
+      end
     end
     resources :course_registrations do
       member do
