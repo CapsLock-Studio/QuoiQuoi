@@ -1,0 +1,51 @@
+<div class="box box-collapsed box-margin-5" data-id="<%= product_option_group.id %>">
+  <div class="box-header box-header-medium purple-background">
+    <div class="edit-block">
+      <%= render 'admin/product_option_groups/edit_form', product_option_group: product_option_group %>
+    </div>
+
+    <div class="title">
+      <%= product_option_group.name %>
+    </div>
+    <div class="actions">
+      <a class="btn btn-xs btn-link edit-trigger" data-target-id="<%= product_option_group.id %>">
+        <i class="icon-pencil"></i>
+      </a>
+      <%= link_to(
+              admin_product_option_group_path(product_option_group),
+              class: 'btn btn-link btn-xs destroy-record',
+              data: {'target-id' => product_option_group.id}
+          ) do %>
+        <i class="icon-remove"></i>
+      <% end %>
+      <a class="btn box-collapse btn-xs btn-link" href="#">
+        <i></i>
+      </a>
+    </div>
+  </div>
+  <div class="box-content box-no-padding">
+    <div class="col-xs-12">
+      <ul class="list-striped list-unstyled sub-records">
+        <% product_option_group.product_options.each do |product_option| %>
+          <%= render template: 'admin/product_options/show', locals: {product_option: product_option} %>
+        <% end %>
+        <li class="row">
+          <%= form_for [:admin, product_option_group, ProductOption.new], html: {class: 'add-sub-record'} do |product_option_form| %>
+            <div class="col-xs-5">
+              <%= product_option_form.text_field :content, class: 'form-control', placeholder: '項目名稱' %>
+            </div>
+            <div class="col-xs-4">
+              <%= product_option_form.text_field :price, value: nil, class: 'form-control', placeholder: '價格' %>
+            </div>
+            <div class="col-xs-3 text-right">
+              <button class="btn btn-primary" type="submit">
+                新增
+              </button>
+              <%= product_option_form.hidden_field :product_option_group_id, value: product_option_group.id %>
+            </div>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

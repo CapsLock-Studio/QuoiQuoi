@@ -1,0 +1,20 @@
+<%= form_for([:admin, @product_option_group.product, @product_option_group], html: {class: 'form', id: @time_in_milliseconds}) do |f| %>
+  <div class="box box-margin-5" id="product-option-group-form">
+    <div class="box-header box-header-medium green-background">
+      <div class="title">
+        <%= f.text_field :name, class: 'form-control input-sm' %>
+      </div>
+      <div class="actions">
+        <a class="btn btn-sm" style="margin-top: 3px;color: #999999" data-dismiss-id="<%= @time_in_milliseconds %>">
+          取消
+        </a>
+        <button class="btn btn-sm" style="margin-top: 3px;" type="submit">
+          <i class="icon-ok"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <%= f.hidden_field :locale_id %>
+  <%= f.hidden_field :product_id %>
+<% end %>

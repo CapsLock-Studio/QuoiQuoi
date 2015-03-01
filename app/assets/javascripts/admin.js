@@ -75,6 +75,8 @@
             };
             fileReader.readAsDataURL(this.files[0]);
         }
+    }).on('click', '[data-dismiss-id]', function(){
+        $('#' + $(this).data('dismiss-id')).remove();
     });
 
     var slideSort = $('#slide-sortable');
@@ -136,6 +138,155 @@
         }
     });
 
+    // for product option groups
+    $('.product-option-group').each(function(){
+        var container = $(this);
+        var tableBlock = container.find('.table-block');
+        var formBlock = container.find('.form-block');
+
+        $.ajax({
+            url: tableBlock.data('src'),
+            type: 'GET',
+            data: 'html',
+            success: function(data, textStatus, jqXHR) {
+              tableBlock.append(data);
+            }
+        });
+
+        formBlock.on('submit', '.form', function(event){
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                dataType: 'html',
+                success: function(data, textStatus, jqXHR) {
+                  console.log(data);
+                  tableBlock.append(data);
+                  form.remove();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                  form.find('.title').addClass('has-error');
+                }
+            });
+        });
+        container.find('.add-form').on('click', function(event){
+            event.preventDefault();
+
+            var targetUrl = $(this).attr('href');
+            $.ajax({
+                url: targetUrl,
+                type: 'GET',
+                dataType: 'html',
+                success: function(data, textStatus, jqXHR) {
+                    formBlock.append(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        })
+    });
+
+    // for option groups
+    $('.table-block').on('click', '.destroy-record', function(event){
+        event.preventDefault();
+            if (window.confirm('確定要刪除嗎?')) {
+                var recordBlock = $(this);
+                $.ajax({
+                    url: recordBlock.attr('href'),
+                    type: 'DELETE',
+                    dataType: 'html',
+                    success: function(data, textStatus, jqXHR) {
+                        $('.table-block').find('[data-id="' + recordBlock.data('target-id') + '"]').fadeOut();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        window.alert('出現連線錯誤, 請稍待片刻或重整頁面');
+                    }
+                })
+            }
+    }).on('submit', '.edit-form', function(event){
+          event.preventDefault();
+          var tableBlock = $('.table-block');
+          var editForm = $(this);
+
+          $.ajax({
+              url: editForm.attr('action'),
+              type: 'PUT',
+              data: editForm.serialize(),
+              dataType: 'html',
+              success: function(data, textStatus, jqXHR) {
+                  tableBlock.find('[data-id="' + editForm.data('target-id') + '"]').replaceWith(data);
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  window.alert('出現連線錯誤, 請稍待片刻或重整頁面')
+              }
+          });
+    }).on('click', '.edit-trigger', function(event){
+        $('.table-block').find('[data-id="' + $(this).data('target-id') + '"] .edit-block').fadeIn();
+    }).on('click', '.cancel-trigger', function(event){
+        $('.table-block').find('[data-id="' + $(this).data('target-id') + '"] .edit-block').fadeOut();
+    }).on('submit', '.add-sub-record', function(event){
+          event.preventDefault();
+          var form = $(this);
+          $.ajax({
+              url: form.attr('action'),
+              type: 'POST',
+              data: form.serialize(),
+              dataType: 'html',
+              success: function(data, textStatus, jqXHR){
+                  form.parent('li').before(data);
+                  form.removeClass('has-error');
+                  form[0].reset();
+              },
+              error: function(jqXHR, textStatus, errorThrown){
+                  form.addClass('has-error');
+              }
+          });
+    }).on('click', '.sub-destroy-trigger', function(event){
+        event.preventDefault();
+          if (window.confirm('確定要刪除嗎？')) {
+            var destroyButton = $(this);
+            $.ajax({
+              url: destroyButton.attr('href'),
+              type: 'DELETE',
+              success: function(data, textStatus, jqXHR){
+                  $('[data-sub-id="' + destroyButton.data('sub-target-id') + '"]').fadeOut();
+              },
+              error: function(jqXHR,textStatus, errorThrown){
+
+              }
+            });
+        }
+    }).on('click', '.sub-edit-trigger, .sub-cancel-trigger', function(event){
+          event.preventDefault();
+          var button = $(this);
+          $.ajax({
+              url: button.attr('href'),
+              type: 'GET',
+              success: function(data, textStatus, jqXHR){
+                $('[data-sub-id="' + button.data('sub-target-id') + '"]').replaceWith(data);
+              },
+              error: function(jqXHR,textStatus, errorThrown){
+
+              }
+          });
+      }).on('submit', '.edit-sub-record', function(event){
+          event.preventDefault();
+          var form = $(this);
+          $.ajax({
+              url: form.attr('action'),
+              type: 'PUT',
+              data: form.serialize(),
+              success: function(data, textStatus, jqXHR){
+                  $('[data-sub-id="' + form.data('sub-target-id') + '"]').replaceWith(data);
+              },
+              error: function(jqXHR,textStatus, errorThrown){
+                  form.addClass('has-error');
+              }
+          });
+      });
 
     if ($("#stats-chart1").length !== 0 && $("#stats-chart2").length !== 0) {
         $.ajax({

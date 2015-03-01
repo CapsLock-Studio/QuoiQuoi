@@ -1,0 +1,20 @@
+<li class="row" data-sub-id="<%= product_option.id %>">
+  <div class="col-xs-5">
+    <%= product_option.content %>
+  </div>
+  <div class="col-xs-4">
+    <%= number_to_currency(product_option.price) %>
+  </div>
+  <div class="col-xs-3 text-right">
+    <%= link_to edit_admin_product_option_path(product_option),
+                class: 'btn btn-xs sub-edit-trigger',
+                data: {'sub-target-id' => product_option.id} do %>
+      <i class="icon-pencil"></i>
+    <% end %>
+    <%= link_to admin_product_option_path(product_option),
+                class: 'btn btn-danger btn-xs sub-destroy-trigger',
+                data: {'sub-target-id' => product_option.id} do %>
+      <i class="icon-remove"></i>
+    <% end %>
+  </div>
+</li>

@@ -19,3 +19,35 @@
 .btn-transparent {
   opacity: 0.3;
 }
+
+.box .box-header.box-header-medium {
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 19px;
+  padding: 10px;
+}
+
+.box-margin-5 {
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.edit-block {
+  position: absolute;
+  width: 100%;
+  top: -5px;
+  left: 0;
+
+  display: none;
+  overflow: hidden;
+  height: 44px;
+}
+
+.sub-records .row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: -10px;
+  }
+}
