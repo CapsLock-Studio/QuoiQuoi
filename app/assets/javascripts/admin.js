@@ -139,7 +139,7 @@
     });
 
     // for product option groups
-    $('.product-option-group').each(function(){
+    $('.option-group').each(function(){
         var container = $(this);
         var tableBlock = container.find('.table-block');
         var formBlock = container.find('.form-block');
@@ -162,7 +162,6 @@
                 data: form.serialize(),
                 dataType: 'html',
                 success: function(data, textStatus, jqXHR) {
-                  console.log(data);
                   tableBlock.append(data);
                   form.remove();
                 },
