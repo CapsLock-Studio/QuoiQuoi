@@ -1,0 +1,22 @@
+<li class="row" data-sub-id="<%= @product_option.id %>">
+  <%= form_for [:admin, @product_option], html: {class: 'edit-sub-record', data: {'sub-target-id' => @product_option.id}} do |product_option_form| %>
+    <div class="col-xs-5">
+      <%= product_option_form.text_field :content, class: 'form-control', placeholder: '項目名稱' %>
+    </div>
+    <div class="col-xs-4">
+      <%= product_option_form.text_field :price, class: 'form-control', placeholder: '價格' %>
+    </div>
+    <div class="col-xs-3 text-right">
+      <%= link_to admin_product_option_path(@product_option),
+                  class: 'btn sub-cancel-trigger',
+                  data: {'sub-target-id' => @product_option.id},
+                  style: 'color:#999999' do %>
+        取消
+      <% end %>
+      <button type="submit" class="btn">
+        <i class="icon-ok"></i>
+      </button>
+      <%= product_option_form.hidden_field :product_option_group_id %>
+    </div>
+  <% end %>
+</li>
