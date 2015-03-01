@@ -40,17 +40,47 @@
                                 </strong>
                               <% end %>
                             </h5>
-                            <% options = ProductOption.where(product_id: builder.object.product_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, data: {subtext: number_to_currency(option.price), price: translate.price + option.price}]} %>
-                            <% if options.length > 0 %>
+
+                            <% if builder.object.product.product_option_groups.size > 0 %>
                               <h5 style="color:#666;">
                                 <strong><%= t('option') %></strong>
                               </h5>
-                              <%= builder.select :product_option_id, options, {selected: builder.object.product_option_id}, class: 'selectpicker option-price form-control', data: {width: '100%', 'show-subtext' => true} %>
                             <% end %>
+
+                            <%= builder.fields_for :order_product_options do |option_field| %>
+                              <label><%= option_field.object.product_option.product_option_group.name %></label>
+                              <%= option_field.select :product_option_id,
+                                                      ProductOption.where(product_option_group_id: option_field.object.product_option.product_option_group_id).collect{|option|
+                                                        [option.content, option.id, {
+                                                            data: {
+                                                                subtext: number_to_currency(option.price),
+                                                                price: option.price
+                                                            }
+                                                        }]
+                                                      },
+                                                      {
+                                                          selected: option_field.object.product_option_id
+                                                      },
+                                                      class: 'selectpicker form-control product-option',
+                                                      data: {
+                                                          width: '100%', 'show-subtext' => true
+                                                      } %>
+                            <% end %>
+
                             <h5 style="color:#666;">
                               <strong><%= t('quantity') %></strong>
                             </h5>
-                            <%= builder.select :quantity, (1..builder.object.product.quantity), {selected: builder.object.quantity}, class: 'selectpicker product-price form-control', data: {width: '100%', price: builder.object.price} %>
+                            <%= builder.select :quantity,
+                                               (1..builder.object.product.quantity),
+                                               {
+                                                   selected: builder.object.quantity
+                                               },
+                                               class: 'selectpicker product-price form-control',
+                                               data: {
+                                                   width: '100%',
+                                                   price: builder.object.price,
+                                                   'raw-price' => builder.object.raw_price(@order_in_cart.locale_id)
+                                               } %>
                             <hr/>
                             <h5 class="margin-bottom-20">
                               <span style="color:#666;"><%= t('subtotal') %></span>

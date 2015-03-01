@@ -1,4 +1,6 @@
 class ProductOptionGroup < ActiveRecord::Base
+  default_scope ->() {order(:id)}
+
   validates :name, presence: true
 
   belongs_to :product
