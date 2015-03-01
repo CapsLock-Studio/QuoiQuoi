@@ -1,4 +1,6 @@
 class CourseOption < ActiveRecord::Base
+  default_scope ->() {order(:id)}
+
   validates :price, numericality: true, presence: true
   validates :content, presence: true, allow_blank: false
 

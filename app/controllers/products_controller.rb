@@ -134,10 +134,14 @@ class ProductsController < ApplicationController
 
     def set_product
       begin
-        @product = Product.includes(:product_translate, :product_options)
-                          .where(product_translates: {locale_id: session[:locale_id]})
-                          .order('product_options.id')
-                          .find(params[:id])
+        product_model = Product.includes(:product_translate).where(product_translates: {locale_id: session[:locale_id]})
+
+        if ProductOptionGroup.where(locale_id: session[:locale_id], product_id: params[:id]).size > 0
+          product_model = product_model.includes(product_option_groups: [:product_options])
+                            .where(product_option_groups: {locale_id: session[:locale_id]})
+        end
+
+        @product = product_model.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to action: :index
       end

@@ -18,8 +18,8 @@ class Product < ActiveRecord::Base
   has_many :order_products
   has_many :orders, through: :order_products
 
-  has_many :product_options
-  accepts_nested_attributes_for :product_options, allow_destroy: true
+  has_many :product_option_groups
+  has_many :product_options, through: :product_option_groups
 
   has_many :product_material_types
   accepts_nested_attributes_for :product_material_types, allow_destroy: true
