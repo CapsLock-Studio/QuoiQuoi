@@ -35,7 +35,7 @@
                                 <strong>
                                   <%= translate.name %>
                                   <span class="pull-right">
-                                    <%= number_to_currency(translate.price) %><br/>
+                                    <%= number_to_currency(builder.object.raw_price(@order_in_cart.locale_id)) %><br/>
                                   </span>
                                 </strong>
                               <% end %>
