@@ -16,7 +16,7 @@
             <th>
               <span class="label label-success">點擊圖片前往編輯</span>
             </th>
-            <th>名稱</th>
+            <th>訂單項目</th>
             <th>金額</th>
             <th>客戶訂購數量</th>
             <th>目前剩餘數量</th>
@@ -38,10 +38,16 @@
                 <% end %>
               </td>
               <td>
-                <h5>
-                  <%= translate.name %><br/>
-                  <small><%= order_product.product_option.content if order_product.product_option %></small>
-                </h5>
+                <h4>
+                  <%= translate.name %>
+                </h4>
+                <ul>
+                  <% order_product.order_product_options.each do |option| %>
+                  <li>
+                    <%= option.product_option.content %>
+                  </li>
+                  <% end %>
+                </ul>
               </td>
               <td>
                 <% if order_product.product_option %>

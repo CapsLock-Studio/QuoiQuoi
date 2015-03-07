@@ -2,7 +2,7 @@
   <div class="box-header">
     <div class="title">
       <i class="icon-edit"></i>
-      手工包
+      手作包
     </div>
     <div class="actions">
       <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
@@ -99,43 +99,28 @@
                                  data: {'rule-required' => true, 'rule-number' => true} %>
               </div>
             </div>
-            <div class="nested-field text-right">
-              <div class="form-group">
-                <a href="#" class="add btn btn-u">
-                  新增現貨選項
-                </a>
-              </div>
-              <div class="items">
-                <%= f.nested_fields_for :product_options do |builder| %>
-                  <div class="item">
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-md-5" style="padding-right: 0">
-                          <%= builder.select :locale_id, Locale.all.order(id: :desc).collect{|locale| [locale.name, locale.id]}, {selected: builder.object.locale_id}, {class: 'form-control'} %>
-                        </div>
-                        <div class="col-md-6" style="padding-right: 0">
-                          <%= builder.text_field :price, class: 'form-control', placeholder: '選項價格' %>
-                        </div>
-                        <div class="col-md-1" style="padding-left: 0;">
-                          <a class="btn remove btn-xs btn-link" href="#" style="padding-top: 7px;">
-                            <i class="icon-remove"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-md-12" style="">
-                          <%= builder.text_field :content, class: 'form-control', placeholder: '選項內容' %>
-                          <%= builder.hidden_field :id %>
-                          <%= builder.hidden_field :_destroy %>
-                        </div>
-                      </div>
-                    </div>
+
+            <% Locale.all.each do |locale| %>
+              <div class="row option-group">
+                <div class="col-sm-12">
+                  <div class="form-group" style="margin-top: 10px;">
+                    <label>選項分類 (<%= locale.name %>)</label>
+                    <%= link_to '新增', new_admin_product_product_option_group_path(@product, locale_id: locale.id), class: 'btn pull-right add-form' %>
                   </div>
-                <% end %>
+
+                  <!-- Append form start -->
+                  <div class="form-block">
+
+                  </div>
+                  <!-- Append form end -->
+
+                  <div class="table-block" data-src="<%= admin_product_product_option_groups_path(@product, locale_id: locale.id) %>">
+
+                  </div>
+                </div>
               </div>
-            </div>
+            <% end %>
+
             <div class="tabbable">
               <ul class="nav nav-responsive nav-tabs">
                 <% f.object.product_translates.each_with_index do |translate, index| %>
