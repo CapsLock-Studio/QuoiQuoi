@@ -117,10 +117,14 @@ class CoursesController < ApplicationController
 
     def set_course
       begin
-        @course = Course.includes(:course_translate, :course_options)
-                        .where(course_translates: {locale_id: session[:locale_id]})
-                        .order('course_options.id')
-                        .find(params[:id])
+        course_model = Course.includes(:course_translate).where(course_translates: {locale_id: session[:locale_id]})
+
+        if CourseOptionGroup.where(locale_id: session[:locale_id], course_id: params[:id]).size > 0
+          course_model = course_model.includes(course_option_groups: [:course_options])
+                                     .where(course_option_groups: {locale_id: session[:locale_id]})
+        end
+
+        @course = course_model.find(params[:id])
 
         #  -------- this way will delete current records --------
         # trim the course_options

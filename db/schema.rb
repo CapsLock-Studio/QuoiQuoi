@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105210753) do
+ActiveRecord::Schema.define(version: 20150301052039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,13 +185,25 @@ ActiveRecord::Schema.define(version: 20141105210753) do
 
   add_index "course_images", ["course_id"], name: "index_course_images_on_course_id", using: :btree
 
+  create_table "course_option_groups", force: true do |t|
+    t.integer  "course_id"
+    t.integer  "locale_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_option_groups", ["course_id"], name: "index_course_option_groups_on_course_id", using: :btree
+  add_index "course_option_groups", ["locale_id"], name: "index_course_option_groups_on_locale_id", using: :btree
+
   create_table "course_options", force: true do |t|
     t.integer  "course_id"
     t.integer  "locale_id"
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price",      default: 0.0
+    t.float    "price",                  default: 0.0
+    t.integer  "course_option_group_id"
   end
 
   add_index "course_options", ["course_id"], name: "index_course_options_on_course_id", using: :btree
@@ -519,6 +531,17 @@ ActiveRecord::Schema.define(version: 20141105210753) do
   add_index "order_product_custom_items", ["order_product_id"], name: "index_order_product_custom_items_on_order_product_id", using: :btree
   add_index "order_product_custom_items", ["product_custom_item_id"], name: "index_order_product_custom_items_on_product_custom_item_id", using: :btree
 
+  create_table "order_product_options", force: true do |t|
+    t.integer  "order_product_id"
+    t.integer  "product_option_id"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_product_options", ["order_product_id"], name: "index_order_product_options_on_order_product_id", using: :btree
+  add_index "order_product_options", ["product_option_id"], name: "index_order_product_options_on_product_option_id", using: :btree
+
   create_table "order_products", force: true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
@@ -732,13 +755,25 @@ ActiveRecord::Schema.define(version: 20141105210753) do
   add_index "product_material_types", ["material_type_id"], name: "index_product_material_types_on_material_type_id", using: :btree
   add_index "product_material_types", ["product_id"], name: "index_product_material_types_on_product_id", using: :btree
 
+  create_table "product_option_groups", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "locale_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_option_groups", ["locale_id"], name: "index_product_option_groups_on_locale_id", using: :btree
+  add_index "product_option_groups", ["product_id"], name: "index_product_option_groups_on_product_id", using: :btree
+
   create_table "product_options", force: true do |t|
     t.integer  "product_id"
     t.string   "content"
     t.integer  "locale_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price",      default: 0.0
+    t.float    "price",                   default: 0.0
+    t.integer  "product_option_group_id"
   end
 
   add_index "product_options", ["locale_id"], name: "index_product_options_on_locale_id", using: :btree

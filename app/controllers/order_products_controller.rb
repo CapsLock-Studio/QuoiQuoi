@@ -10,10 +10,12 @@ class OrderProductsController < ApplicationController
     order_product = @order_in_cart.order_products.build(order_product_params)
     order_product.discount = order_product.product.discount
     price = order_product.product.product_translates.where(locale_id: session[:locale_id]).first.price
-    if order_product.product_option
-      price += order_product.product_option.price
-    end
+
     order_product.price = ApplicationController.helpers.price_discount(price, order_product.product.discount)
+
+    order_product.order_product_options.each do |option|
+      order_product.price += option.product_option.price
+    end
 
     if order_product.product.quantity - order_product.quantity < 0
       render json: 'Products are sold out'
@@ -35,6 +37,6 @@ class OrderProductsController < ApplicationController
   private
   def order_product_params
     #params.require(:order_product).permit!
-    params.require(:order_product).permit(:product_id, :quantity, :product_option_id)
+    params.require(:order_product).permit(:product_id, :quantity, order_product_options_attributes: [:id, :product_option_id])
   end
 end
