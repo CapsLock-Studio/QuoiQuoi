@@ -57,6 +57,8 @@ gem 'sqlite3'
 gem 'recaptcha'
 gem 'sanitize'
 
+gem 'route_translator'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
