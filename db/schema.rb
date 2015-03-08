@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301052039) do
+ActiveRecord::Schema.define(version: 20150308080537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -826,6 +826,17 @@ ActiveRecord::Schema.define(version: 20150301052039) do
     t.float    "discount",           default: 0.0
     t.boolean  "visible",            default: true
   end
+
+  create_table "registration_options", force: true do |t|
+    t.integer  "registration_id"
+    t.integer  "course_option_id"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registration_options", ["course_option_id"], name: "index_registration_options_on_course_option_id", using: :btree
+  add_index "registration_options", ["registration_id"], name: "index_registration_options_on_registration_id", using: :btree
 
   create_table "registrations", force: true do |t|
     t.integer  "course_id"

@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12 reg-page">
       <div class="item">
-        <%= form_for @registration, html: {class: 'form-horizontal validate-form'} do |f| %>
+        <%= form_for @registration, html: {class: 'form-horizontal validate-form registration-course'} do |f| %>
           <% translate = @registration.course.course_translates.where(locale_id: session[:locale_id]).first %>
           <% if flash[:message] %>
             <div class="alert alert-warning text-center">
@@ -26,7 +26,16 @@
                           <% end %>
                         </div>
                         <div class="controls col-md-3">
-                          <%= f.select :attendance, options_for_select(1..@registration.course.popular{|index| [index, index]}), {}, {class: 'selectpicker refresh-price-source form-control', data: {width: '100%'}} %>
+                          <%= f.select :attendance,
+                                       options_for_select(1..@registration.course.popular{|index| [index, index]}),
+                                       {},
+                                       {
+                                           class: 'selectpicker attendance form-control',
+                                           data: {
+                                               width: '100%',
+                                               price: translate.price
+                                           }
+                                       } %>
                         </div>
                       </div>
                       <% unless current_user %>
@@ -77,25 +86,51 @@
                   <div class="row">
                     <div class="col-md-12">
                       <table class="table table-hover">
-                        <thead>
+                        <thead class="hidden-xs">
                         <tr>
                           <td></td>
                           <td><%= t('call_name') %></td>
+                          <td><%= t('option') %></td>
                           <td><%= t('tuition') %></td>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="list-xs">
                           <tr>
-                            <td class="col-xs-3">
+                            <td class="col-sm-2 col-xs-12 ">
                               <%= image_tag @registration.course.image.url(:thumb) %>
                             </td>
-                            <td class="col-xs-2">
+                            <td class="col-sm-2 col-xs-12">
                               <h5>
                                 <%= translate.name %>
                               </h5>
                             </td>
-                            <td class="col-xs-2">
-                              <%= number_to_currency(translate.price) %>
+                            <td class="col-sm-2 col-xs-12">
+                              <%= f.fields_for :registration_options do |option_field| %>
+                                <div class="margin-bottom-10">
+                                  <label><%= option_field.object.course_option.course_option_group.name %></label>
+                                  <%= option_field.select :course_option_id,
+                                                          CourseOption.where(course_option_group_id: option_field.object.course_option.course_option_group_id).collect{|option|
+                                                            [option.content, option.id, {
+                                                                data: {
+                                                                    subtext: number_to_currency(option.price),
+                                                                    price: option.price
+                                                                }
+                                                            }]
+                                                          },
+                                                          {
+                                                              selected: option_field.object.course_option_id
+                                                          },
+                                                          class: 'selectpicker form-control option-price',
+                                                          data: {
+                                                              width: '100%', 'show-subtext' => true,
+                                                          } %>
+                                </div>
+                              <% end %>
+                            </td>
+                            <td class="col-sm-2 col-xs-12">
+                              <label class="tuition" data-raw="<%= translate.price %>" data-subtotal="<%= @registration.subtotal %>">
+                                <%= number_to_currency(translate.price) %>
+                              </label>
                             </td>
                           </tr>
                         </tbody>
@@ -116,8 +151,8 @@
                 <div class="col-md-12">
                   <h4 class="text-right color-orange">
                     <%= t('total_amount') %>:
-                    <strong class="text-muted refresh-price-target" data-price="<%= (@registration.course_option)? translate.price + @registration.course_option.price : translate.price %>">
-                      <%= number_to_currency((@registration.course_option)? translate.price + @registration.course_option.price : translate.price) %>
+                    <strong class="text-muted amount">
+                      <%= number_to_currency(@registration.subtotal) %>
                     </strong>
                   </h4>
                 </div>

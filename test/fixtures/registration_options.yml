@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  registration_id: 
+  course_option_id: 
+  price: 1.5
+
+two:
+  registration_id: 
+  course_option_id: 
+  price: 1.5
