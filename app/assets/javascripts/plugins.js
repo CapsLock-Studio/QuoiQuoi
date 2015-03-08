@@ -198,15 +198,21 @@ var initToggleSearchGiftForm = function() {
 };
 
 var initCartCalculate = function() {
-    $('.option-price').on('change', function(e){
-        var productAndOptionPrice = parseFloat($(this).find('option:selected').data('price'));
+    $('.product-option').on('change', function(e){
+        var totalOptionPrice = 0;
         var parentElement = $(this).parent('div');
+
+        parentElement.find('select.product-option').each(function(){
+            totalOptionPrice += parseFloat($(this).find('option:selected').data('price'));
+        });
+
         var productPriceBlock = parentElement.find('.product-price');
+
         var totalAmountBlock = $('.total-amount');
-        var subtotal = productPriceBlock.val() * productAndOptionPrice;
+        var subtotal = parseFloat(productPriceBlock.data('raw-price')) + totalOptionPrice;
         var totalAmount = 0;
 
-        productPriceBlock.data('price', parseFloat($(this).find('option:selected').data('price')));
+        productPriceBlock.data('price', subtotal);
         parentElement.find('.subtotal').text(parentElement.find('.subtotal').text().getCurrency() + subtotal.format()).data('subtotal', subtotal);
 
         $('.subtotal').each(function(e){

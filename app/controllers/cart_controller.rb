@@ -10,10 +10,17 @@ class CartController < ApplicationController
   def update
     if @order_in_cart.update_attributes(order_params)
       @order_in_cart.order_products.each do |order_product|
-        if order_product.product_option
-          order_product.price = order_product.product.product_translates.where(locale_id: session[:locale_id]).first.price + order_product.product_option.price
-          order_product.save
+        total_option_price = 0
+        order_product.order_product_options.each do |order_option|
+          total_option_price += order_option.product_option.price
         end
+
+        order_product.price = order_product.raw_price(@order_in_cart.locale_id) + total_option_price
+        order_product.save
+        #if order_product.product_option
+        #  order_product.price = order_product.product.product_translates.where(locale_id: session[:locale_id]).first.price + order_product.product_option.price
+        #  order_product.save
+        #end
       end
       redirect_to new_order_path
     else
@@ -23,6 +30,7 @@ class CartController < ApplicationController
 
   private
     def order_params
-      params.fetch(:order, {}).permit(:id, order_products_attributes: [:id, :quantity, :product_option_id])
+      params.fetch(:order, {}).permit(:id, order_products_attributes: [:id, :quantity, :product_option_id,
+                                                                       order_product_options_attributes: [:id, :product_option_id]])
     end
 end
