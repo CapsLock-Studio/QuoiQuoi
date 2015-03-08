@@ -2,15 +2,28 @@
  * Created by Apple on 2014/5/30.
  */
 
-var refreshPrice = function(){
-    var productPriceBlock = $('#product-price');
-    var productPrice = parseInt(productPriceBlock.data('price'), 10);
+var initRefreshTuition = function(){
+    var registrationSection = $('.registration-course');
 
-    $('option:selected').each(function(index){
-        productPrice += parseInt($(this).data('price'), 10);
+    registrationSection.find('.attendance').on('change', function(){
+        registrationSection.find('.amount').text(
+            registrationSection.find('.amount').text().getCurrency() + (parseFloat(registrationSection.find('.tuition').data('subtotal')) * $(this).val()).format()
+        );
     });
 
-    productPriceBlock.text('$' + (productPrice + '').replace(/(\d{1,3})(?=(\d{3})+$)/g, '$1,') + '.00');
+    registrationSection.find('.option-price').on('change', function(){
+        var optionSubtotal = 0;
+        registrationSection.find('.option-price option:selected').each(function(){
+            optionSubtotal += parseFloat($(this).data('price'));
+        });
+
+        var tuitionSection = registrationSection.find('.tuition');
+        tuitionSection.data('subtotal', parseFloat(tuitionSection.data('raw')) + optionSubtotal);
+
+        registrationSection.find('.amount').text(
+            registrationSection.find('.amount').text().getCurrency() + (parseFloat(registrationSection.find('.tuition').data('subtotal')) * registrationSection.find('.attendance').val()).format()
+        );
+    });
 };
 
 var convertPlayer = function(youtubeBlock) {

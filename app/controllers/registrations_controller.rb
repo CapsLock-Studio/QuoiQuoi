@@ -45,6 +45,11 @@ class RegistrationsController < ApplicationController
     flash[:message] = nil
 
     @registration = Registration.new(registration_params)
+
+    @registration.subtotal = 0
+    @registration.registration_options.each do |option|
+      @registration.subtotal += option.course_option.price
+    end
   end
 
   def create
@@ -137,7 +142,7 @@ class RegistrationsController < ApplicationController
 
   private
     def registration_params
-      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id)
+      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id, registration_options_attributes: [:id, :course_option_id])
     end
 
     def set_discount

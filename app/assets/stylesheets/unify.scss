@@ -1133,3 +1133,12 @@ a[data-toggle=offcanvas] {
 .load-more {
   margin: 20px 0;
 }
+
+@media (max-width: 767px) {
+  .list-xs {
+    td {
+      display: inline-block !important;
+      float: left !important;
+    }
+  }
+}

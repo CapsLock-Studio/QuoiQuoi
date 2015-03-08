@@ -124,6 +124,7 @@
     initChangeFocusImageShow();
     initToggleSearchGiftForm();
     initCartCalculate();
+    initRefreshTuition();
     initLoadMore();
     scrolltotop.init();
 
