@@ -27,7 +27,14 @@
               <%= image_tag registration.course.image.url(:thumb), class: 'img-responsive' %>
             </td>
             <td>
-              <strong><%= translate.name %></strong>
+              <h4><%= translate.name %></h4>
+              <ul>
+                <% registration.registration_options.each do |option| %>
+                  <li>
+                    <%= option.course_option.content %>
+                  </li>
+                <% end %>
+              </ul>
             </td>
             <td>
               <%= "#{registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(registration.course.time + registration.course.length.hours).strftime('%H:%M')}" %>

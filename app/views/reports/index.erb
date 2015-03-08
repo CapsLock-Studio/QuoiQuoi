@@ -44,7 +44,14 @@
                           <%= image_tag registration.course.image.url(:thumb) %>
                         </td>
                         <td>
-                          <%= name %>
+                          <h4><%= name %></h4>
+                          <ul>
+                            <% registration.registration_options.each do |option| %>
+                            <li>
+                              <%= option.course_option.content %>
+                            </li>
+                            <% end %>
+                          </ul>
                         </td>
                         <td>
                           <%= "#{t('money_name')}#{number_to_currency(registration.subtotal, locale: locale)}" %>
