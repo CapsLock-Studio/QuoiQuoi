@@ -82,19 +82,21 @@
 
                     <% @course.course_option_groups.each do |option_group| %>
                       <label><%= option_group.name %></label>
-                      <%= f.select :course_option_id,
-                                   option_group.course_options.collect{|option|
-                                     [option.content, option.id, {
-                                         data: {
-                                             subtext: number_to_currency(option.price)
-                                         }
-                                     }]
-                                   },
-                                   {},
-                                   class: 'selectpicker form-control',
-                                   data: {
-                                       width: '100%', 'show-subtext' => true
-                                   } %>
+                      <%= f.fields_for :registration_options, RegistrationOption.new do |option_field| %>
+                        <%= option_field.select :course_option_id,
+                                     option_group.course_options.collect{|option|
+                                       [option.content, option.id, {
+                                           data: {
+                                               subtext: number_to_currency(option.price)
+                                           }
+                                       }]
+                                     },
+                                     {},
+                                     class: 'selectpicker form-control',
+                                     data: {
+                                         width: '100%', 'show-subtext' => true
+                                     } %>
+                      <% end %>
                     <% end %>
                   </div>
 
