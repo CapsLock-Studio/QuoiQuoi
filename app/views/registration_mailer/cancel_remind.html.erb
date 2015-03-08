@@ -39,7 +39,14 @@
     <td style="text-align: center">
       <%= @registration.attendance %></td>
     <td>
-      <%= (@registration.course_option)? "#{@registration.course_option.content} / #{@registration.course_option.price}" : t('none') %>
+      <%= t('none') if @registration.registration_options.size <= 0 %>
+      <ul>
+        <% @registration.registration_options.each do |option| %>
+          <li>
+            <%= "#{option.course_option.content} / #{option.course_option.price}" %>
+          </li>
+        <% end %>
+      </ul>
     </td>
   </tr>
   </tbody>
