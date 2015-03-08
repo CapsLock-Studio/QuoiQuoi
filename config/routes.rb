@@ -6,14 +6,6 @@ QuoiQuoi::Application.routes.draw do
     put 'admin' => 'devise/registrations#update', as: 'admin_registration'
   end
 
-  devise_for :users, controllers: {
-      sessions: 'users/sessions',
-      registrations: 'users/registrations',
-      omniauth_callbacks: 'users/omniauth_callbacks'
-  }
-
-  get 'search' => 'search#index'
-
   namespace :admin do
     root to: 'home#index'
     resource :privacy_statement, controller: :privacy_statement
@@ -52,6 +44,10 @@ QuoiQuoi::Application.routes.draw do
       end
 
       resources :product_addition_images, shallow: true
+
+      resources :product_option_groups, shallow: true do
+        resources :product_options, shallow: true
+      end
     end
 
     #resources :product_material_types do
@@ -96,6 +92,9 @@ QuoiQuoi::Application.routes.draw do
       end
 
       resources :course_addition_images, shallow: true
+      resources :course_option_groups, shallow: true do
+        resources :course_options, shallow: true
+      end
     end
     resources :course_registrations do
       member do
@@ -259,110 +258,122 @@ QuoiQuoi::Application.routes.draw do
   end
   ###### namespace admin end ######
 
-  root to: 'home#index'
+  localized do
 
-  get 'rss' => 'rss#index'
-  get 'cart' => 'cart#index'
-  put 'cart' => 'cart#update'
-  patch 'cart' => 'cart#update'
+    devise_for :users, controllers: {
+        sessions: 'users/sessions',
+        registrations: 'users/registrations',
+        omniauth_callbacks: 'users/omniauth_callbacks'
+    }
 
-  devise_scope :user do
-    get 'user' => 'user#index'
-    get 'user/edit' => 'user#edit', as: :edit_user
-    get 'password' => 'user#password'
-    put 'update_password' => 'user#update_password'
-    patch 'update_password' => 'user#update_password'
-    put 'user' => 'user#update'
-    patch 'user' => 'user#update'
-    get 'email' => 'user#email'
-  end
+    get 'search' => 'search#index'
 
-  resource :home do
-    get 'style1' => 'home#style1'
-    get 'style2' => 'home#style2'
-  end
-  resources :products do
-    resource :order_custom_items
-  end
-  resources :news
-  resources :courses do
-    get 'calendar', on: :collection
-  end
-  resources :reports
-  resource :recruitments
-  resource :about, controller: 'about'
-  resource :rents
-  resource :contacts
-  resources :messages
-  resources :gifts
-  resources :user_gifts do
-    member do
-      get :pay, action: :pay_show
-      post :send_email, action: :send_email
+    root to: 'home#index'
+
+    get 'rss' => 'rss#index'
+    get 'cart' => 'cart#index'
+    put 'cart' => 'cart#update'
+    patch 'cart' => 'cart#update'
+
+    devise_scope :user do
+      get 'user' => 'user#index'
+      get 'user/edit' => 'user#edit', as: :edit_user
+      get 'password' => 'user#password'
+      put 'update_password' => 'user#update_password'
+      patch 'update_password' => 'user#update_password'
+      put 'user' => 'user#update'
+      patch 'user' => 'user#update'
+      get 'email' => 'user#email'
     end
 
-    collection do
-      post :search
-      put :discount
+    resource :home do
+      get 'style1' => 'home#style1'
+      get 'style2' => 'home#style2'
     end
-  end
+    resources :products do
+      resource :order_custom_items
+    end
+    resources :news
+    resources :courses do
+      get 'calendar', on: :collection
+    end
+    resources :reports
+    resource :recruitments
+    resource :about, controller: 'about'
+    resource :rents
+    resource :contacts
+    resources :messages
+    resources :gifts
+    resources :user_gifts do
+      member do
+        get :pay, action: :pay_show
+        post :send_email, action: :send_email
+      end
 
-  resources :orders do
-    collection do
-      get :close, action: :close_index
-    end
-    member do
-      get :close, action: :close_show
-      get :pay, action: :pay_show
-      put :close
-      patch :close
-      put :cancel
-    end
-  end
-
-  resources :order_custom_items do
-    collection do
-      get :material
-    end
-
-    member do
-      put :cancel
-    end
-  end
-  resources :order_products
-  resources :registrations do
-    collection do
-      get :close, action: :close_index
+      collection do
+        post :search
+        put :discount
+      end
     end
 
-    member do
-      get :close, action: :close_show
-      get :pay, action: :pay_show
+    resources :orders do
+      collection do
+        get :close, action: :close_index
+      end
+      member do
+        get :close, action: :close_show
+        get :pay, action: :pay_show
+        put :close
+        patch :close
+        put :cancel
+      end
     end
-  end
 
-  resources :past_work_types do
-    resources :past_works
-  end
+    resources :order_custom_items do
+      collection do
+        get :material
+      end
 
-  resources :product_types do
-    resources :products
-  end
-
-  resources :payments do
-    collection do
-      get :success
-      get :cancel
-      post :notify
-      get :show
+      member do
+        put :cancel
+      end
     end
-  end
+    resources :order_products
+    resources :registrations do
+      collection do
+        get :close, action: :close_index
+      end
 
-  resources :articles
-  resources :areas do
-    resources :travel_information
-  end
+      member do
+        get :close, action: :close_show
+        get :pay, action: :pay_show
+      end
+    end
 
-  resource :terms_of_service, controller: :terms_of_service
-  resource :privacy_statement, controller: :privacy_statement
+    resources :past_work_types do
+      resources :past_works
+    end
+
+    resources :product_types do
+      resources :products
+    end
+
+    resources :payments do
+      collection do
+        get :success
+        get :cancel
+        post :notify
+        get :show
+      end
+    end
+
+    resources :articles
+    resources :areas do
+      resources :travel_information
+    end
+
+    resource :terms_of_service, controller: :terms_of_service
+    resource :privacy_statement, controller: :privacy_statement
+    
+  end
 end

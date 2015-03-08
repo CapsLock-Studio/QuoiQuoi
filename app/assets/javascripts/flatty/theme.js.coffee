@@ -190,13 +190,13 @@ window.locale = {
 
   # --------------------------------------------------------------------------------------------------------------------
   # removes .box after click on .box-remove button
-  $(".box .box-remove").live "click", (e) ->
+  $(".box").on "click", ".box-remove", (e) ->
     $(this).parents(".box").first().remove()
     e.preventDefault()
     return false
 
   # hides .box after click on .box-collapse
-  $(".box .box-collapse").live "click", (e) ->
+  $(".box").on "click", ".box-collapse", (e) ->
     box = $(this).parents(".box").first()
     box.toggleClass("box-collapsed")
     e.preventDefault()

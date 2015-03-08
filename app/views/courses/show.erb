@@ -71,14 +71,32 @@
                   <strong style="color:#666;"><%= number_to_currency(translate.price) %></strong>
                   <small><%= translate.note %></small>
                 </h4>
-
                 <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
                   <%= f.hidden_field :course_id %>
-                  <% if @course.course_options.where(locale_id: session[:locale_id]).size > 0 %>
-                    <label><%= t('option') %></label>
-                    <%= f.select :course_option_id, @course.course_options.where(locale_id: session[:locale_id]).collect{|option| [option.content, option.id, data: {subtext: number_to_currency(option.price)}]},
-                                 {}, class: 'selectpicker form-control', data: {width: '100%', 'show-subtext' => true} %>
-                  <% end %>
+                  <div class="margin-bottom-20">
+                    <% if @course.course_option_groups.size > 0 %>
+                    <div class="header margin-bottom-10">
+                      <span class="text-muted"><%= t('option') %></span>
+                    </div>
+                    <% end %>
+
+                    <% @course.course_option_groups.each do |option_group| %>
+                      <label><%= option_group.name %></label>
+                      <%= f.select :course_option_id,
+                                   option_group.course_options.collect{|option|
+                                     [option.content, option.id, {
+                                         data: {
+                                             subtext: number_to_currency(option.price)
+                                         }
+                                     }]
+                                   },
+                                   {},
+                                   class: 'selectpicker form-control',
+                                   data: {
+                                       width: '100%', 'show-subtext' => true
+                                   } %>
+                    <% end %>
+                  </div>
 
                   <% if @course.canceled? %>
                     <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
