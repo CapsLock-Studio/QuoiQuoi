@@ -3,7 +3,7 @@
     <%= course_option.content %>
   </div>
   <div class="col-xs-4">
-    <%= number_to_currency(course_option.price) %>
+    <%= number_to_currency(course_option.price, locale: course_option.course_option_group.locale.lang) %>
   </div>
   <div class="col-xs-3 text-right">
     <%= link_to edit_admin_course_option_path(course_option),

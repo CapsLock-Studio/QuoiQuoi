@@ -3,7 +3,7 @@
     <%= product_option.content %>
   </div>
   <div class="col-xs-4">
-    <%= number_to_currency(product_option.price) %>
+    <%= number_to_currency(product_option.price, locale: product_option.product_option_group.locale.lang) %>
   </div>
   <div class="col-xs-3 text-right">
     <%= link_to edit_admin_product_option_path(product_option),

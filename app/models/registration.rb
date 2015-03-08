@@ -7,6 +7,9 @@ class Registration < ActiveRecord::Base
 
   has_many :user_gifts
 
+  has_many :registration_options
+  accepts_nested_attributes_for :registration_options
+
   def paid?
     self.payment
   end

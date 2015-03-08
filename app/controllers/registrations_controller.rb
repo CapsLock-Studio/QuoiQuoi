@@ -45,6 +45,11 @@ class RegistrationsController < ApplicationController
     flash[:message] = nil
 
     @registration = Registration.new(registration_params)
+
+    @registration.subtotal = @registration.course.course_translates.find_by_locale_id(session[:locale_id]).price
+    @registration.registration_options.each do |option|
+      @registration.subtotal += option.course_option.price
+    end
   end
 
   def create
@@ -71,9 +76,11 @@ class RegistrationsController < ApplicationController
 
       if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed? && !r.canceled?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
         course_tuition = translate.price
-        if @registration.course_option
-          course_tuition += @registration.course_option.price
+
+        @registration.registration_options.each do |option|
+          course_tuition += option.course_option.price
         end
+
         @registration.subtotal = @registration.attendance * course_tuition
         @registration.locale_id = translate.locale.id
         @registration.currency = translate.locale.currency
@@ -137,7 +144,7 @@ class RegistrationsController < ApplicationController
 
   private
     def registration_params
-      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id)
+      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id, registration_options_attributes: [:id, :course_option_id])
     end
 
     def set_discount
