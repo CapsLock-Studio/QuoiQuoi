@@ -122,6 +122,8 @@ class CoursesController < ApplicationController
         if CourseOptionGroup.where(locale_id: session[:locale_id], course_id: params[:id]).size > 0
           course_model = course_model.includes(course_option_groups: [:course_options])
                                      .where(course_option_groups: {locale_id: session[:locale_id]})
+                                     .order('course_option_groups.id')
+                                     .order('course_options.id')
         end
 
         @course = course_model.find(params[:id])
