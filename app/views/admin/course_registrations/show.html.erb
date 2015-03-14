@@ -67,6 +67,17 @@
                           </span>
                         </h4>
                       <% end %>
+                      <br/>
+                      所選選項:
+                      <ul class="list-inline">
+                        <% registration.registration_options.each do |option| %>
+                          <li>
+                            <label class="label label-lg label-primary">
+                              <%= option.course_option.content %>
+                            </label>
+                          </li>
+                        <% end %>
+                      </ul>
                     </td>
                     <td>
                       <% if registration.returned? %>
