@@ -139,6 +139,8 @@ class ProductsController < ApplicationController
         if ProductOptionGroup.where(locale_id: session[:locale_id], product_id: params[:id]).size > 0
           product_model = product_model.includes(product_option_groups: [:product_options])
                             .where(product_option_groups: {locale_id: session[:locale_id]})
+                            .order('product_option_groups.id')
+                            .order('product_options.id')
         end
 
         @product = product_model.find(params[:id])
