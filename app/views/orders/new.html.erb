@@ -87,27 +87,27 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <table class="table table-hover">
-                        <thead>
+                        <thead class="hidden-xs">
                         <tr>
-                          <td></td>
-                          <td><%= t('call_name') %></td>
-                          <td><%= t('price') %></td>
-                          <td><%= t('quantity') %></td>
+                          <th></th>
+                          <th><%= t('call_name') %></th>
+                          <th><%= t('price') %></th>
+                          <th><%= t('quantity') %></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="list-xs">
                         <% @order_in_cart.order_products.each_with_index do |order_product, index| %>
                           <tr>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <%= image_tag order_product.product.image.url(:thumb) %>
                             </td>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <h5>
                                 <%= order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).name %><br/>
                                 <small><%= order_product.product_option.content if order_product.product_option %></small>
                               </h5>
                             </td>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <% if order_product.product_option %>
                                 <h5>
                                   <%= number_to_currency(order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).price) %><br/>
@@ -116,25 +116,25 @@
                               <% end %>
                               <%= number_to_currency(order_product.price) %>
                             </td>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <%= order_product.quantity %>
                             </td>
                           </tr>
                         <% end %>
                         <% @order_in_cart.order_custom_items.each_with_index do |order_custom_item, index| %>
                           <tr>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <%= custom_item_image_helper(order_custom_item) %>
                             </td>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <h5>
                                 <%= custom_item_name_helper(order_custom_item) %>
                               </h5>
                             </td>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               <%= number_to_currency(order_custom_item.order_custom_item_translates.find_by_locale_id(@order_in_cart.locale_id).price) %>
                             </td>
-                            <td>
+                            <td class="col-sm-2 col-xs-12">
                               1
                             </td>
                           </tr>
