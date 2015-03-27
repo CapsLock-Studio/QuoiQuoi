@@ -72,9 +72,15 @@
                       <ul class="list-inline">
                         <% registration.registration_options.each do |option| %>
                           <li>
-                            <label class="label label-lg label-primary">
-                              <%= option.course_option.content %>
-                            </label>
+                            <% if option.course_option.nil? %>
+                              <label class="label label-lg label-default">
+                                已刪除項目
+                              </label>
+                            <% else %>
+                              <label class="label label-lg label-primary">
+                                <%= option.course_option.content %>
+                              </label>
+                            <% end %>
                           </li>
                         <% end %>
                       </ul>
