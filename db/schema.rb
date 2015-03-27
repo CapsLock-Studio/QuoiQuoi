@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308080537) do
+ActiveRecord::Schema.define(version: 20150323125850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -521,6 +521,25 @@ ActiveRecord::Schema.define(version: 20150308080537) do
     t.integer  "locale_id"
   end
 
+  create_table "order_payments", force: true do |t|
+    t.float    "amount"
+    t.string   "token",          limit: nil
+    t.string   "bankcode",       limit: nil
+    t.string   "account",        limit: nil
+    t.datetime "expire_time"
+    t.string   "trade_no",       limit: nil
+    t.datetime "trade_time"
+    t.string   "payment_no",     limit: nil
+    t.boolean  "completed"
+    t.datetime "completed_time"
+    t.string   "redirect_uri",   limit: nil
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "order_id"
+  end
+
+  add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
+
   create_table "order_product_custom_items", force: true do |t|
     t.integer  "order_product_id"
     t.integer  "product_custom_item_id"
@@ -577,6 +596,7 @@ ActiveRecord::Schema.define(version: 20150308080537) do
     t.integer  "shipping_fee_id"
     t.string   "currency"
     t.integer  "locale_id"
+    t.integer  "payment_method",  default: 0
   end
 
   add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree
