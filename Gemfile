@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '~> 4.2'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+  gem 'sdoc'
 end
 
 gem 'compass-rails', '~> 2.0.0'
@@ -39,9 +39,9 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
-gem 'auto-facebook', '~> 0.42'
+gem 'auto-facebook'
 gem 'breadcrumbs_on_rails'
-gem 'paperclip', '~> 4.1'
+gem 'paperclip'
 gem 'awesome_nested_fields'
 # gem 'will_paginate', '~> 3.0'
 gem 'kaminari'
@@ -51,7 +51,7 @@ gem 'paypal-express'
 gem 'redis'
 gem 'resque'
 gem 'resque_mailer'
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'activerecord-session_store'
 
 gem 'sqlite3'
 gem 'recaptcha'
@@ -63,7 +63,11 @@ gem 'route_translator'
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+group 'production' do
+  gem 'unicorn'
+  gem 'unicorn-worker-killer'
+end
+
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
