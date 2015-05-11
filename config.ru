@@ -4,14 +4,14 @@
 if ENV['RAILS_ENV'] == 'production'
   require 'unicorn/worker_killer'
 
-  max_request_min = 450
-  max_request_max = 550
+  max_request_min = 400
+  max_request_max = 500
 
   # Max request per worker
   use Unicorn::WorkerKiller::MaxRequests, max_request_min, max_request_max
 
-  oom_min = (200) * (1024 ** 2)
-  oom_max = (240) * (2024 ** 2)
+  oom_min = (160*(1024**2))
+  oom_max = (200*(2024**2))
 
   # Max memory size (RSS) per worker
   use Unicorn::WorkerKiller::Oom, oom_min, oom_max
