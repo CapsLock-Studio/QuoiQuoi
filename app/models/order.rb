@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  enum payment_method: {remittance: 0, paypal: 1, cvs_family: 2, cvs_ibon: 3, webatm: 4, atm: 5, alipay: 6}
+
   validates :user_id, presence: true
 
   belongs_to :user
@@ -6,12 +8,16 @@ class Order < ActiveRecord::Base
   has_one :payment, dependent: :destroy
   accepts_nested_attributes_for :order_products
 
+  belongs_to :locale
+
   belongs_to :shipping_fee
 
   has_many :order_custom_items
   accepts_nested_attributes_for :order_custom_items
 
   has_many :user_gifts
+
+  has_one :order_payment
 
   def paid?
     self.payment
@@ -35,13 +41,15 @@ class Order < ActiveRecord::Base
 
   # Order.includes(:order_custom_items, :order_products).find(317).amount <======= For test
   def get_subtotal
-    subtotal = self.order_custom_items_subtotal + self.order_products_subtotal
-    shipping_fee = ShippingFeeTranslate.find_by_shipping_fee_id_and_locale_id(self.shipping_fee_id, self.locale_id)
+    self.get_raw_subtotal + self.shipping_fee!
+  end
 
-    if shipping_fee.free_condition.blank? || subtotal < shipping_fee.free_condition
-      subtotal + shipping_fee.fee
+  def shipping_fee!
+    shipping_fee = ShippingFeeTranslate.find_by_shipping_fee_id_and_locale_id(self.shipping_fee_id, self.locale_id)
+    if shipping_fee.free_condition.blank? || self.get_raw_subtotal < shipping_fee.free_condition
+      shipping_fee.fee
     else
-      subtotal
+      0
     end
   end
 
@@ -56,5 +64,15 @@ class Order < ActiveRecord::Base
 
   def order_products_subtotal
     self.order_products.map{|order_product| order_product.price * order_product.quantity}.sum
+  end
+
+  def has_expire_time?
+    (self.remittance? || self.cvs_family? || self.cvs_ibon? || self.atm?) &&
+        (!self.order_payment.expire_time.nil?)
+  end
+
+  def empty_expire_time?
+    (self.remittance? || self.cvs_family? || self.cvs_ibon? || self.atm?) &&
+        (self.order_payment.expire_time.nil?)
   end
 end

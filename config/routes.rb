@@ -260,6 +260,20 @@ QuoiQuoi::Application.routes.draw do
 
   localized do
 
+    # For handling payment
+    get 'order_payment/:action(/:id)', controller: :order_payment
+    post 'order_payment_callback/allpay_complete' => 'order_payment_callback#allpay_complete'
+
+    get 'registration_payment/:action(/:id)', controller: :registration_payment
+    post 'registration_payment_callback/allpay_complete' => 'registration_payment_callback#allpay_complete'
+
+    # Special for paypal payment feedback
+    get 'order_payment_callback/paypal' => 'order_payment_callback#paypal'
+    get 'orders/:id/cancel?token=EC-\w+' => 'orders#cancel'
+
+    get 'registration_payment_callback/paypal' => 'registration_payment_callback#paypal'
+    get 'registrations/:id/cancel?token=EC-\w+' => 'registrations#cancel'
+
     devise_for :users, controllers: {
         sessions: 'users/sessions',
         registrations: 'users/registrations',
@@ -274,6 +288,8 @@ QuoiQuoi::Application.routes.draw do
     get 'cart' => 'cart#index'
     put 'cart' => 'cart#update'
     patch 'cart' => 'cart#update'
+    get 'cart/checkout' => 'cart#checkout'
+    post 'cart/payment' => 'cart#payment'
 
     devise_scope :user do
       get 'user' => 'user#index'
@@ -320,12 +336,22 @@ QuoiQuoi::Application.routes.draw do
       collection do
         get :close, action: :close_index
       end
+
       member do
         get :close, action: :close_show
         get :pay, action: :pay_show
         put :close
         patch :close
         put :cancel
+        post :cancel
+
+        put :report_remittance
+        post :report_remittance
+
+        post :return
+        put :delivery_report
+
+        post action: :update
       end
     end
 
@@ -342,11 +368,22 @@ QuoiQuoi::Application.routes.draw do
     resources :registrations do
       collection do
         get :close, action: :close_index
+        post :payment
       end
 
       member do
         get :close, action: :close_show
         get :pay, action: :pay_show
+
+        put :cancel
+        post :cancel
+
+        put :report_remittance
+        post :report_remittance
+
+        post :return
+
+        post action: :update
       end
     end
 

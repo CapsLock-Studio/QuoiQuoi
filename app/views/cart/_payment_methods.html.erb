@@ -1,0 +1,84 @@
+<%= form_for @order_in_cart, url: orders_path, method: :post, html: {class: 'form'} do |form| %>
+  <div class="box-content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:remittance], checked: true %>
+            <%= t('remittance') %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:paypal] %>
+            <%= image_tag 'paypal.png', class: 'img-responsive', style: 'max-width: 70px;' %>
+          </label>
+        </div>
+        <label class="pull-left">
+          <%= t('paypal_hint').html_safe %>
+        </label>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:cvs_family] %>
+            <%= image_tag 'famiport.png', class: 'img-responsive', style: 'max-width: 130px;' %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:cvs_ibon] %>
+            <%= image_tag 'ibon.png', class: 'img-responsive', style: 'max-width: 100px;' %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:webatm] %>
+            <%= t('webatm') %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:atm] %>
+            <%= t('atm') %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:alipay] %>
+            <%= t('alipay') %>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+        <button type="submit" class="btn btn-lg btn-orange btn-block hover-effect">
+          <%= t('check_out') %>
+        </button>
+        <%= link_to cart_checkout_path do %>
+          <i class="fa fa-angle-left"></i>
+          <%= t('order.back') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

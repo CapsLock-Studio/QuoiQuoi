@@ -1,0 +1,70 @@
+<div class="items">
+  <% order.order_products.each_with_index do |order_product, index| %>
+    <div class="row item">
+      <div class="col-xs-5">
+        <%= image_tag order_product.product.image.url(:thumb) %>
+      </div>
+      <div class="col-xs-7">
+        <div class="row">
+          <div class="col-xs-12 text-muted">
+            <%= t('item') %>
+          </div>
+          <div class="col-xs-12 margin-bottom-5">
+            <%= order_product.product.product_translates.find_by_locale_id(order.locale_id).name %>
+            (<%= order_product.order_product_options.map{|order_option|
+            order_option.product_option.content
+          }.join(', ') %>)
+          </div>
+
+          <div class="col-xs-12 text-muted">
+            <%= t('single_subtotal') %>
+          </div>
+          <div class="col-xs-12 margin-bottom-5">
+            <%= number_to_currency(order_product.price) %>
+          </div>
+
+          <div class="col-xs-12 text-muted">
+            <%= t('quantity') %>
+          </div>
+          <div class="col-xs-12">
+            <%= order_product.quantity %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% order.order_custom_items.each_with_index do |order_custom_item, index| %>
+  <div class="row items">
+    <div class="item">
+      <div class="col-xs-5">
+        <%= custom_item_image_helper(order_custom_item) %>
+      </div>
+      <div class="col-xs-7">
+        <div class="row">
+          <div class="col-xs-12 text-muted">
+            <%= t('item') %>
+          </div>
+          <div class="col-xs-12 margin-bottom-5">
+            <%= t('customizations') %>
+          </div>
+
+          <div class="col-xs-12 text-muted">
+            <%= t('single_subtotal') %>
+          </div>
+          <div class="col-xs-12 margin-bottom-5">
+            <%= number_to_currency(order_custom_item.order_custom_item_translates.find_by_locale_id(order.locale_id).price) %>
+          </div>
+
+          <div class="col-xs-12 text-muted">
+            <%= t('quantity') %>
+          </div>
+          <div class="col-xs-12">
+            1
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

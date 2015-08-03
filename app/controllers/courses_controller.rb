@@ -82,18 +82,23 @@ class CoursesController < ApplicationController
     set_breadcrumbs
 
     @registration = Registration.all.where(email: (current_user)? current_user.email : nil, course_id: @course.id).order(:id).first
-    @recent_courses = Course.all.where('time > ?', Time.now).where.not(id: @course.id).order(:time).limit(8)
+    @recent_courses = Course.includes(:course_translate)
+                            .where(course_translates: {locale_id: session[:locale_id]})
+                            .where('time > ? AND courses.id != ?', Time.now, @course.id)
+                            .order(:time).limit(8)
+    # @recent_courses = Course.all.where('time > ? AND locale_id = ?', Time.now, session[:locale_id])
+    #                             .where.not(id: @course.id)
+    #                             .order(:time).limit(8)
 
     unless @registration
       @registration = @course.registrations.build
     end
 
-    translate = @course.course_translates.find_by_locale_id(session[:locale_id])
-    add_breadcrumb translate.name
+    add_breadcrumb @course.course_translate.name
 
-    @website_title = "#{translate.name} | #{@website_title}"
-    @meta_og_title = translate.name
-    @meta_og_description = translate.description.gsub(/\n/, '')
+    @website_title = "#{@course.course_translate.name} | #{@website_title}"
+    @meta_og_title = @course.course_translate.name
+    @meta_og_description = @course.course_translate.description.gsub(/\n/, '')
     @meta_og_type = 'product'
     @meta_og_image = "http://quoiquoi.tw#{@course.image.url(:large)}"
   end

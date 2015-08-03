@@ -1,177 +1,134 @@
-<%= render 'layouts/breadcrumbs', title: t('check_out') %>
+<%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
+  <%= render 'layouts/flash_message' %>
   <div class="row">
-    <div class="col-md-12 reg-page">
-      <div class="item">
-        <%= form_for @registration, html: {class: 'form-horizontal validate-form registration-course'} do |f| %>
-          <% translate = @registration.course.course_translates.where(locale_id: session[:locale_id]).first %>
-          <% if flash[:message] %>
-            <div class="alert alert-warning text-center">
-              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-              <%= flash[:message] %>
-            </div>
-          <% end %>
-          <h4><%= t('registration.information') %> <small class="text-muted"><%= t('registration.hint') %></small></h4>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="box">
-                    <div class="box-content">
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <%= f.label :popular do %>
-                            <%= t('registration.attendance') %>
-                            <span class="color-red">*</span>
-                          <% end %>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= f.select :attendance,
-                                       options_for_select(1..@registration.course.popular{|index| [index, index]}),
-                                       {},
-                                       {
-                                           class: 'selectpicker attendance form-control',
-                                           data: {
-                                               width: '100%',
-                                               price: translate.price
-                                           }
-                                       } %>
-                        </div>
-                      </div>
-                      <% unless current_user %>
-                        <div class="form-group row">
-                          <div class="col-md-12">
-                            <%= f.label :email do %>
-                              Email
-                              <span class="color-red">*</span>
-                            <% end %>
-                          </div>
-                          <div class="controls col-md-4">
-                            <%= f.text_field :email, class: 'form-control', data: {'rule-required' => true, 'rule-email' => true} %>
-                          </div>
-                        </div>
-                      <% end %>
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <%= f.label :name do %>
-                            <%= t('name') %>
-                            <span class="color-red">*</span>
-                          <% end %>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= f.text_field :name, value: current_user ? current_user.name : f.object.name, class: 'form-control', data: {'rule-required' => true} %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-md-12">
-                          <%= f.label :phone do %>
-                            <%= t('phone_number') %>
-                          <% end %>
-                        </div>
-                        <div class="controls col-md-3">
-                          <%= f.text_field :phone, value: current_user ? current_user.phone : f.object.phone, class: 'form-control' %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h4><%= t('registration.to') %></h4>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="box">
-                <div class="box-content">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <table class="table table-hover">
-                        <thead class="hidden-xs">
-                        <tr>
-                          <td></td>
-                          <td><%= t('call_name') %></td>
-                          <td><%= t('option') %></td>
-                          <td><%= t('tuition') %></td>
-                        </tr>
-                        </thead>
-                        <tbody class="list-xs">
-                          <tr>
-                            <td class="col-sm-2 col-xs-12 ">
-                              <%= image_tag @registration.course.image.url(:thumb) %>
-                            </td>
-                            <td class="col-sm-2 col-xs-12">
-                              <h5>
-                                <%= translate.name %>
-                              </h5>
-                            </td>
-                            <td class="col-sm-2 col-xs-12">
-                              <%= f.fields_for :registration_options do |option_field| %>
-                                <div class="margin-bottom-10">
-                                  <label><%= option_field.object.course_option.course_option_group.name %></label>
-                                  <%= option_field.select :course_option_id,
-                                                          CourseOption.where(course_option_group_id: option_field.object.course_option.course_option_group_id).collect{|option|
-                                                            [option.content, option.id, {
-                                                                data: {
-                                                                    subtext: number_to_currency(option.price),
-                                                                    price: option.price
-                                                                }
-                                                            }]
-                                                          },
-                                                          {
-                                                              selected: option_field.object.course_option_id
-                                                          },
-                                                          class: 'selectpicker form-control option-price',
-                                                          data: {
-                                                              width: '100%', 'show-subtext' => true,
-                                                          } %>
-                                </div>
-                              <% end %>
-                            </td>
-                            <td class="col-sm-2 col-xs-12">
-                              <label class="tuition" data-raw="<%= translate.price %>" data-subtotal="<%= @registration.subtotal %>">
-                                <%= number_to_currency(translate.price) %>
-                              </label>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <% options = CourseOption.where(course_id: @registration.course_id, locale_id: session[:locale_id]).order(:id).collect{|option| [option.content, option.id, data: {subtext: number_to_currency(option.price), price: option.price + translate.price}]} %>
-                      <% if options.length > 0 %>
-                        <div class="row">
-                          <div class="col-md-3 col-sm-5 col-xs-12">
-                            <%= f.select :course_option_id, options, {}, {class: 'selectpicker form-control course-option-price', data: {'show-subtext' => true}} %>
-                          </div>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <h4 class="text-right color-orange">
-                    <%= t('total_amount') %>:
-                    <strong class="text-muted amount">
-                      <%= number_to_currency(@registration.subtotal) %>
-                    </strong>
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr/>
-          <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-              <%= f.hidden_field :course_id %>
-              <%= f.button t('register'), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
-              <%= link_to courses_path do %>
-                <i class="fa fa-angle-left"></i>
-                <%= t('registration.keep') %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+    <div class="col-sm-7 col-xs-12">
+      <div class="box">
+        <h4>報名的課程資訊</h4>
+        <div class="box-content">
+          <%= render 'course_information', registration: @registration %>
+        </div>
       </div>
+    </div>
+
+    <div class="col-sm-5 col-xs-12">
+      <%= form_for(@registration, url: payment_registrations_path, html: {class: 'validate-form'}) do |f| %>
+        <div class="box">
+          <h4>
+            <%= t('registration.information') %> <small class="text-muted"><%= t('registration.hint') %></small>
+          </h4>
+          <div class="box-content">
+            <div class="form-group">
+              <label>
+                Email
+              </label>
+              <div class="controls">
+                <%= f.text_field(:email, value: ((current_user.nil?)? '' : current_user.email),
+                                 class: 'form-control',
+                                 data: {'rule-required' => true, 'rule-email' => true},
+                                 disabled: !current_user.nil?
+                    ) %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <%= t('name') %>
+              </label>
+              <div class="controls">
+                <%= f.text_field(:name, value: current_user ? current_user.name : f.object.name, class: 'form-control',
+                                 data: {'rule-required' => true}) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>
+                <%= t('phone_number') %>
+              </label>
+              <div class="controls">
+                <%= f.text_field :phone, value: current_user ? current_user.phone : f.object.phone, class: 'form-control',
+                                 data: {'rule-required' => true} %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="box">
+          <h4><%= t('course.options') %></h4>
+          <div class="box-content">
+            <div class="form-group">
+              <label>
+                <%= t('registration.attendance') %>&nbsp;<span class="color-red">*</span>
+              </label>
+              <div class="controls">
+                <%= f.select :attendance,
+                             1..@registration.course.popular,
+                             {
+                                 selected: @registration.attendance
+                             },
+                             {
+                                 class: 'selectpicker attendance form-control',
+                                 data: {
+                                     width: '100%',
+                                     price: @registration.course.course_translate.price
+                                 }
+                             } %>
+              </div>
+            </div>
+
+            <!-- Course's options -->
+            <%= f.fields_for :registration_options, @registration.registration_options do |option_field| %>
+              <div class="form-group">
+                <label><%= option_field.object.course_option.course_option_group.name %></label>
+                <%= option_field.select :course_option_id,
+                                        option_field.object.course_option.course_option_group.course_options.collect{|option|
+                                          [option.content, option.id, {
+                                                             data: {
+                                                                 subtext: number_to_currency(option.price),
+                                                                 price: option.price
+                                                             }
+                                                         }]
+                                        },
+                                        {
+                                            selected: option_field.object.course_option_id
+                                        },
+                                        class: 'selectpicker form-control option-price',
+                                        data: {
+                                            width: '100%', 'show-subtext' => true,
+                                        } %>
+              </div>
+            <% end %>
+            <!-- Course's options -->
+
+            <h4 class="color-orange text-right">
+              <%= t('tuition') %>
+              <strong class="tuition text-muted"
+                      data-raw="<%= @registration.course.course_translate.price %>"
+                      data-subtotal="<%= @registration.subtotal %>">
+                <%= number_to_currency(@registration.tuition) %>
+              </strong>
+            </h4>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <hr/>
+              </div>
+
+              <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+
+                <%= f.hidden_field :course_id %>
+
+                <button type="submit" class="btn btn-lg btn-orange btn-block hover-effecr">
+                  <%= t('register') %>
+                </button>
+                <%= link_to courses_path do %>
+                  <i class="fa fa-angle-left"></i>
+                  <%= t('registration.keep') %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
