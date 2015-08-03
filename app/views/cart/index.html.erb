@@ -2,20 +2,14 @@
 <%= form_for @order_in_cart, url: cart_path, method: :put do |f| %>
   <div class="container main-container">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-7">
         <div class="row">
           <% if @order_in_cart.order_products.size > 0 %>
             <div class="col-sm-12">
               <div class="box">
-                <div class="box-header">
-                  <div class="title">
-                    <div class="fa fa-list"></div>
-                    <%= t('products') %>
-                  </div>
-                  <div class="actions">
-                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-                  </div>
-                </div>
+                <h3>
+                  <%= t('products_in_cart') %>
+                </h3>
                 <div class="box-content">
                   <div class="row">
                     <div class="col-md-12 cart-products">
@@ -48,7 +42,7 @@
                             <% end %>
 
                             <%= builder.fields_for :order_product_options do |option_field| %>
-                              <label><%= option_field.object.product_option.product_option_group.name %></label>
+                              <%= option_field.object.product_option.product_option_group.name %>
                               <%= option_field.select :product_option_id,
                                                       ProductOption.where(product_option_group_id: option_field.object.product_option.product_option_group_id).collect{|option|
                                                         [option.content, option.id, {
@@ -83,7 +77,7 @@
                                                } %>
                             <hr/>
                             <h5 class="margin-bottom-20">
-                              <span style="color:#666;"><%= t('subtotal') %></span>
+                              <span style="color:#666;"><%= t('single_subtotal') %></span>
                               <strong class="pull-right subtotal" data-subtotal="<%= builder.object.price * builder.object.quantity %>">
                                 <%= number_to_currency(builder.object.price * builder.object.quantity) %>
                               </strong>
@@ -128,16 +122,11 @@
           <% end %>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <div class="box">
-          <div class="box-header">
-            <div class="title">
-              <div class="glyphicon-saved glyphicon"></div>
-            </div>
-            <div class="actions">
-              <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-            </div>
-          </div>
+          <h3>
+            <%= t('subtotal') %>
+          </h3>
           <div class="box-content">
             <h4 class="margin-bottom-30">
               <strong>
@@ -147,13 +136,15 @@
               </span>
               </strong>
             </h4>
+
+            <hr/>
+
             <div class="row">
-              <div class="col-md-12 margin-bottom-10">
+              <div class="col-sm-10 col-sm-offset-1 margin-bottom-10">
                 <button class="btn btn-block btn-orange btn-lg hover-effect" type="submit" <%= 'disabled="disabled"' if @order_in_cart.in_cart_empty? %>>
-                  <%= t('check_out') %>
+                  <%= t('proceed_to_checkout') %>
                 </button>
-              </div>
-              <div class="col-md-12">
+
                 <%= link_to products_path do %>
                   <i class="fa fa-angle-left"></i>
                   <%= t('keep_shopping') %>

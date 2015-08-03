@@ -39,9 +39,27 @@
   </li>
   <% if user_signed_in? %>
     <li>
-      <div>
-        <%= link_to(orders_path) do %>
+      <div class="top">
+        <a href="#">
           <%= t('control_panel') %>
+        </a>
+        <ul class="languages" style="margin-left: 17px;">
+          <%= nav_item(orders_path) do %>
+            <%= link_to t('order.all'), orders_path %>
+          <% end %>
+          <%= nav_item(registrations_path) do %>
+            <%= link_to t('registration.all'), registrations_path %>
+          <% end %>
+          <%= nav_item(order_custom_items_path) do %>
+            <%= link_to t('custom_order.all'), order_custom_items_path %>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div>
+        <%= link_to(password_path) do %>
+          <i class="fa fa-fw fa-cog"></i>
         <% end %>
       </div>
     </li>

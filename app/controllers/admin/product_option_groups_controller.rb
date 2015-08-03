@@ -3,7 +3,9 @@ class Admin::ProductOptionGroupsController < AdminController
     @product_option_groups = ProductOptionGroup.includes(:product_options).where(
         locale_id: params[:locale_id] || Locale.first.id,
         product_id: params[:product_id]
-    ).order('product_option_groups.id, product_options.id')
+    )
+    # For sorting option groups and options
+    # @product_option_group = @product_option_groups.order('product_option_groups.id, product_options.id')
 
     render layout: false
   end

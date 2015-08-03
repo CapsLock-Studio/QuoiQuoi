@@ -39,10 +39,18 @@
       <li class="divider"></li>
       <% if user_signed_in? %>
         <li>
-          <%= link_to(orders_path) do %>
-            <i class="fa fa-user fa-fw"></i>
+          <div class="control-title">
             <%= t('control_panel') %>
-          <% end %>
+          </div>
+        </li>
+        <li>
+          <%= link_to('所有訂單', orders_path) %>
+        </li>
+        <li>
+          <%= link_to('報名的課程', registrations_path) %>
+        </li>
+        <li>
+          <%= link_to('我的客製化訂製', '')  %>
         </li>
         <li class="divider"></li>
         <li>

@@ -479,3 +479,44 @@ a.thumbnail {
   margin: 0;
   top: 0;
 }
+
+.items {
+  .item {
+    padding: 10px 0;
+    margin-left: 0;
+    margin-right: 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #EFEFEF;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+}
+
+.status {
+  border: solid 2px;
+  border-radius: 6px !important;
+  padding: 6px;
+  margin: 5px 0;
+}
+
+.status-waiting {
+  border-color: #BBBBBB;
+}
+
+.status-confirmed {
+  border-color: #5cb85c;
+}
+
+.status-denied {
+  border-color: #d9534f;
+}
+
+@media (max-width: 767px) {
+  .margin-bottom-xs-5 {
+    margin-bottom: 5px;
+  }
+}

@@ -54,7 +54,7 @@
           <%= form_for @product.order_products.build do |f| %>
             <%= f.hidden_field :product_id %>
             <div class="row">
-              <div class="col-md-12 margin-bottom-50">
+              <div class="col-md-12 margin-bottom-20">
                 <h3 style="color:#666;">
                   <strong>
                     <%= @product.product_translate.name %>
@@ -64,9 +64,6 @@
               </div>
               <% if @product.visible? %>
                 <div class="col-md-12 margin-bottom-10">
-                  <div class="header margin-bottom-10">
-                    <span class="text-muted"><%= t('price') %></span>
-                  </div>
                   <h4 class="margin-bottom-20">
                     <strong id="product-price" data-price="<%= @product.product_translate.price %>"><%= number_to_currency(price_discount(@product.product_translate.price, @product.discount)) %></strong>
                     <% if @product.discount > 0 %>
@@ -104,8 +101,14 @@
 
                 <div class="col-md-12 margin-bottom-50">
                   <% if @product.quantity > 0 %>
-                    <label><%= t('quantity') %></label>
-                    <%= f.select :quantity, options_for_select((1..@product.quantity).collect{|number| [number, number]}), {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                    <div class="margin-bottom-10">
+                      <label><%= t('quantity') %></label>
+                      <%= f.select(:quantity,
+                                   (1..@product.quantity).collect{|number| [number, number]},
+                                   {},
+                                   class: 'selectpicker form-control',
+                                   data: {width: '100%'}) %>
+                    </div>
                     <%= f.button class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn', type: 'submit' do %>
                       <i class="fa fa-shopping-cart"></i>
                       <span><%= t('add_to_cart') %></span>

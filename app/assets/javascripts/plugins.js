@@ -1,6 +1,11 @@
 /**
  * Created by Apple on 2014/5/30.
  */
+var initAutoSendForm = function() {
+    $('.auto-send-form').each(function(){
+        $(this).submit();
+    });
+};
 
 var initRefreshTuition = function(){
     var registrationSection = $('.registration-course');
@@ -280,7 +285,13 @@ var initLoadMore = function() {
             }
         });
     });
-}
+};
+
+var initCollapseBoxInMobile = function() {
+    if (!window.matchMedia || (window.matchMedia("(max-width: 767px)").matches)) {
+       $('.collapse-in-mobile').addClass('box-collapsed');
+    }
+};
 
 $.fn.marquee = function(animateTime, waitTime) {
     var marqueeBlock = $(this);
@@ -334,7 +345,7 @@ function getCookie(cname) {
 
 String.prototype.getCurrency = function() {
     return this.toString().replace(/(\w*\$[\s\r\n]*)[\w,.]*/g, '$1');
-}
+};
 
 Number.prototype.format = function(){
     return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

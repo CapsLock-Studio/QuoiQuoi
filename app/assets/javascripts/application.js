@@ -126,7 +126,9 @@
     initCartCalculate();
     initRefreshTuition();
     initLoadMore();
+    initCollapseBoxInMobile();
     scrolltotop.init();
+    initAutoSendForm();
 
     $('img').on('load', function(){
         $(this).animate({opacity: 1}, 500);
