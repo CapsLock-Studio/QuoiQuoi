@@ -9,6 +9,11 @@ class Admin::UsersController < AdminController
   end
 
   def show
+  end
+
+  def info
     @user = User.find(params[:id])
+
+    render layout: false
   end
 end

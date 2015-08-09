@@ -53,6 +53,15 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def discount!
+    discount = 0
+    UserGiftSerial.where(order_id: self.id).each do |user_gift_serial|
+      discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: self.locale_id).first.quota
+    end
+
+    discount
+  end
+
   def get_raw_subtotal
     (self.order_custom_items_subtotal + self.order_products_subtotal)
   end
