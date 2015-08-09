@@ -170,6 +170,16 @@ QuoiQuoi::Application.routes.draw do
       end
     end
 
+    resources :order_remittances do
+      member do
+        get :check, action: :edit
+      end
+
+      collection do
+        get :check
+      end
+    end
+
     resources :messages
 
     resources :order_custom_items do
@@ -236,6 +246,10 @@ QuoiQuoi::Application.routes.draw do
 
     resources :users do
       resources :messages
+
+      member do
+        get :info
+      end
     end
 
     resources :gifts do

@@ -23,16 +23,6 @@ class Admin::OrdersController < AdminController
     @orders = Order.where(checkout: true, canceled: false, closed: true)
   end
 
-  def check
-    @payments = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: nil).reject{|payment| !payment.order}
-  end
-
-  def check_show
-    add_breadcrumb '待確認匯款訂單列表', :check_admin_orders_path
-
-    @payment = Payment.where(order_id: params[:id]).first
-  end
-
   # GET /admin/orders/1
   # GET /admin/orders/1.json
   def show

@@ -1,0 +1,96 @@
+<div class="col-sm-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-flag"></i>
+      所有匯款紀錄
+    </h1>
+  </div>
+
+  <% unless flash[:confirmed].nil? %>
+    <% if flash[:confirmed] == 'true' %>
+      <%= render 'message_confirmed' %>
+    <% else %>
+      <%= render 'message_denied' %>
+    <% end %>
+  <% end %>
+
+  <%= render 'search_condition' %>
+
+  <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>回報編號</th>
+              <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+              <th>訂單聯絡人</th>
+              <th>匯款帳號末五碼</th>
+              <th>匯款時間</th>
+              <th>狀態</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @remittances.each do |remittance| %>
+              <tr>
+                <td>
+                  <%= remittance.order_payment.order_id %>
+                </td>
+                <td>
+                  <%= remittance.id %>
+                </td>
+                <td>
+                  <%= link_to(info_admin_user_path(remittance.order_payment.order.user_id),
+                              data: {toggle: 'modal', target: '#user-detail'}
+                      ) do %>
+                    <%= remittance.order_payment.order.user_id %>
+                    <span class="text-muted">
+                      <i class="icon-info-sign"></i>
+                    </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= remittance.order_payment.order.name %>
+                </td>
+                <td>
+                  <%= remittance.account %>
+                </td>
+                <td>
+                  <%= remittance.date.strftime('%Y/%m/%d') %>
+                </td>
+                <td>
+                  <% if remittance.confirm.nil? %>
+                    <label class="label label-warning">未進行確認</label>
+                  <% elsif remittance.confirm %>
+                    <label class="label label-success">已確認匯款</label>
+                  <% else %>
+                    <label class="label label-danger">匯款資料有誤</label>
+                  <% end %>
+                </td>
+                <td>
+                  <div class='text-right'>
+                    <% if remittance.confirm.nil? %>
+                      <%= link_to(edit_admin_order_remittance_path(remittance), class: 'btn btn-default') do %>
+                        <i class='icon-pencil icon-fixed-width'></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to(admin_order_remittance_path(remittance), class: 'btn btn-default') do %>
+                        <i class='icon-eye-open icon-fixed-width'></i>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

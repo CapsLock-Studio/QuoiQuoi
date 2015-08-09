@@ -1,10 +1,10 @@
 <% locale = Locale.where(id: order.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-  <div class="box-header">
-    <div class="title">訂單詳細內容</div>
-    <div class="actions">
-      <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
-      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+  <div class="box-header box-header-small">
+    <div class="title">
+      <strong>
+        <%= link_to("訂單編號: #{order.id}", admin_order_path(order.id)) %>
+      </strong>
     </div>
   </div>
   <div class="box-content box-no-padding">
@@ -103,15 +103,15 @@
       總金額 :
       <strong class="text-muted">
         <%= number_to_currency(order.subtotal, locale: locale.lang) %><br/>
-        <small>運費: <%= number_to_currency(@shipping_fee.fee, locale: locale.lang) %><%= " / 禮券折抵金額: #{number_to_currency(@discount, locale: locale.lang)}" if @discount > 0 %></small>
+        <small>運費: <%= number_to_currency(order.shipping_fee!, locale: locale.lang) %><%= " / 禮券折抵金額: #{number_to_currency(order.discount!, locale: locale.lang)}" if order.discount! > 0 %></small>
       </strong><br>
-      <% if order.payment.completed? %>
+      <% if order.order_payment.completed? %>
         <label class="label label-success">
           <% item_work_days = order.order_custom_items.collect{|item| item.workday}.inject{|sum, attendance| sum + attendance} || 0 %>
           工作天數: <%= (item_work_days > 5)? item_work_days : 5 %> 天
         </label><br/>
         <small>
-          付款完成日期 <%= order.payment.pay_time.strftime('%Y/%m/%d') %>
+          付款完成日期 <%= order.order_payment.completed_time.strftime('%Y/%m/%d') %>
         </small>
       <% end %>
     </h4>

@@ -50,16 +50,16 @@
       <% end %>
 
       <%= nav_item_with_resource('#', nil, Order) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:orders) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:orders) || is_in(:order_remittances) %>" href="#">
           <i class="icon-file-text"></i>
           <span>訂單管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:orders) %>">
-          <%= nav_item_with_resource(check_admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?\/check/}, Payment) do %>
-            <%= link_to(check_admin_orders_path) do %>
+        <ul class="nav <%= 'in' if is_in(:orders) || is_in(:order_remittances) %>">
+          <%= nav_item_with_resource(check_admin_order_remittances_path, {rule: /#{admin_order_remittances_path}(\/\d+)?\/check/}, OrderRemittanceReport) do %>
+            <%= link_to(check_admin_order_remittances_path) do %>
               <i class="icon-check"></i>
-              <span>待確認匯款訂單</span>
+              <span>待確認匯款回報</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(deliver_admin_orders_path, {rule: /#{deliver_admin_orders_path}|#{admin_orders_path}\/\d+\/edit/}, Order) do %>
@@ -77,7 +77,13 @@
           <%= nav_item_with_resource(admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?(?!\/deliver)$/}, Order) do %>
             <%= link_to(admin_orders_path) do %>
               <i class="icon-flag"></i>
-              <span>訂單記錄</span>
+              <span>所有訂單記錄</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_order_remittances_path, {rule: /#{admin_order_remittances_path}(\/\d+)?(\/edit)?(?!\/check)$/}, OrderRemittanceReport) do %>
+            <%= link_to(admin_order_remittances_path) do %>
+              <i class="icon-flag"></i>
+              <span>所有匯款紀錄</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(canceled_admin_orders_path, nil, Order) do %>
