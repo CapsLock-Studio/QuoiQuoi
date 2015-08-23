@@ -3,7 +3,9 @@ class Admin::CourseOptionGroupsController < AdminController
     @course_option_groups = CourseOptionGroup.includes(:course_options).where(
         locale_id: params[:locale_id] || Locale.first.id,
         course_id: params[:course_id]
-    ).order('course_option_groups.id, course_options.id')
+    )
+    # For sorting option groups and options
+    # @course_option_group = @course_option_groups.order('course_option_groups.id, course_options.id')
 
     render layout: false
   end
