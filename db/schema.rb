@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803033950) do
+ActiveRecord::Schema.define(version: 20150817011846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -599,25 +599,27 @@ ActiveRecord::Schema.define(version: 20150803033950) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "closed",                              default: false
-    t.boolean  "delivered",                           default: false
-    t.boolean  "checkout",                            default: false
-    t.string   "name",                    limit: 255
-    t.string   "address",                 limit: 255
+    t.boolean  "closed",                                   default: false
+    t.boolean  "delivered",                                default: false
+    t.boolean  "checkout",                                 default: false
+    t.string   "name",                         limit: 255
+    t.string   "address",                      limit: 255
     t.integer  "zip_code"
-    t.string   "phone",                   limit: 255
+    t.string   "phone",                        limit: 255
     t.datetime "checkout_time"
     t.datetime "closed_time"
     t.datetime "delivered_time"
-    t.boolean  "canceled",                            default: false
+    t.boolean  "canceled",                                 default: false
     t.datetime "canceled_time"
     t.integer  "shipping_fee_id"
-    t.string   "currency",                limit: 255
+    t.string   "currency",                     limit: 255
     t.integer  "locale_id"
-    t.integer  "payment_method",                      default: 0
-    t.boolean  "delivery_report",                     default: false
+    t.integer  "payment_method",                           default: 0
+    t.boolean  "delivery_report",                          default: false
     t.datetime "delivery_report_time"
     t.text     "delivery_report_message"
+    t.boolean  "delivery_report_handled",                  default: false
+    t.datetime "delivery_report_handled_time"
   end
 
   add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree

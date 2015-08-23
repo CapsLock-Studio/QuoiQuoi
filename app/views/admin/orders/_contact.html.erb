@@ -1,30 +1,82 @@
 <div class="box">
   <div class="box-header box-header-small">
     <div class="title">
-      客戶聯絡資訊
-    </div>
-    <div class="actions">
-      <a class="btn box-collapsed btn-xs btn-link" href="#"><i></i></a>
+      訂單相關資訊
     </div>
   </div>
   <div class="box-content">
-    <div class="form-group">
-      <label>聯絡人姓名</label>
-      <div class="controls">
-        <%= text_field_tag :name, order.name, class: 'form-control', disabled: 'disabled' %>
+    <div class="row">
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          收件者姓名
+        </div>
+        <%= order.name %>
       </div>
-    </div>
-    <div class="form-group">
-      <label>聯絡人電話</label>
-      <div class="controls">
-        <%= text_field_tag :phone, order.phone, class: 'form-control', disabled: 'disabled' %>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          郵遞區號
+        </div>
+        <%= order.zip_code %>
       </div>
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <div class="controls">
-        <%= text_field_tag :phone, order.user.email, class: 'form-control', disabled: 'disabled' %>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          國家/區域
+        </div>
+        <%= order.shipping_fee.area %>
       </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          收件地址
+        </div>
+        <%= order.address %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          聯絡電話
+        </div>
+        <%= order.phone %>
+      </div>
+      <% if order.order_payment.completed? %>
+        <div class="col-xs-12">
+          <div class="text-muted">
+            訂單出貨狀態
+          </div>
+          <% if order.delivered? %>
+            <% if order.delivery_report? %>
+              <% if order.delivery_report_handled? %>
+                <span class="label label-default">寄出件問題已解決</span>
+                <small class="text-muted">
+                  (<%= order.delivery_report_handled_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+                </small>
+                <div class="text-muted">
+                  剩餘<%= order.remaining_time_to_archive %>日訂單封存
+                </div>
+              <% else %>
+                <span class="label label-danger">寄出件有問題</span>
+                <small class="text-muted">
+                  (回報時間 <%= order.delivery_report_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+                </small>
+                <div>
+                  回報訊息內容: <label><%= order.delivery_report_message %></label>
+                </div>
+              <% end %>
+            <% else %>
+              <span class="label label-success">已寄出</span>
+              <small class="text-muted">
+                (<%= order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+              </small>
+              <div class="text-muted">
+                剩餘<%= order.remaining_time_to_archive %>日訂單封存
+              </div>
+            <% end %>
+          <% else %>
+            <span class="label label-warning">等待出貨</span>
+            <small class="text-muted">
+              (付款完成時間 <%= order.order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+            </small>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

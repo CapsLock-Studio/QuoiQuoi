@@ -84,4 +84,8 @@ class Order < ActiveRecord::Base
     (self.remittance? || self.cvs_family? || self.cvs_ibon? || self.atm?) &&
         (self.order_payment.expire_time.nil?)
   end
+
+  def remaining_time_to_archive
+    ((((self.delivery_report_handled?)? self.delivery_report_handled_time : self.delivered_time) + 30.days - Time.zone.now) / 1.days).to_i
+  end
 end
