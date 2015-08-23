@@ -1,37 +1,42 @@
 <div class="col-xs-12">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="page-header">
-        <h1 class="pull-left">
-          <i class="icon-truck"></i>
-          待出貨訂單內容
-        </h1>
-        <div class="pull-right">
-          <ul class="breadcrumb">
-            <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
-          </ul>
-        </div>
-      </div>
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-info"></i>
+      待出貨訂單內容 <span class="text-muted">訂單編號: <%= @order.id %></span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-7">
-      <%= render 'order_detail', order: @order %>
-    </div>
-    <div class="col-sm-5">
-      <%= render 'form' %>
-    </div>
+</div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <%= render 'order_detail', order: @order %>
+</div>
+<div class="col-md-4 col-sm-12 col-xs-12">
+  <%= render 'contact', order: @order %>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="pull-right">
+    <% if !@order.delivered? %>
+      <%= link_to(admin_order_path(@order, delivered: true), class: 'btn btn-primary', method: :put) do %>
+        <i class="icon-truck icon-fixed-width"></i>...  訂單已出貨
+      <% end %>
+    <% elsif @order.delivery_report? %>
+      <% if !@order.delivery_report_handled? %>
+        <%= link_to(admin_order_path(@order, delivery_report_handled: true), class: 'btn btn-warning', method: :put) do %>
+          <i class="icon-wrench icon-fixed-width"></i>寄出件問題已解決
+        <% end %>
+      <% elsif !@order.closed? %>
+        <%= link_to(admin_order_path(@order, closed: true), class: 'btn btn-primary', method: :put) do %>
+          <i class="icon-ok icon-fixed-width"></i>直接封存訂單
+        <% end %>
+      <% end %>
+    <% elsif !@order.closed? %>
+      <%= link_to(admin_order_path(@order, closed: true), class: 'btn btn-primary', method: :put) do %>
+        <i class="icon-ok icon-fixed-width"></i>直接封存訂單
+      <% end %>
+    <% end %>
   </div>
-  <% if @order.paid? && @order.payment.completed? && !@order.delivered? && !@order.closed? %>
-    <div class="row form-actions">
-      <div class="col-sm-12">
-        <div class="pull-right">
-          <%= link_to(admin_order_path(@order), class: 'btn btn-primary btn-lg', method: :put) do %>
-            <i class="icon-save"></i>
-            確認已出貨
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
 </div>

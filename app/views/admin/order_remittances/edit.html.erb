@@ -32,7 +32,7 @@
         <%= link_to admin_order_remittance_path(@remittance, confirm: true, from_check: (request.path.include?('/check'))),
                     class: 'btn btn-primary',
                     method: :put do %>
-          確認
+          <i class="icon-ok icon-fixed-width"></i>確認
         <% end %>
       </div>
     </div>

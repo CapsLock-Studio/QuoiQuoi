@@ -65,7 +65,7 @@
           <%= nav_item_with_resource(deliver_admin_orders_path, {rule: /#{deliver_admin_orders_path}|#{admin_orders_path}\/\d+\/edit/}, Order) do %>
             <%= link_to(deliver_admin_orders_path) do %>
               <i class="icon-truck"></i>
-              <span>待出貨訂單</span>
+              <span>訂單出貨情形</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(closed_admin_orders_path, nil, Order) do %>

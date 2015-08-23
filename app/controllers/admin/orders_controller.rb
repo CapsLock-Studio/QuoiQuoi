@@ -1,9 +1,8 @@
 class Admin::OrdersController < AdminController
   authorize_resource
-  before_action :set_order, only: [:check_show, :edit, :show, :update]
-  before_action :set_shipping_fee, only: [:check_show, :edit, :show]
-  before_action :set_discount, only: [:check_show, :edit, :show]
-  before_action :remove_order_dulicate, only: [:check_show, :edit, :show, :update]
+  before_action :set_order, only: [:edit, :show, :update]
+  before_action :set_shipping_fee, only: [:edit, :show]
+  before_action :set_discount, only: [:edit, :show]
   add_breadcrumb '首頁', :admin_root_path
 
   # GET /admin/orders
@@ -41,12 +40,14 @@ class Admin::OrdersController < AdminController
   end
 
   def deliver
-    @orders = []
-    Payment.where(completed: true).where.not(order_id: ['', nil]).each do |payment|
-      if payment.order && !payment.order.closed?
-        @orders << payment.order
-      end
-    end
+    # @orders = []
+    # Payment.where(completed: true).where.not(order_id: ['', nil]).each do |payment|
+    #   if payment.order && !payment.order.closed?
+    #     @orders << payment.order
+    #   end
+    # end
+
+    @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: false)
   end
 
   # POST /admin/orders
@@ -58,14 +59,25 @@ class Admin::OrdersController < AdminController
   # PATCH/PUT /admin/orders/1
   # PATCH/PUT /admin/orders/1.json
   def update
-    respond_to do |format|
-      if @order.update_attributes({delivered: true, delivered_time: Time.now})
-        OrderMailer.delivered(@order.id).deliver
-        format.html {redirect_to deliver_admin_orders_path}
-      else
-        format.html {render json: @order.errors}
-      end
+    if order_params[:closed]
+      @order.closed = true
+      @order.closed_time = Time.now
+    elsif order_params[:delivery_report_handled]
+      @order.delivery_report_handled = true
+      @order.delivery_report_handled_time = Time.now
+    elsif order_params[:delivered]
+      @order.delivered = true
+      @order.delivered_time = Time.now
     end
+
+    @order.save!
+
+    flash[:id] = @order.id
+    flash[:closed] = order_params[:closed]
+    flash[:delivery_report_handled] = order_params[:delivery_report_handled]
+    flash[:delivered] = order_params[:delivered]
+
+    redirect_to action: :deliver
   end
 
   # DELETE /admin/orders/1
@@ -92,10 +104,7 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def remove_order_dulicate
-    payments = Payment.where(order_id: @order.id).order(:created_at)
-    if payments.length > 1
-      payments.first.destroy
-    end
+  def order_params
+    params.permit(:closed, :delivery_report_handled, :delivered)
   end
 end
