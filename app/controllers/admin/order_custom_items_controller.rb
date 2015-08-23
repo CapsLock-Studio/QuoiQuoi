@@ -58,7 +58,7 @@ class Admin::OrderCustomItemsController < AdminController
   end
 
   def check
-    @order_custom_items = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil).where.not(user_id: ['', nil])
+    @order_custom_items = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil).where.not(user_id: nil)
   end
 
   private

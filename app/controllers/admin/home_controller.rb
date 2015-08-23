@@ -10,12 +10,12 @@ class Admin::HomeController < AdminController
         2.month.ago.to_date.step( DateTime.now ).to_a.each do |date|
           @order_quantity_each_day << [
               date.to_time.to_i * 1000,
-              Order.distinct.count(conditions: ['created_at > ? AND created_at <= ?', date, date + 1.day])
+              Order.where('created_at > ? AND created_at <= ?', date, date + 1.days).size
           ]
 
           @new_user_each_day << [
               date.to_time.to_i * 1000,
-              User.distinct.count(conditions: ['created_at > ? AND created_at <= ? AND name != ?', date, date + 1.day, 'guest'])
+              User.where('created_at > ? AND created_at <= ? AND name != ?', date, date + 1.days, 'guest').size
           ]
         end
 

@@ -24,7 +24,7 @@ class Admin::OrdersController < AdminController
   end
 
   def check
-    @payments = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: nil).reject{|payment| !payment.order}
+    @payments = Payment.where(completed: false).where.not(order_id: nil, amount: 0, pay_time: nil).reject{|payment| !payment.order}
   end
 
   def check_show
@@ -52,7 +52,7 @@ class Admin::OrdersController < AdminController
 
   def deliver
     @orders = []
-    Payment.where(completed: true).where.not(order_id: ['', nil]).each do |payment|
+    Payment.where(completed: true).where.not(order_id: nil).each do |payment|
       if payment.order && !payment.order.closed?
         @orders << payment.order
       end

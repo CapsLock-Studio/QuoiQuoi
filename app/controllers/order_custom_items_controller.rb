@@ -8,7 +8,7 @@ class OrderCustomItemsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('custom_order.my'), :order_custom_items_path
 
-    @order_custom_items = OrderCustomItem.where(canceled: false, user_id: current_user.id, order_id: ['', nil])
+    @order_custom_items = OrderCustomItem.where(canceled: false, user_id: current_user.id, order_id: nil)
   end
 
   def show
@@ -85,7 +85,12 @@ class OrderCustomItemsController < ApplicationController
   def update
     respond_to do |format|
       if @order_custom_item.accept? && (@order_custom_item.order_custom_item_translates.length > 0)
-        if @order_custom_item.update_attribute(:order_id, order_in_cart.id)
+
+        if @order_in_cart.nil?
+          @order_in_cart = Order.create_cart((user_signed_in?)? current_user.id : (session[:guest_user_id] = User.create_guest_user.id), session[:locale_id])
+        end
+
+        if @order_custom_item.update_attribute(:order_id, @order_in_cart.id)
           format.html {redirect_to cart_path}
         else
           format.html {render json: @order_custom_item.errors}

@@ -21,7 +21,7 @@ class Admin::RegistrationsController < AdminController
   end
 
   def check
-    @payments = Payment.where(canceled: false, completed: false).where.not(registration_id: '', pay_time: nil)
+    @payments = Payment.where(canceled: false, completed: false).where.not(registration_id: nil, pay_time: nil)
   end
 
   def check_show
