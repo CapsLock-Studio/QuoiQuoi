@@ -160,11 +160,13 @@ QuoiQuoi::Application.routes.draw do
     resources :orders do
       member do
         get :check, action: :check_show
+        get :archive, action: :show
       end
       collection do
         get :check
         get :accept
         get :closed
+        get :archive
         get :deliver
         get :canceled
       end

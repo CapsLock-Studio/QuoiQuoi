@@ -1,31 +1,20 @@
 <div class="col-xs-12">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="page-header">
-        <h1 class="pull-left">
-          <i class="icon-flag"></i>
-          訂單記錄詳細
-          <small><%= render 'status', order: @order %>&nbsp;<%= "交易完成時間#{@order.closed_time.strftime('%Y/%m/%d %H:%M')}" if @order.closed? %></small>
-        </h1>
-        <div class="pull-right">
-          <ul class="breadcrumb">
-            <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
-          </ul>
-        </div>
-      </div>
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-info"></i>
+      訂單詳細 <span class="text-muted">訂單編號: <%= @order.id %></span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <%= render 'form' %>
-    </div>
-    <div class="col-sm-6">
-      <%= render 'payment_info' %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <%= render 'order_detail', order: @order %>
-    </div>
-  </div>
+</div>
+
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <%= render 'order_detail', order: @order %>
+</div>
+<div class="col-md-4 col-sm-12 col-xs-12">
+  <%= render 'info', order: @order %>
 </div>

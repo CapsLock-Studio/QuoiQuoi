@@ -68,10 +68,10 @@
               <span>訂單出貨情形</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(closed_admin_orders_path, nil, Order) do %>
-            <%= link_to (closed_admin_orders_path) do %>
+          <%= nav_item_with_resource(archive_admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?\/archive/}, Order) do %>
+            <%= link_to (archive_admin_orders_path) do %>
               <i class="icon-ok"></i>
-              <span>交易完成訂單</span>
+              <span>已封存訂單</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?(?!\/deliver)$/}, Order) do %>

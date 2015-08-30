@@ -1,7 +1,10 @@
 <div class="box">
   <div class="box-header box-header-small">
     <div class="title">
-      訂單相關資訊
+      訂單相關資訊&nbsp;
+      <% if order.closed? %>
+        <span class="label label-inverse">已封存</span>
+      <% end %>
     </div>
   </div>
   <div class="box-content">
@@ -36,6 +39,21 @@
         </div>
         <%= order.phone %>
       </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          訂單狀態
+        </div>
+        <% if order.order_payment %>
+          <% if order.order_payment.completed? %>
+            <span class="label label-success">付款完成</span>
+            <div>
+              <small>使用&nbsp;<%= t("#{order.payment_method}") %>&nbsp;付款 (<%= order.order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)</small>
+            </div>
+          <% else %>
+            <span class="label label-warning">等待付款</span>
+          <% end %>
+        <% end %>
+      </div>
       <% if order.order_payment.completed? %>
         <div class="col-xs-12">
           <div class="text-muted">
@@ -48,9 +66,11 @@
                 <small class="text-muted">
                   (<%= order.delivery_report_handled_time.strftime('%Y/%m/%d %H:%I:%S') %>)
                 </small>
-                <div class="text-muted">
-                  剩餘<%= order.remaining_time_to_archive %>日訂單封存
-                </div>
+                <% unless order.closed? %>
+                  <div class="text-muted">
+                    剩餘<%= order.remaining_time_to_archive %>日訂單封存
+                  </div>
+                <% end %>
               <% else %>
                 <span class="label label-danger">寄出件有問題</span>
                 <small class="text-muted">
@@ -65,9 +85,11 @@
               <small class="text-muted">
                 (<%= order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') %>)
               </small>
-              <div class="text-muted">
-                剩餘<%= order.remaining_time_to_archive %>日訂單封存
-              </div>
+              <% unless order.closed? %>
+                <div class="text-muted">
+                  剩餘<%= order.remaining_time_to_archive %>日訂單封存
+                </div>
+              <% end %>
             <% end %>
           <% else %>
             <span class="label label-warning">等待出貨</span>
