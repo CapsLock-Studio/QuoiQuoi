@@ -43,8 +43,17 @@ class ApplicationController < ActionController::Base
     @article_types = ArticleType.where(locale_id: session[:locale_id]).includes(:articles)
   end
 
-  # handle the order custom item params
   def after_sign_in_path_for(resource)
+    # Order items in cart change it's owner.
+    if session[:guest_user_id] && @order_in_cart
+      @order_in_cart.user_id = resource.id
+      @order_in_cart.save
+
+      User.find(session[:guest_user_id]).destroy
+      session.delete(:guest_user_id)
+    end
+
+    # handle the order custom item params
     if session[:temp].present?
       order_custom_item = OrderCustomItem.find(session[:temp])
       order_custom_item.user_id = current_user.id
