@@ -50,6 +50,12 @@ class Admin::OrdersController < AdminController
     @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: false)
   end
 
+  def archive
+    @search_filter = search_filter_params || Order.payment_methods.map{|payment_method| payment_method[1]}
+
+    @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: true, payment_method: @search_filter)
+  end
+
   # POST /admin/orders
   # POST /admin/orders.json
   def create
@@ -106,5 +112,9 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params.permit(:closed, :delivery_report_handled, :delivered)
+  end
+
+  def search_filter_params
+    (params[:search_filter].nil?)? params[:search_filter] : params[:search_filter].map{|value| value.to_i}
   end
 end
