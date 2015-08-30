@@ -32,7 +32,7 @@
   </div>
   <div class="col-xs-12">
     <strong>
-      <%= order.phone ||= '-' %>
+      <%= (order.phone.blank?)? '-' : order.phone %>
     </strong>
   </div>
 </div>
