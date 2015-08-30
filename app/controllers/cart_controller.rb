@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :authenticate_user!, only: [:checkout, :payment]
+
   # GET /cart
   def index
     add_breadcrumb t('home')
