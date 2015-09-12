@@ -59,8 +59,8 @@
           <label>布料</label>
           <div class="controls">
             <% @order_custom_item.order_custom_item_materials.each do |order_custom_item_material| %>
-              <%= link_to(order_custom_item_material.material.image(:large), target: '_blank') do %>
-                <%= image_tag order_custom_item_material.material.image(:thumb) %>
+              <%= link_to(("#{order_custom_item_material.material.image(:large)}" rescue '#'), target: '_blank') do %>
+                <%= image_tag(("#{order_custom_item_material.material.image(:thumb)}" rescue 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Deleted&w=100&h=75')) %>
               <% end %>
             <% end %>
           </div>
