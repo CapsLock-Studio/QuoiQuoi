@@ -8,8 +8,16 @@ class Admin::OrdersController < AdminController
   # GET /admin/orders
   # GET /admin/orders.json
   def index
-    add_breadcrumb '訂單記錄'
-    @orders = Order.where(checkout: true, canceled: false)
+    @orders = Order.includes(:order_payment).where(order_payments: {completed: [true, false]})
+
+    unless search_filter_params.nil?
+      @search_filter = search_filter_params
+      @orders = @orders.where(@search_filter)
+    end
+  end
+
+  def hook
+    render json: search_filter_params
   end
 
   # GET /admin/orders/canceled
@@ -51,7 +59,7 @@ class Admin::OrdersController < AdminController
   end
 
   def archive
-    @search_filter = search_filter_params || Order.payment_methods.map{|payment_method| payment_method[1]}
+    @search_filter = archive_search_filter_params || Order.payment_methods.map{|payment_method| payment_method[1]}
 
     @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: true, payment_method: @search_filter)
   end
@@ -114,7 +122,16 @@ class Admin::OrdersController < AdminController
     params.permit(:closed, :delivery_report_handled, :delivered)
   end
 
-  def search_filter_params
+  def archive_search_filter_params
     (params[:search_filter].nil?)? params[:search_filter] : params[:search_filter].map{|value| value.to_i}
+  end
+
+  def search_filter_params
+    unless params[:search_filter].nil?
+      sanitize_params = params[:search_filter].permit(order_payments: [completed: []], payment_method: [])
+      sanitize_params['payment_method'] = sanitize_params['payment_method'].map{|value| value.to_i} unless sanitize_params['payment_method'].nil?
+
+      sanitize_params
+    end
   end
 end

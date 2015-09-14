@@ -126,6 +126,15 @@
         });
     });
 
+    $('[data-switch-disable]').on('change', function(){
+        var bootstrapSwitch = $(this);
+        $(bootstrapSwitch.data('switch-disable')).select2('enable', bootstrapSwitch.is(':checked')).prop('disabled', !bootstrapSwitch.is(':checked'));
+    });
+
+    $(".daterange input").daterangepicker({
+        format: "YYYY/MM/DD"
+    });
+
     $('.lang-options').on('change', function(){
         $('.decline-btn').attr('href', $('.' + $(this).val()).text());
     });

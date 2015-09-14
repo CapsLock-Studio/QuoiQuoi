@@ -59,44 +59,7 @@
           <div class="text-muted">
             訂單出貨狀態
           </div>
-          <% if order.delivered? %>
-            <% if order.delivery_report? %>
-              <% if order.delivery_report_handled? %>
-                <span class="label label-default">寄出件問題已解決</span>
-                <small class="text-muted">
-                  (<%= order.delivery_report_handled_time.strftime('%Y/%m/%d %H:%I:%S') %>)
-                </small>
-                <% unless order.closed? %>
-                  <div class="text-muted">
-                    剩餘<%= order.remaining_time_to_archive %>日訂單封存
-                  </div>
-                <% end %>
-              <% else %>
-                <span class="label label-danger">寄出件有問題</span>
-                <small class="text-muted">
-                  (回報時間 <%= order.delivery_report_time.strftime('%Y/%m/%d %H:%I:%S') %>)
-                </small>
-                <div>
-                  回報訊息內容: <label><%= order.delivery_report_message %></label>
-                </div>
-              <% end %>
-            <% else %>
-              <span class="label label-success">已寄出</span>
-              <small class="text-muted">
-                (<%= order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') %>)
-              </small>
-              <% unless order.closed? %>
-                <div class="text-muted">
-                  剩餘<%= order.remaining_time_to_archive %>日訂單封存
-                </div>
-              <% end %>
-            <% end %>
-          <% else %>
-            <span class="label label-warning">等待出貨</span>
-            <small class="text-muted">
-              (付款完成時間 <%= order.order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)
-            </small>
-          <% end %>
+          <%= render 'delivery_status', order: order %>
         </div>
       <% end %>
     </div>
