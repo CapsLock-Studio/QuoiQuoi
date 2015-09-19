@@ -12,7 +12,29 @@ class Admin::OrdersController < AdminController
 
     unless search_filter_params.nil?
       @search_filter = search_filter_params
-      @orders = @orders.where(@search_filter)
+      conditions = search_filter_params
+
+      # Unless the completed_time is not nil, translate it to date range for rails.
+      unless conditions['order_payments']['completed_time'].nil?
+        dates = conditions['order_payments']['completed_time'].split(' - ')
+        conditions['order_payments']['completed_time'] = dates[0]..dates[1]
+      end
+
+      # Unless the delivered_time is not nil, translate it to date range for rails.
+      unless conditions['delivered_time'].nil?
+        dates = conditions['delivered_time'].split(' - ')
+        conditions['delivered_time'] = dates[0]..dates[1]
+      end
+
+      # Unless the closed_time is not nil, translate it to date range for rails.
+      unless conditions['closed_time'].nil?
+        dates = conditions['closed_time'].split(' - ')
+
+        # Including not archived items.
+        conditions['closed_time'] = [dates[0]..dates[1], nil]
+      end
+
+      @orders = @orders.where(conditions)
     end
   end
 
@@ -128,8 +150,20 @@ class Admin::OrdersController < AdminController
 
   def search_filter_params
     unless params[:search_filter].nil?
-      sanitize_params = params[:search_filter].permit(order_payments: [completed: []], payment_method: [])
+      sanitize_params = params[:search_filter].permit(:delivered_time, :closed, :closed_time,
+                                                      order_payments: [{completed: []}, :completed_time],
+                                                      payment_method: [],
+                                                      delivered: [])
       sanitize_params['payment_method'] = sanitize_params['payment_method'].map{|value| value.to_i} unless sanitize_params['payment_method'].nil?
+      sanitize_params['order_payments'].delete('completed_time') if sanitize_params['order_payments']['completed_time'].blank?
+      sanitize_params.delete('delivered_time') if sanitize_params['delivered_time'].blank?
+
+      if sanitize_params['closed'].nil?
+        sanitize_params['closed'] = false
+      else
+        sanitize_params.delete('closed')
+        sanitize_params.delete('closed_time') if sanitize_params['closed_time'].blank?
+      end
 
       sanitize_params
     end
