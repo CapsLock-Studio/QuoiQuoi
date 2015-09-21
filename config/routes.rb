@@ -169,7 +169,6 @@ QuoiQuoi::Application.routes.draw do
         get :archive
         get :deliver
         get :canceled
-        get :hook
       end
     end
 

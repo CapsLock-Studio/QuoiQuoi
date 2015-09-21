@@ -38,13 +38,8 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def hook
-    render json: search_filter_params
-  end
-
   # GET /admin/orders/canceled
   def canceled
-    add_breadcrumb '已取消訂單'
     @orders = Order.where(checkout: true, canceled: true)
   end
 
