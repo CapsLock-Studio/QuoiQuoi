@@ -40,7 +40,20 @@ class Admin::OrdersController < AdminController
 
   # GET /admin/orders/canceled
   def canceled
-    @orders = Order.where(checkout: true, canceled: true)
+    @orders = Order.includes(:order_payment).where(order_payments: {cancel: true})
+
+    unless cancel_search_filter_params.nil?
+      @search_filter = cancel_search_filter_params
+      conditions = cancel_search_filter_params
+
+      unless conditions['cancel_time'].nil?
+        dates = conditions['cancel_time'].split(' - ')
+        conditions['cancel_time'] = dates[0]..dates[1]
+
+        # Add search conditions to orders
+        @orders = @orders.where(order_payments: conditions)
+      end
+    end
   end
 
   def closed
@@ -114,7 +127,9 @@ class Admin::OrdersController < AdminController
   # DELETE /admin/orders/1
   # DELETE /admin/orders/1.json
   def destroy
-
+    if Order.find(params[:id]).destroy!
+      redirect_to canceled_admin_orders_path
+    end
   end
 
   def set_order
@@ -141,6 +156,14 @@ class Admin::OrdersController < AdminController
 
   def archive_search_filter_params
     (params[:search_filter].nil?)? params[:search_filter] : params[:search_filter].map{|value| value.to_i}
+  end
+
+  def cancel_search_filter_params
+    unless params[:search_filter].nil?
+      sanitize_params = params[:search_filter].permit(:cancel_time)
+      sanitize_params.delete('cancel_time') if sanitize_params['cancel_time'].blank?
+      sanitize_params
+    end
   end
 
   def search_filter_params

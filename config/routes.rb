@@ -161,6 +161,7 @@ QuoiQuoi::Application.routes.draw do
       member do
         get :check, action: :check_show
         get :archive, action: :show
+        get :canceled, action: :show
       end
       collection do
         get :check
