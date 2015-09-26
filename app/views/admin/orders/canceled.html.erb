@@ -6,6 +6,10 @@
     </h1>
   </div>
 
+  <% unless flash[:id].nil? %>
+    <%= render 'message_deleted' %>
+  <% end %>
+
   <%= render 'cancel_search_condition' %>
 
   <div class="box bordered-box" style="margin-bottom:0;">
