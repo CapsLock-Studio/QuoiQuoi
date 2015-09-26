@@ -2,13 +2,13 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-flag"></i>
-      <span>所有訂單紀錄</span>
+      <span>訂單紀錄</span>
     </h1>
   </div>
 
   <%= render 'search_condition' %>
 
-  <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+  <div class="box bordered-box" style="margin-bottom:0;">
     <div class="box-content box-no-padding">
       <div class="responsive-table">
         <div class="scrollable-table">
@@ -57,7 +57,7 @@
                 </td>
                 <td class="text-right">
                   <%= link_to(admin_order_path(order), class: 'btn btn-md') do %>
-                    <i class="icon-eye-open"></i>
+                    <i class="icon-info icon-fixed-width"></i>
                   <% end %>
                 </td>
               </tr>
