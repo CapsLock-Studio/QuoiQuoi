@@ -67,24 +67,12 @@ class Admin::OrdersController < AdminController
     add_breadcrumb '訂單詳細內容'
   end
 
-  # GET /admin/orders/new
-  def new
-
-  end
-
   def edit
     add_breadcrumb '待出貨訂單', :deliver_admin_orders_path
     add_breadcrumb '訂單詳細內容'
   end
 
   def deliver
-    # @orders = []
-    # Payment.where(completed: true).where.not(order_id: ['', nil]).each do |payment|
-    #   if payment.order && !payment.order.closed?
-    #     @orders << payment.order
-    #   end
-    # end
-
     @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: false)
   end
 
@@ -92,12 +80,6 @@ class Admin::OrdersController < AdminController
     @search_filter = archive_search_filter_params || Order.payment_methods.map{|payment_method| payment_method[1]}
 
     @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: true, payment_method: @search_filter)
-  end
-
-  # POST /admin/orders
-  # POST /admin/orders.json
-  def create
-
   end
 
   # PATCH/PUT /admin/orders/1
@@ -130,6 +112,8 @@ class Admin::OrdersController < AdminController
     if Order.find(params[:id]).destroy!
       redirect_to canceled_admin_orders_path
     end
+
+    flash[:id] = params[:id]
   end
 
   def set_order
