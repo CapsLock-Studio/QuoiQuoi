@@ -16,8 +16,7 @@
 </div>
 <div class="col-md-4 col-sm-12 col-xs-12">
   <%= render 'info', order: @order %>
-</div>
-<div class="col-md-12 col-sm-12 col-xs-12">
+
   <div class="pull-right">
     <% if !@order.delivered? %>
       <%= link_to(admin_order_path(@order, delivered: true), class: 'btn btn-primary', method: :put) do %>
