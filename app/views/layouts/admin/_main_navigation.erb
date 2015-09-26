@@ -77,7 +77,7 @@
           <%= nav_item_with_resource(admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?(?!\/deliver)$/}, Order) do %>
             <%= link_to(admin_orders_path) do %>
               <i class="icon-flag"></i>
-              <span>所有訂單記錄</span>
+              <span>訂單記錄</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(admin_order_remittances_path, {rule: /#{admin_order_remittances_path}(\/\d+)?(\/edit)?(?!\/check)$/}, OrderRemittanceReport) do %>
@@ -86,7 +86,7 @@
               <span>所有匯款紀錄</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(canceled_admin_orders_path, nil, Order) do %>
+          <%= nav_item_with_resource(canceled_admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?\/canceled$/}, Order) do %>
             <%= link_to(canceled_admin_orders_path, class: 'text-muted') do %>
               <i class="icon-remove"></i>
               <span>已取消訂單</span>

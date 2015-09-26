@@ -17,4 +17,13 @@
 </div>
 <div class="col-md-4 col-sm-12 col-xs-12">
   <%= render 'info', order: @order %>
+
+  <% if @order.order_payment && @order.order_payment.cancel? %>
+    <div class="pull-right">
+      <%= link_to(admin_order_path(@order), class: 'btn btn-danger', method: :delete, data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}) do %>
+        <i class="icon-trash"></i>
+        永久刪除
+      <% end %>
+    </div>
+  <% end %>
 </div>
