@@ -14,7 +14,8 @@ class Admin::OrderRemittancesController < AdminController
   end
 
   def show
-    add_breadcrumb '匯款紀錄列表', :admin_order_remittances_path
+    add_breadcrumb '所有匯款紀錄', :admin_order_remittances_path
+    add_breadcrumb '詳細匯款紀錄'
   end
 
   def check
@@ -22,7 +23,8 @@ class Admin::OrderRemittancesController < AdminController
   end
 
   def edit
-    add_breadcrumb '匯款紀錄列表', :admin_order_remittances_path
+    add_breadcrumb '所有匯款紀錄', :admin_order_remittances_path
+    add_breadcrumb '詳細匯款紀錄'
   end
 
   def update
