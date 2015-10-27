@@ -286,8 +286,6 @@ QuoiQuoi::Application.routes.draw do
     get 'registrations/:id/cancel?token=EC-\w+' => 'registrations#cancel'
 
     devise_for :users, controllers: {
-        sessions: 'users/sessions',
-        registrations: 'users/registrations',
         omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
