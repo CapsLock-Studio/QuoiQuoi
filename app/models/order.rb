@@ -4,8 +4,8 @@ class Order < ActiveRecord::Base
   validates :user_id, presence: true
 
   belongs_to :user
-  has_many :order_products
-  has_one :payment, dependent: :destroy
+  has_many :order_products, dependent: :delete_all
+
   accepts_nested_attributes_for :order_products
 
   belongs_to :locale
@@ -17,7 +17,7 @@ class Order < ActiveRecord::Base
 
   has_many :user_gifts
 
-  has_one :order_payment
+  has_one :order_payment, dependent: :destroy
 
   def paid?
     self.payment

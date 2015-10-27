@@ -2,8 +2,8 @@ QuoiQuoi::Application.routes.draw do
   devise_for :admin, controller: { sessions: 'admin/sessions' }
 
   as :admin do
-    get 'admin/edit' => 'devise/registrations#edit', as: 'edit_admin_registration'
-    put 'admin' => 'devise/registrations#update', as: 'admin_registration'
+    get 'admin/edit' => 'devise/registrations#edit', as: 'edit_admin_account'
+    put 'admin' => 'devise/registrations#update', as: 'admin_account'
   end
 
   namespace :admin do
@@ -85,37 +85,29 @@ QuoiQuoi::Application.routes.draw do
     resources :questions
 
     resources :product_types
-    resources :courses do
+
+    resources :registrations do
       member do
-        put :visible
-        patch :visible
-      end
-
-      resources :course_addition_images, shallow: true
-      resources :course_option_groups, shallow: true do
-        resources :course_options, shallow: true
-      end
-    end
-    resources :course_registrations do
-      member do
-        get :cancel, action: :cancel_form
-        put :cancel, action: :cancel_one
-        patch :cancel, action: :cancel_one
-        put :full, action: :full_register
-        patch :full, action: :full_register
-        put :return
-        patch :return
-
-        get :canceled, action: :canceled_show
-        put :canceled, action: :canceled_return
-        patch :canceled, action: :canceled_return
-
-        get :closed, action: :closed_show
+        get :canceled, action: :show
       end
 
       collection do
         get :canceled
-        get :closed
+      end
+    end
+
+    resources :registration_payments
+
+    resources :courses do
+      member do
+        put :status
+        patch :status
+      end
+
+      resources :registrations, shallow: true
+      resources :course_addition_images, shallow: true
+      resources :course_option_groups, shallow: true do
+        resources :course_options, shallow: true
       end
     end
 
@@ -147,16 +139,6 @@ QuoiQuoi::Application.routes.draw do
 
     resource :requirement_intros
 
-    resources :registrations do
-      member do
-        get :check, action: :check_show
-      end
-
-      collection do
-        get :check
-      end
-    end
-
     resources :orders do
       member do
         get :check, action: :check_show
@@ -173,7 +155,19 @@ QuoiQuoi::Application.routes.draw do
       end
     end
 
+    resources :order_payments
+
     resources :order_remittances do
+      member do
+        get :check, action: :edit
+      end
+
+      collection do
+        get :check
+      end
+    end
+
+    resources :registration_remittances do
       member do
         get :check, action: :edit
       end

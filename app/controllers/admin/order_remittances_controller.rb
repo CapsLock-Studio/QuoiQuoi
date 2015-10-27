@@ -28,7 +28,10 @@ class Admin::OrderRemittancesController < AdminController
   end
 
   def update
-    if @remittance.update_columns(remittance_params)
+    @remittance.confirm = remittance_params[:confirm]
+    @remittance.message = remittance_params[:message]
+
+    if @remittance.save
 
       @remittance.order_payment.completed = @remittance.confirm
       @remittance.order_payment.completed_time = Time.now if @remittance.confirm
@@ -40,7 +43,7 @@ class Admin::OrderRemittancesController < AdminController
 
       # TO-DO: After setting the remittance status, we need to send mail to notify customers what's going on.
 
-      redirect_to (params[:from_check])? check_admin_order_remittances_path : admin_order_remittances_path
+      redirect_to (params[:from_check] == 'true')? check_admin_order_remittances_path : admin_order_remittances_path
     else
       render json: @remittance.errors
     end

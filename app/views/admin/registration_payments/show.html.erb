@@ -1,0 +1,24 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+      <h4 class="modal-title">取消報名</h4>
+    </div>
+    <%= form_tag admin_registration_payment_path(@registration_payment, cancel: true), class: 'form validate-form', method: :put do %>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>請敘述一下取消的原因</label>
+          <div class="controls">
+            <%= text_field_tag :cancel_reason, '管理員取消', class: 'form-control', data: {'rule-required' => true} %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+        <button type="submit" class="btn btn-primary">
+          送出
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>

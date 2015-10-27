@@ -8,7 +8,7 @@ class Admin::OrdersController < AdminController
   # GET /admin/orders
   # GET /admin/orders.json
   def index
-    @orders = Order.includes(:order_payment).where(order_payments: {completed: [true, false]})
+    @orders = Order.includes(:order_payment)
 
     unless search_filter_params.nil?
       @search_filter = search_filter_params
@@ -110,7 +110,7 @@ class Admin::OrdersController < AdminController
   # DELETE /admin/orders/1.json
   def destroy
     if Order.find(params[:id]).destroy!
-      redirect_to canceled_admin_orders_path
+      redirect_to (params[:from_cancel] == 'true')? canceled_admin_orders_path : admin_orders_path
     end
 
     flash[:id] = params[:id]

@@ -1,0 +1,47 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-info"></i>
+      報名詳細 <span class="text-muted">報名編號: <%= @registration.id %></span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6 col-xs-12">
+  <%= render 'admin/courses/info', course: @registration.course %>
+</div>
+<div class="col-sm-6 col-xs-12">
+  <%= render 'info', registration: @registration %>
+
+  <div class="pull-right">
+    <% if @registration.registration_payment %>
+      <%=
+          link_to_if(@registration.registration_payment.refunded?, '已退款', '#', class: 'btn btn-default disabled') do
+            link_to('確認退款', admin_registration_payment_path(@registration.registration_payment, refund: true),
+                    method: :put, class: 'btn btn-primary')
+          end if @registration.registration_payment.completed?
+      %>
+      <%= link_to_if(@registration.registration_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
+        <%= link_to('取消報名',
+                    admin_registration_payment_path(@registration.registration_payment),
+                    class: 'btn btn-default', data: {toggle: 'modal', target: '#cancel-dialog'}
+            ) %>
+      <% end %>
+      <%= link_to(admin_registration_path(@registration),
+                  class: "btn btn-danger #{'disabled' unless (!@registration.registration_payment.completed? ||
+                      (@registration.registration_payment.completed? && @registration.registration_payment.refunded?)
+                  ) && @registration.registration_payment.cancel?}",
+                  data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) do %>
+        <i class="icon-trash"></i>
+        永久刪除
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="modal fade" id="cancel-dialog"></div><!-- /.modal -->

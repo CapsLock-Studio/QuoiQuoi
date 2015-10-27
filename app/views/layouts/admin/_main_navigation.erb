@@ -131,6 +131,49 @@
         </ul>
       <% end %>
 
+      <%= nav_item_with_resource('#', nil, Registration) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:registrations) or is_in(:courses) %>" href="#">
+          <i class="icon-check"></i>
+          <span>報名管理</span>
+          <i class="icon-angle-down"></i>
+        </a>
+        <ul class="nav <%= 'in' if is_in(:registrations) or is_in(:courses) or is_in(:registration_remittances) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_registration_remittances_path}(\/\d+)?\/check/}, Registration) do %>
+            <%= link_to(check_admin_registration_remittances_path) do %>
+              <i class="icon-check"></i>
+              <span>待確認報名課程匯款</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_courses_path}(\/\d+(\/edit)?)?(?!\/registrations)$/}, Registration) do %>
+            <%= link_to(admin_courses_path) do %>
+              <i class="icon-book"></i>
+              <span>所有課程</span>
+              <i class="icon-angle-down angle-down"></i>
+            <% end %>
+            <ul class="nav" style="display: block;">
+              <%= nav_item_with_resource(nil, {rule: /registrations(\/\d+)?(?!\/canceled)$/}, Registration) do %>
+                <%= link_to(admin_courses_path) do %>
+                  <i class="icon-flag"></i>
+                  <span>報名列表</span>
+                <% end %>
+              <% end %>
+            </ul>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_registration_remittances_path}(\/\d+)?(\/edit)?(?!\/check)$/}, Registration) do %>
+            <%= link_to(admin_registration_remittances_path) do %>
+              <i class="icon-flag"></i>
+              <span>所有匯款紀錄</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /admin\/registrations(\/\d+)?\/canceled/}, Registration) do %>
+            <%= link_to(canceled_admin_registrations_path, class: 'text-muted') do %>
+              <i class="icon-remove"></i>
+              已取消報名
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
       <%= nav_item_with_resource('#', nil, UserGift) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
           <i class="icon-gift"></i>
@@ -148,40 +191,6 @@
             <%= link_to(admin_user_gifts_path) do %>
               <i class="icon-flag"></i>
               <span>禮券記錄</span>
-            <% end %>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <%= nav_item_with_resource('#', nil, Registration) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>" href="#">
-          <i class="icon-check"></i>
-          <span>手作教室報名課程管理</span>
-          <i class="icon-angle-down"></i>
-        </a>
-        <ul class="nav <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>">
-          <%= nav_item_with_resource(nil, {rule: /#{admin_registrations_path}(\/\d+)?\/check/}, Registration) do %>
-            <%= link_to(check_admin_registrations_path) do %>
-              <i class="icon-check"></i>
-              <span>待確認報名課程匯款</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?(?!\/canceled)$/}, Registration) do %>
-            <%= link_to(admin_course_registrations_path) do %>
-              <i class="icon-book"></i>
-              <span>課程狀態管理</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/closed/}, Registration) do %>
-            <%= link_to(closed_admin_course_registrations_path) do %>
-              <i class="icon-book"></i>
-              <span>已關閉課程管理</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(admin_registrations_path, {rule: /#{admin_registrations_path}(\/\d+)?(?!\/check)/}, Registration) do %>
-            <%= link_to(admin_registrations_path) do %>
-              <i class="icon-flag"></i>
-              <span>報名課程記錄</span>
             <% end %>
           <% end %>
         </ul>
@@ -223,10 +232,10 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(admin_courses_path, {rule: /#{admin_courses_path}.*/}, Course) do %>
+      <%= nav_item_with_resource(nil, {rule: /none/}, Course) do %>
         <%= link_to(admin_courses_path) do %>
           <i class="icon-book"></i>
-          <span>開設課程管理</span>
+          <span>課程管理</span>
         <% end %>
       <% end %>
 

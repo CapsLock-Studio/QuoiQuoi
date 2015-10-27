@@ -5,6 +5,12 @@
       <% if order.closed? %>
         <span class="label label-inverse">已封存</span>
       <% end %>
+      <% if order.order_payment && order.order_payment.cancel? %>
+        <span class="label label-inverse">已取消</span>
+        <small class="text-muted">
+          於&nbsp;<%= order.order_payment.cancel_time.strftime('%Y/%m/%d %H:%I') %>&nbsp;取消
+        </small>
+      <% end %>
     </div>
   </div>
   <div class="box-content">
@@ -14,6 +20,12 @@
           收件者姓名
         </div>
         <%= order.name %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          Email
+        </div>
+        <%= order.user.email %>
       </div>
       <div class="col-xs-12 margin-bottom-10">
         <div class="text-muted">
@@ -44,14 +56,11 @@
           訂單狀態
         </div>
         <% if order.order_payment %>
-          <% if order.order_payment.cancel? %>
-            <span class="label label-inverse">已取消</span>
-            <small class="text-muted">於 <%= order.order_payment.cancel_time.strftime('%Y/%m/%d %H:%I') %> 取消</small>
+          <% if order.order_payment.completed.nil? %>
+            <span class="label label-warning">等待付款</span>
+            <small class="text-muted">於 <%= order.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳</small>
             <div>
               <small>使用&nbsp;<span class="label label-default"><%= t("#{order.payment_method}") %></span>&nbsp;付款</small>
-            </div>
-            <div>
-              取消原因: <label><%= order.order_payment.cancel_reason %></label>
             </div>
           <% elsif order.order_payment.completed? %>
             <span class="label label-success">付款完成</span>
@@ -60,8 +69,14 @@
               <small>使用&nbsp;<span class="label label-default"><%= t("#{order.payment_method}") %></span>&nbsp;付款</small>
             </div>
           <% else %>
-            <span class="label label-warning">等待付款</span>
-            <small>使用&nbsp;<span class="label label-default"><%= t("#{order.payment_method}") %></span>&nbsp;付款</small>
+            <span class="label label-danger">匯款有誤</span>
+            <small class="text-muted">於 <%= order.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳</small>
+          <% end %>
+
+          <% if order.order_payment.cancel? %>
+            <div>
+              取消原因: <label><%= order.order_payment.cancel_reason %></label>
+            </div>
           <% end %>
         <% end %>
       </div>

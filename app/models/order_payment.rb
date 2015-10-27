@@ -1,7 +1,7 @@
 class OrderPayment < ActiveRecord::Base
   belongs_to :order
 
-  has_many :order_remittance_reports
+  has_many :order_remittance_reports, dependent: :delete_all
 
   def remittance_reports_in_process?
     self.order_remittance_reports.where(confirm: nil).size > 0

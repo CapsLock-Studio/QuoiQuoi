@@ -37,7 +37,4 @@
   <% end %>
 <% else %>
   <span class="label label-warning">等待出貨</span>
-  <small class="text-muted">
-    (付款完成時間 <%= order.order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)
-  </small>
 <% end %>

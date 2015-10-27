@@ -3,7 +3,7 @@
     <%= image_tag registration.course.image.url(:medium), class: 'img-responsive' %>
   </div>
   <div class="col-sm-5 col-xs-12">
-    <h4><%= registration.course.course_translate.name %></h4>
+    <h4><%= registration.course.course_translates.find_by_locale_id(registration.locale_id).name %></h4>
     <div class="row">
       <div class="col-xs-12 text-muted">
         <%= t('course_time') %>
@@ -20,14 +20,17 @@
       </div>
       <div class="col-xs-12">
         <strong>
-          <%= registration.course.course_translate.teacher %>
+          <%= registration.course.course_translates.find_by_locale_id(registration.locale_id).teacher %>
         </strong>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
         <article class="article-content">
-          <%== Sanitize.fragment(registration.course.course_translate.description, Sanitize::Config::ALLOWED) %>
+          <%== Sanitize.fragment(
+                   registration.course.course_translates.find_by_locale_id(registration.locale_id).description,
+                   Sanitize::Config::ALLOWED
+               ) %>
         </article>
       </div>
     </div>

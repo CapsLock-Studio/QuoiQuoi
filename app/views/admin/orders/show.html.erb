@@ -18,12 +18,21 @@
 <div class="col-md-4 col-sm-12 col-xs-12">
   <%= render 'info', order: @order %>
 
-  <% if @order.order_payment && @order.order_payment.cancel? %>
+  <% if @order.order_payment %>
     <div class="pull-right">
-      <%= link_to(admin_order_path(@order), class: 'btn btn-danger', method: :delete, data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}) do %>
-        <i class="icon-trash"></i>
-        永久刪除
+      <%= link_to_if(@order.order_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
+        <%= link_to_unless(@order.order_payment.completed?, '取消訂單',
+                           admin_order_payment_path(@order.order_payment),
+                           class: 'btn btn-default', data: {toggle: 'modal', target: '#cancel-dialog'}
+            ) {} %>
       <% end %>
+      <%= link_to_unless(@order.order_payment.completed?,
+                         content_tag(:i, '永久刪除', class: 'icon-trash'),
+                         admin_order_path(@order, from_cancel: request.path.include?('/canceled')),
+                         class: "btn btn-danger #{'disabled' unless @order.order_payment.cancel?}",
+                         data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) {} %>
     </div>
   <% end %>
 </div>
+
+<div class="modal fade" id="cancel-dialog"></div><!-- /.modal -->

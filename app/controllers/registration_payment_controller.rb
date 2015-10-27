@@ -122,10 +122,11 @@ class RegistrationPaymentController < ApplicationController
 
   # Complete register here to prevent that is the registration but no registration_payment
   def set_registration
-    @registration = Course.includes(:course_translate)
-                          .where(course_translates: {locale_id: registration_params[:locale_id]}, id: registration_params[:course_id])
-                          .first
-                          .registrations.build(registration_params)
+    @registration = Registration.new(registration_params)
+
+    unless current_user.nil?
+      @registration.user_id = current_user.id
+    end
 
     # Getting total tuition and store it as registration's amount
     @registration.subtotal = @registration.tuition

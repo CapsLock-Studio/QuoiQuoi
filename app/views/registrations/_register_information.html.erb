@@ -58,7 +58,11 @@
   </div>
   <div class="col-xs-12">
     <strong>
-      <%= registration.registration_options.map{|option| option.course_option.content}.join(', ') %>
+      <% if registration.registration_options.size > 0 %>
+        <%= registration.registration_options.map{|option| option.course_option.content}.join(', ') %>
+      <% else %>
+        沒有任何項目
+      <% end %>
     </strong>
   </div>
 </div>
