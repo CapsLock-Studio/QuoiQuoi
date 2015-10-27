@@ -7,7 +7,7 @@
   </div>
 
   <% unless flash[:confirmed].nil? %>
-    <% if flash[:confirmed] == 'true' %>
+    <% if flash[:confirmed] %>
       <%= render 'message_confirmed' %>
     <% else %>
       <%= render 'message_denied' %>
@@ -21,8 +21,8 @@
           <table class="data-table table table-striped" style="margin-bottom:0;">
             <thead>
             <tr>
-              <th>訂單編號</th>
               <th>回報編號</th>
+              <th>訂單編號</th>
               <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
               <th>訂單聯絡人</th>
               <th>匯款帳號末五碼</th>
@@ -34,10 +34,10 @@
             <% @remittances.each do |remittance| %>
               <tr>
                 <td>
-                  <%= remittance.order_payment.order_id %>
+                  <%= remittance.id %>
                 </td>
                 <td>
-                  <%= remittance.id %>
+                  <%= remittance.order_payment.order_id %>
                 </td>
                 <td>
                   <%= link_to(info_admin_user_path(remittance.order_payment.order.user_id),

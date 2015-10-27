@@ -4,12 +4,20 @@ class RegistrationRemittanceReport < ActiveRecord::Base
   def status
     status = 'denied'
 
-    if self.confirm
-      status = 'confirmed'
-    elsif self.confirm.nil?
+    if confirm.nil?
       status = 'waiting'
+    elsif confirm
+      status = 'confirmed'
     end
 
-    status
+    "#{status} #{id}"
+  end
+
+  def account
+    if read_attribute(:account).blank?
+      '無摺存款'
+    else
+      read_attribute(:account)
+    end
   end
 end

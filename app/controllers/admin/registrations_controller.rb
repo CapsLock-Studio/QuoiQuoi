@@ -1,33 +1,48 @@
 class Admin::RegistrationsController < AdminController
   authorize_resource
 
+  before_action :set_registration, only: [:show, :destroy]
   before_action :remove_duplicate_payment, only: [:show, :check_show]
   before_action :set_check_payment, only: [:show, :check_show]
   before_action :set_discount, only: [:show, :check_show]
   before_action :set_total_attendance, only: [:show, :check_show]
 
   def index
-    @registrations = Registration.all.order(created_at: :desc)
+
+    @course = Course.includes(:registrations, registrations: :registration_payment).find(params[:course_id])
   end
 
   def show
     add_breadcrumb '首頁', :admin_root_path
-    add_breadcrumb '所有報名課程記錄', :admin_registrations_path
-    add_breadcrumb '詳細報名課程記錄'
+    add_breadcrumb '所有課程', :admin_courses_path
+    add_breadcrumb '報名詳細'
 
-    respond_to do |format|
-      format.html {render action: :check_show}
+
+  end
+
+  def canceled
+    @registrations = Registration.includes(:registration_payment).where(registration_payments: {cancel: true})
+
+    unless cancel_search_filter_params.nil?
+      @search_filter = cancel_search_filter_params
+      conditions = cancel_search_filter_params
+
+      unless conditions['cancel_time'].nil?
+        dates = conditions['cancel_time'].split(' - ')
+        conditions['cancel_time'] = dates[0]..dates[1]
+
+        # Add search conditions to orders
+        @registrations = @registrations.where(registration_payments: conditions)
+      end
     end
   end
 
-  def check
-    @payments = Payment.where(canceled: false, completed: false).where.not(registration_id: '', pay_time: nil)
-  end
+  def destroy
+    if @registration.destroy!
+      redirect_to :back
+    end
 
-  def check_show
-    add_breadcrumb '首頁', :admin_root_path
-    add_breadcrumb '所有報名課程匯款', :check_admin_registrations_path
-    add_breadcrumb '詳細報名課程匯款'
+    flash[:id] = params[:id]
   end
 
   private
@@ -60,4 +75,27 @@ class Admin::RegistrationsController < AdminController
         end
       end
     end
+
+  def set_registration
+    @registration = Registration.find(params[:id])
+  end
+
+  def status_params
+    unless params[:canceled].nil?
+      params[:canceled_time] = Time.now
+    end
+    unless params[:refunded_time].nil?
+      params[:refunded_time] = Time.now
+    end
+
+    params.permit(:canceled, :canceled_time, :refunded, :refunded_time)
+  end
+
+  def cancel_search_filter_params
+    unless params[:search_filter].nil?
+      sanitize_params = params[:search_filter].permit(:cancel_time)
+      sanitize_params.delete('cancel_time') if sanitize_params['cancel_time'].blank?
+      sanitize_params
+    end
+  end
 end

@@ -35,6 +35,34 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # Include people who have not completed payment.
+  def applicants
+    registrations.reject do |registration|
+      registration.canceled?
+    end.map{|registration| registration.attendance}.inject{|sum, applicant| sum + applicant} || 0
+  end
+
+  # Registered people who already completed payment.
+  def applicants_completed
+    registrations.reject do |registration|
+      registration.canceled? || !registration.registration_payment.completed?
+    end.map{|registration| registration.attendance}.inject{|sum, applicant| sum + applicant} || 0
+  end
+
+  def register_full?
+    (applicants >= popular)
+  end
+
+  def applicants_not_refund
+    registrations.reject do |registration|
+      registration.canceled? || !registration.registration_payment.completed? || registration.registration_payment.refunded
+    end.size
+  end
+
+  def refund_completed?
+    (applicants_not_refund == 0)
+  end
+
   def self.by_month(month)
     self.where('extract(month from time) = ?', month)
   end

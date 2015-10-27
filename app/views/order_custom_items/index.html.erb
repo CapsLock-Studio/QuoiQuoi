@@ -2,73 +2,29 @@
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-md-9 col-sm-9">
+    <div class="col-sm-9 col-xs-12">
       <div class="row">
         <%= render 'layouts/nav_item' %>
         <div class="col-xs-12">
-          <div class="alert alert-warning fade in text-center">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <i class="fa fa-exclamation fa-fw"></i><%= t('custom_order.mind') %>
-          </div>
+          <%= render 'warning_message' %>
         </div>
-        <div class="col-xs-12">
-          <% @order_custom_items.each do |order_custom_item| %>
-            <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
-            <div class="box">
-              <div class="box-header box-header-small grey-background">
-                <h4>
-                  <%= t('no_s') %> <strong class="text-muted"><%= order_custom_item.id %></strong>
-                  <br class="visible-xs" /><small class="order-time"><%= t('build_time') %>: <strong><%= order_custom_item.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
-                </h4>
-              </div>
-              <div class="box-content box-no-padding" style="border:0;">
-                <div class="responsive-table">
-                  <div class="scrollable-area">
-                    <table class="table table-bordered text-center table-padding-10" style="margin-bottom:0;">
-                      <thead>
-
-                      </thead>
-                      <tbody>
-                      <tr>
-                        <td class="text-left col-md-6">
-                          <% if order_custom_item.product %>
-                            <%= image_tag(order_custom_item.product.image.url(:thumb)) %>
-                          <% else %>
-                            <%= image_tag(order_custom_item.image.url(:thumb)) %>
-                          <% end %>
-                          <% order_custom_item.order_custom_item_materials.each do |material| %>
-                            <%= image_tag material.material.image.url(:thumb) %>
-                          <% end %>
-                        </td>
-                        <td class="hidden-xs">
-                          <% if order_custom_item.product %>
-                            <%= t('customize') %>
-                          <% else %>
-                            <%= t('personalize_s') %>
-                          <% end %>
-                        </td>
-                        <td>
-                          <%= render 'status', order_custom_item: order_custom_item %>
-                        </td>
-                        <td>
-                          <%= (translate)? number_to_currency(translate.price, locale: translate.locale.lang) : '-' %>
-                        </td>
-                        <td>
-                          <ul class="list-unstyled">
-                            <% if order_custom_item.accept && !order_custom_item.order %>
-                              <li>
-                                <%= link_to t('add_to_cart'), order_custom_item_path(order_custom_item), class: 'btn btn-u btn-orange hover-effect', method: :put %>
-                              </li>
-                            <% end %>
-                            <li>
-                              <%= link_to t('detail'), order_custom_item_path(order_custom_item), class: 'btn btn-u btn-default' %>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
+      </div>
+      <div class="box">
+        <div class="box-content">
+          <% if @order_custom_item.size > 0 %>
+            <div class="col-sm-12 hidden-xs text-muted margin-bottom-5">
+              <div class="row">
+                <div class="col-sm-2">
+                  <%= t('order.no_s') %>
+                </div>
+                <div class="col-sm-3">
+                  <%= t('purchased_items') %>
+                </div>
+                <div class="col-sm-2">
+                  <%= t('total_amount') %>
+                </div>
+                <div class="col-sm-5">
+                  <%= t('status') %>
                 </div>
               </div>
             </div>

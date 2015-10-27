@@ -69,7 +69,7 @@
                                  class: 'selectpicker attendance form-control',
                                  data: {
                                      width: '100%',
-                                     price: @registration.course.course_translate.price
+                                     price: @registration.course.course_translates.find_by_locale_id(@registration.locale_id).price
                                  }
                              } %>
               </div>
@@ -102,7 +102,7 @@
             <h4 class="color-orange text-right">
               <%= t('tuition') %>
               <strong class="tuition text-muted"
-                      data-raw="<%= @registration.course.course_translate.price %>"
+                      data-raw="<%= @registration.course.course_translates.find_by_locale_id(@registration.locale_id).price %>"
                       data-subtotal="<%= @registration.subtotal %>">
                 <%= number_to_currency(@registration.tuition) %>
               </strong>

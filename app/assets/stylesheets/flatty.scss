@@ -61,3 +61,21 @@
   vertical-align: middle;
   width: 80%;
 }
+
+.append-notification-text {
+  position: relative;
+
+  small {
+    position: absolute;
+    top: 28px;
+    left: 0;
+  }
+}
+
+.label-sm {
+  padding: 0.1em 0.4em 0.2em;
+}
+
+.option-group {
+  margin: 5px 10px;
+}

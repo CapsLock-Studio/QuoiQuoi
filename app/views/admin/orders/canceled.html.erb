@@ -53,7 +53,7 @@
                   <%= order.order_payment.cancel_time.strftime('%Y/%m/%d %H:%I') %>
                 </td>
                 <td class="text-right">
-                  <%= link_to(admin_order_path(order), class: 'btn btn-danger', method: :delete, data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}) do %>
+                  <%= link_to(admin_order_path(order, from_cancel: true), class: 'btn btn-danger', method: :delete, data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}) do %>
                     <i class="icon-trash icon-fixed-width"></i>
                   <% end %>
                   <%= link_to(canceled_admin_order_path(order), class: 'btn btn-default') do %>

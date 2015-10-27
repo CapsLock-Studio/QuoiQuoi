@@ -42,7 +42,7 @@ class RegistrationsController < ApplicationController
     flash[:message] = nil
 
     begin
-      course_model = Course.includes(:course_translate).where(course_translates: {locale_id: session[:locale_id]})
+      course_model = Course
 
       if CourseOptionGroup.where(locale_id: session[:locale_id], course_id: registration_params[:course_id]).size > 0
         course_model = course_model.includes(course_option_groups: [:course_options])
@@ -52,6 +52,7 @@ class RegistrationsController < ApplicationController
       end
 
       @registration = course_model.find(registration_params[:course_id]).registrations.build(registration_params)
+      @registration.locale_id = session[:locale_id]
 
         #  -------- this way will delete current records --------
         # trim the course_options

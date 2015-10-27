@@ -6,6 +6,14 @@
     </h1>
   </div>
 
+  <% if !flash[:status].nil? %>
+    <% if flash[:status][:cancel] == 'true' %>
+      <%= render 'message_cancel' %>
+    <% end %>
+  <% elsif !flash[:id].nil? %>
+    <%= render 'message_deleted' %>
+  <% end %>
+
   <%= render 'search_condition' %>
 
   <div class="box bordered-box" style="margin-bottom:0;">
@@ -43,19 +51,41 @@
                   <%= order.name %>
                 </td>
                 <td>
-                  <% if order.order_payment.completed? %>
+                  <% if order.order_payment.completed.nil? %>
+                    <span class="label label-warning">等待付款</span>
+                    <div>
+                      <small>
+                        使用&nbsp;<%= t("#{order.payment_method}") %>&nbsp;付款
+                        <span class="text-muted">
+                          <%= order.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳
+                        </span>
+                      </small>
+                    </div>
+                  <% elsif order.order_payment.completed? %>
                     <span class="label label-success">付款完成</span>
                     <div>
                       <small>使用&nbsp;<%= t("#{order.payment_method}") %>&nbsp;付款 (<%= order.order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)</small>
                     </div>
                   <% else %>
-                    <span class="label label-warning">等待付款</span>
+                    <span class="label label-danger">匯款有誤</span>
+                    <small class="text-muted">
+                      <%= order.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳
+                    </small>
                   <% end %>
                 </td>
                 <td>
                   <%= render 'delivery_status', order: order if order.order_payment.completed? %>
                 </td>
                 <td class="text-right">
+                  <%= link_to_if(order.order_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
+                    <%= link_to_unless(order.order_payment.completed?, '取消訂單',
+                                admin_order_payment_path(order.order_payment),
+                                class: 'btn btn-default', data: {toggle: 'modal', target: '#cancel-dialog'}
+                        ) {} %>
+                  <% end %>
+                  <%= link_to_unless(order.order_payment.completed?, content_tag(:i, '', class: 'icon-trash'), admin_order_path(order),
+                              class: "btn btn-danger #{'disabled' unless order.order_payment.cancel?}",
+                              data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) {} %>
                   <%= link_to(admin_order_path(order), class: 'btn btn-md') do %>
                     <i class="icon-info icon-fixed-width"></i>
                   <% end %>
@@ -71,3 +101,4 @@
 </div>
 
 <div class="modal fade" id="user-detail"></div><!-- /.modal -->
+<div class="modal fade" id="cancel-dialog"></div><!-- /.modal -->
