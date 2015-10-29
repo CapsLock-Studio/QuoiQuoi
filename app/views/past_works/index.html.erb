@@ -6,7 +6,7 @@
       <div class="row">
         <%= render 'layouts/nav_item' %>
         <div class="col-xs-12">
-          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue' do %>
+          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue', title: t('order.personalize') do %>
             <%= t('order.personalize') %>
             <i class="fa fa-angle-right"></i>
           <% end %>
@@ -17,12 +17,13 @@
           </div>
         </div>
         <div class="col-xs-12 margin-bottom-20">
-          <%= image_tag @past_work_type.image.url(:large), class: 'img-responsive' %>
+          <%= image_tag @past_work_type.image.url(:large), class: 'img-responsive', alt: @past_work_type.past_work_type_translate.name %>
         </div>
         <% @past_works.each do |past_work| %>
-          <%= link_to past_work_type_past_work_path(@past_work_type, past_work), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' do %>
+          <%= link_to past_work_type_past_work_path(@past_work_type, past_work), class: 'col-lg-4 col-md-4 col-sm-6 col-xs-12',
+                      title: past_work.past_work_translate.name do %>
             <div class="thumbnails thumbnail-style">
-              <%= image_tag past_work.image.url(:small), class: 'img-responsive' %>
+              <%= image_tag past_work.image.url(:small), class: 'img-responsive', alt: past_work.past_work_translate.name %>
               <div class="caption">
                 <h4 style="margin-top: 10px; margin-bottom: 5px;">
                   <%= truncate(past_work.past_work_translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
@@ -36,12 +37,12 @@
         <% end %>
 
         <script id="more-template" type="text/html">
-          <a href="{{url}}" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+          <a href="{{url}}" class="col-lg-4 col-md-4 col-sm-6 col-xs-12" title="{{name}}">
             <div class="thumbnails thumbnail-style">
-              <img src="{{image}}" class="img-responsive">
+              <img src="{{image}}" class="img-responsive" alt="{{alt}}">
               <div class="caption">
                 <h4 style="margin-top: 10px; margin-bottom: 5px;">
-                  {{name}}
+                  {{truncated_name}}
                 </h4>
                   <span>
                     {{completionDate}}
@@ -55,7 +56,8 @@
           <%= link_to_if(@past_works.total_pages > @past_works.current_page,
                          t('load_more'),
                          past_work_type_past_works_path(page: ((params[:page] || 1).to_i + 1), format: :json),
-                         class: 'load-more btn-link btn-md btn-block text-center text-blue'
+                         class: 'load-more btn-link btn-md btn-block text-center text-blue',
+                         data: {template: '#more-template'}
               ) {} %>
         </div>
       </div>

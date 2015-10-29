@@ -110,4 +110,8 @@ module ApplicationHelper
 
     image_tag "#{root_url}#{image_url}", class: option
   end
+
+  def total_pages(array, perPage)
+    (array.length.to_f / perPage).ceil
+  end
 end

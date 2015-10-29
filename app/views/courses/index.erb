@@ -55,7 +55,8 @@
           <%= link_to_if(@courses.total_pages > @courses.current_page,
                          t('load_more'),
                          month_courses_path(month: params[:month], page: ((params[:page] || 1).to_i + 1), format: :json),
-                         class: 'load-more btn btn-link btn-md btn-block text-center text-blue'
+                         class: 'load-more btn btn-link btn-md btn-block text-center text-blue',
+                         data: {template: '#more-template'}
               ) {} %>
         </div>
       </div>

@@ -393,6 +393,18 @@ zh-TW:
   month_10: '10月'
   month_11: '11月'
   month_12: '12月'
+  year_1: "%{year}年 1月"
+  year_2: "%{year}年 2月"
+  year_3: "%{year}年 3月"
+  year_4: "%{year}年 4月"
+  year_5: "%{year}年 5月"
+  year_6: "%{year}年 6月"
+  year_7: "%{year}年 7月"
+  year_8: "%{year}年 8月"
+  year_9: "%{year}年 9月"
+  year_10: "%{year}年 10月"
+  year_11: "%{year}年 11月"
+  year_12: "%{year}年 12月"
   remittance_hint: '此功能僅提供給手作教室學員使用, 如果是購買商品的顧客, 請登入會員帳號後，到 %{link} 回報已匯款'
   remittance_placeholder: '請輸入您報名時填寫的聯絡Email'
   refunded: '已退款'
