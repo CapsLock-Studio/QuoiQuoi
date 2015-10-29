@@ -57,7 +57,7 @@ class PastWorksController < ApplicationController
 
     @website_title = "#{@past_work_type.past_work_type_translates.find_by_locale_id(session[:locale_id]).name}- #{@past_work.past_work_translate.name} | #{@website_title}"
     @meta_og_title = @past_work.past_work_translate.name
-    @meta_og_description = @past_work.past_work_translate.description.gsub(/\n/, '')
+    @meta_og_description = ApplicationController.helpers.truncate(Sanitize.fragment(@past_work.past_work_translate.description), length: 100)
     @meta_og_type = 'product'
     @meta_og_image = "http://quoiquoi.tw#{@past_work.image.url(:large)}"
   end

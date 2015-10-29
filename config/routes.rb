@@ -294,6 +294,15 @@ QuoiQuoi::Application.routes.draw do
     resources :news
     resources :courses do
       get 'calendar', on: :collection
+      member do
+        get '/month(/:month)', action: :show, constraints: {month: /\d{1,2}/}, as: 'month'
+        get 'past', action: :show
+      end
+      collection do
+        get 'calendar'
+        get '/month(/:month)', action: :index, constraints: {month: /\d{1,2}/}, as: 'month'
+        get 'past', action: :past_all
+      end
     end
     resources :reports
     resource :recruitments

@@ -148,21 +148,20 @@
           </div>
           <div class="margin-bottom-40">
             <ul id="list" class="bxslider">
-              <% @recent_courses.each do |recent_course| %>
+              <% @newest_courses.each do |course| %>
                 <li>
-                  <%= link_to course_path(recent_course, month: recent_course.time.strftime('%m').to_i) do %>
+                  <%= link_to month_course_path(course, month: course.time.strftime('%m').to_i), title: course.course_translate.name do %>
                     <em class="overflow-hidden">
-                      <%= image_tag recent_course.image.url(:small), style: 'width:100%;' %>
+                      <%= image_tag course.image.url(:small), style: 'width:100%;', alt: course.course_translate.name %>
                     </em>
                     <span>
-                      <% translate = recent_course.course_translates.where(locale_id: session[:locale_id]).first %>
                       <h5>
                         <strong>
-                          <%= truncate(translate.name, length: (session[:locale] == 'en')? 32 : 14) %>
+                          <%= truncate(course.course_translate.name, length: (session[:locale] == 'en')? 32 : 14) %>
                         </strong>
                       </h5>
-                      <h5><%= "#{recent_course.time.strftime('%Y/%m/%d')}" %></h5>
-                      <i><%= t('teacher') %>:&nbsp;<%= translate.teacher %></i>
+                      <h5><%= "#{course.time.strftime('%Y/%m/%d')}" %></h5>
+                      <i><%= t('teacher') %>:&nbsp;<%= course.course_translate.teacher %></i>
                     </span>
                   <% end %>
                 </li>
