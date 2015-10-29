@@ -365,6 +365,18 @@ en:
   month_10: 'OCT'
   month_11: 'NOV'
   month_12: 'DEC'
+  year_1: "January %{year}"
+  year_2: "February %{year}"
+  year_3: "March %{year}"
+  year_4: "April %{year}"
+  year_5: "May %{year}"
+  year_6: "June %{year}"
+  year_7: "July %{year}"
+  year_8: "August %{year}"
+  year_9: "September %{year}"
+  year_10: "October %{year}"
+  year_11: "November %{year}"
+  year_12: "December %{year}"
   remittance_hint: 'This function is just for the course students. If you are the shop customer, please sign in and go to %{link} to advice the remittance.'
   remittance_placeholder: 'Input the email address'
   refunded: 'Refunded'
