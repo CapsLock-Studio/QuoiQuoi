@@ -38,4 +38,8 @@ class Course < ActiveRecord::Base
   def self.by_month(month)
     self.where('extract(month from time) = ?', month)
   end
+
+  def month
+    time.beginning_of_month
+  end
 end

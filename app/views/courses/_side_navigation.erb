@@ -1,16 +1,21 @@
 <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
   <ul class="list-group sidebar-nav-v1" data-toggle="tooltip" data-placement="top" title="<%= t('calendar_hint') %>">
-    <%= nav_item(courses_path, {rule: /month=new$/,class: 'list-group-item'}) do %>
-      <%= link_to(courses_path(month: 'new')) do %>
+    <%= nav_item(courses_path, {class: 'list-group-item'}) do %>
+      <%= link_to(courses_path) do %>
         <%= t('recent_course') %>
       <% end %>
     <% end %>
     <% @months.each do |month| %>
-      <%= nav_item(courses_path(month: month), {rule: /month=#{month}$/, class: 'list-group-item'}) do %>
-        <%= link_to(courses_path(month: month)) do %>
+      <%= nav_item(nil, {rule: /courses(\/\d{1,2})?(\/|\?)month(\/|=)#{month}$/, class: 'list-group-item'}) do %>
+        <%= link_to(month_courses_path(month: month)) do %>
           <span><%= t("month_#{month}") %></span>
           <i class="fa fa-calendar pull-right show-calendar hidden-xs" data-month="<%= month %>"></i>
         <% end %>
+      <% end %>
+    <% end %>
+    <%= nav_item(nil, {rule: /courses(\/\d+)?\/past(\/\d{4}-\d{2}-\d{2})?/,class: 'list-group-item'}) do %>
+      <%= link_to(past_courses_path) do %>
+        <%= t('course.past') %>
       <% end %>
     <% end %>
   </ul>
