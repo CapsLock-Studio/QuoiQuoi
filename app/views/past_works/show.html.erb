@@ -50,9 +50,9 @@
             <ul id="list" class="bxslider">
               <% @past_work.others(session[:locale_id], 8).each do |past_work| %>
                 <li>
-                  <%= link_to past_work_type_past_work_path(@past_work_type, past_work) do %>
+                  <%= link_to past_work_type_past_work_path(@past_work_type, past_work), title: past_work.past_work_translate.name do %>
                     <em class="overflow-hidden">
-                      <%= image_tag past_work.image.url(:small), style: 'width:100%;' %>
+                      <%= image_tag past_work.image.url(:small), style: 'width:100%;', alt: past_work.past_work_translate.name %>
                     </em>
                     <span>
                         <strong>

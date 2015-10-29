@@ -264,7 +264,7 @@ var initLoadMore = function() {
                     var item = template.html();
                     for (var j = 0; j < data.items[i].length; j++) {
                         // fill the data into template
-                        item = item.replace('{{' + data.items[i][j].key + '}}', data.items[i][j].value);
+                        item = item.replace((new RegExp('{{' + data.items[i][j].key + '}}', 'g')), data.items[i][j].value);
                     }
                     $(item).insertBefore(template);
                 }

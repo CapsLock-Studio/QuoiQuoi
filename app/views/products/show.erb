@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-xs-12 nopadding">
               <div class="well-sm" style="margin-top:0;padding-top:0;">
-                <a class="mediumnail fancybox-button zoomer" href="<%= asset_path @product.image.url(:large) %>">
+                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="<%= @product.product_translate.name %>" href="<%= asset_path @product.image.url(:large) %>">
                   <span class="overlay-zoom main-image">
                     <%= image_tag @product.image.url(:medium), class: 'img-responsive' %>
                   </span>
