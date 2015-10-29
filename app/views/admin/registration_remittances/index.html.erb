@@ -79,7 +79,7 @@
                 </td>
                 <td>
                   <div class='text-right'>
-                    <% if remittance.confirm.nil? || !remittance.confirm? %>
+                    <% if remittance.confirm.nil? %>
                       <%= link_to(edit_admin_registration_remittance_path(remittance), class: 'btn btn-default') do %>
                         <i class='icon-pencil icon-fixed-width'></i>
                       <% end %>
