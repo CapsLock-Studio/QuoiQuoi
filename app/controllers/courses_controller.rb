@@ -114,21 +114,17 @@ class CoursesController < ApplicationController
           courses = courses.where('courses.time' => Time.parse("#{params[:id]}-1")..Time.parse("#{params[:id]}-1").end_of_month)
                            .order('courses.time DESC')
                            .page(params[:page])
-                           .per(24)
+                           .per(6)
           render json: {
                      items: courses.collect do |course|
                        [
                            {
                                key: 'truncated_name',
-                               value: ApplicationController.helpers.truncate(course.course_translate.name, length: (session[:locale] == 'en')? 38 : 20)
+                               value: ApplicationController.helpers.truncate(course.course_translate.name, length: (session[:locale] == 'en')? 26 : 13)
                            },
                            {
                                key: 'name',
                                value: course.course_translate.name
-                           },
-                           {
-                               key: 'time',
-                               value: "#{course.time.strftime('%Y/%m/%d %H:%M')}-#{(course.time + course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[course.time.strftime('%u').to_i - 1]})"
                            },
                            {
                                key: 'teacher',
@@ -141,10 +137,6 @@ class CoursesController < ApplicationController
                            {
                                key: 'image',
                                value: course.image.url(:small)
-                           },
-                           {
-                               key: 'status',
-                               value: course.status
                            }
                        ]
                      end,

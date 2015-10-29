@@ -11,13 +11,13 @@
               <h4><%= t("year_#{month.month}", year: month.year) %></h4>
             </div>
           </div>
-          <% courses.take(24).each do |course| %>
+          <% courses.take(6).each do |course| %>
             <%= link_to past_course_path(course), class: 'col-lg-3 col-md-3 col-sm-4 col-xs-6 course', title: course.course_translate.name do %>
               <div class="thumbnails thumbnail-style">
                 <%= image_tag course.image.url(:small), class: 'img-responsive', alt: course.course_translate.name %>
                 <div class="caption">
                   <h4 style="margin-top: 10px; margin-bottom: 5px;">
-                    <%= truncate(course.course_translate.name, length: (session[:locale] == 'en')? 26 : 14) %>
+                    <%= truncate(course.course_translate.name, length: (session[:locale] == 'en')? 26 : 13) %>
                   </h4>
                   <ul class="list-unstyled">
                     <li>
@@ -46,7 +46,7 @@
             </a>
           </script>
           <div class="col-xs-12">
-            <%= link_to_if(total_pages(courses, 24) > 1,
+            <%= link_to_if(total_pages(courses, 6) > 1,
                            t('load_more'),
                            "/courses/past/#{month.year}-#{month.month}.json?page=#{((params[:page] || 1).to_i + 1)}",
                            class: 'load-more btn btn-link btn-md btn-block text-center text-blue',
