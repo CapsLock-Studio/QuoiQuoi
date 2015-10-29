@@ -34,8 +34,12 @@ class PastWorksController < ApplicationController
                       value: past_work.image.url(:small)
                   },
                   {
-                      key: 'name',
+                      key: 'truncated_name',
                       value: ApplicationController.helpers.truncate(past_work.past_work_translate.name, length: (session[:locale] == 'en')? 38 : 20)
+                  },
+                  {
+                      key: 'name',
+                      value: past_work.past_work_translate.name
                   },
                   {
                       key: 'completionDate',

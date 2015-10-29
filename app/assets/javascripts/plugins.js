@@ -253,7 +253,8 @@ var initLoadMore = function() {
         // disable default action of archor
         e.preventDefault();
 
-        var template = $('#more-template');
+        var loadMoreButton = $(this);
+        var template = $(loadMoreButton.data('template'));
 
         $.ajax({
             url: $(this).attr('href'),
@@ -270,9 +271,9 @@ var initLoadMore = function() {
                 }
 
                 if (data.nextPage != null) {
-                    $('.load-more').attr('href', data.nextPage);
+                    loadMoreButton.attr('href', data.nextPage);
                 } else {
-                    $('.load-more').hide();
+                    loadMoreButton.hide();
                 }
             },
             error: function(jqXHR, textStatus, errorThrown){
@@ -280,7 +281,7 @@ var initLoadMore = function() {
             }
         });
     });
-}
+};
 
 $.fn.marquee = function(animateTime, waitTime) {
     var marqueeBlock = $(this);
