@@ -32,7 +32,7 @@
               <img src="{{image}}" class="img-responsive" alt="{{name}}">
               <div class="caption">
                 <h4 style="margin-top: 10px; margin-bottom: 5px;">
-                  {{turncated_name}}
+                  {{truncated_name}}
                 </h4>
                 <span class="price">
                   {{price}}
@@ -48,7 +48,8 @@
         <div class="col-xs-12" style="border-top: 1px solid #F1F1F1;">
           <%= link_to_if(@products.total_pages > @products.current_page, t('load_more'),
                          polymorphic_path([@product_type, :products], page: ((params[:page] || 1).to_i + 1), format: :json),
-                         class: 'load-more btn btn-link btn-md btn-block text-center text-blue') {} %>
+                         class: 'load-more btn btn-link btn-md btn-block text-center text-blue',
+                         data: {template: '#more-template'}) {} %>
         </div>
       </div>
     </div>
