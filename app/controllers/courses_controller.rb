@@ -114,7 +114,7 @@ class CoursesController < ApplicationController
           courses = courses.where('courses.time' => Time.parse("#{params[:id]}-1")..Time.parse("#{params[:id]}-1").end_of_month)
                            .order('courses.time DESC')
                            .page(params[:page])
-                           .per(6)
+                           .per(8)
           render json: {
                      items: courses.collect do |course|
                        [
