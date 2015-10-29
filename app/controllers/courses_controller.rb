@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
-  before_action :set_course, except: [:index]
+
+  before_action :set_course, only: [:show, :calendar]
   before_action :set_months
 
   # GET /course
@@ -11,20 +12,24 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @courses = get_courses
+        @courses = get_courses(params[:month], params[:page])
       end
 
       format.json do
         render(
             json:
               (if params[:page]
-                courses = get_courses
+                courses = get_courses(params[:month], params[:page])
                 {
                     items: courses.collect do |course|
                       [
                           {
-                              key: 'name',
+                              key: 'truncated_name',
                               value: ApplicationController.helpers.truncate(course.course_translate.name, length: (session[:locale] == 'en')? 38 : 20)
+                          },
+                          {
+                              key: 'name',
+                              value: course.course_translate.name
                           },
                           {
                               key: 'time',
@@ -82,20 +87,31 @@ class CoursesController < ApplicationController
     set_breadcrumbs
 
     @registration = Registration.all.where(email: (current_user)? current_user.email : nil, course_id: @course.id).order(:id).first
-    @recent_courses = Course.all.where('time > ?', Time.now).where.not(id: @course.id).order(:time).limit(8)
+    @newest_courses = get_courses(nil, nil).where.not(id: @course.id).limit(8)
 
     unless @registration
       @registration = @course.registrations.build
     end
 
-    translate = @course.course_translates.find_by_locale_id(session[:locale_id])
-    add_breadcrumb translate.name
+    add_breadcrumb @course.course_translate.name
 
-    @website_title = "#{translate.name} | #{@website_title}"
-    @meta_og_title = translate.name
-    @meta_og_description = translate.description.gsub(/\n/, '')
+    @website_title = "#{@course.course_translate.name} | #{@website_title}"
+    @meta_og_title = @course.course_translate.name
+    @meta_og_description = ApplicationController.helpers.truncate(Sanitize.fragment(@course.course_translate.description), length: 100)
     @meta_og_type = 'product'
     @meta_og_image = "http://quoiquoi.tw#{@course.image.url(:large)}"
+  end
+
+  def past_all
+    set_breadcrumbs
+    add_breadcrumb t('course.past')
+
+    @courses = Course.includes(:course_translate).where(course_translates: {locale_id: session[:locale_id]})
+                                                 .where('courses.time >= ? AND courses.time < ?', 12.months.ago, Time.now)
+
+    @website_title = "#{t('course.past')} | #{@website_title}"
+    @meta_og_title = t('course.past')
+    @meta_og_description = t('course.past')
   end
 
   # access able from another controller
@@ -133,23 +149,25 @@ class CoursesController < ApplicationController
         #@course.course_options = @course.course_options.where(locale_id: session[:locale_id])
 
       rescue ActiveRecord::RecordNotFound
-        redirect_to action: :index
+        redirect_to courses_path
       end
     end
 
-    def get_courses
+    def get_courses(month, page)
+      # not show any past courses
       courses = Course.includes(:course_translate, :registrations)
                       .where(course_translates: {locale_id: session[:locale_id]}, visible: true)
+                      .where('courses.time > ?', Time.now)
                       .where.not(course_translates: {name: '', description: '', price: nil})
 
-      # not show any past courses
-      if params[:month] && params[:month] != 'new'
-        courses.by_month(params[:month]).order('courses.time ASC').page(params[:page]).per(24)
-      else
+      if !month.nil?
+        courses.by_month(month.to_i).order('courses.time ASC').page(page).per(24)
+      elsif month == 'past'
 
+      else
         # show now to two months after
         # @courses = @courses.where('time <= ?', Time.now + 2.months)
-        courses.order('courses.id DESC').page(params[:page]).per(24).page(params[:page]).per(24)
+        courses.order('courses.id DESC').page(page).per(24)
       end
     end
 end

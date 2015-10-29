@@ -6,7 +6,7 @@
       <div class="row">
         <%= render 'layouts/nav_item' %>
         <div class="col-xs-12">
-          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue' do %>
+          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue', title: t('order.personalize') do %>
             <%= t('order.personalize') %>
             <i class="fa fa-angle-right"></i>
           <% end %>
@@ -22,13 +22,13 @@
               <div class="article">
                 <div class="row">
                   <div class="col-sm-3 col-xs-12">
-                    <%= link_to past_work_type_past_works_path(past_work_type) do %>
-                      <%= image_tag past_work_type.thumbnail.url(:medium), class: 'img-responsive' %>
+                    <%= link_to past_work_type_past_works_path(past_work_type), title: past_work_type.past_work_type_translate.name do %>
+                      <%= image_tag past_work_type.thumbnail.url(:medium), class: 'img-responsive', alt: past_work_type.past_work_type_translate.name %>
                     <% end %>
                   </div>
                   <div class="col-sm-9 col-xs-12">
                     <div class="article-body">
-                      <%= link_to past_work_type_past_works_path(past_work_type), class: 'margin-bottom-10' do %>
+                      <%= link_to past_work_type_past_works_path(past_work_type), class: 'margin-bottom-10', title: past_work_type.past_work_type_translate.name do %>
                         <h4>
                           <%= past_work_type.past_work_type_translate.name %>
                         </h4>
@@ -37,13 +37,17 @@
                       <ul class="list-inline inline-block">
                         <% past_work_type.past_works.where(visible: true).order(id: :desc).limit(7).each_with_index do |past_work, index| %>
                           <li class="<%= 'hidden-xs' if index >= 4 %> <%= 'hidden-md' if index >= 6 %>">
-                            <%= link_to(past_work_type_past_work_path(past_work_type, past_work)) do %>
-                              <%= image_tag past_work.image(:thumb), class: 'small-thumb' %>
+                            <%= link_to(past_work_type_past_work_path(past_work_type, past_work),
+                                        title: past_work.past_work_translates.find_by_locale_id(session[:locale_id]).name) do %>
+                              <%= image_tag past_work.image(:thumb), class: 'small-thumb',
+                                            alt: past_work.past_work_translates.find_by_locale_id(session[:locale_id]).name %>
                             <% end %>
                           </li>
                         <% end %>
                       </ul>
-                      <%= link_to_if(past_work_type.past_works.size > 0, "#{t('more')}...", past_work_type_past_works_path(past_work_type), class: 'more') do %>
+                      <%= link_to_if(past_work_type.past_works.size > 0, "#{t('more')}...",
+                                     past_work_type_past_works_path(past_work_type), class: 'more',
+                                     title: past_work_type.past_work_type_translate.name) do %>
                         <h3 class="text-muted">
                           <i class="fa fa-frown-o"></i><%= t('no_content') %>
                         </h3>
