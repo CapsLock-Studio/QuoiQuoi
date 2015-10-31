@@ -549,6 +549,8 @@ en:
   more: "More"
   no_content: "Sorry, no content"
   load_more: "Load more..."
+  read_more: "Read more..."
+  read_less: "Close"
   past_works: "Past Works"
   completion_date: "Completion Date"
   other_past_works: "Other past works"

@@ -10,3 +10,4 @@
 //= require unify/plugins/bootstrap-select/bootstrap-select.min.js
 //= require unify/plugins/fuelux/wizard.js
 //= require unify/plugins/outdated-browser/outdatedBrowser.min.js
+//= require unify/plugins/readmore/readmore.min.js

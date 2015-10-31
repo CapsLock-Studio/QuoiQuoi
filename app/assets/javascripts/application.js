@@ -126,6 +126,7 @@
     initCartCalculate();
     initRefreshTuition();
     initLoadMore();
+    initReadMore();
     initCollapseBoxInMobile();
     scrolltotop.init();
     initAutoSendForm();

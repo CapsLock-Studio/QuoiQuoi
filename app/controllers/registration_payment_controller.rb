@@ -106,15 +106,16 @@ class RegistrationPaymentController < ApplicationController
 
   def alipay_resume
     registration_payment = duplicate_registration_payment(params[:id])
+    registration = registration_payment.registration
 
-    # Resend a order payment to AllPay
+    # # Resend a order payment to AllPay
     send_request_to_allpay(registration_payment.registration, 'Alipay', {
                                                        AlipayItemName: "#{t('course.name')}: #{registration.course.course_translates.find_by_locale_id(registration.locale_id).name}, #{t('registration.attendance')}: #{registration.attendance}",
                                                        AlipayItemCounts: '1',
                                                        AlipayItemPrice: "#{registration_payment.amount.to_i}",
-                                                       Email: registration_payment.registration.email,
-                                                       PhoneNo: registration_payment.registration.phone,
-                                                       UserName: registration_payment.registration.name
+                                                       Email: registration.email,
+                                                       PhoneNo: registration.phone,
+                                                       UserName: registration.name
                                                    })
   end
 
@@ -189,7 +190,7 @@ class RegistrationPaymentController < ApplicationController
       option.update_column(:registration_id, registration.id)
     end
 
-    registration_payment.registration.destroy
+    registration_payment.registration.delete
     registration_payment.registration_id = registration.id
     registration_payment.save!
 

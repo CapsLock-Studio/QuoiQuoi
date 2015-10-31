@@ -287,6 +287,14 @@ var initLoadMore = function() {
     });
 };
 
+var initReadMore = function() {
+    $('.article-collapse').readmore({
+        collapsedHeight: 260,
+        moreLink: $('#read-more-button').html(),
+        lessLink: $('#read-less-button').html()
+    });
+};
+
 var initCollapseBoxInMobile = function() {
     if (!window.matchMedia || (window.matchMedia("(max-width: 767px)").matches)) {
        $('.collapse-in-mobile').addClass('box-collapsed');
