@@ -94,16 +94,20 @@ class OrderPaymentController < ApplicationController
   end
 
   def alipay
+    item_names = @order.order_products.map{|order_products| "#{order_products.product.product_translates.find_by_locale_id(@order.locale_id).name}" }
+    item_counts = @order.order_products.map{|order_products| "#{order_products.quantity}" }
+    item_prices = @order.order_products.map{|order_products| "#{order_products.price.to_i}" }
+
+    if @order.shipping_fee! > 0
+      item_names << "#{t('shipping_fee')}"
+      item_counts << "1"
+      item_prices << "#{@order.shipping_fee!.to_i}"
+    end
+
     send_request_to_allpay(@order, 'Alipay', {
-                                    AlipayItemName: @order.order_products.map{|order_products|
-                                      "#{order_products.product.product_translates.find_by_locale_id(@order.locale_id).name}"
-                                    }.join('#'),
-                                    AlipayItemCounts: @order.order_products.map{|order_products|
-                                      "#{order_products.quantity}"
-                                    }.join('#'),
-                                    AlipayItemPrice: @order.order_products.map{|order_products|
-                                      "#{order_products.price.to_i}"
-                                    }.join('#'),
+                                    AlipayItemName: item_names.join('#'),
+                                    AlipayItemCounts: item_counts.join('#'),
+                                    AlipayItemPrice: item_prices.join('#'),
                                     Email: @order.user.email,
                                     PhoneNo: @order.phone,
                                     UserName: @order.name
@@ -112,18 +116,23 @@ class OrderPaymentController < ApplicationController
 
   def alipay_resume
     order_payment = duplicate_order_payment(params[:id])
+    order = order_payment.order
+
+    item_names = order.order_products.map{|order_products| "#{order_products.product.product_translates.find_by_locale_id(order.locale_id).name}" }
+    item_counts = order.order_products.map{|order_products| "#{order_products.quantity}" }
+    item_prices = order.order_products.map{|order_products| "#{order_products.price.to_i}" }
+
+    if order.shipping_fee! > 0
+      item_names << "#{t('shipping_fee')}"
+      item_counts << "1"
+      item_prices << "#{order.shipping_fee!.to_i}"
+    end
 
     # Resend a order payment to AllPay
     send_request_to_allpay(order_payment.order, 'Alipay', {
-                                                       AlipayItemName: order_payment.order.order_products.map{|order_products|
-                                                         "#{order_products.product.product_translates.find_by_locale_id(order_payment.order.locale_id).name}"
-                                                       }.join('#'),
-                                                       AlipayItemCounts: order_payment.order.order_products.map{|order_products|
-                                                         "#{order_products.quantity}"
-                                                       }.join('#'),
-                                                       AlipayItemPrice: order_payment.order.order_products.map{|order_products|
-                                                         "#{order_products.price.to_i}"
-                                                       }.join('#'),
+                                                       AlipayItemName: item_names.join('#'),
+                                                       AlipayItemCounts: item_counts.join('#'),
+                                                       AlipayItemPrice: item_prices.join('#'),
                                                        Email: order_payment.order.user.email,
                                                        PhoneNo: order_payment.order.phone,
                                                        UserName: order_payment.order.name
@@ -190,7 +199,7 @@ class OrderPaymentController < ApplicationController
       order_product.update_column(:order_id, order.id)
     end
 
-    order_payment.order.destroy
+    order_payment.order.delete
     order_payment.order_id = order.id
     order_payment.save!
 

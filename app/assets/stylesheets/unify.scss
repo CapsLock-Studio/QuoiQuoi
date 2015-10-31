@@ -857,6 +857,7 @@ a[data-toggle=offcanvas] {
 }
 
 .article-content {
+  overflow: hidden;
   img {
     display: block;
     max-width: 100%;
@@ -1132,6 +1133,12 @@ a[data-toggle=offcanvas] {
 
 .load-more {
   margin: 20px 0;
+}
+
+.full-main-image {
+  .col-md-6 {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 767px) {

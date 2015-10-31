@@ -574,6 +574,8 @@ zh-TW:
   more: "看更多"
   no_content: "現在沒有內容喔"
   load_more: "我想看更多..."
+  read_more: "看全部..."
+  read_less: "關閉"
   past_works: "過去的作品"
   completion_date: "完成時間"
   other_past_works: "其他作品"
