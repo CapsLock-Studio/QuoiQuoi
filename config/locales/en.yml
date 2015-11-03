@@ -468,13 +468,18 @@ en:
   remarks: 'Remarks'
   others: 'Others'
   payment_completed: 'Your payment has been completed.'
+  payment_already_completed: 'Your payment has already completed ~!'
   paypal_hint: ""
   webatm: 'Web ATM'
   atm: 'ATM'
   alipay: 'Ali PAY'
   paypal: 'Paypal'
   continue_on_paypal: 'Continue on Paypal'
+  continue_on_alipay: 'Continue on Alipay'
   continue_pay_page: 'Continue to pay'
+  click_to_continue_paying: 'Click the button bellow to continue your payment.'
+  cvs_tutorial: 'Check the tutorial about who to use %{cvs}'
+  atm_remind: 'Reminds you, recently the ATM cheating case keeps pouring in, in case cheats please do dial 165 for consultations.'
 
   outdated:
     title: 'Your browser is out-of-date!'
@@ -517,6 +522,8 @@ en:
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
+    report_button: 'Click the button below to report page.'
+    remind_text_for_registration: "Thank you for registering our course. Mind you, if you don't complete payment within %{days} days, the registration will be canceled automatically."
     custom_item_accept: 'We have accepted your customization order.'
     custom_item_decline: "We regret that we need to reject your order. The order was reviewed by the quoi quoi designer and our assessment is that the order is not well suited to our studio's production. <br/>Please note that in view of the quantity of orders we receive, we have to be selective in the orders we accept, and unfortunately we have to make difficult decisions.<br/><br/>Thank you for giving us the opportunity to consider your order and I hope the decision will not discourage you from considering quoi quoi studio's products as a potential outlet for your future shopping."
     suggestion_hint: 'please contact us by'

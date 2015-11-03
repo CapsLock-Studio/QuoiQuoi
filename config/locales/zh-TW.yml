@@ -475,6 +475,7 @@ zh-TW:
   enter: '確認'
   person: '人'
   payment_completed: '你的付款已經完成'
+  payment_already_completed: '你的付款在早些時候就已經完成囉 ~!'
   customizations: '客製化商品'
   personalized_products: '客製化商品'
   check_hint: '非常感謝您對quoi quoi 布知道的支持, 在此通知您所訂購的商品我們已經寄出去了!<br/>還需要請您估算大約送達時間注意記得收取商品<br/>如果您沒有收到我們寄出的商品, 請使用後面的信箱連結通知我們'
@@ -499,7 +500,11 @@ zh-TW:
   alipay: '支付寶'
   paypal: 'Paypal'
   continue_on_paypal: '繼續在Paypal上付款'
+  continue_on_alipay: '繼續在支付寶網站上付款'
   continue_pay_page: '前往付款頁面'
+  click_to_continue_paying: '請按下方按鈕繼續完成你的付款'
+  cvs_tutorial: '看看如何使用%{cvs}繳費'
+  atm_remind: '提醒您, 近來ATM詐騙案例頻傳, 如遇詐騙請撥打反詐騙電話165諮詢'
 
   outdated:
     title: '你的瀏覽器已經過時！'
@@ -542,6 +547,8 @@ zh-TW:
     cancel_registration: '非常感謝您報名quoi quoi布知道工作室的課程，您的報名已經取消'
     user_gift_hint: '非常感謝您購買quoi quoi布知道的禮券<br/>這封信件要通知你, 如果您想取得禮券, 請登入 [%{link}]<br/>%{url}<br/>以下是禮券的電子收據, 可以當作本訂單的付款憑證'
     dear: '親愛的客戶'
+    report_button: '回報請按下方按鈕'
+    remind_text_for_registration: '感謝您報名了我們的課程，提醒您，在%{days}天內未完成付款系統將自動取消報名！'
     custom_item_accept: '我們很樂意接受您的客製化訂單'
     custom_item_decline: '真的非常抱歉! 經過我們設計師的仔細評估後, 因為訂單的數量過多, 我們必須很沈痛的拒絕您的訂單<br/>感謝您願意給我們這個機會, 希望這次的決定不會讓您感到不愉快<br/>也希望未來我們仍然可以繼續為您服務'
     suggestion_hint: '有任何建議請寄 '
