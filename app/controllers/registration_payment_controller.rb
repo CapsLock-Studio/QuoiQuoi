@@ -1,5 +1,6 @@
 class RegistrationPaymentController < ApplicationController
   before_action :set_registration, except: [:resume, :webatm_resume, :alipay_resume]
+  before_action :check_payment_is_completed, only: [:resume, :webatm_resume, :alipay_resume]
   before_action :set_breadcrumb
 
   def remittance
@@ -10,7 +11,7 @@ class RegistrationPaymentController < ApplicationController
     @registration.create_registration_payment(
         {
             amount: @registration.subtotal,
-            expire_time: Date.today + 7.days
+            expire_time: (Time.zone.now + 7.days).end_of_day
         })
 
     redirect_to registration_path(@registration)
@@ -195,5 +196,17 @@ class RegistrationPaymentController < ApplicationController
     registration_payment.save!
 
     registration_payment
+  end
+
+  def check_payment_is_completed
+    # Check if the payment is completed or not, stop resume payment action.
+    registration_payment = RegistrationPayment.find(params[:id])
+    if registration_payment.completed?
+      flash[:icon] = 'fa-lightbulb-o'
+      flash[:status] = 'success'
+      flash[:message] = t('payment_already_completed')
+
+      redirect_to registration_path(registration_payment.registration)
+    end
   end
 end

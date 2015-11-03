@@ -1,5 +1,6 @@
 class OrderPaymentController < ApplicationController
   before_action :checkout, except: [:resume, :webatm_resume, :alipay_resume]
+  before_action :check_payment_is_completed, only: [:resume, :alipay_resume, :webatm_resume]
   before_action :set_breadcrumb
 
   def remittance
@@ -204,5 +205,17 @@ class OrderPaymentController < ApplicationController
     order_payment.save!
 
     order_payment
+  end
+
+  def check_payment_is_completed
+    # Check if the payment is completed or not, stop resume payment action.
+    order_payment = OrderPayment.find(params[:id])
+    if order_payment.completed?
+      flash[:icon] = 'fa-lightbulb-o'
+      flash[:status] = 'success'
+      flash[:message] = t('payment_already_completed')
+
+      redirect_to order_path(order_payment.order)
+    end
   end
 end
