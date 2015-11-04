@@ -54,7 +54,7 @@ gem 'activerecord-session_store'
 gem 'sqlite3'
 gem 'recaptcha'
 gem 'sanitize'
-gem 'mailgun_rails'
+# gem 'mailgun_rails'
 gem 'sidekiq'
 
 gem 'route_translator'
