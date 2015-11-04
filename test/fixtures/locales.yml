@@ -1,7 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  lang: MyString
+  lang: zh-TW
+  name: 中文
+  currency: TWD
 
 two:
-  lang: MyString
+  lang: en
+  name: 英文
+  currency: USD
