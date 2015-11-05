@@ -30,19 +30,31 @@ class OrderPaymentController < ApplicationController
   end
 
   def resume
-    order = duplicate_order_payment(params[:id]).order
+    order_payment = OrderPayment.find(params[:id])
 
-    case order.payment_method
-      when order.payment_method['cvs_family']
-        send_request_to_allpay(order, 'CVS', {
-                                         ChooseSubPayment: 'FAMILY',
-                                     })
-      when order.payment_method['cvs_ibon']
-        send_request_to_allpay(order, 'CVS', {
-                                         ChooseSubPayment: 'IBON',
-                                     })
-      when order.payment_method['atm']
-        send_request_to_allpay(order, 'ATM')
+    case order_payment.order.payment_method
+      when order_payment.order.payment_method['cvs_family']
+        if order_payment.payment_no.nil?
+          send_request_to_allpay(duplicate_order_payment(order_payment.id).order, 'CVS', {
+                                          ChooseSubPayment: 'FAMILY',
+                                      })
+        else
+          render json: 'ERROR!!'
+        end
+      when order_payment.order.payment_method['cvs_ibon']
+        if order_payment.payment_no.nil?
+          send_request_to_allpay(duplicate_order_payment(order_payment.id).order, 'CVS', {
+                                          ChooseSubPayment: 'IBON',
+                                      })
+        else
+          render json: 'ERROR!!'
+        end
+      when order_payment.order.payment_method['atm']
+        if order_payment.bankcode.nil? || order_payment.account.nil?
+          send_request_to_allpay(duplicate_order_payment(order_payment.id).order, 'ATM')
+        else
+          render json: 'ERROR!!'
+        end
       else
         render json: 'ERROR!!'
     end
