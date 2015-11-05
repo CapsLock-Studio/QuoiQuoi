@@ -30,19 +30,31 @@ class RegistrationPaymentController < ApplicationController
   end
 
   def resume
-    registration = duplicate_registration_payment(params[:id]).registration
+    registration_payment = RegistrationPayment.find(params[:id])
 
-    case registration.payment_method
-      when registration.payment_method['cvs_family']
-        send_request_to_allpay(registration, 'CVS', {
-                                        ChooseSubPayment: 'FAMILY',
-                                    })
-      when registration.payment_method['cvs_ibon']
-        send_request_to_allpay(registration, 'CVS', {
-                                        ChooseSubPayment: 'IBON',
-                                    })
-      when registration.payment_method['atm']
-        send_request_to_allpay(registration, 'ATM')
+    case registration_payment.registration.payment_method
+      when registration_payment.registration.payment_method['cvs_family']
+        if registration_payment.payment_no.nil?
+          send_request_to_allpay(duplicate_registration_payment(registration_payment.id).registration, 'CVS', {
+                                                                                                         ChooseSubPayment: 'FAMILY',
+                                                                                                     })
+        else
+          render json: 'ERROR!!'
+        end
+      when registration_payment.registration.payment_method['cvs_ibon']
+        if registration_payment.payment_no.nil?
+          send_request_to_allpay(duplicate_registration_payment(registration_payment.id).registration, 'CVS', {
+                                                                                                         ChooseSubPayment: 'IBON',
+                                                                                                     })
+        else
+          render json: 'ERROR!!'
+        end
+      when registration_payment.registration.payment_method['atm']
+        if registration_payment.account.nil? || registration_payment.account.nil?
+          send_request_to_allpay(duplicate_registration_payment(registration_payment.id).registration, 'ATM')
+        else
+          render json: 'ERROR!!'
+        end
       else
         render json: 'ERROR!!'
     end
