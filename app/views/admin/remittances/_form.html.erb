@@ -9,14 +9,14 @@
     </div>
   </div>
   <div class="box-content">
-    <%= form_for(@remittance, url: admin_remittances_path, html: { class: 'form validate-form' }) do |f| %>
+    <%= form_tag(admin_remittances_path, method: :put, html: { class: 'form validate-form' }) do %>
       <div class="row">
-        <%= f.fields_for :remittance_translates do |builder| %>
+        <% Locale.all.order(id: :desc).each_with_index do |locale, index| %>
           <div class="col-sm-6">
             <div class="box">
               <div class="box-header">
                 <div class="title">
-                  <%= @remittance.remittance_translates[builder.index].locale.name %>
+                  <%= locale.name %>
                   <small style="margin-left:10px;">
                     <span class="label label-danger">不可留空</span>
                   </small>
@@ -27,43 +27,41 @@
               </div>
               <div class="box-content">
                 <div class="form-group">
-                  <%= builder.label :name, '帳戶名稱' %>
+                  <label>帳戶名稱</label>
                   <div class="controls">
-                    <%= builder.text_field :name, class: 'form-control',
-                                           placeholder: '請輸入名稱', data: {'rule-required' => true} %>
+                    <%= text_field_tag "remittance[#{index}][name]", $redis.get("remittance:locale:#{locale.id}:name"), class: 'form-control',
+                                       placeholder: '請輸入名稱', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :code, '銀行代碼(國內: Short Code / 國外: Swift Code)' %>
+                  <label>銀行代碼(國內: Short Code / 國外: Swift Code)</label>
                   <div class="controls">
-                    <%= builder.text_field :code, class: 'form-control', placeholder: 'Short Code / Swift Code',
-                                           data: {'rule-required' => true} %>
+                    <%= text_field_tag "remittance[#{index}][code]", $redis.get("remittance:locale:#{locale.id}:code"), class: 'form-control',
+                                       placeholder: 'Short Code / Swift Code', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :account, '收款帳戶全部號碼(Full A/C No.)' %>
+                  <label>收款帳戶全部號碼(Full A/C No.)</label>
                   <div class="controls">
-                    <%= builder.text_field :account, class: 'form-control', placeholder: '請輸入帳號',
-                                           data: {'rule-required' => true} %>
+                    <%= text_field_tag "remittance[#{index}][account]", $redis.get("remittance:locale:#{locale.id}:account"), class: 'form-control',
+                                       placeholder: '請輸入帳號', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :bank_name do %>
-                    銀行名稱 - <span class="label label-danger">英文網站(海外匯款)不可留空</span>
-                  <% end %>
+                  <label>銀行名稱</label>
                   <div class="controls">
-                    <%= builder.text_field :bank_name, class: 'form-control', placeholder: '海外匯款不可留空' %>
+                    <%= text_field_tag "remittance[#{index}][bank_name]", $redis.get("remittance:locale:#{locale.id}:bank_name"), class: 'form-control',
+                                       placeholder: '請輸入名稱', data: {'rule-required' => true} %>
                   </div>
                 </div>
                 <div class="form-group">
-                  <%= builder.label :bank_address do %>
-                    銀行地址 - <span class="label label-danger">英文網站(海外匯款)不可留空</span>
-                  <% end %>
+                  <label>銀行地址 - <span class="label label-danger">英文網站(海外匯款)不可留空</span></label>
                   <div class="controls">
-                    <%= builder.text_field :bank_address, class: 'form-control', placeholder: '海外匯款不可留空' %>
+                    <%= text_field_tag "remittance[#{index}][bank_address]", $redis.get("remittance:locale:#{locale.id}:bank_address"), class: 'form-control',
+                                       placeholder: '請輸入名稱', data: {'rule-required' => true} %>
                   </div>
                 </div>
-                <%= builder.hidden_field :locale_id %>
+                <%= hidden_field_tag "remittance[#{index}][locale_id]", locale.id %>
               </div>
             </div>
           </div>
@@ -73,10 +71,10 @@
         <div class="col-sm-12">
           <div class="pull-right">
             <%= link_to '取消', admin_remittances_path, class: 'btn btn-lg' %>
-            <%= f.button(class: 'btn btn-primary btn-lg') do %>
+            <button type="submit" class="btn btn-primary btn-lg">
               <i class="icon-save"></i>
               儲存
-            <% end %>
+            </button>
           </div>
         </div>
       </div>
