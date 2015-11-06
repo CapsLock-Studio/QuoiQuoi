@@ -427,6 +427,10 @@ en:
   report_remittance_hint: 'Thank you for shopping on quoi quoi! We will deal your report as soon as possible.'
   report_remittance_warning: 'So sorry. There was already a report waiting confirmed, please wait us checking.'
   completed_payment_hint: 'Thank you for shopping on quoi quoi. Other products and courses?'
+  registration_complete_hint: 'Thank you! Registration has been completed. Please note that registration will automatically canceled if payment was expired.'
+  registration_cancel: 'Your registration was canceled, Thank you for your cooperation.'
+  order_complete_hint: 'Thank you! Order has been completed. Please note that order will automatically canceled if payment was expired.'
+  order_cancel: 'Your order was canceled, Thank you for your cooperation.'
   keep_shopping: 'Keep shopping'
   other_courses: 'Other courses'
   beneficiary_information: 'Beneficiary information'
@@ -479,7 +483,10 @@ en:
   continue_pay_page: 'Continue to pay'
   click_to_continue_paying: 'Click the button bellow to continue your payment.'
   cvs_tutorial: 'Check the tutorial about who to use %{cvs}'
+  cvs_tutorial_link: 'Tutorials for pay at convenience store'
   atm_remind: 'Reminds you, recently the ATM cheating case keeps pouring in, in case cheats please do dial 165 for consultations.'
+  atm_remind_link: 'National police agency'
+  registration_detail: 'Detail register information'
 
   outdated:
     title: 'Your browser is out-of-date!'
@@ -489,6 +496,19 @@ en:
   view_cart: 'View cart'
 
   mailer:
+    subject:
+      payment:
+        remittance: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
+        cvs: "[quoi quoi studio] Remind of paying at convenience store (Please don't reply this mail)"
+        online: "[quoi quoi studio] Remind of completing you payment (Please don't reply this mail)"
+        atm: "[quoi quoi studio] Remind of using ATM to complete you payment (Please don't reply this mail)"
+      registration: "[quoi quoi studio] Payment confirmation of your handmade course (Please don't reply this mail)"
+      order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
+    text:
+      registration:
+        completed: "Thank you for registering our course. This email is to confirm that you have completed the payment. <br/>The following is your electronic receipt which is regarded as the payment voucher of this course."
+        remind: "Remind that you don't miss this course. The course time is at %{date}. We are expecting your come."
+
     success: 'Send mail success.'
     subject_for_order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
     subject_for_remittance_order: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"

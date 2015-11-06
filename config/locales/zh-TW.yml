@@ -454,6 +454,10 @@ zh-TW:
   report_remittance_hint: '非常感謝您! 我們會儘速確認您的匯款是否無誤'
   report_remittance_warning: '非常抱歉! 目前已有等待確認中匯款, 請等待審核結果'
   completed_payment_hint: '非常感謝您的愛戴, 希望您也能夠喜歡我們其他的商品與課程, 謝謝!'
+  registration_complete_hint: '謝謝你！報名已經完成。請你注意繳費期限以免報名自動取消喔！'
+  registration_cancel: '你的報名已經取消, 謝謝你的合作!'
+  order_complete_hint: '謝謝你！訂單已經成立。請你注意繳費期限以免訂單自動取消喔！'
+  order_cancel: '你的訂單已經取消, 謝謝你的合作!'
   keep_shopping: '繼續逛逛商店'
   other_courses: '看其他課程'
   beneficiary_information: '店家匯款資訊'
@@ -504,7 +508,10 @@ zh-TW:
   continue_pay_page: '前往付款頁面'
   click_to_continue_paying: '請按下方按鈕繼續完成你的付款'
   cvs_tutorial: '看看如何使用%{cvs}繳費'
+  cvs_tutorial_link: '超商代碼繳費教學'
   atm_remind: '提醒您, 近來ATM詐騙案例頻傳, 如遇詐騙請撥打反詐騙電話165諮詢'
+  atm_remind_link: '內政部警政署反詐騙網站'
+  registration_detail: '詳細報名資訊'
 
   outdated:
     title: '你的瀏覽器已經過時！'
@@ -514,13 +521,26 @@ zh-TW:
   view_cart: '查看購物車'
 
   mailer:
+    subject:
+      payment:
+        remittance: '[quoi quoi 布知道] 匯款提醒通知信 (系統自動寄出請勿回覆)'
+        cvs: '[quoi quoi 布知道] 超商付款提醒通知信 (系統自動寄出請勿回覆)'
+        online: '[quoi quoi 布知道] 線上付款提醒通知信 (系統自動寄出請勿回覆)'
+        atm: '[quoi quoi 布知道] ATM付款提醒通知信 (系統自動寄出請勿回覆)'
+      registration: '[quoi quoi 布知道] 課程報名付款完成確認信 (系統自動寄出請勿回覆)'
+      order: '[quoi quoi 布知道] 付款完成確認信 (系統自動寄出請勿回覆)'
+    text:
+      registration:
+        completed:  '感謝您報名了我們的課程，您已經完成了付款程序了，您的報名編號是 %{link} 。'
+        remind: '在此再次提醒您上課的時間是 %{date}，期盼與您的相見。'
+
     success: '送信成功'
     subject_for_order: '[quoi quoi 布知道] 付款完成確認信 (系統自動寄出請勿回覆)'
     subject_for_remittance_order: '[quoi quoi 布知道] 訂購匯款提醒通知信 (系統自動寄出請勿回覆)'
     subject_for_re_remittance: '[quoi quoi 布知道] 抱歉！你的匯款資料似乎有問題 (系統自動寄出請勿回覆)'
     subject_for_deliver_order: '[quoi quoi 布知道] 你好！您訂購的商品已經寄出 (系統自動寄出請勿回覆)'
     subject_for_accpet_custom_order: '[quoi quoi 布知道] 接受客製化通知信'
-    subject_for_decline_custom_order: '[quoi quoi 布知道] 非常抱歉，無法接受你的客製化訂單'
+    subject_for_decline_cust_order: '[quoi quoi 布知道] 非常抱歉，無法接受你的客製化訂單'
     subject_for_remittance_registration: '[quoi quoi 布知道] 課程匯款提醒通知信 (系統自動寄出請勿回覆)'
     subject_for_registration: '[quoi quoi 布知道] 課程報名付款完成確認信 (系統自動寄出請勿回覆)'
     subject_for_cancel_registration: '[quoi quoi 布知道] 非常抱歉! 您報名的課程已經取消了'
