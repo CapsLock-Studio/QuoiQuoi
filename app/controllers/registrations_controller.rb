@@ -84,7 +84,7 @@ class RegistrationsController < ApplicationController
   # Receive CVS and ATM result here.
   def update
     flash.now[:icon] = 'fa-smile-o'
-    flash.now[:message] = '謝謝你！報名已經完成。請你注意繳費期限以免報名自動取消喔！'
+    flash.now[:message] = t('registration_complete_hint')
     flash.now[:status] = 'success'
 
     @registration = Registration.find(params['MerchantTradeNo'].delete('R'))
@@ -107,18 +107,26 @@ class RegistrationsController < ApplicationController
 
         @registration.reload
 
+        if @registration.atm?
+          subject = t('mailer.subject.payment.atm')
+        else
+          subject = t('mailer.subject.payment.cvs')
+        end
+
+        RegistrationMailer.remind_to_pay(@registration.id, subject).deliver_later
+
         render action: :show
       else
         render json: 'Not support payment method.'
       end
     else
-      render json: 'Order not found.'
+      render json: 'Registration not found.'
     end
   end
 
   def show
     if @registration.empty_expire_time?
-      redirect_to controller: :registration_payment, action: :resume, id: @registration.registration_payment
+      redirect_to controller: :registration_payment, action: :resume, id: @registration.id
     else
       add_breadcrumb t('home'), :root_path
       add_breadcrumb t('registration.all')
@@ -190,15 +198,19 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('registration.all'), :registrations_path
     add_breadcrumb t('detail')
 
-    unless @registration.registration_payment.cancel?
+    if !@registration.registration_payment.completed? && !@registration.registration_payment.cancel?
       flash.now[:icon] = 'fa-user-times'
-      flash.now[:message] = '你的報名已經取消, 謝謝你的合作!'
+      flash.now[:message] = t('registration_cancel')
       flash.now[:status] = 'success'
 
       @registration.registration_payment.cancel = true
       @registration.registration_payment.cancel_reason = params[:cancel_reason]
       @registration.registration_payment.cancel_time = Time.now
       @registration.registration_payment.save!
+    else
+      flash.now[:icon] = 'fa-lightbulb-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_already_completed')
     end
 
     render action: :show
@@ -213,7 +225,7 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('registration.all'), :registrations_path
     add_breadcrumb t('detail')
 
-    @registration = Registration.find(params['MerchantTradeNo'].delete('R'))
+    @registration = Registration.find(params['MerchantTradeNo'].delete('R').split('t')[0])
 
     # Not really update order entity, just show the newest status.
     @registration.registration_payment.trade_no = params['TradeNo']
@@ -221,6 +233,8 @@ class RegistrationsController < ApplicationController
     @registration.registration_payment.payment_time = params['PaymentDate']
     @registration.registration_payment.completed =  true
     @registration.registration_payment.completed_time = Time.now
+
+    @registration.registration_payment.save!
 
     render 'registrations/show'
   end
