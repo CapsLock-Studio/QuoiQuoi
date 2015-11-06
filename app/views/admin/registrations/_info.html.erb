@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header box-header-small">
     <div class="title">
-      報名相關資訊&nbsp;
+      報名相關資訊&nbsp;<strong>報名編號: <%= registration.id %></strong>&nbsp;
       <% if registration.registration_payment && registration.registration_payment.cancel? %>
         <span class="label label-inverse">已取消</span>
         <small class="text-muted">
