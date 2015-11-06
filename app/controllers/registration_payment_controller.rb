@@ -5,7 +5,7 @@ class RegistrationPaymentController < ApplicationController
 
   def remittance
     flash[:icon] = 'fa-smile-o'
-    flash[:message] = '謝謝你！訂單已經成立。請你注意繳費期限以免訂單自動取消喔！'
+    flash[:message] = t('registration_complete_hint')
     flash[:status] = 'success'
 
     @registration.create_registration_payment(
@@ -13,6 +13,9 @@ class RegistrationPaymentController < ApplicationController
             amount: @registration.subtotal,
             expire_time: (Time.zone.now + 7.days).end_of_day
         })
+
+    # Send email to remind customer take the payment
+    RegistrationMailer.remind_to_pay(@registration.id, t('mailer.subject.payment.remittance')).deliver_later
 
     redirect_to registration_path(@registration)
   end
@@ -30,28 +33,28 @@ class RegistrationPaymentController < ApplicationController
   end
 
   def resume
-    registration_payment = RegistrationPayment.find(params[:id])
+    registration = Registration.find(params[:id])
 
-    case registration_payment.registration.payment_method
-      when registration_payment.registration.payment_method['cvs_family']
-        if registration_payment.payment_no.nil?
-          send_request_to_allpay(duplicate_registration_payment(registration_payment.id).registration, 'CVS', {
-                                                                                                         ChooseSubPayment: 'FAMILY',
-                                                                                                     })
+    case registration.payment_method
+      when registration.payment_method['cvs_family']
+        if registration.registration_payment.payment_no.nil?
+          send_request_to_allpay(registration, 'CVS', {
+                                                 ChooseSubPayment: 'FAMILY',
+                                             })
         else
           render json: 'ERROR!!'
         end
-      when registration_payment.registration.payment_method['cvs_ibon']
-        if registration_payment.payment_no.nil?
-          send_request_to_allpay(duplicate_registration_payment(registration_payment.id).registration, 'CVS', {
-                                                                                                         ChooseSubPayment: 'IBON',
-                                                                                                     })
+      when registration.payment_method['cvs_ibon']
+        if registration.registration_payment.payment_no.nil?
+          send_request_to_allpay(registration, 'CVS', {
+                                                 ChooseSubPayment: 'IBON',
+                                             })
         else
           render json: 'ERROR!!'
         end
-      when registration_payment.registration.payment_method['atm']
-        if registration_payment.account.nil? || registration_payment.account.nil?
-          send_request_to_allpay(duplicate_registration_payment(registration_payment.id).registration, 'ATM')
+      when registration.payment_method['atm']
+        if registration.registration_payment.account.nil? || registration.registration_payment.account.nil?
+          send_request_to_allpay(registration, 'ATM')
         else
           render json: 'ERROR!!'
         end
@@ -84,6 +87,9 @@ class RegistrationPaymentController < ApplicationController
             trade_time: paypal_response.timestamp
         })
 
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@registration.registration_payment)
+
     redirect_to paypal_response.redirect_uri
   end
 
@@ -91,15 +97,18 @@ class RegistrationPaymentController < ApplicationController
     send_request_to_allpay(@registration, 'WebATM', {
                                           OrderResultURL: return_registration_url(@registration)
                                       })
+
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@registration.registration_payment)
   end
 
   def webatm_resume
-    registration_payment = duplicate_registration_payment(params[:id])
+    registration = Registration.find(params[:id])
 
     # Resend a order payment to AllPay
-    send_request_to_allpay(registration_payment.registration, 'WebATM', {
-                                                       OrderResultURL: return_registration_url(registration_payment.registration)
-                                                   })
+    send_request_to_allpay(registration, 'WebATM', {
+                                           OrderResultURL: return_registration_url(registration)
+                                       })
   end
 
   def atm
@@ -115,17 +124,19 @@ class RegistrationPaymentController < ApplicationController
                                           PhoneNo: @registration.phone,
                                           UserName: @registration.name
                                       })
+
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@registration.registration_payment)
   end
 
   def alipay_resume
-    registration_payment = duplicate_registration_payment(params[:id])
-    registration = registration_payment.registration
+    registration = Registration.find(params[:id])
 
     # # Resend a order payment to AllPay
-    send_request_to_allpay(registration_payment.registration, 'Alipay', {
+    send_request_to_allpay(registration, 'Alipay', {
                                                        AlipayItemName: "#{t('course.name')}: #{registration.course.course_translates.find_by_locale_id(registration.locale_id).name}, #{t('registration.attendance')}: #{registration.attendance}",
                                                        AlipayItemCounts: '1',
-                                                       AlipayItemPrice: "#{registration_payment.amount.to_i}",
+                                                       AlipayItemPrice: "#{registration.subtotal.to_i}",
                                                        Email: registration.email,
                                                        PhoneNo: registration.phone,
                                                        UserName: registration.name
@@ -164,7 +175,7 @@ class RegistrationPaymentController < ApplicationController
   def send_request_to_allpay(registration, payment, options = nil)
     @form_data = {
         MerchantID: AllPay.merchant_id,
-        MerchantTradeNo: "R#{registration.id}",
+        MerchantTradeNo: "R#{registration.id}t#{Time.now.to_i}",
         MerchantTradeDate: registration.checkout_time.strftime('%Y/%m/%d %H:%I:%S'),
         PaymentType: 'aio',
         TotalAmount: registration.subtotal.to_i,
@@ -182,43 +193,25 @@ class RegistrationPaymentController < ApplicationController
     # render json: @form_data
 
     # Record payment information
-    registration.create_registration_payment(
-        {
-            amount: registration.subtotal
-        })
+    if registration.registration_payment.nil?
+      registration.create_registration_payment(
+          {
+              amount: registration.subtotal
+          })
+    end
 
     render template: 'order_payment/all_pay_form'
   end
 
-  def duplicate_registration_payment(id)
-    # We need to resend the order again but the previous MerchantTradeNo has exists
-    # So duplicate the entry then send it to AllPay.
-    registration_payment = RegistrationPayment.find(id)
-
-    registration = registration_payment.registration.dup
-    registration.save!
-
-    # Set order_products to newest one
-    registration_payment.registration.registration_options.each do |option|
-      option.update_column(:registration_id, registration.id)
-    end
-
-    registration_payment.registration.delete
-    registration_payment.registration_id = registration.id
-    registration_payment.save!
-
-    registration_payment
-  end
-
   def check_payment_is_completed
     # Check if the payment is completed or not, stop resume payment action.
-    registration_payment = RegistrationPayment.find(params[:id])
-    if registration_payment.completed?
+    registration = Registration.find(params[:id])
+    if registration.registration_payment.completed?
       flash[:icon] = 'fa-lightbulb-o'
       flash[:status] = 'success'
       flash[:message] = t('payment_already_completed')
 
-      redirect_to registration_path(registration_payment.registration)
+      redirect_to registration_path(registration)
     end
   end
 end
