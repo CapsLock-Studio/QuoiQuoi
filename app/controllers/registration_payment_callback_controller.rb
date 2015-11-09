@@ -5,6 +5,7 @@ class RegistrationPaymentCallbackController < ApplicationController
 
   end
 
+  # Allpay offline trade complete post back
   def allpay_complete
 
     # RtnCode's value 1 means the transaction was success.
@@ -19,6 +20,8 @@ class RegistrationPaymentCallbackController < ApplicationController
       registration_payment.completed_time = Time.now
       registration_payment.save!
 
+      RegistrationMailer.completed_confirmation(registration_payment.registration_id).deliver_later
+
       render text: '1|OK'
     else
 
@@ -27,6 +30,7 @@ class RegistrationPaymentCallbackController < ApplicationController
     end
   end
 
+  # Paypal trade complete
   def paypal
     registration_payment = RegistrationPayment.find_by_token!(params[:token])
 
@@ -51,6 +55,8 @@ class RegistrationPaymentCallbackController < ApplicationController
     flash[:icon] = 'fa-smile-o'
     flash[:status] = 'success'
     flash[:message] = t('payment_completed')
+
+    RegistrationMailer.completed_confirmation(registration_payment.registration).deliver_later
 
     redirect_to registration_path(registration_payment.registration)
   end

@@ -43,6 +43,11 @@ class Admin::CoursesController < AdminController
     if @course.update_columns(status_params)
       flash[:status] = status_params
       flash[:id] = @course.id
+
+      if @course.canceled?
+        CourseMailer.cancel_notification(@course.id)
+      end
+
       redirect_to :back
     else
       render json: @course.errors

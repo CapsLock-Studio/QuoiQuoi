@@ -1,0 +1,88 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" background="<%= image_url(@registration.course.image.url(:medium)) %>" bgcolor="#3b464e" style="background-image:url(<%= image_url(@registration.course.image.url(:medium)) %>);background-repeat:no-repeat;background-size:cover;padding: 120px 0;" class="100padleftright80x40">
+  <tr>
+    <td align="center" style="font-size:14px; color:#ffffff;">
+      <center>
+        <table border="0" cellspacing="0" cellpadding="0" width="360" class="100p">
+          <tr>
+            <td align="center" bgcolor="#EFEFEF" style="color:#585F69;font-size:22px;background-color: rgba(255,255,255,0.9) !important;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td height="10">
+                  </td>
+                </tr>
+              </table>
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                <a href="<%= month_course_url(@registration.course_id, month: @registration.course.time.strftime('%m').to_i) %>" style="color:#8A929D;">
+                  <%= @registration.course.course_translates.find_by_locale_id(@registration.locale_id).name %>&nbsp;<img alt="fa-info" width="18" height="18" border="0" style="width:18px;height:18px;" src="<%= image_url('fa-info-circle.png') %>"/>
+                </a><br />
+                <strong style="color:#000000;font-size:18px;">
+                  <%= "#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[@registration.course.time.strftime('%u').to_i - 1]})" %>
+                </strong><br/>
+                <strong style="color:#000000;font-size:18px;">
+                  <%= @registration.course.course_translates.find_by_locale_id(@registration.locale_id).teacher %>
+                </strong>
+              </font>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td height="10">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 70px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;color:#000000;"><%= t('mailer.dear_student') %></span><br />
+        <span style="font-size:14px;">
+          <%== t('mailer.text.registration.remind_before_course_start', name: "<a href=\"#{month_course_url(@registration.course_id, month: @registration.course.time.strftime('%m').to_i)}\" style=\"color:#8A929D;\">#{@registration.course.course_translates.find_by_locale_id(@registration.locale_id).name}&nbsp;<img alt=\"fa-info\" width=\"14\" height=\"14\" border=\"0\" style=\"width:14px;height:14px;\" src=\"#{image_url('fa-info-circle.png')}\"/></a>") %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0px 70px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          <%== t('mailer.text.registration.remind', date: "<strong style=\"text-decoration:underline;color:#000000;\">#{@registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(@registration.course.time + @registration.course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[@registration.course.time.strftime('%u').to_i - 1]})</strong>") %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 70px;">
+  <tr>
+    <td>
+      <a href="<%= registration_url(@registration.id) %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15" bgcolor="#72C8E6">
+          <tr>
+            <td align="center" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                <%= t('registration_detail') %>
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 70px;">
+  <tr>
+    <td style="font-size:20px;">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= t('sincerely') %>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>

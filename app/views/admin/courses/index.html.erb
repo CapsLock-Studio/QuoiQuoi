@@ -62,7 +62,7 @@
                 </td>
                 <td>
                   <div class="preview">
-                    <%= image_tag course.image.url(:thumb), style: 'height:50px;' %>
+                    <%= image_tag course.image.url(:thumb), style: 'height:50px;', alt: '' %>
                   </div>
                 </td>
                 <td>
@@ -120,7 +120,7 @@
                       </span>
                     <% else %>
                       <%= link_to('取消', status_admin_course_path(course, canceled: true),
-                                  class: 'btn btn-default', method: :put) %>
+                                  class: 'btn btn-default', method: :put, data: {confirm: '你確定要取消嗎？'}) %>
                     <% end %>
                     <%= link_to(edit_admin_course_path(course), class: 'btn btn-md') do %>
                       <i class='icon-pencil'></i>

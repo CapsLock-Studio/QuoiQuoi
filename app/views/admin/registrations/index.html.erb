@@ -106,13 +106,13 @@
                       <%= link_to_if(registration.registration_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
                         <%= link_to('取消報名',
                                     admin_registration_payment_path(registration.registration_payment),
-                                    class: 'btn btn-default', data: {toggle: 'modal', target: '#cancel-dialog'}
+                                    class: "btn btn-default #{'disabled' if registration.course.canceled?}", data: {toggle: 'modal', target: '#cancel-dialog'}
                             ) %>
                       <% end %>
                       <%= link_to(admin_registration_path(registration),
                                   class: "btn btn-danger #{'disabled' unless (!registration.registration_payment.completed? ||
                                       (registration.registration_payment.completed? && registration.registration_payment.refunded?)
-                                  ) && registration.registration_payment.cancel?}",
+                                  ) && (registration.registration_payment.cancel? || (registration.course.canceled?))}",
                                   data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) do %>
                         <i class="icon-trash"></i>
                       <% end %>

@@ -15,6 +15,7 @@ class Admin::RegistrationsController < AdminController
   def show
     add_breadcrumb '首頁', :admin_root_path
     add_breadcrumb '所有課程', :admin_courses_path
+    add_breadcrumb '所有報名', admin_course_registrations_path(@registration.course_id)
     add_breadcrumb '報名詳細'
 
 

@@ -1,0 +1,171 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('order.no_s') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <a href="<%= order_url(order_payment.order) %>" style="color:#8A929D;"><%= "R#{order_payment.order_id}" %>&nbsp;<img alt="fa-info" width="14" height="14" border="0" style="width:14px;height:14px;" src="<%= image_url('fa-info-circle.png') %>"/></a>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('payment_method') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <%= t("#{order_payment.order.payment_method}") %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('amount_payable') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <%= number_to_currency(order_payment.amount) %>
+      </font>
+    </td>
+  </tr>
+  <% if order_payment.order.remittance? %>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('account_name') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{order_payment.order.locale_id}:name") %>
+        </font>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('account_number') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{order_payment.order.locale_id}:account") %>
+        </font>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('bank_code') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{order_payment.order.locale_id}:code") %>
+        </font>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('bank_name') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{order_payment.order.locale_id}:bank_name") %>
+        </font>
+      </td>
+    </tr>
+  <% end %>
+
+  <%# CVS payments %>
+  <% if order_payment.order.cvs_family? || order_payment.order.cvs_ibon? %>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('payment_no') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= order_payment.payment_no %>
+        </font>
+      </td>
+    </tr>
+  <% end %>
+
+  <% if order_payment.order.atm? %>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('bankcode') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= order_payment.bankcode %>
+        </font>
+      </td>
+    </tr>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('virtual_account') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= order_payment.account %>
+        </font>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('expire_time') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <%= (order_payment.expire_time ||= (order_payment.order.checkout_time + 3.days).end_of_day).strftime('%Y/%m/%d %H:%I') %>
+      </font>
+    </td>
+  </tr>
+</table>

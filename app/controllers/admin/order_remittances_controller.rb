@@ -25,6 +25,10 @@ class Admin::OrderRemittancesController < AdminController
   def edit
     add_breadcrumb '所有匯款紀錄', :admin_order_remittances_path
     add_breadcrumb '詳細匯款紀錄'
+
+    unless @remittance.confirm.nil?
+      redirect_to action: :show
+    end
   end
 
   def update

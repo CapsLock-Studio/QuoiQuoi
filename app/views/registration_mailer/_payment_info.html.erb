@@ -1,0 +1,171 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('registration.no_s') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <a href="<%= registration_url(registration_payment.registration) %>" style="color:#8A929D;"><%= "R#{registration_payment.registration_id}" %>&nbsp;<img alt="fa-info" width="14" height="14" border="0" style="width:14px;height:14px;" src="<%= image_url('fa-info-circle.png') %>"/></a>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('payment_method') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <%= t("#{registration_payment.registration.payment_method}") %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('amount_payable') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <%= number_to_currency(registration_payment.amount) %>
+      </font>
+    </td>
+  </tr>
+  <% if registration_payment.registration.remittance? %>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('account_name') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{registration_payment.registration.locale_id}:name") %>
+        </font>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('account_number') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{registration_payment.registration.locale_id}:account") %>
+        </font>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('bank_code') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{registration_payment.registration.locale_id}:code") %>
+        </font>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('bank_name') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= $redis.get("remittance:locale:#{registration_payment.registration.locale_id}:bank_name") %>
+        </font>
+      </td>
+    </tr>
+  <% end %>
+
+  <%# CVS payments %>
+  <% if registration_payment.registration.cvs_family? || registration_payment.registration.cvs_ibon? %>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('payment_no') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= registration_payment.payment_no %>
+        </font>
+      </td>
+    </tr>
+  <% end %>
+
+  <% if registration_payment.registration.atm? %>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('bankcode') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= registration_payment.bankcode %>
+        </font>
+      </td>
+    </tr>
+    <tr>
+      <td style="" valign="top" align="right" width="35%">
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+          <%= t('virtual_account') %>
+        </font>
+      </td>
+      <td width="20">
+      </td>
+      <td>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= registration_payment.account %>
+        </font>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td style="" valign="top" align="right" width="35%">
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#999999">
+        <%= t('expire_time') %>
+      </font>
+    </td>
+    <td width="20">
+    </td>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+        <%= (registration_payment.expire_time ||= (registration_payment.registration.checkout_time + 3.days).end_of_day).strftime('%Y/%m/%d %H:%I') %>
+      </font>
+    </td>
+  </tr>
+</table>

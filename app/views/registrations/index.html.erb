@@ -54,7 +54,11 @@
                     <%= t('status') %>
                   </div>
                   <div class="col-sm-4 col-xs-9 margin-bottom-xs-5">
-                    <% if registration.registration_payment.cancel? %>
+                    <% if registration.course.canceled? %>
+                      <span class="text-muted">
+                        <%= t('course.canceled') %>
+                      </span>
+                    <% elsif registration.registration_payment.cancel? %>
                       <span class="text-muted">
                         <%= t('registration.canceled') %>&nbsp;(<%= registration.registration_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>)
                       </span>

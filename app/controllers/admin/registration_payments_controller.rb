@@ -10,6 +10,8 @@ class Admin::RegistrationPaymentsController < AdminController
       @registration_payment.cancel = true
       @registration_payment.cancel_time = Time.now
       @registration_payment.cancel_reason = sanitize_params[:cancel_reason]
+
+      RegistrationMailer.cancel_notification(@registration_payment.registration_id).deliver_later
     elsif sanitize_params[:refund]
       @registration_payment.refunded = true
       @registration_payment.refunded_time = Time.now
@@ -20,7 +22,7 @@ class Admin::RegistrationPaymentsController < AdminController
     flash[:id] = @registration_payment.registration.id
     flash[:status] = sanitize_params
 
-    redirect_to :back
+    redirect_to admin_course_registrations_path(@registration_payment.registration.course_id, @registration_payment.registration_id)
   end
 
   private

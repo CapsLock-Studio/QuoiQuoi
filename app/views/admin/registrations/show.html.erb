@@ -35,7 +35,7 @@
       <%= link_to(admin_registration_path(@registration),
                   class: "btn btn-danger #{'disabled' unless (!@registration.registration_payment.completed? ||
                       (@registration.registration_payment.completed? && @registration.registration_payment.refunded?)
-                  ) && @registration.registration_payment.cancel?}",
+                  ) && (@registration.registration_payment.cancel? || @registration.course.canceled?)}",
                   data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) do %>
         <i class="icon-trash"></i>
         永久刪除

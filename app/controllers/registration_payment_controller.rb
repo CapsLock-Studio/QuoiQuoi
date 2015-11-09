@@ -11,7 +11,7 @@ class RegistrationPaymentController < ApplicationController
     @registration.create_registration_payment(
         {
             amount: @registration.subtotal,
-            expire_time: (Time.zone.now + 7.days).end_of_day
+            expire_time: (Time.now + 7.days).end_of_day
         })
 
     # Send email to remind customer take the payment
