@@ -272,10 +272,10 @@ QuoiQuoi::Application.routes.draw do
   localized do
 
     # For handling payment
-    get 'order_payment/:action(/:id)', controller: :order_payment
+    get 'order_payment/:action(/:id)', controller: :order_payment, as: 'order_payment'
     post 'order_payment_callback/allpay_complete' => 'order_payment_callback#allpay_complete'
 
-    get 'registration_payment/:action(/:id)', controller: :registration_payment
+    get 'registration_payment/:action(/:id)', controller: :registration_payment, as: 'registration_payment'
     post 'registration_payment_callback/allpay_complete' => 'registration_payment_callback#allpay_complete'
 
     # Special for paypal payment feedback
@@ -320,7 +320,15 @@ QuoiQuoi::Application.routes.draw do
     end
     resources :news
     resources :courses do
-      get 'calendar', on: :collection
+      member do
+        get '/month(/:month)', action: :show, constraints: {month: /\d{1,2}/}, as: 'month'
+        get 'past', action: :show
+      end
+      collection do
+        get 'calendar'
+        get '/month(/:month)', action: :index, constraints: {month: /\d{1,2}/}, as: 'month'
+        get 'past', action: :past_all
+      end
     end
     resources :reports
     resource :recruitments

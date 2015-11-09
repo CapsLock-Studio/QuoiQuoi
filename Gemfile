@@ -56,6 +56,7 @@ gem 'recaptcha'
 gem 'sanitize'
 # gem 'mailgun_rails'
 gem 'sidekiq'
+gem 'whenever', require: false
 
 gem 'route_translator'
 

@@ -69,9 +69,15 @@ QuoiQuoi::Application.configure do
   config.action_mailer.default_url_options = { :host => "quoiquoi.tw" }
   config.action_mailer.asset_host = "http://quoiquoi.tw"
   config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.mailgun_settings = {
-      api_key: '...',
-      domain: '...'
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              '...',
+      port:                 587,
+      domain:               'example.domain',
+      user_name:            'example@domain',
+      password:             '...',
+      authentication:       'plain',
+      enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

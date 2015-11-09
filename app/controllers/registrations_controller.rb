@@ -125,7 +125,7 @@ class RegistrationsController < ApplicationController
   end
 
   def show
-    if @registration.empty_expire_time?
+    if (!@registration.registration_payment.cancel? && !@registration.course.canceled?) && @registration.empty_expire_time?
       redirect_to controller: :registration_payment, action: :resume, id: @registration.id
     else
       add_breadcrumb t('home'), :root_path
@@ -216,6 +216,7 @@ class RegistrationsController < ApplicationController
     render action: :show
   end
 
+  # Allpay online trade complete.
   def return
     flash.now[:icon] = 'fa-smile-o'
     flash.now[:status] = 'success'
@@ -245,11 +246,13 @@ class RegistrationsController < ApplicationController
     #            Confirmed -> confirm: false
     # If there are any reports waiting be reviewed, do nothing and show message to customer
     if @registration.registration_payment.registration_remittance_reports.where(confirm: nil).size <= 0
-      @registration.registration_payment.registration_remittance_reports.create({
+      report = @registration.registration_payment.registration_remittance_reports.create({
                                                                amount: params[:amount],
                                                                account: params[:account],
                                                                date: params[:date]
                                                            })
+      RegistrationMailer.remind_remittance_report(report).deliver_later
+
       flash.now[:icon] = 'fa-smile-o'
       flash.now[:status] = 'success'
       flash.now[:message] = t('report_remittance_hint')

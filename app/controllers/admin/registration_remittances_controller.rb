@@ -25,6 +25,10 @@ class Admin::RegistrationRemittancesController < AdminController
   def edit
     add_breadcrumb '所有匯款紀錄', :admin_registration_remittances_path
     add_breadcrumb '詳細匯款紀錄'
+
+    unless @remittance.confirm.nil?
+      redirect_to action: :show
+    end
   end
 
   def update
@@ -37,6 +41,17 @@ class Admin::RegistrationRemittancesController < AdminController
       @remittance.registration_payment.completed_time = Time.now if @remittance.confirm
 
       @remittance.registration_payment.save!
+
+      # Status ==> Waiting   -> confirm: nil
+      #            Confirmed -> confirm: true
+      #            Confirmed -> confirm: false
+      unless @remittance.confirm.nil?
+        if @remittance.confirm?
+          RegistrationMailer.completed_confirmation(@remittance.registration_payment.registration.id).deliver_later
+        else
+          RegistrationMailer.request_remit_payment_again(@remittance).deliver_later
+        end
+      end
 
       flash[:confirmed] = @remittance.confirm
       flash[:id] = @remittance.id

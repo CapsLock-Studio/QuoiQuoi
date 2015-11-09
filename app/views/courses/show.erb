@@ -136,11 +136,11 @@
                       <span><%= t('course.canceled') %></span>
                     </a>
                   <% elsif @course.time > Time.now + 5.hours %>
-                    <% if @course.full? || @course.popular <= @course.registrations.collect{|registration| (!registration.canceled? && registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} %>
+                    <% if @course.full? || @course.register_full? %>
                       <a href="#" class="btn btn-orange btn-lg btn-block hover-effect" disabled="disabled">
                         <span><%= t('registration.full') %></span>
                       </a>
-                    <% elsif current_user && @registration.id && @registration.payment %>
+                    <% elsif @course.email_registered?((current_user.nil?)? 'guest' : current_user.email) %>
                       <button type="submit" class="btn btn-orange btn-lg btn-block hover-effect">
                         <span><%= t('had_registered') %></span>
                       </button>

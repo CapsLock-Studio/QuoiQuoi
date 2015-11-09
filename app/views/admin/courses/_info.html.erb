@@ -1,7 +1,9 @@
 <div class="box">
   <div class="box-header box-header-small">
     <div class="title">
-      課程相關資訊&nbsp;<strong>課程編號: <%= course.id %></strong>
+      <%= link_to(admin_course_registrations_path(@registration.course_id)) do %>
+        課程相關資訊&nbsp;<strong>課程編號: <%= course.id %></strong>
+      <% end %>
       <% if course.visible? %>
         <label class="label label-primary">上架中</label>
       <% else %>
