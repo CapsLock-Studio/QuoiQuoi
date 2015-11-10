@@ -34,9 +34,11 @@
               </div>
               <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
                 <%= order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).name %>
-                (<%= order_product.order_product_options.map{|order_option|
-                order_option.product_option.content
-              }.join(', ') %>)
+                <%= '(' if order_product.order_product_options.size > 0 %>
+                <%= order_product.order_product_options.map{|order_option|
+                  order_option.product_option.content
+                }.join(', ') %>
+                <%= ')' if order_product.order_product_options.size > 0 %>
               </div>
 
               <div class="visible-xs col-xs-12 text-muted">
@@ -50,7 +52,7 @@
                 <%= t('quantity') %>
               </div>
               <div class="col-sm-4 col-xs-12">
-                <%= order_product.quantity %>
+                <%= order_product.quantity.to_i %>
               </div>
             </div>
           </div>
@@ -103,12 +105,7 @@
                   <span class="text-muted">
                     (<%= t('shipping_fee') %>:&nbsp;
                     <span class="shipping-fee-subtotal">
-                      <% if @order_in_cart.shipping_fee.shipping_fee_translates.find_by_locale_id(@order_in_cart.locale_id).free_condition &&
-                          (@order_in_cart.get_raw_subtotal >= @order_in_cart.shipping_fee.shipping_fee_translates.find_by_locale_id(@order_in_cart.locale_id).free_condition) %>
-                        <%= number_to_currency(0) %>
-                      <% else %>
-                        <%= number_to_currency(@order_in_cart.shipping_fee.shipping_fee_translates.find_by_locale_id(@order_in_cart.locale_id).fee) %>
-                      <% end %>
+                      <%= number_to_currency(@order_in_cart.shipping_fee!) %>
                     </span>
                     )
                   </span>

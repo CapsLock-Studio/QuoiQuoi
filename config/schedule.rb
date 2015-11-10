@@ -24,4 +24,5 @@ set :output, "#{Whenever.path}/log/cron_job.log"
 
 every 1.days do
   rake 'course:remind_before_one_day'
+  rake 'order:archive'
 end

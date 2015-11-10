@@ -18,7 +18,8 @@
     <% else %>
       <span class="label label-danger">寄出件有問題</span>
       <small class="text-muted">
-        (回報時間 <%= order.delivery_report_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+        回報時間 <%= order.delivery_report_time.strftime('%Y/%m/%d %H:%I:%S') %><br/>
+        貨件寄出時間 <%= order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') %>
       </small>
       <div>
         回報訊息內容: <label><%= order.delivery_report_message %></label>

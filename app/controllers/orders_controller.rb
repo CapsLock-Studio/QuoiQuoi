@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   def show
     if @order.empty_expire_time?
-      redirect_to controller: :order_payment, action: :resume, id: @order.order_payment
+      redirect_to controller: :order_payment, action: :resume, id: @order.id
     else
       add_breadcrumb t('home'), :root_path
       add_breadcrumb t('order.all'), :orders_path
@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
   # Receive CVS and ATM result here.
   def update
     flash.now[:icon] = 'fa-smile-o'
-    flash.now[:message] = '謝謝你！訂單已經成立。請你注意繳費期限以免訂單自動取消喔！'
+    flash.now[:message] = t('order_complete_hint')
     flash.now[:status] = 'success'
 
     @order = Order.find(params['MerchantTradeNo'].delete('O'))
@@ -77,6 +77,18 @@ class OrdersController < ApplicationController
 
         @order.reload
 
+        if @order.atm?
+          subject = t('mailer.subject.payment.atm')
+        else
+          subject = t('mailer.subject.payment.cvs')
+        end
+
+        OrderMailer.remind_to_pay(@order.id, subject).deliver_later
+
+        add_breadcrumb t('home'), :root_path
+        add_breadcrumb t('order.all'), :orders_path
+        add_breadcrumb t('detail')
+
         render action: :show
       else
         render json: 'Not support payment method.'
@@ -94,15 +106,19 @@ class OrdersController < ApplicationController
     add_breadcrumb t('order.all'), :orders_path
     add_breadcrumb t('detail')
 
-    unless @order.order_payment.cancel?
+    if !@order.order_payment.completed? && !@order.order_payment.cancel?
       flash.now[:icon] = 'fa-user-times'
-      flash.now[:message] = '你的訂單已經取消, 謝謝你的合作!'
+      flash.now[:message] = t('order_cancel')
       flash.now[:status] = 'success'
 
       @order.order_payment.cancel = true
       @order.order_payment.cancel_reason = params[:cancel_reason]
       @order.order_payment.cancel_time = Time.now
       @order.order_payment.save!
+    else
+      flash.now[:icon] = 'fa-lightbulb-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_already_completed')
     end
 
     render action: :show
@@ -111,13 +127,15 @@ class OrdersController < ApplicationController
   def delivery_report
     unless @order.delivery_report?
       flash.now[:icon] = 'fa-exclamation-triangle'
-      flash.now[:message] = '我們會儘速處理, 非常感謝你的合作！'
+      flash.now[:message] = t('report_problem_hint')
       flash.now[:status] = 'success'
 
       @order.delivery_report = true
       @order.delivery_report_message = params[:delivery_report_message]
       @order.delivery_report_time = Time.now
       @order.save!
+
+      OrderMailer.report_deliver_problem(@order.id).deliver_later
     end
 
     render action: :show
@@ -129,11 +147,14 @@ class OrdersController < ApplicationController
     #            Confirmed -> confirm: false
     # If there are any reports waiting be reviewed, do nothing and show message to customer
     if @order.order_payment.order_remittance_reports.where(confirm: nil).size <= 0
-      @order.order_payment.order_remittance_reports.create({
+      report = @order.order_payment.order_remittance_reports.create({
                                                                amount: params[:amount],
                                                                account: params[:account],
                                                                date: params[:date]
                                                            })
+
+      OrderMailer.remind_remittance_report(report).deliver_later
+
       flash.now[:icon] = 'fa-smile-o'
       flash.now[:status] = 'success'
       flash.now[:message] = t('report_remittance_hint')
@@ -219,7 +240,7 @@ class OrdersController < ApplicationController
     add_breadcrumb t('order.in_trading'), :orders_path
     add_breadcrumb t('detail')
 
-    @order = Order.find(params['MerchantTradeNo'].delete('O'))
+    @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
 
     # Not really update order entity, just show the newest status.
     @order.order_payment.trade_no = params['TradeNo']
@@ -227,6 +248,10 @@ class OrdersController < ApplicationController
     @order.order_payment.payment_time = params['PaymentDate']
     @order.order_payment.completed =  true
     @order.order_payment.completed_time = Time.now
+
+    @order.order_payment.save!
+
+    OrderMailer.completed_confirmation(@order.id).deliver_later
 
     render 'orders/show'
   end

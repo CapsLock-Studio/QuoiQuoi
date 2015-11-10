@@ -1,0 +1,126 @@
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+            <span>
+              匯款回報編號<%= @report.id %>未確認, 請按此前往管理介面&nbsp;<%= link_to('訂單匯款回報管理', check_admin_order_remittance_url(@report)) %>
+            </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" class="columns-container">
+  <tr>
+    <td class="force-col" style="padding-right: 20px;" valign="top">
+      <!-- ### COLUMN 1 ### -->
+      <table border="0" cellspacing="0" cellpadding="0" width="230" align="left" class="col-2">
+        <tr>
+          <td>
+            <h2>
+              訂單相關資訊
+            </h2>
+            <dl>
+              <dt style="font-size: 14px; color: #848484">
+                訂單編號
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.id %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                費用
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= number_to_currency(@order.order_payment.amount, locale: @order.locale.lang) %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                聯絡人姓名
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.name %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                Email
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.user.email %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                聯絡電話
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.phone %>
+              </dd>
+
+              <dd style="padding: 0 0 10px 0"><%= link_to('其他詳細項目', check_admin_order_remittance_url(@report)) %></dd>
+            </dl>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td class="force-col" style="padding-right: 20px;" valign="top">
+      <!-- ### COLUMN 1 ### -->
+      <table border="0" cellspacing="0" cellpadding="0" width="230" align="left" class="col-2">
+        <tr>
+          <td>
+            <h2>
+              客戶匯款資訊
+            </h2>
+            <dl>
+              <dt style="font-size: 14px; color: #848484">
+                回報編號
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @report.id %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                匯款金額
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @report.amount %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                匯款帳號後五碼
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @report.account %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                匯款日期
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @report.date.strftime('%Y/%m/%d') %>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td>
+      <a href="<%= check_admin_order_remittance_url(@report) %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15" bgcolor="#72C8E6">
+          <tr>
+            <td align="center" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                訂單匯款回報管理
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+
+<br/>

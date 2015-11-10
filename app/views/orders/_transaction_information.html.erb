@@ -146,6 +146,14 @@
 
     <% if order_payment.cancel? %>
       <%= t('order.canceled') %>&nbsp;(<%= order_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+      <div class="row margin-bottom-5">
+        <div class="col-xs-12">
+          <strong>
+            <i class="fa fa-fw fa-comment-o"></i>
+            <%= order_payment.cancel_reason %>
+          </strong>
+        </div>
+      </div>
     <% elsif order_payment.completed? %>
       <%= "#{(order_payment.order.remittance?)? t('report_confirmed') : t('completed_payment')} (#{order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')})" %>
 
@@ -179,11 +187,11 @@
 
       <%= link_to(
               t('continue_pay_page'),
-              url_for(controller: :order_payment, action: :webatm_resume, id: order_payment),
+              url_for(controller: :order_payment, action: :webatm_resume, id: order_payment.order_id),
               class: 'btn btn-primary btn-xs') if order_payment.order.webatm? %>
       <%= link_to(
               t('continue_pay_page'),
-              url_for(controller: :order_payment, action: :alipay_resume, id: order_payment),
+              url_for(controller: :order_payment, action: :alipay_resume, id: order_payment.order_id),
               class: 'btn btn-primary btn-xs') if order_payment.order.alipay? %>
       <%= link_to t('continue_on_paypal'), order_payment.redirect_uri, class: 'btn btn-xs btn-primary' if order_payment.order.paypal? %>
 

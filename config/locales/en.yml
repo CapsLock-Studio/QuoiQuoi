@@ -106,13 +106,15 @@ en:
     received: 'Remittance paid'
     detail: 'Course detail'
     cancel: 'Cancel registration'
-    canceled: 'Canceled'
+    canceled: 'Registration canceled'
     option: 'Options you chose'
     no_s: 'Registration No.'
     item: 'Registered courses'
     wait_remittance: 'Wait remittance'
     wait_confirm: 'Wait confirmation'
     wait_paying: 'Wait paying'
+    wait_refund: 'Wait refund'
+    refunded: 'Refunded'
     your: 'Your registration'
     cancel_reason: 'Give us the reason why you want to cancel'
     cancel_reason_hint: 'For providing you better service, please write down your message to us.'
@@ -323,6 +325,7 @@ en:
   completion_payment: 'Completion payment'
   payment_completed_time: 'Payment completed time'
   expired: 'expired'
+  payment_expired: 'Sorry, payment has been canceled because expired.'
 
   add_to_cart: 'Add to cart'
   buy: 'Buy'
@@ -487,6 +490,10 @@ en:
   atm_remind: 'Reminds you, recently the ATM cheating case keeps pouring in, in case cheats please do dial 165 for consultations.'
   atm_remind_link: 'National police agency'
   registration_detail: 'Detail register information'
+  order_detail: 'Detail order information'
+  sorry: 'Sorry!'
+  thanks: 'Thank you! '
+  report_problem_hint: 'We will handle it as fast as possible. Thank you for your cooperation.'
 
   outdated:
     title: 'Your browser is out-of-date!'
@@ -502,13 +509,43 @@ en:
         cvs: "[quoi quoi studio] Remind of paying at convenience store (Please don't reply this mail)"
         online: "[quoi quoi studio] Remind of completing you payment (Please don't reply this mail)"
         atm: "[quoi quoi studio] Remind of using ATM to complete you payment (Please don't reply this mail)"
+        remittance_report_fail: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
       registration: "[quoi quoi studio] Payment confirmation of your handmade course (Please don't reply this mail)"
       order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
+      cancel_course: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
+      cancel_registration: "[quoi quoi studio] Notification for registration was canceled (Please don't reply this mail)"
+      remind_before_course_start: "[quoi quoi studio] Remind of attending handmade class (Please don't reply this mail)"
+      delivered: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
     text:
       registration:
-        completed: "Thank you for registering our course. This email is to confirm that you have completed the payment. <br/>The following is your electronic receipt which is regarded as the payment voucher of this course."
+        completed: "Thank you for registering our course. This email is to confirm that you have completed the payment. Your registration no. is %{link}"
         remind: "Remind that you don't miss this course. The course time is at %{date}. We are expecting your come."
-
+        remittance_report_fail: 'Thank you for registering our course. Your remittance information is wrong. Please check your remittance and advice again.'
+        remittance_report_fail_hint: 'Message from manager blew.'
+        remind_before_course_start: "We remind you of attending the tomorrow handmade course - %{name} at quoi quoi studio. Please don't miss this course and make ready for the course requirement."
+        cancel:
+          alert: 'Your registration has been canceled.'
+          name: 'Sorry, Your registration for course - %{name} was canceled because some trouble, your consideration will be very much appreciated. The message below for you from manager.'
+          apologize: "Thank you for giving us the opportunity to serve for you and I hope this will not discourage you from considering quoi quoi studio's service as a potential outlet for you."
+          refund: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
+          detail: 'If you need to check your registration, please click the link.'
+      course:
+        cancel:
+          alert: 'The course has been canceled.'
+          name: 'Sorry, Course - %{name} was canceled because some trouble, your consideration will be very much appreciated. '
+          apologize: "Thank you for giving us the opportunity to serve for you and I hope this will not discourage you from considering quoi quoi studio's service as a potential outlet for you."
+          refund: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
+          registration: 'If you need to check your registration, please click the link.'
+      order:
+        payment: "Thank you for your shopping on quoi quoi website. Mind you, if you don't complete payment within %{days} days, the order will be canceled automatically."
+        list_header: 'Your orders'
+        remittance_report_fail: 'Thank you for your shopping on quoi quoi website. Your remittance information is wrong. Please check your remittance and advice again.'
+        remittance_report_fail_hint: 'Message from manager blew.'
+        completed:
+          title: 'Your payment has been completed'
+          message: 'Thank you for your shopping on quoi quoi website. This email is to confirm that you have completed the payment. Your order no. is %{link}'
+        remind: 'We will send your orders as fast as possible. Thank you.'
+        delivered: "Thank you for shopping at quoi quoi studio. Your order has been shipped. Please check your mailbox, you will receive it about one week(Not including outside Taiwan). If you don't receive the products, your order no. is %{link}, please report at your order page or contact us by email"
     success: 'Send mail success.'
     subject_for_order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
     subject_for_remittance_order: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"

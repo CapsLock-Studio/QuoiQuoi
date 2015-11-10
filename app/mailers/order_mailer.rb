@@ -1,93 +1,66 @@
-class OrderMailer < ActionMailer::Base
-  include Resque::Mailer
-  default from: 'admin@quoiquoi.tw'
-  add_template_helper(ApplicationHelper)
+class OrderMailer < ApplicationMailer
+  def remind_to_pay(id, subject)
+    @order = Order.find(id)
+    @locale_id = @order.locale_id
 
-  def remind(order_id)
-    @order = Order.find(order_id)
-    I18n.locale = Locale.find(@order.locale_id).lang
+    I18n.locale = @order.locale.lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
-    @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
-      @fee = 0
-    end
+    # Setup expire payment clean job
+    CleanExpirePaymentsJob.set(
+        wait_until: (@order.order_payment.expire_time.nil?)? (Time.now + 3.days).end_of_day : @order.order_payment.expire_time
+    ).perform_later(@order.order_payment, t('payment_expired'))
 
-    set_discount
-
-    mail(to: @order.user.email, subject: t('mailer.subject_for_order'))
+    mail(to: @order.user.email, subject: subject)
   end
 
-  def re_remittance_remind(order_id, amount, identifier, pay_time)
-    @order = Order.find(order_id)
-    I18n.locale = Locale.find(@order.locale_id).lang
+  def request_remit_payment_again(id)
+    @report = OrderRemittanceReport.find(id)
+    @order = @report.order_payment.order
+    @locale_id = @order.locale_id
 
-    @order.payment.amount = amount
-    @order.payment.identifier = identifier
-    @order.payment.pay_time = pay_time
+    I18n.locale = @order.locale.lang
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
-    @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
-      @fee = 0
-    end
-
-    set_discount
-
-    mail(to: @order.user.email, subject: t('mailer.subject_for_re_remittance'))
+    mail(to: @order.user.email, subject: t('mailer.subject.payment.remittance_report_fail'))
   end
 
-  def remittance_remind(order_id)
-    @order = Order.find(order_id)
-    I18n.locale = Locale.find(@order.locale_id).lang
+  def completed_confirmation(id)
+    @order = Order.find(id)
+    @locale_id = @order.locale_id
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
-    @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
-      @fee = 0
-    end
+    I18n.locale = @order.locale.lang
 
-    set_discount
+    mail(to: @order.user.email, subject: t('mailer.subject.order'))
 
-    mail(to: @order.user.email, subject: t('mailer.subject_for_remittance_order'))
+    OrderMailer.remind_completed(@order.id).deliver_later
   end
 
-  def remittance_remind_three_days(order_id)
-    @order = Order.find(order_id)
-    I18n.locale = Locale.find(@order.locale_id).lang
+  def deliver_notification(id)
+    @order = Order.find(id)
+    @locale_id = @order.locale_id
 
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
-    @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
-      @fee = 0
-    end
+    I18n.locale = @order.locale.lang
 
-    set_discount
-
-    mail(to: @order.user.email, subject: t('mailer.subject_for_three_days'))
+    mail(to: @order.user.email, from: $redis.get('about:locale:1:email'), subject: t('mailer.subject.delivered'))
   end
 
-  def delivered(order_id)
-    @order = Order.find(order_id)
-    I18n.locale = Locale.find(@order.locale_id).lang
-
-    shipping_fee = ShippingFeeTranslate.where(shipping_fee_id: @order.shipping_fee_id, locale_id: @order.locale_id).first
-    @fee = shipping_fee.fee
-    if !shipping_fee.free_condition.blank? && (@order.subtotal >= shipping_fee.free_condition)
-      @fee = 0
-    end
-
-    set_discount
-
-    mail(to: @order.user.email, subject: t('mailer.subject_for_deliver_order'))
+  # Send to manager for notification
+  def remind_remittance_report(id)
+    @report = OrderRemittanceReport.find(id)
+    @order = @report.order_payment.order
+    mail(to: $redis.get('about:locale:1:email'), subject: "[quoiquoi.tw] 系統提醒 訂單編號#{@order.id}有匯款回報 - 回報編號#{@report.id}待確認")
   end
 
-  private
-  def set_discount
-    @user_gift_serials = UserGiftSerial.where(order_id: @order.id)
-    @discount = 0
-    @user_gift_serials.each do |user_gift_serial|
-      @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @order.locale_id).first.quota
-    end
+  # Send to manager for notification
+  def remind_completed(id)
+    @order = Order.find(id)
+
+    mail(to: $redis.get('about:locale:1:email'), subject: "[quoiquoi.tw] 系統提醒 訂單編號#{@order.id}付款已經完成 - 等待出貨中")
+  end
+
+  # Send to manager for notification
+  def report_deliver_problem(id)
+    @order = Order.find(id)
+
+    mail(to: $redis.get('about:locale:1:email'), subject: "[quoiquoi.tw] 系統提醒 訂單編號#{@order.id} 客戶回報超過7天沒有收到貨件")
   end
 end
