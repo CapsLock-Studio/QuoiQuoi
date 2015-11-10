@@ -121,28 +121,44 @@
 
               <%= yield %>
 
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#F2F2F2" class="100pad" style="padding: 20px 70px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#F2F2F2">
                 <tr>
-                  <td>
-                    <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
-                      <span style="font-size:14px;"><%= t('quoiquoi') %></span><br />
-                      <span style="font-size:14px;"><%= $redis.get("about:locale:#{@locale_id}:address") %></span><br />
-                    <span style="font-size:14px;">
-                      <a href="mailto:<%= $redis.get("about:locale:#{@locale_id}:email") %>" style="color:#8A929D;"><%= $redis.get("about:locale:#{@locale_id}:email") %></a>
-                    </span><br />
-                      <span style="font-size:14px;"><%= $redis.get("about:locale:#{@locale_id}:phone") %></span>
-                    </font>
+                  <td align="center">
+                    <center>
+                      <table width="540" border="0" cellspacing="0" cellpadding="0" class="100pad" style="padding: 20px;">
+                        <tr>
+                          <td>
+                            <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                              <span style="font-size:14px;"><%= t('quoiquoi') %></span><br />
+                              <span style="font-size:14px;"><%= $redis.get("about:locale:#{@locale_id}:address") %></span><br />
+                              <span style="font-size:14px;">
+                                <a href="mailto:<%= $redis.get("about:locale:#{@locale_id}:email") %>" style="color:#8A929D;"><%= $redis.get("about:locale:#{@locale_id}:email") %></a>
+                              </span><br />
+                              <span style="font-size:14px;"><%= $redis.get("about:locale:#{@locale_id}:phone") %></span>
+                            </font>
+                          </td>
+                        </tr>
+                      </table>
+                    </center>
                   </td>
                 </tr>
               </table>
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666" class="100pad" style="padding: 20px 70px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
                 <tr>
-                  <td align="left" style="font-size:14px; color:#ffffff;">
-                    <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
-                      2014 © CapsLock. ALL Rights Reserved.&nbsp;<a href="http://calvinpeak.net" style="color:#CCCCCC;text-decoration:none;">Calvin</a>
-                      <br/>
-                      <a href="<%= privacy_statement_url %>" style="color:#CCCCCC;text-decoration:none;"><%= t('privacy_statement') %></a>&nbsp;·&nbsp;<a href="<%= terms_of_service_url %>" style="color:#CCCCCC;text-decoration:none;"><%= t('terms_of_service') %></a>
-                    </font>
+                  <td align="center">
+                    <center>
+                      <table width="540" border="0" cellspacing="0" cellpadding="0" class="100pad" style="padding: 20px;">
+                        <tr>
+                          <td align="left" style="font-size:14px; color:#ffffff;">
+                            <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                              2014 © CapsLock. ALL Rights Reserved.&nbsp;<a href="http://calvinpeak.net" style="color:#CCCCCC;text-decoration:none;">Calvin</a>
+                              <br/>
+                              <a href="<%= privacy_statement_url %>" style="color:#CCCCCC;text-decoration:none;"><%= t('privacy_statement') %></a>&nbsp;·&nbsp;<a href="<%= terms_of_service_url %>" style="color:#CCCCCC;text-decoration:none;"><%= t('terms_of_service') %></a>
+                            </font>
+                          </td>
+                        </tr>
+                      </table>
+                    </center>
                   </td>
                 </tr>
               </table>
