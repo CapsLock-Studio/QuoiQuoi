@@ -1,0 +1,109 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#50C771" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td align="center">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+          <span style="color:#FFFFFF;font-size:16px;">
+            <%= t('thanks') %>
+          </span>
+          <span style="color:#C0FFD2;font-size:16px;">
+            <%= t('mailer.text.order.completed.title') %>
+          </span>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;color:#000000;"><%= t('mailer.dear') %></span><br />
+        <span style="font-size:14px;">
+          <%== t('mailer.text.order.completed.message', link: "<a href=\"#{order_url(@order.id)}\" style=\"color:#8A929D\">O#{@order.id}&nbsp;<img src=\"#{image_url('fa-info-circle.png')}\" alt=\"fa-info\" width=\"14\" height=\"14\" border=\"0\" style=\"width:14px;height:14px;\"></a>") %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0px 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          <%== t('mailer.text.order.remind') %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0 20px 20px 20px;font-size:14px;">
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <td style="padding: 0 0 5px 0;">
+            <%= t('mailer.text.order.list_header') %>&nbsp;
+            <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+              <a href="<%= order_url(@order) %>" style="color:#8A929D;"><%= "O#{@order.id}" %>&nbsp;<img alt="fa-info" width="14" height="14" border="0" style="width:14px;height:14px;" src="<%= image_url('fa-info-circle.png') %>"/></a>
+            </font>
+          </td>
+        </tr>
+        <% @order.order_products.each do |order_product| %>
+          <tr>
+            <td style="padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= order_product.product.product_translates.find_by_locale_id(@locale_id).name %>
+              <%= '(' if order_product.order_product_options.size > 0 %>
+              <%= order_product.order_product_options.map{|order_option|
+                order_option.product_option.content
+              }.join(', ') %>
+              <%= ')' if order_product.order_product_options.size > 0 %>
+              &nbsp;x<%= order_product.quantity.to_i %>
+            </td>
+            <td width="80" style="text-align:center;padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= number_to_currency(order_product.price) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <h4 style="text-align:right">
+        <%= t('total_amount') %>&nbsp;<%= number_to_currency(@order.get_subtotal) %><br/>
+        <small>
+          (<%= t('shipping_fee') %>:&nbsp;
+                    <span class="shipping-fee-subtotal">
+                      <%= number_to_currency(@order.shipping_fee!) %>
+                    </span>
+          )
+        </small>
+      </h4>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td>
+      <a href="<%= order_url(@order.id) %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15" bgcolor="#72C8E6">
+          <tr>
+            <td align="center" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                <%= t('order_detail') %>
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td style="font-size:20px;">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= t('sincerely') %>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>

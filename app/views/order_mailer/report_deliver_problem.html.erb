@@ -1,0 +1,142 @@
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+            <span>
+              訂單編號<%= @order.id %> 客戶回報超過7天沒有收到貨件, 該訂單寄出日期為<%= @order.delivered_time.strftime('%Y/%m/%d') %>, 請您聯絡協助客戶了解相關事項, 請按此前往管理介面&nbsp;<%= link_to('訂單出貨情形管理', edit_admin_order_url(@order)) %>
+            </span>
+      </font>
+    </td>
+  </tr>
+</table>
+
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0px 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          以下是客戶給您的訊息
+        </span><br/>
+        <strong style="font-size:16px;color: #000000">
+          <%= @order.delivery_report_message ||= '沒有內容' %>
+        </strong>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0 20px 20px 20px;font-size:14px;">
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <td style="padding: 0 0 5px 0;">
+            客戶的訂單資訊&nbsp;
+            <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+              <a href="<%= admin_order_url(@order) %>" style="color:#8A929D;"><%= "訂單編號#{@order.id}" %>&nbsp;<img alt="fa-info" width="14" height="14" border="0" style="width:14px;height:14px;" src="<%= image_url('fa-info-circle.png') %>"/></a>
+            </font>
+          </td>
+        </tr>
+        <% @order.order_products.each do |order_product| %>
+          <tr>
+            <td style="padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= order_product.product.product_translates.find_by_locale_id(@locale_id).name %>
+              <%= '(' if order_product.order_product_options.size > 0 %>
+              <%= order_product.order_product_options.map{|order_option|
+                order_option.product_option.content
+              }.join(', ') %>
+              <%= ')' if order_product.order_product_options.size > 0 %>
+              &nbsp;x<%= order_product.quantity.to_i %>
+            </td>
+            <td width="80" style="text-align:center;padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= number_to_currency(order_product.price) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <h4 style="text-align:right">
+        <%= t('total_amount') %>&nbsp;<%= number_to_currency(@order.get_subtotal) %><br/>
+        <small>
+          (<%= t('shipping_fee') %>:&nbsp;
+                    <span class="shipping-fee-subtotal">
+                      <%= number_to_currency(@order.shipping_fee!) %>
+                    </span>
+          )
+        </small>
+      </h4>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td class="force-col" style="padding-right: 20px;" valign="top">
+      <!-- ### COLUMN 1 ### -->
+      <table border="0" cellspacing="0" cellpadding="0" width="230" align="left" class="col-2">
+        <tr>
+          <td>
+            <h2>
+              訂單相關資訊
+            </h2>
+            <dl>
+              <dt style="font-size: 14px; color: #848484">
+                訂單編號
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.id %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                費用
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= number_to_currency(@order.order_payment.amount, locale: @order.locale.lang) %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                聯絡人姓名
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.name %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                Email
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.user.email %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                聯絡電話
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @order.phone %>
+              </dd>
+
+              <dd style="padding: 0 0 10px 0"><%= link_to('其他詳細項目', admin_order_url(@order)) %></dd>
+            </dl>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td>
+      <a href="<%= edit_admin_order_url(@order) %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15" bgcolor="#72C8E6">
+          <tr>
+            <td align="center" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                訂單出貨情形管理
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+
+<br/>

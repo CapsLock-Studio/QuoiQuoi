@@ -73,7 +73,19 @@ class Admin::OrdersController < AdminController
   end
 
   def deliver
+    @search_filter = params[:search_filter] || %w[waiting delivered problem]
     @orders = Order.includes(:order_payment).where(order_payments: {completed: true}, closed: false)
+    unless @search_filter.include?('waiting')
+      @orders = @orders.where.not(delivered: false)
+    end
+
+    unless @search_filter.include?('delivered')
+      @orders = @orders.where.not(delivered: true)
+    end
+
+    unless @search_filter.include?('problem')
+      @orders = @orders.where.not(delivery_report: true)
+    end
   end
 
   def archive
@@ -94,6 +106,8 @@ class Admin::OrdersController < AdminController
     elsif order_params[:delivered]
       @order.delivered = true
       @order.delivered_time = Time.now
+
+      OrderMailer.deliver_notification(@order.id).deliver_later if @order.delivered?
     end
 
     @order.save!

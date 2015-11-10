@@ -5,14 +5,17 @@ class OrderPaymentController < ApplicationController
 
   def remittance
     flash[:icon] = 'fa-smile-o'
-    flash[:message] = '謝謝你！訂單已經成立。請你注意繳費期限以免訂單自動取消喔！'
+    flash[:message] = t('order_complete_hint')
     flash[:status] = 'success'
 
     @order.create_order_payment(
         {
             amount: @order.subtotal,
-            expire_time: Date.today + 7.days
+            expire_time: (Time.now + 7.days).end_of_day
         })
+
+    # Send email to remind customer take the payment
+    OrderMailer.remind_to_pay(@order.id, t('mailer.subject.payment.remittance')).deliver_later
 
     redirect_to order_path(@order)
   end
@@ -30,28 +33,28 @@ class OrderPaymentController < ApplicationController
   end
 
   def resume
-    order_payment = OrderPayment.find(params[:id])
+    order = Order.find(params[:id])
 
-    case order_payment.order.payment_method
-      when order_payment.order.payment_method['cvs_family']
-        if order_payment.payment_no.nil?
-          send_request_to_allpay(duplicate_order_payment(order_payment.id).order, 'CVS', {
+    case order.payment_method
+      when order.payment_method['cvs_family']
+        if order.order_payment.payment_no.nil?
+          send_request_to_allpay(order, 'CVS', {
                                           ChooseSubPayment: 'FAMILY',
                                       })
         else
           render json: 'ERROR!!'
         end
-      when order_payment.order.payment_method['cvs_ibon']
-        if order_payment.payment_no.nil?
-          send_request_to_allpay(duplicate_order_payment(order_payment.id).order, 'CVS', {
+      when order.payment_method['cvs_ibon']
+        if order.order_payment.payment_no.nil?
+          send_request_to_allpay(order, 'CVS', {
                                           ChooseSubPayment: 'IBON',
                                       })
         else
           render json: 'ERROR!!'
         end
-      when order_payment.order.payment_method['atm']
-        if order_payment.bankcode.nil? || order_payment.account.nil?
-          send_request_to_allpay(duplicate_order_payment(order_payment.id).order, 'ATM')
+      when order.payment_method['atm']
+        if order.order_payment.bankcode.nil? || order.order_payment.account.nil?
+          send_request_to_allpay(order, 'ATM')
         else
           render json: 'ERROR!!'
         end
@@ -84,6 +87,9 @@ class OrderPaymentController < ApplicationController
             trade_time: paypal_response.timestamp
         })
 
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@order.order_payment)
+
     redirect_to paypal_response.redirect_uri
   end
 
@@ -91,15 +97,18 @@ class OrderPaymentController < ApplicationController
     send_request_to_allpay(@order, 'WebATM', {
                                           OrderResultURL: return_order_url(@order)
                                       })
+
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@order.order_payment)
   end
 
   def webatm_resume
-    order_payment = duplicate_order_payment(params[:id])
+    order = Order.find(params[:id])
 
     # Resend a order payment to AllPay
-    send_request_to_allpay(order_payment.order, 'WebATM', {
-                                                       OrderResultURL: return_order_url(order_payment.order)
-                                                   })
+    send_request_to_allpay(order, 'WebATM', {
+                                    OrderResultURL: return_order_url(order)
+                                })
   end
 
   def atm
@@ -125,11 +134,13 @@ class OrderPaymentController < ApplicationController
                                     PhoneNo: @order.phone,
                                     UserName: @order.name
                                       })
+
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@order.order_payment)
   end
 
   def alipay_resume
-    order_payment = duplicate_order_payment(params[:id])
-    order = order_payment.order
+    order = Order.find(params[:id])
 
     item_names = order.order_products.map{|order_products| "#{order_products.product.product_translates.find_by_locale_id(order.locale_id).name}" }
     item_counts = order.order_products.map{|order_products| "#{order_products.quantity}" }
@@ -142,13 +153,13 @@ class OrderPaymentController < ApplicationController
     end
 
     # Resend a order payment to AllPay
-    send_request_to_allpay(order_payment.order, 'Alipay', {
+    send_request_to_allpay(order, 'Alipay', {
                                                        AlipayItemName: item_names.join('#'),
                                                        AlipayItemCounts: item_counts.join('#'),
                                                        AlipayItemPrice: item_prices.join('#'),
-                                                       Email: order_payment.order.user.email,
-                                                       PhoneNo: order_payment.order.phone,
-                                                       UserName: order_payment.order.name
+                                                       Email: order.user.email,
+                                                       PhoneNo: order.phone,
+                                                       UserName: order.name
                                                    })
   end
 
@@ -171,7 +182,7 @@ class OrderPaymentController < ApplicationController
   def send_request_to_allpay(order, payment, options = nil)
     @form_data = {
         MerchantID: AllPay.merchant_id,
-        MerchantTradeNo: "O#{order.id}",
+        MerchantTradeNo: "O#{order.id}t#{Time.now.to_i}",
         MerchantTradeDate: order.checkout_time.strftime('%Y/%m/%d %H:%I:%S'),
         PaymentType: 'aio',
         TotalAmount: order.subtotal.to_i,
@@ -191,43 +202,25 @@ class OrderPaymentController < ApplicationController
     # render json: @form_data
 
     # Record payment information
-    order.create_order_payment(
-        {
-            amount: order.subtotal
-        })
+    if order.order_payment.nil?
+      order.create_order_payment(
+          {
+              amount: order.subtotal
+          })
+    end
 
     render template: 'order_payment/all_pay_form'
   end
 
-  def duplicate_order_payment(id)
-    # We need to resend the order again but the previous MerchantTradeNo has exists
-    # So duplicate the entry then send it to AllPay.
-    order_payment = OrderPayment.find(id)
-
-    order = order_payment.order.dup
-    order.save!
-
-    # Set order_products to newest one
-    order_payment.order.order_products.each do |order_product|
-      order_product.update_column(:order_id, order.id)
-    end
-
-    order_payment.order.delete
-    order_payment.order_id = order.id
-    order_payment.save!
-
-    order_payment
-  end
-
   def check_payment_is_completed
     # Check if the payment is completed or not, stop resume payment action.
-    order_payment = OrderPayment.find(params[:id])
-    if order_payment.completed?
+    order = Order.find(params[:id])
+    if order.order_payment.completed?
       flash[:icon] = 'fa-lightbulb-o'
       flash[:status] = 'success'
       flash[:message] = t('payment_already_completed')
 
-      redirect_to order_path(order_payment.order)
+      redirect_to order_path(order)
     end
   end
 end

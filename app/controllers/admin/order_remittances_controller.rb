@@ -42,6 +42,17 @@ class Admin::OrderRemittancesController < AdminController
 
       @remittance.order_payment.save!
 
+      # Status ==> Waiting   -> confirm: nil
+      #            Confirmed -> confirm: true
+      #            Confirmed -> confirm: false
+      unless @remittance.confirm.nil?
+        if @remittance.confirm?
+          OrderMailer.completed_confirmation(@remittance.order_payment.order.id).deliver_later
+        else
+          OrderMailer.request_remit_payment_again(@remittance).deliver_later
+        end
+      end
+
       flash[:confirmed] = @remittance.confirm
       flash[:id] = @remittance.id
 

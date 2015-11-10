@@ -10,7 +10,7 @@ class OrderPaymentCallbackController < ApplicationController
     # RtnCode's value 1 means the transaction was success.
     # In this method, just like the other callback handlers, updating the order payment status.
     if params['RtnCode'] == '1'
-      order_payment = OrderPayment.find_by_order_id!(params['MerchantTradeNo'].delete('O'))
+      order_payment = OrderPayment.find_by_order_id!(params['MerchantTradeNo'].delete('O').split('t')[0])
 
       order_payment.trade_no = params['TradeNo']
       order_payment.trade_time = params['TradeDate']
@@ -18,6 +18,8 @@ class OrderPaymentCallbackController < ApplicationController
       order_payment.completed =  true
       order_payment.completed_time = Time.now
       order_payment.save!
+
+      OrderMailer.completed_confirmation(order_payment.order_id).deliver_later
 
       render text: '1|OK'
     else
@@ -37,7 +39,7 @@ class OrderPaymentCallbackController < ApplicationController
             currency_code: Locale.find(order_payment.order.locale_id).currency_code,
             description: @website_title,
             quantity: 1,
-            amount: @order_payment.amount
+            amount: order_payment.amount
         )
     )
 
@@ -51,6 +53,8 @@ class OrderPaymentCallbackController < ApplicationController
     flash[:icon] = 'fa-smile-o'
     flash[:status] = 'success'
     flash[:message] = t('payment_completed')
+
+    OrderMailer.completed_confirmation(order_payment.order_id).deliver_later
 
     redirect_to order_path(order_payment.order)
   end

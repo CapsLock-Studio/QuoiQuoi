@@ -16,6 +16,8 @@
     <% end %>
   <% end %>
 
+  <%= render 'deliver_search_condition' %>
+
   <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
     <div class="box-content box-no-padding">
       <div class="responsive-table">
@@ -60,13 +62,12 @@
                 <td>
                   <% if order.delivered? %>
                     <% if order.delivery_report? %>
+                      <span class="label label-danger">寄出件有問題</span>
                       <% if order.delivery_report_handled? %>
                         <span class="label label-default">寄出件問題已解決</span>
                         <div class="text-muted">
                           剩餘<%= order.remaining_time_to_archive %>日訂單封存
                         </div>
-                      <% else %>
-                        <span class="label label-danger">寄出件有問題</span>
                       <% end %>
                     <% else %>
                       <span class="label label-success">已寄出</span>
@@ -82,15 +83,25 @@
                   <% if order.delivered? %>
                     <% if order.delivery_report? %>
                       <% if order.delivery_report_handled? %>
+                        <% unless order.closed? %>
+                          <%= link_to(admin_order_path(order, closed: true), class: 'btn btn-primary', method: :put) do %>
+                            直接封存
+                          <% end %>
+                        <% end %>
                         <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
                           <i class="icon-edit icon-fixed-width"></i>
                         <% end %>
                       <% else %>
-                        <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
+                        <%= link_to(edit_admin_order_path(order), class: 'btn btn-md btn-danger') do %>
                           <i class="icon-exclamation icon-fixed-width"></i>
                         <% end %>
                       <% end %>
                     <% else %>
+                      <% unless order.closed? %>
+                        <%= link_to(admin_order_path(order, closed: true), class: 'btn btn-primary', method: :put) do %>
+                          直接封存
+                        <% end %>
+                      <% end %>
                       <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
                         <i class="icon-edit icon-fixed-width"></i>
                       <% end %>

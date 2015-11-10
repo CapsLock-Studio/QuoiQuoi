@@ -11,9 +11,11 @@
           </div>
           <div class="col-xs-12 margin-bottom-5">
             <%= order_product.product.product_translates.find_by_locale_id(order.locale_id).name %>
-            (<%= order_product.order_product_options.map{|order_option|
-            order_option.product_option.content
-          }.join(', ') %>)
+            <%= '(' if order_product.order_product_options.size > 0 %>
+            <%= order_product.order_product_options.map{|order_option|
+              order_option.product_option.content
+            }.join(', ') %>
+            <%= ')' if order_product.order_product_options.size > 0 %>
           </div>
 
           <div class="col-xs-12 text-muted">
