@@ -115,6 +115,9 @@ class RegistrationsController < ApplicationController
 
         RegistrationMailer.remind_to_pay(@registration.id, subject).deliver_later
 
+        add_breadcrumb t('home'), :root_path
+        add_breadcrumb t('registrations')
+
         render action: :show
       else
         render json: 'Not support payment method.'
@@ -236,6 +239,8 @@ class RegistrationsController < ApplicationController
     @registration.registration_payment.completed_time = Time.now
 
     @registration.registration_payment.save!
+
+    RegistrationMailer.completed_confirmation(@registration.id).deliver_later
 
     render 'registrations/show'
   end
