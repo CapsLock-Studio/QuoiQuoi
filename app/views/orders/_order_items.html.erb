@@ -1,57 +1,61 @@
-<div class="box">
-  <div class="box-content">
-    <div class="items">
-      <% order.order_custom_items.each do |order_custom_item| %>
-        <div class="cart-item">
-          <%= link_to custom_order_path(order_custom_item.custom_order.id) do %>
-            <%= t('custom_order_no') %>&nbsp;C<%= order_custom_item.custom_order.id %>
-            <span class="text-muted pull-right"><%= t('custom_order.charge') %><%= number_to_currency(order_custom_item.custom_order.price) %></span>
-          <% end %>
-        </div>
-      <% end %>
+<% if order.order_custom_items.size > 0 %>
+  <div class="box">
+    <div class="box-content">
+      <div class="items">
+        <% order.order_custom_items.each do |order_custom_item| %>
+          <div class="cart-item">
+            <%= link_to custom_order_path(order_custom_item.custom_order.id) do %>
+              <%= t('custom_order_no') %>&nbsp;C<%= order_custom_item.custom_order.id %>
+              <span class="text-muted pull-right"><%= t('custom_order.charge') %><%= number_to_currency(order_custom_item.custom_order.price) %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
-<div class="box">
-  <div class="box-content">
-    <div class="items">
-      <% order.order_products.each do |order_product| %>
-        <div class="row item">
-          <div class="col-xs-5">
-            <%= image_tag order_product.product.image.url(:thumb) %>
-          </div>
-          <div class="col-xs-7">
-            <div class="row">
-              <div class="col-xs-12 text-muted">
-                <%= t('item') %>
-              </div>
-              <div class="col-xs-12 margin-bottom-5">
-                <%= order_product.product.product_translates.find_by_locale_id(order.locale_id).name %>
-                <%= '(' if order_product.order_product_options.size > 0 %>
-                <%= order_product.order_product_options.map{|order_option|
-                  order_option.product_option.content
-                }.join(', ') %>
-                <%= ')' if order_product.order_product_options.size > 0 %>
-              </div>
+<% if order.order_products.size > 0 %>
+  <div class="box">
+    <div class="box-content">
+      <div class="items">
+        <% order.order_products.each do |order_product| %>
+          <div class="row item">
+            <div class="col-xs-5">
+              <%= image_tag order_product.product.image.url(:thumb) %>
+            </div>
+            <div class="col-xs-7">
+              <div class="row">
+                <div class="col-xs-12 text-muted">
+                  <%= t('item') %>
+                </div>
+                <div class="col-xs-12 margin-bottom-5">
+                  <%= order_product.product.product_translates.find_by_locale_id(order.locale_id).name %>
+                  <%= '(' if order_product.order_product_options.size > 0 %>
+                  <%= order_product.order_product_options.map{|order_option|
+                    order_option.product_option.content
+                  }.join(', ') %>
+                  <%= ')' if order_product.order_product_options.size > 0 %>
+                </div>
 
-              <div class="col-xs-12 text-muted">
-                <%= t('single_subtotal') %>
-              </div>
-              <div class="col-xs-12 margin-bottom-5">
-                <%= number_to_currency(order_product.price) %>
-              </div>
+                <div class="col-xs-12 text-muted">
+                  <%= t('single_subtotal') %>
+                </div>
+                <div class="col-xs-12 margin-bottom-5">
+                  <%= number_to_currency(order_product.price) %>
+                </div>
 
-              <div class="col-xs-12 text-muted">
-                <%= t('quantity') %>
-              </div>
-              <div class="col-xs-12">
-                <%= order_product.quantity %>
+                <div class="col-xs-12 text-muted">
+                  <%= t('quantity') %>
+                </div>
+                <div class="col-xs-12">
+                  <%= order_product.quantity %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
