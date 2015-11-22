@@ -30,9 +30,9 @@
                 <tr>
                   <th>用戶id</th>
                   <th>Email</th>
-                  <th>常用聯絡姓名</th>
-                  <th>常用聯絡電話</th>
-                  <th>常用聯絡line</th>
+                  <th>姓名</th>
+                  <th>聯絡電話</th>
+                  <th>line</th>
                   <th>加入時間</th>
                   <th></th>
                 </tr>
@@ -60,7 +60,9 @@
                     </td>
                     <td>
                       <div class="text-right">
-                        <%= link_to(admin_user_path(user), class: 'btn btn-md') do %>
+                        <%= link_to(info_admin_user_path(user.id),
+                                    class: 'btn btn-md', data: {toggle: 'modal', target: '#user-detail'}
+                            ) do %>
                           <i class="icon-eye-open"></i>
                         <% end %>
                       </div>
@@ -76,3 +78,5 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

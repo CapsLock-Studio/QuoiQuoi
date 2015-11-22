@@ -57,6 +57,17 @@ class UserController < ApplicationController
           sign_in_and_redirect(user)
         else
           sign_in(user)
+
+          # Same code in application_controller.db - line 47
+          # Order items in cart change it's owner.
+          if session[:guest_user_id] && @order_in_cart
+            @order_in_cart.user_id = user.id
+            @order_in_cart.save
+
+            User.find(session[:guest_user_id]).destroy
+            session.delete(:guest_user_id)
+          end
+
           redirect_to user.redirect_url
         end
       end

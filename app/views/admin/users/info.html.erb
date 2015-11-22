@@ -14,21 +14,33 @@
           </div>
         </div>
         <div class="form-group">
-          <label>常用姓名</label>
+          <label>姓名</label>
           <div class="controls">
             <%= text_field_tag :name, @user.name, class: 'form-control', disabled: 'disabled' %>
           </div>
         </div>
         <div class="form-group">
-          <label>常用電話</label>
+          <label>電話</label>
           <div class="controls">
             <%= text_field_tag :phone, @user.phone, class: 'form-control', disabled: 'disabled' %>
           </div>
         </div>
         <div class="form-group">
+          <label>Line</label>
+          <div class="controls">
+            <%= text_field_tag :line, @user.line, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>地址</label>
+          <div class="controls">
+            <%= text_field_tag :line, @user.address, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
           <label>帳號類型</label>
           <div class="controls">
-            <%= text_field_tag :provider, @user.provider.blank?? '一般帳號' : @user.provider, class: 'form-control', disabled: 'disabled' %>
+            <%= text_field_tag :provider, @user.provider.blank?? 'Email建立' : @user.provider, class: 'form-control', disabled: 'disabled' %>
           </div>
         </div>
         <div class="form-group">

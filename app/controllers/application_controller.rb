@@ -52,18 +52,6 @@ class ApplicationController < ActionController::Base
       User.find(session[:guest_user_id]).destroy
       session.delete(:guest_user_id)
     end
-
-    # handle the order custom item params
-    if session[:temp].present?
-      order_custom_item = OrderCustomItem.find(session[:temp])
-      order_custom_item.user_id = current_user.id
-      order_custom_item.save!
-      session[:temp] = nil
-
-      order_custom_item_path(order_custom_item)
-    else
-      super
-    end
   end
 
   def configure_devise_params
@@ -92,7 +80,7 @@ class ApplicationController < ActionController::Base
   def set_default_seo_properties
     @website_title = $redis.get('seo:title')
     @meta_og_description = $redis.get('seo:description')
-    @meta_og_image = "http://quoiquoi.tw#{ActionController::Base.helpers.asset_path('logo-large.jpg')}"
+    @meta_og_image = "https://quoiquoi.tw#{ActionController::Base.helpers.asset_path('logo-large.jpg')}"
     @meta_og_title = $redis.get('seo:og:title')
     @meta_og_type = 'website'
   end

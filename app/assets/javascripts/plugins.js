@@ -310,22 +310,28 @@ var initSigninModel = function() {
     });
 
     userEmailForm.find('button[type=submit]').on('click', function(){
-        $.ajax({
-            url: $(this).data('url'),
-            type: 'post',
-            dataType: 'json',
-            data: {
-                email: userEmailForm.find('input[name=email]').val(),
-                redirect_url: window.location.href
-            },
-            success: function(data, textStatus, jqXHR){
-                userEmailForm.hide();
-                $('.user-email-sent').show();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                window.alert('Send email error');
-            }
-        });
+        var emailInput = userEmailForm.find('input[name=email]');
+        if (validateEmail(emailInput.val())) {
+            emailInput.css('border-color', '');
+            $.ajax({
+                url: $(this).data('url'),
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    email: emailInput.val(),
+                    redirect_url: window.location.href
+                },
+                success: function(data, textStatus, jqXHR){
+                    userEmailForm.hide();
+                    $('.user-email-sent').show();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    window.alert('Send email error');
+                }
+            });
+        } else {
+            emailInput.css('border-color', 'red');
+        }
     });
 
     $('#signin-modal').on('hidden.bs.modal', function(){
@@ -406,36 +412,43 @@ var initCustomOrderModel = function() {
     });
 
     step2.find('button[type=submit]').on('click', function() {
-        var materials = [];
-        customOrdeModal.find('.material.removable').each(function(i){
-            materials[i] = $(this).data('id');
-        });
+        var emailInput = customOrdeModal.find('input[name=email]');
+        if (validateEmail(emailInput.val())) {
+            emailInput.css('border-color', '');
+            var materials = [];
+            customOrdeModal.find('.material.removable').each(function(i){
+                materials[i] = $(this).data('id');
+            });
 
-        $.ajax({
-            url: $(this).data('url'),
-            data: {
-                style: customOrdeModal.find('input[name=style]:checked').val(),
-                order_type: customOrdeModal.find('input[name=order_type]:checked').val(),
-                materials: JSON.stringify(materials),
-                name: customOrdeModal.find('input[name=name]').val(),
-                phone: customOrdeModal.find('input[name=phone]').val(),
-                line: customOrdeModal.find('input[name=line]').val(),
-                email: customOrdeModal.find('input[name=email]').val()
-            },
-            dataType: 'json',
-            type: 'post',
-            success: function(data) {
-                if (data.redirectNow) {
-                    window.location.href = data.redirectUrl;
-                } else {
-                    step2.hide();
-                    step3.show();
+            $.ajax({
+                url: $(this).data('url'),
+                data: {
+                    style: customOrdeModal.find('input[name=style]:checked').val(),
+                    order_type: customOrdeModal.find('input[name=order_type]:checked').val(),
+                    materials: JSON.stringify(materials),
+                    name: customOrdeModal.find('input[name=name]').val(),
+                    phone: customOrdeModal.find('input[name=phone]').val(),
+                    line: customOrdeModal.find('input[name=line]').val(),
+                    email: emailInput.val()
+                },
+                dataType: 'json',
+                type: 'post',
+                success: function(data) {
+                    if (data.redirectNow) {
+                        window.location.href = data.redirectUrl;
+                    } else {
+                        step2.hide();
+                        step3.show();
+                    }
+                },
+                error: function() {
+                   window.alert('Authenticate wrong!');
                 }
-            },
-            error: function() {
-                window.alert('Authenticate wrong!');
-            }
-        });
+            });
+
+        } else {
+            emailInput.css('border-color', 'red');
+        }
     });
 
     customOrdeModal.on('hidden.bs.modal', function(){
@@ -494,6 +507,11 @@ function getCookie(cname) {
         if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
     }
     return "";
+}
+
+function validateEmail(email) {
+  var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  return re.test(email);
 }
 
 String.prototype.getCurrency = function() {

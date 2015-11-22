@@ -32,27 +32,20 @@
           </a>
         </div>
       </li>
-      <li>
-        <div>
-          <%= link_to t('order.my'), orders_path %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <%= link_to t('registration.all'), registrations_path %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <%= link_to t('custom_order.all'), custom_orders_path %>
-        </div>
-      </li>
       <% if user_signed_in? %>
         <li>
           <div>
-            <%= link_to(password_path) do %>
-              <i class="fa fa-fw fa-cog"></i>
-            <% end %>
+            <%= link_to t('order.my'), orders_path %>
+          </div>
+        </li>
+        <li>
+          <div>
+            <%= link_to t('registration.all'), registrations_path %>
+          </div>
+        </li>
+        <li>
+          <div>
+            <%= link_to t('custom_order.all'), custom_orders_path %>
           </div>
         </li>
         <li>
@@ -64,6 +57,27 @@
           </div>
         </li>
       <% else %>
+        <li>
+          <div>
+            <a href="#" data-toggle="modal" data-target="#signin-modal">
+              <%= t('order.my') %>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <a href="#" data-toggle="modal" data-target="#signin-modal">
+              <%= t('registration.all') %>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <a href="#" data-toggle="modal" data-target="#signin-modal">
+              <%= t('custom_order.all') %>
+            </a>
+          </div>
+        </li>
         <li>
           <div>
             <a href="#" data-toggle="modal" data-target="#signin-modal">

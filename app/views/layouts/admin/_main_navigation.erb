@@ -56,13 +56,13 @@
           <i class="icon-angle-down"></i>
         </a>
         <ul class="nav <%= 'in' if is_in(:orders) || is_in(:order_remittances) %>">
-          <%= nav_item_with_resource(check_admin_order_remittances_path, {rule: /#{admin_order_remittances_path}(\/\d+)?\/check/}, OrderRemittanceReport) do %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_order_remittances_path}(\/\d+)?\/check/}, OrderRemittanceReport) do %>
             <%= link_to(check_admin_order_remittances_path) do %>
               <i class="icon-check"></i>
               <span>待確認匯款回報</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(deliver_admin_orders_path, {rule: /#{deliver_admin_orders_path}|#{admin_orders_path}\/\d+\/edit/}, Order) do %>
+          <%= nav_item_with_resource(nil, {rule: /#{deliver_admin_orders_path}|#{admin_orders_path}\/\d+\/edit/}, Order) do %>
             <%= link_to(deliver_admin_orders_path) do %>
               <i class="icon-truck"></i>
               <span>訂單出貨情形</span>
@@ -178,6 +178,7 @@
         </ul>
       <% end %>
 
+      <!--
       <%= nav_item_with_resource('#', nil, UserGift) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
           <i class="icon-gift"></i>
@@ -199,6 +200,7 @@
           <% end %>
         </ul>
       <% end %>
+      -->
 
       <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*|#{admin_product_types_path}.*)/}, Product) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) or is_in(:product_types) or is_in(:product_material_types) %>" href="#">
@@ -243,6 +245,7 @@
         <% end %>
       <% end %>
 
+      <!--
       <%= nav_item_with_resource('#', nil, Material) do %>
         <a class="dropdown-collapse <%= 'in' if (is_in(:order_information) or is_in(:instructions)) %>" href="#">
           <i class="icon-heart-empty"></i>
@@ -268,6 +271,7 @@
           <% end %>
         </ul>
       <% end %>
+      -->
 
       <%= nav_item_with_resource('#', {rule: /#{admin_articles_path}.*|#{admin_article_types_path}.*/}, Article) do %>
       <a class="dropdown-collapse <%= 'in' if is_in(:articles) or is_in(:article_types) %>" href="#">
@@ -319,13 +323,6 @@
         <%= link_to(admin_board_index_path) do %>
           <i class="icon-comments-alt"></i>
           <span>訪客留言訊息管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_messages_path}.*|#{admin_users_path}\/\d+\/messages.*/}, Message) do %>
-        <%= link_to(admin_messages_path) do %>
-          <i class="icon-comment-alt"></i>
-          <span>客戶留言訊息管理</span>
         <% end %>
       <% end %>
 
@@ -478,13 +475,6 @@
         <%= link_to(admin_system_path) do %>
           <i class="icon-gear"></i>
           <span>系統設定</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(admin_payments_path, {rule: /#{admin_payments_path}(\/\d+)?(?!\/edit)$/}, Payment) do %>
-        <%= link_to(admin_payments_path) do %>
-          <i class="icon-credit-card"></i>
-          <span>付款記錄</span>
         <% end %>
       <% end %>
     </ul>
