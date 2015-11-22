@@ -1,0 +1,142 @@
+<div id="custom-order-modal" class="modal fade custom-order-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="step1">
+          <i class="icon icon-handwriting-inverse"></i>
+          <%= t('step') %> 1 /2
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="step2" style="display:none;">
+          <button type="button" class="btn btn-link button-step-back button-to-step1">
+            <i class="fa fa-angle-left fa-2x"></i>
+          </button>
+          <%= t('step') %> 2 /2
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="choose-materials" style="display:none">
+          <button type="button" class="btn btn-link button-step-back button-to-step1">
+            <i class="fa fa-angle-left fa-2x"></i>
+          </button>
+          <%= t('choose_some_materials') %>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" style="padding-top: 0;">
+        <div class="row step1" style="">
+          <div class="col-xs-12 margin-bottom-20">
+            <h4><%= t('which_type') %></h4>
+            <% JSON.parse($redis.get("order_type:locale:#{session[:locale_id]}") || '[]').each_with_index do |value, index| %>
+              <label class="radio-inline style-label">
+                <input type="radio" name="order_type" value="<%= value %>" <%= 'checked="checked""' if index == 0 %>>
+                <span></span>
+                <%= value %>
+              </label>
+            <% end %>
+          </div>
+          <div class="col-xs-12 margin-bottom-20 text-center">
+            <div>
+              <%= t('donot_know') %>
+            </div>
+            <div>
+              <%= t('some_clue') %>&nbsp;&nbsp;<a href=""><%= t('our_past_work') %></a>
+            </div>
+          </div>
+          <div class="col-xs-12 margin-bottom-20">
+            <h4><%= t('which_type') %></h4>
+            <% JSON.parse($redis.get("style:locale:#{session[:locale_id]}") || '[]').each_with_index do |value, index| %>
+              <label class="radio-inline style-label">
+                <input type="radio" name="style" value="<%= value %>" <%= 'checked="checked""' if index == 0 %>>
+                <span></span>
+                <%= value %>
+              </label>
+            <% end %>
+          </div>
+          <div class="col-xs-12">
+            <h4><%= t('let_choose_material') %></h4>
+            <div class="materials">
+              <input type="hidden" name="materials" />
+              <script id="removable-material-template" type="text/html">
+                <div class="material removable" data-id="{{id}}" style="background-image: url({{image}});">
+                  <i class="fa fa-times"></i>
+                </div>
+              </script>
+              <div class="material not-loaded" id="button-choose-materials" data-url="<%= materials_path %>">
+                <i class="fa fa-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row choose-materials" style="display:none;">
+          <script id="selectable-materials-template" type="text/html">
+            <div class="col-xs-12 margin-bottom-20">
+              <h4>{{type}}</h4>
+              <div class="materials">
+              </div>
+            </div>
+          </script>
+          <script id="selectable-material-template" type="text/html">
+            <div class="material selectable" data-id="{{id}}" style="background-image: url({{image}});"></div>
+          </script>
+        </div>
+
+        <div class="row step2" style="display:none;">
+          <div class="col-xs-12">
+            <h4><span class="text-danger">*</span>&nbsp;<%= t('must_fill') %></h4>
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label"><span class="text-danger">*</span>&nbsp;<%= t('full_name') %></label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control" name="name" value="<%= (current_user.nil?)? '' : current_user.name %>" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label"><span class="text-danger">*</span>&nbsp;Email</label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control <%= 'disabled' unless current_user.nil? %>" <%= 'disabled="disabled"' unless current_user.nil? %> name="email"
+                  placeholder="yourname@example.com" value="<%= (current_user.nil?)? '' : current_user.email %>" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label"><%= t('phone_number') %></label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control" name="phone" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label">Line</label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control" name="line" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row step3" style="display:none;">
+          <h3 class="text-center">
+            <i class="fa fa-envelope-o fa-fw"></i>
+            <%= t('check_signin_mail') %>
+          </h3>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link btn-block step1 button-to-step2"><%= t('order.next') %></button>
+
+        <div class="choose-materials text-center" style=display:none;>
+          <button type="submit" class="btn btn-default button-to-step1"><%= t('choose_ok') %></button>
+        </div>
+
+        <div class="step2 text-center" style=display:none;>
+          <button type="submit" class="btn btn-link btn-block" data-url="<%= custom_orders_path %>"><%= t('submit') %></button>
+        </div>
+        <div class="step3" style="display:none;">
+          <a class="btn btn-block text-muted" data-dismiss="modal"><%= t('close') %></a>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,68 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#50C771" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td align="center">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+          <span style="color:#FFFFFF;font-size:16px;">
+            <%= t('thanks') %>
+          </span>
+          <span style="color:#C0FFD2;font-size:16px;">
+            <%= t('mailer.text.custom.approve.alert') %>
+          </span>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;color:#000000;"><%= t('mailer.dear') %></span><br />
+        <span style="font-size:14px;">
+          <%= t('mailer.text.custom.approve.hint') %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0px 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          <%= t('custom_order.charge') %>
+        </span>
+        <strong style="font-size:14px;color:#000000;"><%= number_to_currency(@price) %></strong>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td>
+      <a href="<%= custom_order_url(@custom_order_id) %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15" bgcolor="#72C8E6">
+          <tr>
+            <td align="center" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                <%= t('mailer.text.custom.detail') %>
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td style="font-size:20px;">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= t('sincerely') %>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>

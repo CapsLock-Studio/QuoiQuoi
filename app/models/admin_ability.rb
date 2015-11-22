@@ -50,6 +50,7 @@ class AdminAbility
       can :manage, Faq
       can :manage, ProductType
       can :manage, Top
+      can :manage, CustomOrder
     end
 
     # for development

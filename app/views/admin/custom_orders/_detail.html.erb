@@ -1,0 +1,59 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      訂製相關資訊&nbsp;
+      <% if custom_order.cancel? || (!custom_order.approve.nil? && !custom_order.approve?) %>
+        <span class="label label-inverse">已取消</span>
+        <small class="text-muted">
+          於&nbsp;<%= custom_order.cancel_time.strftime('%Y/%m/%d %H:%I') %>&nbsp;取消
+        </small>
+      <% end %>
+    </div>
+  </div>
+  <div class="box-content">
+    <div class="row">
+      <% if custom_order.product_id.nil? %>
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            客戶所選選項
+          </div>
+          <u><%= custom_order.order_type %>、<%= custom_order.style %></u>
+        </div>
+        <div class="col-xs-12">
+          <div class="text-muted margin-bottom-10">
+            客戶所選布料
+          </div>
+          <div class="row margin-bottom-10">
+            <% Material.where(id: JSON.parse((custom_order.materials.blank?)? '[]' : custom_order.materials)).each do |material| %>
+              <div class="col-xs-4 margin-bottom-10">
+                <div>
+                  編號 <%= material.id %>
+                  <small class="text-muted"><%= material.material_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name %></small>
+                </div>
+                <a class="material" target="_blank" href="<%= material.image.url(:original) %>">
+                  <%= image_tag material.image.url(:thumb), class: 'img-responsive', style: 'max-width:180px;' %>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-xs-3 text-muted">
+          修改商品
+        </div>
+        <div class="col-xs-9">
+          <div>
+            <%= link_to edit_admin_product_path(custom_order.product_id), target: '_blank' do %>
+              編號 <%= custom_order.product_id %>
+              <small class="text-muted"><%= custom_order.product.product_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name %></small>
+              <i class="icon-info-sign"></i>
+            <% end %>
+          </div>
+          <a class="material" target="_blank" href="<%= edit_admin_product_path(custom_order.product_id) %>">
+            <%= image_tag custom_order.product.image.url(:thumb), class: 'img-responsive', style: 'max-width:180px;' %>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -301,6 +301,151 @@ var initCollapseBoxInMobile = function() {
     }
 };
 
+var initSigninModel = function() {
+    var socialSignin = $('.social-signin');
+    var userEmailForm = $('.user-email-form');
+    $('#email-signin-btn').on('click', function(){
+        socialSignin.hide();
+        userEmailForm.show();
+    });
+
+    userEmailForm.find('button[type=submit]').on('click', function(){
+        $.ajax({
+            url: $(this).data('url'),
+            type: 'post',
+            dataType: 'json',
+            data: {
+                email: userEmailForm.find('input[name=email]').val(),
+                redirect_url: window.location.href
+            },
+            success: function(data, textStatus, jqXHR){
+                userEmailForm.hide();
+                $('.user-email-sent').show();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                window.alert('Send email error');
+            }
+        });
+    });
+
+    $('#signin-modal').on('hidden.bs.modal', function(){
+        socialSignin.show();
+        userEmailForm.hide();
+        $('.user-email-sent').hide();
+    });
+};
+
+var initCustomOrderModel = function() {
+    var customOrdeModal = $('.custom-order-modal');
+    var step1 = customOrdeModal.find('.step1');
+    var step2 = customOrdeModal.find('.step2');
+    var chooseMaterials = customOrdeModal.find('.choose-materials');
+    var step3 = customOrdeModal.find('.step3');
+    customOrdeModal.find('.button-to-step1').on('click', function() {
+        step1.show();
+        chooseMaterials.hide();
+        step2.hide();
+    });
+
+    customOrdeModal.find('#button-choose-materials').on('click', function(){
+        var buttonChooseMaterials = $(this);
+        if (buttonChooseMaterials.hasClass('not-loaded')) {
+            $.ajax({
+                url: buttonChooseMaterials.data('url'),
+                dataType: 'json',
+                type: 'get',
+                success: function(data) {
+                    var materialsTemplate = customOrdeModal.find('#selectable-materials-template');
+                    var materialTemplate = customOrdeModal.find('#selectable-material-template');
+                    for (var i = 0; i < data.length; i++) {
+                        var materials = materialsTemplate.html();
+                        materials = $(materials.replace('{{type}}', data[i].type));
+
+                        for (var j = 0; j < data[i].materials.length; j++) {
+                            var material = materialTemplate.html();
+                            material = material.replace('{{id}}', data[i].materials[j].id);
+                            material = material.replace('{{image}}', data[i].materials[j].image);
+                            materials.find('.materials').append(material);
+                        }
+
+                        materials.insertBefore(materialsTemplate);
+                    }
+                    chooseMaterials.show();
+                    step1.hide();
+                    buttonChooseMaterials.removeClass('not-loaded');
+                },
+                error: function() {
+                    window.alert('load materials error!');
+                }
+            });
+        } else {
+            chooseMaterials.show();
+            step1.hide();
+        }
+    });
+
+    customOrdeModal.find('.button-to-step2').on('click', function() {
+        step1.hide();
+        step2.show();
+    });
+
+    customOrdeModal.on('click', '.selectable', function(){
+        $(this).toggleClass('selected').html(($(this).hasClass('selected'))? '<i class="fa fa-check fa-2x"></i>' : '');
+        if ($(this).hasClass('selected')) {
+            var template = customOrdeModal.find('#removable-material-template');
+            $(template.html().replace('{{id}}', $(this).data('id'))).css('background-image', $(this).css('background-image')).insertBefore(template);
+        } else {
+            step1.find('.removable[data-id=' + $(this).data('id') + ']').remove();
+        }
+    });
+
+    customOrdeModal.on('click', '.removable', function(){
+        var material = $(this);
+        customOrdeModal.find('.selectable[data-id=' + material.data('id') + ']').removeClass('selected').html('');
+        material.remove();
+    });
+
+    step2.find('button[type=submit]').on('click', function() {
+        var materials = [];
+        customOrdeModal.find('.material.removable').each(function(i){
+            materials[i] = $(this).data('id');
+        });
+
+        $.ajax({
+            url: $(this).data('url'),
+            data: {
+                style: customOrdeModal.find('input[name=style]:checked').val(),
+                order_type: customOrdeModal.find('input[name=order_type]:checked').val(),
+                materials: JSON.stringify(materials),
+                name: customOrdeModal.find('input[name=name]').val(),
+                phone: customOrdeModal.find('input[name=phone]').val(),
+                line: customOrdeModal.find('input[name=line]').val(),
+                email: customOrdeModal.find('input[name=email]').val()
+            },
+            dataType: 'json',
+            type: 'post',
+            success: function(data) {
+                if (data.redirectNow) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    step2.hide();
+                    step3.show();
+                }
+            },
+            error: function() {
+                window.alert('Authenticate wrong!');
+            }
+        });
+    });
+
+    customOrdeModal.on('hidden.bs.modal', function(){
+        step2.hide();
+        step3.hide();
+        step1.show();
+        chooseMaterials.hide();
+    });
+};
+
 $.fn.marquee = function(animateTime, waitTime) {
     var marqueeBlock = $(this);
     var marqueeHeight = marqueeBlock.height();

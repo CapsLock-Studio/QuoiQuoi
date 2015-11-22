@@ -8,7 +8,7 @@ class Admin::OrdersController < AdminController
   # GET /admin/orders
   # GET /admin/orders.json
   def index
-    @orders = Order.includes(:order_payment)
+    @orders = Order.includes(:order_payment).where.not(order_payments: {id: nil})
 
     unless search_filter_params.nil?
       @search_filter = search_filter_params

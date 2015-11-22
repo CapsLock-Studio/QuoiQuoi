@@ -40,7 +40,7 @@ class OrderMailer < ApplicationMailer
 
     I18n.locale = @order.locale.lang
 
-    mail(to: @order.user.email, from: $redis.get('about:locale:1:email'), subject: t('mailer.subject.delivered'))
+    mail(to: @order.user.email, subject: t('mailer.subject.delivered'))
   end
 
   # Send to manager for notification

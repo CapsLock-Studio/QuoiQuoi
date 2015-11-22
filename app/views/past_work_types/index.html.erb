@@ -1,15 +1,11 @@
 <%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
-    <%= render 'products/side_navigation' %>
+    <%= render 'side_navigation' %>
     <div class="col-md-9 col-sm-9">
       <div class="row">
         <%= render 'layouts/nav_item' %>
         <div class="col-xs-12">
-          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue' do %>
-            <%= t('order.personalize') %>
-            <i class="fa fa-angle-right"></i>
-          <% end %>
           <div class="headline">
             <h4>
               <%= t('past_works') %>

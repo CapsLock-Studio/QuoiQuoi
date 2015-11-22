@@ -90,11 +90,12 @@
 }
 
 /*Navbar*/
-.header .navbar-default .navbar-nav > li > a {
+.header .navbar-nav a {
 	color: #687074;
 	padding: 8px 12px;
 	text-transform: uppercase;
     font-size: 13px;
+    margin: 0 2px;
 }
 
 /*Dropdown*/
@@ -135,11 +136,6 @@
 	background: #f7f7f7 !important;
 }
 
-.header .navbar .nav > li > a.search:hover {
-	color: #72c02c;
-	border-bottom-color: #72c02c;
-}
-
 .header .navbar .search-open form {
 	margin: 0;	
 }
@@ -167,13 +163,8 @@
 
 	/*Navbar*/
 	.header .navbar-nav {
-		top: 2px;
 		position: relative;
-	}
-
-	.header .navbar-default .navbar-nav > li > a,
-	.header .navbar-default .navbar-nav > li > a:focus {	
-		border-bottom: solid 2px transparent;
+        margin-top: 12px;
 	}
 
 	.header .navbar-default .navbar-nav > li > a,
@@ -185,12 +176,6 @@
 		background: none;
 	}
 
-	.header .navbar-default .navbar-nav > .open > a,
-	.header .navbar-default .navbar-nav > .open > a:hover,
-	.header .navbar-default .navbar-nav > .open > a:focus {
-		color: #72c02c;
-	}
-
 	/*Dropdown Menu*/
 	.header .dropdown-menu { 
 		padding: 0;
@@ -198,9 +183,9 @@
 		min-width: 200px;
 		border-radius: 0; 
 		z-index: 9999 !important;
-		margin-top: -2px !important; 
-		border-top: solid 2px #72c02c; 
-		border-bottom: solid 2px #687074; 
+		margin-top: -2px !important;
+        border-top: solid 2px #787d80;
+		border-bottom: solid 2px #787d80;
 	}
 
 	.header .dropdown-menu li a { 
@@ -211,15 +196,9 @@
 		border-bottom: solid 1px #eee;
 	}
 
-	.header .dropdown-menu .active > a,
-	.header .dropdown-menu li > a:hover {
+	.header .dropdown-menu .active > a {
 		color: #fff;
-		filter: none !important;
 		background: #687074 !important;
-		-webkit-transition: all 0.1s ease-in-out;
-		-moz-transition: all 0.1s ease-in-out;
-		-o-transition: all 0.1s ease-in-out;
-		transition: all 0.1s ease-in-out;
 	}
 
 	.header .dropdown-menu li > a:focus {
@@ -244,16 +223,4 @@
 		box-shadow: none;
 		background: none; 
 	}	
-}
-
-@media (min-width: 768px) and (max-width: 1199px) {
-  .header .navbar-nav {
-    margin-top: 5px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .header .navbar-nav {
-    margin-top: 10px;
-  }
 }

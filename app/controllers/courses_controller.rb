@@ -81,7 +81,6 @@ class CoursesController < ApplicationController
   def show
     set_breadcrumbs
 
-    @registration = Registration.all.where(email: (current_user)? current_user.email : nil, course_id: @course.id).order(:id).first
     @recent_courses = Course.includes(:course_translate)
                             .where(course_translates: {locale_id: session[:locale_id]})
                             .where('time > ? AND courses.id != ?', Time.now, @course.id)
@@ -89,10 +88,6 @@ class CoursesController < ApplicationController
     # @recent_courses = Course.all.where('time > ? AND locale_id = ?', Time.now, session[:locale_id])
     #                             .where.not(id: @course.id)
     #                             .order(:time).limit(8)
-
-    unless @registration
-      @registration = @course.registrations.build
-    end
 
     add_breadcrumb @course.course_translate.name
 

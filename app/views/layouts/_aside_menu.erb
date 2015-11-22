@@ -45,22 +45,6 @@
                 </div>
               </div>
             <% end %>
-            <% @order_in_cart.order_custom_items.each do|order_custom_item| %>
-              <% translate = order_custom_item.order_custom_item_translates.where(locale_id: session[:locale_id]).first %>
-              <% subtotal += translate.price %>
-              <div class="search-blocks search-blocks-colored side-menu-block">
-                <div class="col-sm-5 search-img">
-                  <%= custom_item_image_helper(order_custom_item, :medium, 'img-responsive') %>
-                </div>
-                <div class="col-sm-7">
-                  <%= link_to(order_custom_item_path(order_custom_item), class: 'pull-right', method: :delete) do %>
-                    <i class="fa fa-times"></i>
-                  <% end %>
-                  <h4><%= custom_item_name_helper(order_custom_item) %></h4>
-                  <h5 class="text-muted"><%= number_to_currency(translate.price) %></h5>
-                </div>
-              </div>
-            <% end %>
           </div>
           <div class="box-content">
             <div class="row">

@@ -1,84 +1,78 @@
-<ul class="top-navigation list-unstyled pull-right" style="padding-left: 100px;">
-  <li>
-    <div class="top">
-      <a href="#" class="<%= 'disabled' if !@order_in_cart.nil? && !@order_in_cart.in_cart_empty? %>">
-        <i class="fa fa-globe"></i>
-        <%= t('language') %>
-      </a>
-      <% if @order_in_cart.nil? || @order_in_cart.in_cart_empty? %>
-        <ul class="languages">
-          <%= lang_nav_item('zh-TW') do %>
-            <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+<div class="top-navigation row hidden-xs">
+  <div class="container">
+    <ul class="list-unstyled pull-right">
+      <li>
+        <div class="top">
+          <a href="#" class="<%= 'disabled' if !@order_in_cart.nil? && !@order_in_cart.in_cart_empty? %>">
+            <i class="fa fa-globe"></i>
+            <%= t('language') %>
+          </a>
+          <% if @order_in_cart.nil? || @order_in_cart.in_cart_empty? %>
+            <ul class="languages">
+              <%= lang_nav_item('zh-TW') do %>
+                <%= link_to '中文', controller: controller.controller_name, action: controller.action_name, locale: 'zh-TW' %>
+              <% end %>
+              <%= lang_nav_item('en') do %>
+                <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
+              <% end %>
+            </ul>
           <% end %>
-          <%= lang_nav_item('en') do %>
-            <%= link_to 'English', controller: controller.controller_name, action: controller.action_name, locale: 'en' %>
-          <% end %>
-        </ul>
+        </div>
+      </li>
+      <li>
+        <div>
+          <a href="https://www.facebook.com/bellaszakka" target="_blank">
+            <i class="fa fa-facebook fa-fw"></i>
+          </a>
+          <a href="http://weibo.com/quoiquoistudio" target="_blank">
+            <i class="fa fa-weibo fa-fw"></i>
+          </a>
+          <a href="http://lisabella.pixnet.net/blog" target="_blank">
+            Blog
+          </a>
+        </div>
+      </li>
+      <li>
+        <div>
+          <%= link_to t('order.my'), orders_path %>
+        </div>
+      </li>
+      <li>
+        <div>
+          <%= link_to t('registration.all'), registrations_path %>
+        </div>
+      </li>
+      <li>
+        <div>
+          <%= link_to t('custom_order.all'), custom_orders_path %>
+        </div>
+      </li>
+      <% if user_signed_in? %>
+        <li>
+          <div>
+            <%= link_to(password_path) do %>
+              <i class="fa fa-fw fa-cog"></i>
+            <% end %>
+          </div>
+        </li>
+        <li>
+          <div>
+            <%= link_to(destroy_user_session_path, method: :delete) do %>
+              <i class="fa fa-sign-out"></i>
+              <%= t('signout') %>
+            <% end %>
+          </div>
+        </li>
+      <% else %>
+        <li>
+          <div>
+            <a href="#" data-toggle="modal" data-target="#signin-modal">
+              <i class="fa fa-sign-in"></i>
+              <%= t('signin') %>
+            </a>
+          </div>
+        </li>
       <% end %>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a href="https://www.facebook.com/bellaszakka" target="_blank">
-        <i class="fa fa-facebook fa-fw"></i>
-      </a>
-      <a href="http://weibo.com/quoiquoistudio" target="_blank">
-        <i class="fa fa-weibo fa-fw"></i>
-      </a>
-      <a href="http://lisabella.pixnet.net/blog" target="_blank">
-        Blog
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <%= link_to rss_path do %>
-        <i class="fa fa-rss"></i>
-      <% end %>
-    </div>
-  </li>
-  <% if user_signed_in? %>
-    <li>
-      <div class="top">
-        <a href="#">
-          <%= t('control_panel') %>
-        </a>
-        <ul class="languages" style="margin-left: 17px;">
-          <%= nav_item(orders_path) do %>
-            <%= link_to t('order.all'), orders_path %>
-          <% end %>
-          <%= nav_item(registrations_path) do %>
-            <%= link_to t('registration.all'), registrations_path %>
-          <% end %>
-          <%= nav_item(order_custom_items_path) do %>
-            <%= link_to t('custom_order.all'), order_custom_items_path %>
-          <% end %>
-        </ul>
-      </div>
-    </li>
-    <li>
-      <div>
-        <%= link_to(password_path) do %>
-          <i class="fa fa-fw fa-cog"></i>
-        <% end %>
-      </div>
-    </li>
-    <li>
-      <div>
-        <%= link_to(destroy_user_session_path, method: :delete) do %>
-          <i class="fa fa-sign-out"></i>
-          <%= t('signout') %>
-        <% end %>
-      </div>
-    </li>
-  <% else %>
-    <li>
-      <div>
-        <%= link_to(new_user_session_path) do %>
-          <i class="fa fa-sign-in"></i>
-          <%= t('signin') %>
-        <% end %>
-      </div>
-    </li>
-  <% end %>
-</ul>
+    </ul>
+  </div>
+</div>

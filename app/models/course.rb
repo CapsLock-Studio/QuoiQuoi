@@ -25,7 +25,7 @@ class Course < ActiveRecord::Base
     end.inject{|sum, attendance| sum + attendance} || 0
 
     if self.canceled?
-      I18n.translate('registration.cancel')
+      I18n.translate('course.canceled')
     elsif self.time < Time.now + 5.hours
       I18n.translate('course.past')
     elsif register_full? || self.full?

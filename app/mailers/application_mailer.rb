@@ -1,6 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
   # include Resque::Mailer
-  default from: 'no-reply@quoiquoi.tw'
+  default from: 'admin@quoiquoi.tw'
   layout 'mailer'
 
   before_action :set_locale_id

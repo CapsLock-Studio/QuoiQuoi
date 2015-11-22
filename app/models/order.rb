@@ -67,8 +67,7 @@ class Order < ActiveRecord::Base
   end
 
   def order_custom_items_subtotal
-    self.order_custom_items.includes(:order_custom_item_translate)
-                           .where(order_custom_item_translates: {locale_id: self.locale_id}).sum(:price)
+    order_custom_items.map(&:custom_order).sum(&:price)
   end
 
   def order_products_subtotal

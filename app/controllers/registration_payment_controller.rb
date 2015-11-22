@@ -1,6 +1,7 @@
 class RegistrationPaymentController < ApplicationController
   before_action :set_registration, except: [:resume, :webatm_resume, :alipay_resume]
   before_action :check_payment_is_completed, only: [:resume, :webatm_resume, :alipay_resume]
+  before_action :authenticate_user!
   before_action :set_breadcrumb
 
   def remittance

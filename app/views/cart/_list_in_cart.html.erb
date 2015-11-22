@@ -1,107 +1,98 @@
-<div class="box collapse-in-mobile">
-  <h4 class="box-collapse">
-    <a class="pull-right">
-      <i class="fa fa-angle-down fa-lg hidden-lg hidden-md hidden-sm"></i>
-    </a>
-    <%= t('products_in_cart') %>
-  </h4>
-  <div class="box-content">
-    <!-- items title -->
-    <div class="col-sm-offset-3 col-sm-9 hidden-xs text-muted margin-bottom-5">
-      <div class="row">
-        <div class="col-sm-4">
-          <%= t('item') %>
-        </div>
-        <div class="col-sm-4">
-          <%= t('single_subtotal') %>
-        </div>
-        <div class="col-sm-4">
-          <%= t('quantity') %>
-        </div>
+<% if @order_in_cart.order_custom_items.size > 0 %>
+  <div class="box">
+    <h4><%= t('custom_order.my') %></h4>
+    <div class="box-content">
+      <div class="cart-item">
+        <% @order_in_cart.order_custom_items.each do |custom_item| %>
+          <div class="cart-item">
+            <%= link_to custom_order_path(custom_item.custom_order) do %>
+              <%= t('custom_order_no') %>&nbsp;C<%= custom_item.custom_order.id %>&nbsp;<span class="text-muted">(建立於<%= custom_item.custom_order.created_at.strftime('%Y/%m/%d') %>)</span>
+            <% end %>
+            <strong class="pull-right">
+              <%= t('custom_order.charge') %>&nbsp;
+              <%= number_to_currency(custom_item.custom_order.price) %>
+            </strong>
+          </div>
+        <% end %>
       </div>
     </div>
+  </div>
+<% end %>
 
-    <div class="items">
-      <% @order_in_cart.order_products.each_with_index do |order_product, index| %>
-        <div class="row item">
-          <div class="col-sm-3 col-xs-5">
-            <%= image_tag order_product.product.image.url(:thumb) %>
+<% if @order_in_cart.order_products.size > 0 %>
+  <div class="box collapse-in-mobile">
+    <h4 class="box-collapse">
+      <a class="pull-right">
+        <i class="fa fa-angle-down fa-lg hidden-lg hidden-md hidden-sm"></i>
+      </a>
+      <%= t('products_in_cart') %>
+    </h4>
+    <div class="box-content">
+      <!-- items title -->
+      <div class="col-sm-offset-3 col-sm-9 hidden-xs text-muted margin-bottom-5">
+        <div class="row">
+          <div class="col-sm-4">
+            <%= t('item') %>
           </div>
-          <div class="col-sm-9 col-xs-7">
-            <div class="row">
-              <div class="visible-xs col-xs-12 text-muted">
-                <%= t('item') %>
-              </div>
-              <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
-                <%= order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).name %>
-                <%= '(' if order_product.order_product_options.size > 0 %>
-                <%= order_product.order_product_options.map{|order_option|
-                  order_option.product_option.content
-                }.join(', ') %>
-                <%= ')' if order_product.order_product_options.size > 0 %>
-              </div>
-
-              <div class="visible-xs col-xs-12 text-muted">
-                <%= t('single_subtotal') %>
-              </div>
-              <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
-                <%= number_to_currency(order_product.price) %>
-              </div>
-
-              <div class="visible-xs col-xs-12 text-muted">
-                <%= t('quantity') %>
-              </div>
-              <div class="col-sm-4 col-xs-12">
-                <%= order_product.quantity.to_i %>
-              </div>
-            </div>
+          <div class="col-sm-4">
+            <%= t('single_subtotal') %>
           </div>
-        </div>
-      <% end %>
-    </div>
-
-    <% @order_in_cart.order_custom_items.each_with_index do |order_custom_item, index| %>
-      <div class="row items">
-        <div class="item">
-          <div class="col-sm-3 col-xs-5">
-            <%= custom_item_image_helper(order_custom_item) %>
-          </div>
-          <div class="col-sm-9 col-xs-7">
-            <div class="row">
-              <div class="visible-xs col-xs-12 text-muted">
-                <%= t('item') %>
-              </div>
-              <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
-                <%= t('customizations') %>
-              </div>
-
-              <div class="visible-xs col-xs-12 text-muted">
-                <%= t('single_subtotal') %>
-              </div>
-              <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
-                <%= number_to_currency(order_custom_item.order_custom_item_translates.find_by_locale_id(@order_in_cart.locale_id).price) %>
-              </div>
-
-              <div class="visible-xs col-xs-12 text-muted">
-                <%= t('quantity') %>
-              </div>
-              <div class="col-sm-4 col-xs-12">
-                1
-              </div>
-            </div>
+          <div class="col-sm-4">
+            <%= t('quantity') %>
           </div>
         </div>
       </div>
-    <% end %>
 
-    <div class="row">
-      <div class="col-xs-12">
-        <h4 class="color-orange text-right">
-          <%= t('total_amount') %>
-          <strong class="text-muted subtotal" data-price="<%= @order_in_cart.get_raw_subtotal %>">
-            <%= number_to_currency(@order_in_cart.get_subtotal) %>
-          </strong>
-          <br/>
+      <div class="items">
+        <% @order_in_cart.order_products.each_with_index do |order_product, index| %>
+          <div class="row item">
+            <div class="col-sm-3 col-xs-5">
+              <%= image_tag order_product.product.image.url(:thumb) %>
+            </div>
+            <div class="col-sm-9 col-xs-7">
+              <div class="row">
+                <div class="visible-xs col-xs-12 text-muted">
+                  <%= t('item') %>
+                </div>
+                <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
+                  <%= order_product.product.product_translates.find_by_locale_id(@order_in_cart.locale_id).name %>
+                  <%= '(' if order_product.order_product_options.size > 0 %>
+                  <%= order_product.order_product_options.map{|order_option|
+                    order_option.product_option.content
+                  }.join(', ') %>
+                  <%= ')' if order_product.order_product_options.size > 0 %>
+                </div>
+
+                <div class="visible-xs col-xs-12 text-muted">
+                  <%= t('single_subtotal') %>
+                </div>
+                <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
+                  <%= number_to_currency(order_product.price) %>
+                </div>
+
+                <div class="visible-xs col-xs-12 text-muted">
+                  <%= t('quantity') %>
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                  <%= order_product.quantity.to_i %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h4 class="color-orange text-right">
+      <%= t('total_amount') %>
+      <strong class="text-muted subtotal" data-price="<%= @order_in_cart.get_raw_subtotal %>">
+        <%= number_to_currency(@order_in_cart.get_subtotal) %>
+      </strong>
+      <br/>
                   <span class="text-muted">
                     (<%= t('shipping_fee') %>:&nbsp;
                     <span class="shipping-fee-subtotal">
@@ -109,8 +100,6 @@
                     </span>
                     )
                   </span>
-        </h4>
-      </div>
-    </div>
+    </h4>
   </div>
 </div>

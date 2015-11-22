@@ -27,7 +27,7 @@ QuoiQuoi::Application.routes.draw do
         patch :visible
       end
 
-      resources :product_custom_items
+      resources :product_custom_items, shallow: true
 
       # This is one way to shallow nesting resource from http://weblog.jamisbuck.org/2007/2/5/nesting-resources
       # The article is written by Jamis on February 05, 2007 @ 01:00 PM
@@ -179,16 +179,19 @@ QuoiQuoi::Application.routes.draw do
 
     resources :messages
 
-    resources :order_custom_items do
+    resources :custom_orders do
       member do
-        delete :delete
+        get :discussing, action: :show
+        get :canceled, action: :show
       end
+
       collection do
-        get :accepted
+        get :discussing
         get :canceled
-        get :check
       end
     end
+
+    resources :custom_order_options
 
     resource :remittances
 
@@ -299,6 +302,9 @@ QuoiQuoi::Application.routes.draw do
     patch 'cart' => 'cart#update'
     get 'cart/checkout' => 'cart#checkout'
     post 'cart/payment' => 'cart#payment'
+    get 'user/token/:token' => 'user#email_signin', as: 'email_signin'
+    get 'user/email_confirmation' => 'user#email_confirmation'
+    post 'user/email_authencate' => 'user#email_authencate', as: 'email_authencate'
 
     devise_scope :user do
       get 'user' => 'user#index'
@@ -315,9 +321,7 @@ QuoiQuoi::Application.routes.draw do
       get 'style1' => 'home#style1'
       get 'style2' => 'home#style2'
     end
-    resources :products do
-      resource :order_custom_items
-    end
+    resources :products
     resources :news
     resources :courses do
       member do
@@ -372,15 +376,6 @@ QuoiQuoi::Application.routes.draw do
       end
     end
 
-    resources :order_custom_items do
-      collection do
-        get :material
-      end
-
-      member do
-        put :cancel
-      end
-    end
     resources :order_products
     resources :registrations do
       collection do
@@ -425,6 +420,19 @@ QuoiQuoi::Application.routes.draw do
     resources :areas do
       resources :travel_information
     end
+
+    resources :custom_orders do
+      member do
+        put :cancel
+        patch :cancel
+      end
+      collection do
+        get :build
+      end
+    end
+
+    resources :order_custom_items
+    resources :materials
 
     resource :terms_of_service, controller: :terms_of_service
     resource :privacy_statement, controller: :privacy_statement
