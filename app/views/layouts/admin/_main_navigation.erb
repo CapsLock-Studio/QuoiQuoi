@@ -96,38 +96,42 @@
       <% end %>
 
       <%= nav_item_with_resource('#', nil, OrderCustomItem) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:order_custom_items) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:custom_orders) or is_in(:custom_order_options) or (is_in(:materials) or is_in(:material_types)) %>" href="#">
           <i class="icon-tasks"></i>
-          <span>客製化訂單管理</span>
+          <span>客製化相關管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:order_custom_items) %>">
-          <%= nav_item_with_resource(check_admin_order_custom_items_path, nil, OrderCustomItem) do %>
-            <%= link_to(check_admin_order_custom_items_path) do %>
-              <i class="icon-check"></i>
-              <span>待確認訂製要求</span>
+        <ul class="nav <%= 'in' if is_in(:custom_orders) or is_in(:custom_order_options) or (is_in(:materials) or is_in(:material_types)) %>">
+          <%= nav_item_with_resource(nil, {rule: /custom_orders(\/\d+)?\/discussing/}, CustomOrder) do %>
+            <%= link_to(discussing_admin_custom_orders_path) do %>
+              <i class="icon-comments-alt"></i>
+              <span>討論中訂製</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(accepted_admin_order_custom_items_path, nil, OrderCustomItem) do %>
-            <%= link_to(accepted_admin_order_custom_items_path) do %>
-              <i class="icon-ok"></i>
-              <span>已接受訂製要求</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(admin_order_custom_items_path, {rule: /#{admin_order_custom_items_path}(\/\d+\/edit)?((?!\/accepted)|(?!\/check))$/}, OrderCustomItem) do %>
-            <%= link_to(admin_order_custom_items_path) do %>
+          <%= nav_item_with_resource(nil, {rule: /admin\/custom_orders(\/\d+)?((?!\/discussing)|(?!\/canceled))$/}, CustomOrder) do %>
+            <%= link_to(admin_custom_orders_path) do %>
               <i class="icon-flag"></i>
-              <span>訂製要求記錄</span>
+              <span>所有訂製紀錄</span>
             <% end %>
           <% end %>
-          <!--
-          <%= nav_item_with_resource(canceled_admin_order_custom_items_path, nil, OrderCustomItem) do %>
-            <%= link_to(canceled_admin_order_custom_items_path, class: 'text-muted') do %>
+          <%= nav_item_with_resource(nil, {rule: /^#{admin_custom_order_options_path}.*/}, CustomOrder) do %>
+            <%= link_to(admin_custom_order_options_path) do %>
+              <i class="icon-tag"></i>
+              <span>訂製選項標籤管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_material_types_path, {rule: /^#{admin_material_types_path}.*/}, Material) do %>
+            <%= link_to(admin_material_types_path) do %>
+              <i class="icon-tag"></i>
+              <span>布料管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(canceled_admin_custom_orders_path, nil, CustomOrder) do %>
+            <%= link_to(canceled_admin_custom_orders_path, class: 'text-muted') do %>
               <i class="icon-remove"></i>
               <span>已取消訂製要求</span>
             <% end %>
           <% end %>
-          -->
         </ul>
       <% end %>
 
@@ -232,32 +236,20 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(nil, {rule: /none/}, Course) do %>
-        <%= link_to(admin_courses_path) do %>
-          <i class="icon-book"></i>
-          <span>課程管理</span>
+      <%= nav_item_with_resource(admin_past_work_types_path, {rule: /admin\/(#{:past_work_types}|#{:past_works}|#{:past_work_translates}).*/}, Admin) do %>
+        <%= link_to(admin_past_work_types_path) do %>
+          <i class="icon-tag"></i>
+          <span>過去作品管理</span>
         <% end %>
       <% end %>
 
       <%= nav_item_with_resource('#', nil, Material) do %>
-        <a class="dropdown-collapse <%= 'in' if (is_in(:materials) or is_in(:material_types) or is_in(:order_information) or is_in(:instructions) or is_in(:past_work_types) or is_in(:past_works) or is_in(:past_work_translates)) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if (is_in(:order_information) or is_in(:instructions)) %>" href="#">
           <i class="icon-heart-empty"></i>
           <span>訂製手作包管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:materials) or is_in(:material_types) or is_in(:order_information) or is_in(:instructions) or is_in(:past_work_types) or is_in(:past_works) or is_in(:past_work_translates) %>">
-          <%= nav_item_with_resource(admin_past_work_types_path, {rule: /admin\/(#{:past_work_types}|#{:past_works}|#{:past_work_translates}).*/}, Admin) do %>
-            <%= link_to(admin_past_work_types_path) do %>
-              <i class="icon-tag"></i>
-              <span>過去作品管理</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(admin_material_types_path, {rule: /^#{admin_material_types_path}.*/}, Material) do %>
-            <%= link_to(admin_material_types_path) do %>
-              <i class="icon-tag"></i>
-              <span>布料管理</span>
-            <% end %>
-          <% end %>
+        <ul class="nav <%= 'in' if is_in(:order_information) or is_in(:instructions) %>">
           <% Locale.all.each do |locale| %>
             <%= nav_item_with_resource(nil, {rule: /#{admin_locale_order_information_index_path(locale)}.*/}, OrderInformation) do %>
               <%= link_to(admin_locale_order_information_index_path(locale)) do %>

@@ -77,7 +77,34 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    redirect_to controller: :registration_payment, action: Registration.new(registration_params).payment_method, params: params
+    if current_user.nil?
+      user = User.find_by_email(registration_params[:email])
+      if user.nil?
+        user = User.new(email: registration_params[:email])
+        unless params[:save].nil?
+          user.phone = registration_params[:phone]
+          user.name = registration_params[:name]
+        end
+        user.password = Devise.friendly_token[0, 20]
+        user.save!
+      end
+
+      UserMailer.signin_confirmation(
+          user,
+          url_for(
+              controller: :registration_payment,
+              action: Registration.new(registration_params).payment_method,
+              params: params)).deliver_later
+      render 'user/email_confirmation'
+    else
+      unless params[:save].nil?
+        current_user.phone = registration_params[:phone]
+        current_user.name = registration_params[:name]
+        current_user.save!
+      end
+
+      redirect_to controller: :registration_payment, action: Registration.new(registration_params).payment_method, params: params
+    end
   end
 
   # PUT/PATCH or POST /registrations/1

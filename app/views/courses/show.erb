@@ -86,8 +86,8 @@
                   <strong><%= number_to_currency(@course.course_translate.price) %></strong>
                   <small><%= @course.course_translate.note %></small>
                 </h4>
-                <%= form_for @registration, url: new_registration_path, method: :get do |f| %>
-                  <%= f.hidden_field :course_id %>
+                <%= form_for Registration.new, url: new_registration_path, method: :get do |f| %>
+                  <%= f.hidden_field :course_id, value: @course.id %>
                   <div class="margin-bottom-20">
                     <% if @course.course_option_groups.size > 0 %>
                     <div class="header margin-bottom-10">
@@ -98,13 +98,13 @@
                     <div class="margin-bottom-10">
                       <label><%= t('registration.attendance') %></label>
                       <%= f.select :attendance,
-                                   options_for_select(1..@registration.course.popular{|index| [index, index]}),
+                                   options_for_select(1..@course.popular{|index| [index, index]}),
                                    {},
                                    {
                                        class: 'selectpicker attendance form-control',
                                        data: {
                                            width: '100%',
-                                           price: @registration.course.course_translate.price
+                                           price: @course.course_translate.price
                                        }
                                    } %>
                     </div>

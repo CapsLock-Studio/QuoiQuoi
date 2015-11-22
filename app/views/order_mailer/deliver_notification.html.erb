@@ -38,6 +38,16 @@
             </font>
           </td>
         </tr>
+        <% @order.order_custom_items.each do |order_item| %>
+          <tr>
+            <td style="padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= t('custom_order_no') %>&nbsp;C<%= order_item.custom_order.id %>
+            </td>
+            <td width="80" style="text-align:center;padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= number_to_currency(order_item.custom_order.price) %>
+            </td>
+          </tr>
+        <% end %>
         <% @order.order_products.each do |order_product| %>
           <tr>
             <td style="padding:5px 0;border-bottom:1px solid #CCCCCC;">

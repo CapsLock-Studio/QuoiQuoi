@@ -55,4 +55,16 @@ class NotifierPreview < ActionMailer::Preview
   def order_delivered
     OrderMailer.deliver_notification(516)
   end
+
+  def custom_dismiss
+    CustomMailer.dismiss(7)
+  end
+
+  def custom_approve
+    CustomMailer.approve(7)
+  end
+
+  def custom_remind
+    CustomMailer.remind_new_order(7)
+  end
 end

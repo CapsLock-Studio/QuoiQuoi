@@ -30,13 +30,6 @@
         </a>
       </li>
       <li class="divider"></li>
-      <li>
-        <%= link_to rss_path do %>
-          <i class="fa fa-fw fa-rss"></i>
-          RSS
-        <% end %>
-      </li>
-      <li class="divider"></li>
       <% if user_signed_in? %>
         <li>
           <div class="control-title">
@@ -61,10 +54,10 @@
         </li>
       <% else %>
         <li>
-          <%= link_to(new_user_session_path) do %>
+          <a href="#" data-toggle="modal" data-target="#signin-modal">
             <i class="fa fa-sign-in fa-fw"></i>
             <%= t('signin') %>
-          <% end %>
+          </a>
         </li>
       <% end %>
     </ul>
@@ -72,6 +65,11 @@
   <li class="dropdown user-menu">
     <a class="aside-menu-switch mobile-control-btn" href="#">
       <i class="fa fa-shopping-cart fa-2x"></i>
+    </a>
+  </li>
+  <li class="dropdown user-menu">
+    <a class="mobile-control-btn cta-btn" data-toggle="modal" data-target="#custom-order-modal">
+      <i class="icon icon-handwriting"></i>
     </a>
   </li>
 </ul>

@@ -1,0 +1,76 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'user/side_navigation' %>
+    <div class="col-sm-9 col-xs-12">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+      </div>
+      <div class="box">
+        <div class="box-content">
+          <% if @custom_orders.size > 0 %>
+            <div class="col-sm-12 hidden-xs text-muted margin-bottom-5">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= t('order.no_s') %>
+                </div>
+                <div class="col-sm-4">
+                  建立日期
+                </div>
+                <div class="col-sm-5">
+                  <%= t('status') %>
+                </div>
+              </div>
+            </div>
+
+            <div class="items">
+              <% @custom_orders.each do |custom_order| %>
+                <div class="row item">
+                  <div class="col-xs-12 visible-xs text-muted">
+                    <%= t('custom_order.no_s') %>
+                  </div>
+                  <div class="col-sm-3 col-xs-12 margin-bottom-xs-5">
+                    <%= "C#{custom_order.id}" %>
+                  </div>
+
+                  <div class="col-xs-12 visible-xs tex-muted">
+                    建立日期
+                  </div>
+                  <div class="col-sm-4 col-xs-12 margin-bottom-xs-5">
+                    <%= custom_order.created_at.strftime('%Y/%m/%d') %>
+                  </div>
+
+                  <div class="col-xs-12 visible-xs text-muted">
+                    <%= t('status') %>
+                  </div>
+                  <div class="col-sm-4 col-xs-9 margin-bottom-xs-5">
+                    <% if custom_order.cancel? || (!custom_order.approve.nil? && !custom_order.approve?) %>
+                      <label class="label label-default">
+                        已取消
+                      </label>
+                    <% elsif custom_order.approve.nil? %>
+                      <label class="label label-warning">
+                        討論中
+                      </label>
+                    <% else %>
+                      <label class="label label-success">
+                        接受訂製
+                      </label>
+                    <% end %>
+                  </div>
+                  <div class="col-sm-1 col-xs-3">
+                    <%= link_to t('detail'), custom_order_path(custom_order), class: 'btn btn-default pull-right' %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <h4 class="text-center">
+              <i class="fa fa-wd fa-exclamation"></i>&nbsp;<%= t('no_data') %>
+            </h4>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

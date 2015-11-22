@@ -50,7 +50,7 @@ class RegistrationMailer < ApplicationMailer
     @course_name = registration.course.course_translates.find_by_locale_id(@locale_id).name
     I18n.locale = registration.locale.lang
 
-    mail(to: registration.email, from: $redis.get('about:locale:1:email'), subject: t('mailer.subject.cancel_registration'))
+    mail(to: registration.email, subject: t('mailer.subject.cancel_registration'))
   end
 
   def remind_remittance_report(id)

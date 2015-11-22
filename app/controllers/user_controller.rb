@@ -1,8 +1,8 @@
 class UserController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:email_signin, :email_authencate]
 
   def index
-
+    render json: params[:id]
   end
 
   def edit
@@ -39,6 +39,44 @@ class UserController < ApplicationController
         render :password
       end
     end
+  end
+
+  def email_signin
+    user = User.find_by_token(params[:token])
+    if user.nil?
+      render json: 'Token error!'
+    else
+      if Time.now > user.token_expire
+        render json: 'Token expired!'
+      else
+        user.token = nil
+        user.token_expire = nil
+        user.save!
+
+        if user.redirect_url.nil?
+          sign_in_and_redirect(user)
+        else
+          sign_in(user)
+          redirect_to user.redirect_url
+        end
+      end
+    end
+  end
+
+  def email_authencate
+    user = User.find_by_email(params[:email])
+    if user.nil?
+      user = User.create(email: params[:email])
+    end
+
+    UserMailer.signin_confirmation(
+        user,
+        params[:redirect_url]).deliver_later
+
+    render json: {
+      email: params[:email],
+      redirect_url: params[:redirect_url]
+    }
   end
 
   private

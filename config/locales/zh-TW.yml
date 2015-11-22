@@ -99,8 +99,9 @@ zh-TW:
 
     personalize: "我想訂製"
   custom_order:
-    all: '我的客製化訂製'
-    my: '我的訂製要求'
+    no_s: '編號'
+    all: '我的訂製'
+    my: '我的訂製'
     prev: '上一步'
     next: '下一步'
     finish: '完成訂單'
@@ -116,8 +117,9 @@ zh-TW:
     respond: '訊息'
     detail: '訂製手作包要求內容詳細'
     about: '大約 %{days} 個工作天'
-    hint: '訂製手作包需要會員功能, 下一步驟需要請您登入或是註冊網站會員'
+    hint: '歡迎使用留言系統給我們知道關於你心目中包包的細節<br/>另外如果您想要主動聯絡我們，可以請你<br/>撥打&nbsp;%{phone}&nbsp;或&nbsp;寄Email到&nbsp;%{email}<br/>我們會盡快替您處理，謝謝！'
     first_hint: '您可以不照順序填寫你的需求, 而右上角有紅色星號標記的項目請一定要填寫資料'
+    charge: '訂製費用'
 
   registration:
     all: '報名的課程'
@@ -236,7 +238,7 @@ zh-TW:
   proceed_to_checkout: '前往結帳'
   payment: '付款'
   checkout_time: '結帳時間'
-
+  subscribe_rss: '訂閱RSS'
   no_data: '沒有資料'
   paypal_description: 'PayPal 是更快速、安全的跨國線上交易支付平台'
   online_payment: '線上付款'
@@ -417,7 +419,6 @@ zh-TW:
   forget_password: '忘記密碼'
   share_text: '來自布知道(QuoiQuoi)工作室: '
   all_courses: '全部課程'
-
   calendar_hint: '點選日曆圖示開啟該月份課程表'
   month_1: '1月'
   month_2: '2月'
@@ -483,7 +484,7 @@ zh-TW:
   person: '人'
   payment_completed: '你的付款已經完成'
   payment_already_completed: '你的付款在早些時候就已經完成囉 ~!'
-  customizations: '客製化商品'
+  customization: '量身訂製'
   personalized_products: '客製化商品'
   check_hint: '非常感謝您對quoi quoi 布知道的支持, 在此通知您所訂購的商品我們已經寄出去了!<br/>還需要請您估算大約送達時間注意記得收取商品<br/>如果您沒有收到我們寄出的商品, 請使用後面的信箱連結通知我們'
   remittance_edit_hint: '請自行轉帳到下列帳戶, 轉帳完成後請登入「我的帳戶」回報已轉帳, 如是報名手作教室者, 可進入「匯款回報」選項回報'
@@ -519,6 +520,33 @@ zh-TW:
   sorry: '非常抱歉!'
   thanks: '謝謝!'
   report_problem_hint: '我們會儘速處理, 非常感謝你的合作！'
+  custom_order_no: '訂製編號'
+  step: '步驟'
+  choose_some_materials: '選幾個你喜歡的布料'
+  which_type: '你喜歡哪種包呢'
+  donot_know: '完全沒有頭緒嗎？'
+  some_clue: '可以參考一下'
+  our_past_work: '我們過去的作品'
+  which_style: '你喜歡哪種風格呢'
+  let_choose_material: '選幾個你喜歡的布料吧！'
+  must_fill: '紅色記號部分請一定要填寫'
+  choose_ok: '選好了'
+  check_signin_mail_hint: '我們只需要確認這個信箱是您在使用'
+  check_signin_mail: '我們寄了一個連結給你以用來確認身份<br/>請你檢查一下信箱'
+  basic_info_hint: '請留一下簡單的聯絡方式，我們的設計師會與您討論細節'
+  sign_or_create: '登入/建立 你的帳號'
+  just_two_steps: '只需要簡單的兩個步驟'
+  sign_in_with_google: '使用Google做身份驗證'
+  sign_in_with_fb: '使用Facebook做身份驗證'
+  use_email_sign_in: '使用Email登入或建立帳號'
+  your_custom_options: '你想要的包包是'
+  material_you_like: '你喜歡的布料有'
+  cusutomise_product: '你想要的修改的是'
+  product_no: '商品編號'
+  discussing: '討論中'
+  approved: '接受訂製'
+  lets_discuss: '跟我們討論一下吧！'
+  ok: '好的'
 
   outdated:
     title: '你的瀏覽器已經過時！'
@@ -541,6 +569,9 @@ zh-TW:
       cancel_registration: '[quoi quoi 布知道] 非常抱歉! 我們取消了您的報名'
       remind_before_course_start: '[quoi quoi 布知道] 提醒上課通知信 (系統自動寄出請勿回覆)'
       delivered: '[quoi quoi 布知道] 你好！您訂購的商品已經寄出 (系統自動寄出請勿回覆)'
+      custom:
+        approve: '[quoi quoi 布知道] 接受客製化通知信'
+        dismiss: '[quoi quoi 布知道] 非常抱歉，無法接受你的客製化訂單'
     text:
       registration:
         completed:  '感謝您報名了我們的課程，您已經完成了付款程序了，您的報名編號是 %{link} 。'
@@ -571,7 +602,20 @@ zh-TW:
           message: '感謝你購買quoi quoi 布知道的商品，您已經完成所有的付款程序了，您的訂單編號是 %{link}'
         remind: '我們會儘速將您的訂購送出，謝謝!'
         delivered: '感謝您對quoi quoi 布知道的支持，在此通知您所訂購的商品我們已經寄出了，寄出的貨件大約會在一週內送達(不包含台灣外區域)。如果一直沒有收到，您的訂單編號是 %{link}，請您到訂單頁面回報或是寫信給我們，謝謝!'
-
+      custom:
+        detail: '詳細訂製內容'
+        dismiss:
+          alert: '我們取消了你的訂製'
+          apologize: '非常抱歉! 經過我們設計師的仔細評估後，我們必須很沈痛的拒絕您的訂單，感謝您願意給我們這個機會，希望這次的決定不會讓您感到不愉快，也希望未來我們仍然可以繼續為您服務。'
+          hint: '以下為來自管理員給您的訊息。'
+          detail: '如果您需要檢視您的訂製，請按這裡前往'
+        approve:
+          alert: '我們接受您的訂製！'
+          hint: '提醒您，接受你的訂單後，需要先付款完成我們才會著手製作喔！'
+      user:
+        sign_in: '登入到quoi quoi 布知道'
+        sign_in_link: '點擊下面按鈕或是連結%{link}可以完成登入，這個連結將會在15分鐘後過期而且只能使用一次'
+        alert: '嗨！在quoi quoi 布知道上有人想要使用你的信箱<br/>我們需要知道這是不是你本人，'
     success: '送信成功'
     subject_for_order: '[quoi quoi 布知道] 付款完成確認信 (系統自動寄出請勿回覆)'
     subject_for_remittance_order: '[quoi quoi 布知道] 訂購匯款提醒通知信 (系統自動寄出請勿回覆)'
@@ -608,7 +652,7 @@ zh-TW:
     report_button: '回報請按下方按鈕'
     remind_text_for_registration: '感謝您報名了我們的課程，提醒您，在%{days}天內未完成付款系統將自動取消報名！'
     custom_item_accept: '我們很樂意接受您的客製化訂單'
-    custom_item_decline: '真的非常抱歉! 經過我們設計師的仔細評估後, 因為訂單的數量過多, 我們必須很沈痛的拒絕您的訂單<br/>感謝您願意給我們這個機會, 希望這次的決定不會讓您感到不愉快<br/>也希望未來我們仍然可以繼續為您服務'
+    custom_item_decline: '真的非常抱歉! 經過我們設計師的仔細評估後, 我們必須很沈痛的拒絕您的訂單<br/>感謝您願意給我們這個機會, 希望這次的決定不會讓您感到不愉快<br/>也希望未來我們仍然可以繼續為您服務'
     suggestion_hint: '有任何建議請寄 '
     suggestion_hint2: ''
     order_information: '您的訂單資訊請到quoi qoui 布知道網站查看 %{link} '
@@ -629,6 +673,7 @@ zh-TW:
       mind: '提醒您, 接受你的訂單後, 需要先付款完成我們才會著手製作喔!'
       add_to_cart: '如果你想要完成付款, 請點擊後面的連結去結賬'
       following: '以下是你的訂單資訊'
+
     remind_before_start: "[quoi quoi 布知道] 提醒上課通知信 (系統自動寄出請勿回覆)"
     dear_student: "親愛的學員"
     remind_before_start_content: "提醒你明天要上quoi quoi 布知道的課程，<br/>
@@ -641,7 +686,7 @@ zh-TW:
   load_more: "我想看更多..."
   read_more: "看全部..."
   read_less: "關閉"
-  past_works: "過去的作品"
+  past_works: "過去作品"
   completion_date: "完成時間"
   other_past_works: "其他作品"
   wrong_user_warning: "這個訂製要求不是你的喔，如果您是本人請嘗試更換為提出要求的帳戶以便完成付款手續"

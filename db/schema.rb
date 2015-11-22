@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022060924) do
+ActiveRecord::Schema.define(version: 20151121090705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,6 +259,53 @@ ActiveRecord::Schema.define(version: 20151022060924) do
     t.boolean  "visible",                        default: true
   end
 
+  create_table "custom_order_payments", force: :cascade do |t|
+    t.float    "amount"
+    t.string   "token"
+    t.string   "bankcode"
+    t.string   "account"
+    t.datetime "expire_time"
+    t.string   "trade_no"
+    t.datetime "trade_time"
+    t.string   "payment_no"
+    t.boolean  "completed"
+    t.datetime "completed_time"
+    t.string   "redirect_uri"
+    t.integer  "custom_order_id"
+    t.boolean  "cancel",          default: false
+    t.text     "cancel_reason"
+    t.datetime "cancel_time"
+    t.string   "payer_id"
+    t.datetime "payment_time"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "custom_order_payments", ["custom_order_id"], name: "index_custom_order_payments_on_custom_order_id", using: :btree
+
+  create_table "custom_orders", force: :cascade do |t|
+    t.string   "style"
+    t.string   "order_type"
+    t.string   "materials"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "line"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "user_id"
+    t.float    "price"
+    t.boolean  "approve"
+    t.integer  "product_id"
+    t.datetime "approve_time"
+    t.boolean  "cancel",          default: false
+    t.text     "cancel_reason"
+    t.datetime "cancel_time"
+    t.text     "dismiss_message"
+    t.integer  "locale_id"
+  end
+
+  add_index "custom_orders", ["user_id"], name: "index_custom_orders_on_user_id", using: :btree
+
   create_table "designer_translates", force: :cascade do |t|
     t.integer  "designer_id"
     t.string   "name",         limit: 255
@@ -485,32 +532,13 @@ ActiveRecord::Schema.define(version: 20151022060924) do
 
   create_table "order_custom_items", force: :cascade do |t|
     t.integer  "order_id"
-    t.integer  "product_id"
-    t.string   "design",                 limit: 255
-    t.string   "style",                  limit: 255
-    t.string   "description",            limit: 255
-    t.string   "response",               limit: 255
-    t.integer  "workday"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "accept"
-    t.string   "name",                   limit: 255
-    t.string   "phone",                  limit: 255
-    t.string   "line",                   limit: 255
-    t.datetime "estimate_complete_time"
-    t.datetime "accept_time"
-    t.string   "image_file_name",        limit: 255
-    t.string   "image_content_type",     limit: 255
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.boolean  "canceled",                           default: false
-    t.datetime "canceled_time"
-    t.integer  "user_id"
     t.integer  "locale_id"
+    t.integer  "custom_order_id"
   end
 
   add_index "order_custom_items", ["order_id"], name: "index_order_custom_items_on_order_id", using: :btree
-  add_index "order_custom_items", ["product_id"], name: "index_order_custom_items_on_product_id", using: :btree
 
   create_table "order_informations", force: :cascade do |t|
     t.string   "bag_type",   limit: 255
@@ -1256,11 +1284,15 @@ ActiveRecord::Schema.define(version: 20151022060924) do
     t.string   "phone",                  limit: 255
     t.string   "provider",               limit: 255
     t.string   "uid",                    limit: 255
+    t.string   "token"
+    t.datetime "token_expire"
+    t.string   "redirect_url"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "custom_order_payments", "custom_orders"
   add_foreign_key "order_remittance_reports", "order_payments"
   add_foreign_key "registration_remittance_reports", "registration_payments"
 end

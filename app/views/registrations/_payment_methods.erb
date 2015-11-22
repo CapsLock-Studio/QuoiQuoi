@@ -74,6 +74,7 @@
     <%= form.hidden_field :email %>
     <%= form.hidden_field :attendance %>
     <%= form.hidden_field :course_id %>
+    <%= hidden_field_tag :save, params[:save] %>
     <%= form.fields_for :registration_options do |field| %>
       <%= field.hidden_field :course_option_id %>
     <% end %>

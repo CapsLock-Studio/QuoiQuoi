@@ -1,0 +1,111 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-info"></i>
+      訂製詳細 <span class="text-muted">訂製編號: <%= @custom_order.id %></span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6 col-xs-12">
+  <%= render 'detail', custom_order: @custom_order %>
+  <%= render 'info', custom_order: @custom_order %>
+
+  <% if !@custom_order.cancel? && @custom_order.approve.nil? %>
+    <div class="pull-right">
+      <button class="btn btn-danger" data-toggle="modal" data-target="#dismiss-form">
+        <i class="icon-remove"></i>
+        取消訂製(不接受)
+      </button>
+      <button class="btn btn-default" data-toggle="modal" data-target="#approve-modal">
+        <i class="icon-ok"></i>
+        接受訂製
+      </button>
+      <%= link_to_unless(@custom_order.approve.nil?,
+                         content_tag(:i, '永久刪除', class: 'icon-trash'),
+                         admin_custom_order_path(@custom_order, from_cancel: request.path.include?('/canceled')),
+                         class: "btn btn-danger #{'disabled' unless @custom_order.cancel?}",
+                         data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) {} %>
+    </div>
+  <% end %>
+</div>
+<div class="col-sm-6 col-xs-12">
+  <div id="disqus_thread" style=""></div>
+  <script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    var disqus_config = function () {
+      this.page.url = "<%= custom_order_url(@custom_order) %>";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "<%= "C#{@custom_order.id}" %>"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+
+      s.src = '//quoiquoitw.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+</div>
+
+<div class="modal fade" id="dismiss-form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_tag admin_custom_order_path(@custom_order.id), class: 'form validate-form', method: :put do %>
+        <div class="modal-header">
+          取消訂製
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="message">請簡單說明給客戶為什麼不接受訂製</label>
+            <div class="controls">
+              <%= text_field_tag :dismiss_message, '', class: 'form-control', rows: 4, data: {'rule-required' => true} %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= hidden_field_tag :from_discussing, request.path.include?('/discussing') %>
+          <%= hidden_field_tag :approve, false %>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('close') %></button>
+          <button type="submit" class="btn btn-primary"><%= t('submit') %></button>
+        </div>
+      <% end %>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="approve-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_tag admin_custom_order_path(@custom_order.id), class: 'form validate-form', method: :put do %>
+        <div class="modal-header">
+          接受訂製
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="message">請設定價格</label>
+            <div class="controls">
+              <%= text_field_tag :price, '', class: 'form-control', data: {'rule-required' => true} %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= hidden_field_tag :from_discussing, request.path.include?('/discussing') %>
+          <%= hidden_field_tag :approve, true %>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('close') %></button>
+          <button type="submit" class="btn btn-primary"><%= t('submit') %></button>
+        </div>
+      <% end %>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

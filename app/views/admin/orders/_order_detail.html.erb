@@ -6,91 +6,132 @@
       </strong>
     </div>
   </div>
-  <div class="box-content box-no-padding">
-    <div class="responsive-table">
-      <div class="scrollable-table">
-        <table class="data-table table table-striped" style="margin-bottom:0;">
-          <thead>
-          <tr>
-            <th>
-              商品編號
-            </th>
-            <th></th>
-            <th>訂單項目</th>
-            <th>小計</th>
-            <th>
-              <small class="label label-sm label-primary">
-                訂購數量
-              </small>
-              <small class="label label-sm label-warning">
-                剩餘數量
-              </small>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <% order.order_products.reject{|object| object.product.nil?}.each do |order_product| %>
-            <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: order.locale_id).first %>
+
+  <% if order.order_custom_items.size > 0 %>
+    <div class="box-content margin-bottom-10">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="table table-striped" style="margin-bottom:0;">
+            <thead>
             <tr>
-              <td>
-                <%= link_to(
-                        (order_product.product.product_type)?
-                            edit_admin_other_product_path(order_product.product) : edit_admin_product_path(order_product.product)) do %>
-                  <%= order_product.product_id %>
-                  <span class="text-muted">
+              <th>
+                訂製編號
+              </th>
+              <th>
+                訂製費用
+              </th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% order.order_custom_items.each do |order_custom_item| %>
+              <tr>
+                <td>
+                  <%= order_custom_item.custom_order.id %>
+                </td>
+                <td>
+                  <%= number_to_currency(order_custom_item.custom_order.price) %>
+                </td>
+                <td class="text-right">
+                  <%= link_to('詳細訂製內容', admin_custom_order_path(order_custom_item.custom_order.id), class: 'btn btn-default') %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if order.order_products.size > 0 %>
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>
+                商品編號
+              </th>
+              <th></th>
+              <th>訂單項目</th>
+              <th>小計</th>
+              <th>
+                <small class="label label-sm label-primary">
+                  訂購數量
+                </small>
+                <small class="label label-sm label-warning">
+                  剩餘數量
+                </small>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% order.order_products.reject{|object| object.product.nil?}.each do |order_product| %>
+              <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: order.locale_id).first %>
+              <tr>
+                <td>
+                  <%= link_to(
+                          (order_product.product.product_type)?
+                              edit_admin_other_product_path(order_product.product) : edit_admin_product_path(order_product.product)) do %>
+                    <%= order_product.product_id %>
+                    <span class="text-muted">
                     <i class="icon-info-sign"></i>
                   </span>
-                <% end %>
-              </td>
-              <td>
-                <%= image_tag order_product.product.image.url(:thumb), style: 'height:50px', alt: '' %>
-              </td>
-              <td>
-                <div>
-                  <strong>
-                    <%= truncate(order_product.product.product_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name, length: 14) %>
-                  </strong>
+                  <% end %>
+                </td>
+                <td>
+                  <%= image_tag order_product.product.image.url(:thumb), style: 'height:50px', alt: '' %>
+                </td>
+                <td>
+                  <div>
+                    <strong>
+                      <%= truncate(order_product.product.product_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name, length: 14) %>
+                    </strong>
 
+                    <small class="text-muted">
+                      <%= truncate(order_product.product.product_translates.find_by_locale_id(Locale.find_by_lang('en').id).name, length: 30) %>
+                    </small>
+                  </div>
                   <small class="text-muted">
-                    <%= truncate(order_product.product.product_translates.find_by_locale_id(Locale.find_by_lang('en').id).name, length: 30) %>
+                    所選項目
                   </small>
-                </div>
-                <small class="text-muted">
-                  所選項目
-                </small>
-                <% ProductOptionGroup.where(locale_id: order.locale_id, product_id: order_product.product_id).each do |group| %>
-                  <div class="option-group">
-                    <small><%= group.name %></small>
-                    <div>
-                      <% if group.product_options.where(id: order_product.order_product_options.map{|option| option.product_option_id}).size > 0 %>
+                  <% ProductOptionGroup.where(locale_id: order.locale_id, product_id: order_product.product_id).each do |group| %>
+                    <div class="option-group">
+                      <small><%= group.name %></small>
+                      <div>
+                        <% if group.product_options.where(id: order_product.order_product_options.map{|option| option.product_option_id}).size > 0 %>
                         <span class="label label-primary">
                           <%= group.product_options.where(id: order_product.order_product_options.map{|option| option.product_option_id}).first.content %>
                         </span>
-                      <% else %>
-                        <span class="label label-default"><i class="icon-warning-sign icon-fixed-width"></i>沒有所選項目</span>
-                      <% end %>
+                        <% else %>
+                          <span class="label label-default"><i class="icon-warning-sign icon-fixed-width"></i>沒有所選項目</span>
+                        <% end %>
+                      </div>
                     </div>
-                  </div>
-                <% end %>
-              </td>
-              <td>
-                <%= number_to_currency(order_product.price, locale: order.locale.lang) %>
-              </td>
-              <td>
-                <small class="label label-sm label-primary">
-                  <%= order_product.quantity %>
-                </small>
-                <small class="label label-sm label-warning">
-                  <%= translate.product.quantity %>
-                </small>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+                  <% end %>
+                </td>
+                <td>
+                  <%= number_to_currency(order_product.price, locale: order.locale.lang) %>
+                </td>
+                <td>
+                  <small class="label label-sm label-primary">
+                    <%= order_product.quantity %>
+                  </small>
+                  <small class="label label-sm label-warning">
+                    <%= translate.product.quantity %>
+                  </small>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+
+  <% end %>
 </div>
 <div class="row">
   <div class="col-sm-12">

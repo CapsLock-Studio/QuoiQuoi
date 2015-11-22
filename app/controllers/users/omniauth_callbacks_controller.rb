@@ -24,12 +24,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_or_create_by_oauth2(request.env['omniauth.auth'])
 
     if @user.persisted?
-      if @user.provider != provider
-        flash[:alert] = t('right_sign_in')
-        redirect_to new_user_session_url
-      else
-        sign_in_and_redirect @user, event: :authentication
-      end
+      sign_in_and_redirect @user, event: :authentication
     end
   end
 end

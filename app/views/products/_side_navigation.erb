@@ -3,18 +3,6 @@
     <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}(?!\/search)/}) do %>
       <%= link_to t('handmadebag').titleize, products_path %>
     <% end %>
-    <%= nav_item(nil, {class: 'list-group-item', rule: /^#{past_work_types_path}$|^#{new_order_custom_item_path}$/}) do %>
-      <%= link_to t('personalize').titleize, past_work_types_path %>
-      <ul class="nav">
-        <% (@past_work_types || []).each do |past_work_type| %>
-          <%= nav_item(nil, {rule: /^#{past_work_type_past_works_path(past_work_type)}.*/}) do %>
-            <%= link_to(past_work_type_past_works_path(past_work_type)) do %>
-              <%= past_work_type.past_work_type_translate.name %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </ul>
-    <% end %>
     <% @product_types.each do |product_type| %>
       <%= nav_item(product_type_products_path(product_type), {class: 'list-group-item', rule: /^\/#{:product_types}\/#{product_type.id}\/#{:products}(\/\d*)?$/}) do %>
         <%= link_to product_type.product_type_translate.name.titleize, product_type_products_path(product_type) %>

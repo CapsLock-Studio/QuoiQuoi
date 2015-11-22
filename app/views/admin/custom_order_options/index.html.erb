@@ -1,0 +1,147 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-tag"></i>
+      訂製選項標籤管理
+    </h1>
+  </div>
+</div>
+<% Locale.select(:id, :name).each do |locale| %>
+  <div class="col-xs-3">
+    <div class="box">
+      <div class="box-header box-header-small">
+        <div class="title">
+          種類標籤&nbsp;<label class="label label-default"><%= locale.name %></label>
+        </div>
+      </div>
+      <div class="box-content box-no-padding">
+        <%= form_tag admin_custom_order_options_path, class: 'form', method: :post do %>
+          <div class="row" style="padding:8px;">
+            <div class="col-xs-9">
+              <div class="form-group">
+                <%= text_field_tag :value, '', class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <%= hidden_field_tag :key, "order_type:locale:#{locale.id}" %>
+              <button type="submit" class="btn btn-primary pull-right">
+                新增
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <table class="table table-striped">
+          <tbody>
+          <% JSON.parse($redis.get("order_type:locale:#{locale.id}") || '[]').each_with_index do |order_type, index| %>
+          <tr>
+            <td>
+              <% if params[:key] == "order_type:locale:#{locale.id}" && params[:index].to_i == index %>
+                <%= form_tag admin_custom_order_option_path(index), class: 'form', method: :put do %>
+                  <div class="row">
+                    <div class="col-xs-9">
+                      <div class="form-group">
+                        <%= hidden_field_tag :key, "order_type:locale:#{locale.id}" %>
+                        <%= text_field_tag :value, order_type, class: 'form-control' %>
+                      </div>
+                    </div>
+                    <div class="col-xs-3 text-right">
+                      <%= link_to admin_custom_order_options_path, class: 'btn btn-default btn-xs' do %>
+                        <i class="icon-remove"></i>
+                      <% end %>
+                      <button type="submit" class="btn btn-success btn-xs">
+                        <i class="icon-ok"></i>
+                      </button>
+                    </div>
+                  </div>
+                <% end %>
+              <% else %>
+                <%= order_type %>
+                <div class="pull-right">
+                  <%= link_to admin_custom_order_options_path(key: "order_type:locale:#{locale.id}", index: index), class: 'btn btn-default btn-xs' do %>
+                    <i class="icon-pencil"></i>
+                  <% end %>
+                  <%= link_to admin_custom_order_option_path(index, key: "order_type:locale:#{locale.id}"),
+                              method: :delete, class: 'btn btn-danger btn-xs' do %>
+                    <i class="icon-trash"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% Locale.select(:id, :name).each do |locale| %>
+  <div class="col-xs-3">
+    <div class="box">
+      <div class="box-header box-header-small">
+        <div class="title">
+          風格標籤&nbsp;<label class="label label-default"><%= locale.name %></label>
+        </div>
+      </div>
+      <div class="box-content box-no-padding">
+        <%= form_tag admin_custom_order_options_path, class: 'form', method: :post do %>
+          <div class="row" style="padding:8px;">
+            <div class="col-xs-9">
+              <div class="form-group">
+                <%= text_field_tag :value, '', class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <%= hidden_field_tag :key, "style:locale:#{locale.id}" %>
+              <button type="submit" class="btn btn-primary pull-right">
+                新增
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <table class="table table-striped">
+          <tbody>
+          <% JSON.parse($redis.get("style:locale:#{locale.id}") || '[]').each_with_index do |style, index| %>
+            <tr>
+              <td>
+                <% if params[:key] == "style:locale:#{locale.id}" && params[:index].to_i == index %>
+                  <%= form_tag admin_custom_order_option_path(index), class: 'form', method: :put do %>
+                    <div class="row">
+                      <div class="col-xs-9">
+                        <div class="form-group">
+                          <%= hidden_field_tag :key, "style:locale:#{locale.id}" %>
+                          <%= text_field_tag :value, order_type, class: 'form-control' %>
+                        </div>
+                      </div>
+                      <div class="col-xs-3 text-right">
+                        <%= link_to admin_custom_order_options_path, class: 'btn btn-default btn-xs' do %>
+                          <i class="icon-remove"></i>
+                        <% end %>
+                        <button type="submit" class="btn btn-success btn-xs">
+                          <i class="icon-ok"></i>
+                        </button>
+                      </div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <%= style %>
+                  <div class="pull-right">
+                    <%= link_to admin_custom_order_options_path(key: "style:locale:#{locale.id}", index: index), class: 'btn btn-default btn-xs' do %>
+                      <i class="icon-pencil"></i>
+                    <% end %>
+                    <%= link_to admin_custom_order_option_path(index, key: "style:locale:#{locale.id}"),
+                                method: :delete, class: 'btn btn-danger btn-xs' do %>
+                      <i class="icon-trash"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

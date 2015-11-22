@@ -1,0 +1,199 @@
+<div id="custom-order-modal" class="modal" style="display:block;position:relative;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="step1">
+          <i class="icon icon-handwriting-inverse"></i>
+          步驟 1 /2
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="step2" style="display:none;">
+          <button type="button" class="btn btn-link button-step-back button-to-step1">
+            <i class="fa fa-angle-left fa-2x"></i>
+          </button>
+          步驟 2 /2
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="choose-materials" style="display:none">
+          <button type="button" class="btn btn-link button-step-back button-to-step1">
+            <i class="fa fa-angle-left fa-2x"></i>
+          </button>
+          選幾個你喜歡的布料
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" style="padding-top: 0;">
+        <div class="row step1" style="">
+          <div class="col-xs-12 margin-bottom-20">
+            <h4>你喜歡哪種包呢</h4>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="托特包">
+              <span></span>
+              托特包
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="袖珍包">
+              <span></span>
+              袖珍包
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="拼布包">
+              <span></span>
+              拼布包
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="口金包">
+              <span></span>
+              口金包3131
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="零錢包">
+              <span></span>
+              零錢包1213131
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="男人包">
+              <span></span>
+              男人包
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="order_type" value="鉑金包">
+              <span></span>
+              鉑金包
+            </label>
+          </div>
+          <div class="col-xs-12 margin-bottom-20 text-center">
+            <div>
+              完全沒有頭緒嗎？
+            </div>
+            <div>
+              可以參考一下&nbsp;&nbsp;<a href="">我們過去的作品</a>
+            </div>
+          </div>
+          <div class="col-xs-12 margin-bottom-20">
+            <h4>你喜歡哪種風格呢</h4>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="現代風">
+              <span></span>
+              現代風
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="混搭風">
+              <span></span>
+              混搭風
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="清爽風">
+              <span></span>
+              清爽風
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="頹廢風">
+              <span></span>
+              頹廢風
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="搖滾風">
+              <span></span>
+              搖滾風
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="夢幻風">
+              <span></span>
+              夢幻風
+            </label>
+            <label class="radio-inline style-label">
+              <input type="radio" name="style" value="甜蜜風格">
+              <span></span>
+              甜蜜風格
+            </label>
+          </div>
+          <div class="col-xs-12">
+            <h4>選幾個你喜歡的布料吧！</h4>
+            <div class="materials">
+              <input type="hidden" name="materials" />
+              <script id="removable-material-template" type="text/html">
+                <div class="material removable" data-id="{{id}}" style="background-image: url({{image}});">
+                  <i class="fa fa-times"></i>
+                </div>
+              </script>
+              <div class="material not-loaded" id="button-choose-materials" data-url="<%= materials_path %>">
+                <i class="fa fa-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row choose-materials" style="display:none;">
+          <script id="selectable-materials-template" type="text/html">
+            <div class="col-xs-12 margin-bottom-20">
+              <h4>{{type}}</h4>
+              <div class="materials">
+              </div>
+            </div>
+          </script>
+          <script id="selectable-material-template" type="text/html">
+            <div class="material selectable" data-id="{{id}}" style="background-image: url({{image}});"></div>
+          </script>
+        </div>
+
+        <div class="row step2" style="display:none;">
+          <div class="col-xs-12">
+            <h4><span class="text-danger">*</span>&nbsp;部分請一定要填寫</h4>
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label"><span class="text-danger">*</span>&nbsp;您的姓名</label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control" name="name" value="<%= (current_user.nil?)? '' : current_user.name %>" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label"><span class="text-danger">*</span>&nbsp;您的Email</label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control <%= 'disabled' unless current_user.nil? %>" <%= 'disabled="disabled"' unless current_user.nil? %> name="email"
+                         placeholder="yourname@example.com" value="<%= (current_user.nil?)? '' : current_user.email %>" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label">聯絡電話</label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control" name="phone" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 col-xs-12 control-label">您的Line</label>
+                <div class="col-sm-10 col-xs-12">
+                  <input class="form-control" name="line" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row step3" style="display:none;">
+          <h3 class="text-center">
+            <i class="fa fa-envelope-o fa-fw"></i>
+            我們寄了一個連結給你以用來確認身份<br/>請你檢查一下信箱
+          </h3>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link btn-block step1 button-to-step2">下一步</button>
+
+        <div class="choose-materials text-center" style=display:none;>
+            <button type="submit" class="btn btn-default button-to-step1">選好了</button>
+        </div>
+
+        <div class="step2 text-center" style=display:none;>
+            <a class="btn" data-dismiss="modal">先暫時不要，但是將我的選擇寄給我</a>
+            <button type="submit" class="btn btn-default" data-url="<%= custom_orders_path %>">送出</button>
+        </div>
+        <div class="step3" style="display:none;">
+          <a class="btn btn-block text-muted" data-dismiss="modal">關閉</a>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

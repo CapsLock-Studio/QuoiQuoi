@@ -8,8 +8,8 @@
       <%= link_to t('registration.all'), registrations_path
       %>
     <% end %>
-    <%= nav_item(order_custom_items_path, {rule: /#{order_custom_items_path}.*/, class: 'list-group-item'}) do %>
-      <%= link_to t('custom_order.my'), order_custom_items_path %>
+    <%= nav_item(nil, {rule: /#{custom_orders_path}.*/, class: 'list-group-item'}) do %>
+      <%= link_to t('custom_order.my'), custom_orders_path %>
     <% end %>
   </ul>
 </div>
