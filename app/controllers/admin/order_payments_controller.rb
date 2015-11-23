@@ -16,6 +16,8 @@ class Admin::OrderPaymentsController < AdminController
       flash[:id] = @order_payment.order.id
       flash[:status] = sanitize_params
 
+
+
       redirect_to admin_orders_path
     end
   end
