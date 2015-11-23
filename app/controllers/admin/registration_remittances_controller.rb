@@ -16,6 +16,8 @@ class Admin::RegistrationRemittancesController < AdminController
   def show
     add_breadcrumb '所有匯款紀錄', :admin_registration_remittances_path
     add_breadcrumb '詳細匯款紀錄'
+
+    @registration = @remittance.registration_payment.registration
   end
 
   def check

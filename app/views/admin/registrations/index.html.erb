@@ -71,7 +71,9 @@
                       <%= registration.attendance %>
                     </td>
                     <td>
-                      <% if registration.registration_payment.completed.nil? %>
+                      <% if registration.registration_payment.cancel? %>
+                        <span class="label label-default">已取消</span>
+                      <% elsif registration.registration_payment.completed.nil? %>
                         <span class="label label-warning">等待付款</span>
                         <div>
                           <small>
@@ -132,5 +134,5 @@
   </div>
 </div>
 
-<div class="modal fade" id="user-detail"></div><!-- /.modal -->
+<div class="modal fade reload-modal" id="user-detail"></div><!-- /.modal -->
 <div class="modal fade" id="cancel-dialog"></div><!-- /.modal -->

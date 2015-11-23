@@ -133,4 +133,44 @@ namespace :migrate do
       end
     end
   end
+
+  desc 'fuck'
+  task fix_payment_data: :environment do
+    RegistrationRemittanceReport.where(confirm: true).each do |report|
+      old_payment = Payment.find_by_registration_id(report.registration_payment.registration_id)
+      new_payment = report.registration_payment
+      new_payment.completed = true
+      new_payment.completed_time = old_payment.pay_time
+      new_payment.save
+    end
+
+    Registration.where(canceled: true).each do |registration|
+      new_payment = registration.registration_payment
+      new_payment.cancel = true
+      new_payment.cancel_time = registration.canceled_time
+      new_payment.save!
+    end
+
+    RegistrationRemittanceReport.where(date: nil).update_all(date: Time.new(0))
+    RegistrationPayment.where(cancel: true).update_all(cancel_reason: '')
+
+    ######################
+    OrderRemittanceReport.where(confirm: true).each do |report|
+      old_payment = Payment.find_by_order_id(report.order_payment.order_id)
+      new_payment = report.order_payment
+      new_payment.completed = true
+      new_payment.completed_time = old_payment.pay_time
+      new_payment.save
+    end
+
+    # Order.where(canceled: true).each do |order|
+    #   new_payment = order.order_payment
+    #   new_payment.cancel = true
+    #   new_payment.cancel_time = order.canceled_time
+    #   new_payment.save!
+    # end
+
+    # OrderRemittanceReport.where(date: nil).update_all(date: Time.new(0))
+    # OrderPayment.where(cancel: true).update_all(cancel_reason: '')
+  end
 end
