@@ -38,6 +38,9 @@ $colorsHexes: #EC8FC4, #6FDFBB, #F38B2F, #74C2FF;
 $colorsNames: 'pink', 'green', 'orange', 'blue';
 
 // override font size start
+html {
+  background-color: #262626;
+}
 html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */

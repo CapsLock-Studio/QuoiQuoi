@@ -52,6 +52,8 @@ class ApplicationController < ActionController::Base
       User.find(session[:guest_user_id]).destroy
       session.delete(:guest_user_id)
     end
+
+    super
   end
 
   def configure_devise_params
