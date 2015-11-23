@@ -4,6 +4,7 @@ namespace :migrate do
     Payment.all.reject{|p| p.order_id.nil? && p.registration_id.nil?}.each do |payment|
       if !payment.order_id.blank? && !payment.order.nil?
         payment_object = OrderPayment.new
+        payment_object.order_id = payment.order_id
 
         if payment.wait?
           payment_object.amount = payment.order.subtotal
@@ -42,10 +43,10 @@ namespace :migrate do
 
       if !payment.registration_id.blank? && !payment.registration.nil?
         payment_object = RegistrationPayment.new
+        payment_object.registration_id = payment.registration_id
 
         if payment.wait?
           payment_object.amount = payment.registration.subtotal
-
           payment_object.save
 
           unless payment.amount.blank?
@@ -53,7 +54,7 @@ namespace :migrate do
             report.amount = payment.amount
             report.account = payment.identifier
             report.date = payment.pay_time
-            report.order_payment_id = payment_object.id
+            report.registration_payment_id = payment_object.id
 
             if payment.completed?
               report.confirm = true
@@ -108,20 +109,21 @@ namespace :migrate do
   desc 'migrate old order custom item to new custom order'
   task custom_order: :environment do
     locale_id = Locale.find_by_lang('zh-TW').id
-    OrderCustomItem.all.each do |item|
+    OrderCustomItem.where.not(user_id: nil).each do |item|
       custom_order = CustomOrder.new
       custom_order.order_type = item.design
       custom_order.style = item.style
-      custom_order.materials = item.order_custom_item_materials.pluck(:id).to_json
+      custom_order.materials = OrderCustomItemMaterial.where(order_custom_item_id: item.id).pluck(:material_id).to_json
       custom_order.approve = item.accept
       custom_order.approve_time = item.accept_time
       custom_order.phone = item.phone
-      custom_order.email = item.user.email
+      custom_order.email = User.find(item.user_id).email
       custom_order.line = item.line
       custom_order.cancel = item.canceled
       custom_order.cancel_time = item.canceled_time
       custom_order.product_id = item.product_id
       custom_order.locale_id = locale_id
+      custom_order.user_id = item.user_id
       custom_order.save
 
       unless item.order_id.blank?
