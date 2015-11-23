@@ -6,33 +6,55 @@
     </h1>
     <div class="pull-right">
       <div class="btn-group">
-        <%= link_to '修改項目', edit_admin_system_path, class: 'btn btn-primary' %>
+
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      <div class="box">
-        <div class="box-header">
-          <div class="actions">
-            <a href="#" class="btn box-collapse btn-xs btn-link"><i></i></a>
+    <% Locale.pluck(:id, :name).each do |locale| %>
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="title">
+              <%= locale[1] %>
+            </div>
+            <div class="actions">
+              <% if params[:id].to_i.to_i != locale[0] %>
+                <%= link_to '修改', admin_system_path(id: locale[0]), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
           </div>
-        </div>
-        <div class="box-content">
-          <label for="website-title">網站名稱(請盡可能簡短)</label>
-          <div class="form-group">
-            <input id="website-title" disabled="disabled" class="form-control" value="<%= $redis.get('seo:title') %>" />
-          </div>
-          <label for="seo-title">網站標題(請控制在100字以內)</label>
-          <div class="form-group">
-            <input id="seo-title" disabled="disabled" class="form-control" value="<%= $redis.get('seo:og:title') %>" />
-          </div>
-          <label for="seo-description">網站敘述(請控制在140字以內)</label>
-          <div class="form-group">
-            <input id="seo-description" disabled="disabled" class="form-control" value="<%= $redis.get('seo:description') %>" />
+          <div class="box-content">
+            <%= form_tag admin_system_path, method: :put do %>
+              <label for="website-title-<%= locale[0] %>">網站名稱(請盡可能簡短)</label>
+              <div class="form-group">
+                <%= text_field_tag 'title', $redis.get("seo:locale:#{locale[0]}:title"), class: 'form-control', disabled: (params[:id].to_i != locale[0]) %>
+              </div>
+              <label for="seo-title-<%= locale[0] %>">網站標題(請控制在100字以內)</label>
+              <div class="form-group">
+                <%= text_field_tag 'og:title', $redis.get("seo:locale:#{locale[0]}:og:title"), class: 'form-control', disabled: (params[:id].to_i != locale[0]) %>
+              </div>
+              <label for="seo-description-<%= locale[0] %>">網站敘述(請控制在140字以內)</label>
+              <div class="form-group">
+                <%= text_field_tag 'description', $redis.get("seo:locale:#{locale[0]}:description"), class: 'form-control', disabled: (params[:id].to_i != locale[0]) %>
+              </div>
+
+              <% if params[:id].to_i == locale[0] %>
+                <div class="form-actions">
+                  <div class="btn-toolbar text-right">
+                    <%= link_to '取消', admin_system_path, class: 'btn btn-default btn-lg' %>
+
+                    <%= hidden_field_tag 'locale_id', locale[0] %>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                      儲存
+                    </button>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
