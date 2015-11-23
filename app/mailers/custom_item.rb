@@ -1,5 +1,4 @@
 class CustomItem < ActionMailer::Base
-  include Resque::Mailer
   default from: 'admin@quoiquoi.tw'
 
   def decline(custom_item_id, lang)

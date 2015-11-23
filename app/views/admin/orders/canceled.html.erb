@@ -5,62 +5,69 @@
       <span>已取消訂單記錄</span>
     </h1>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-        <div class="box-header">
-          <div class="title">已取消訂單列表</div>
-          <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
-            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-          </div>
-        </div>
-        <div class="box-content box-no-padding">
-          <div class="responsive-table">
-            <div class="scrollable-table">
-              <table class="data-table table table-striped" style="margin-bottom:0;">
-                <thead>
-                <tr>
-                  <th>訂單編號</th>
-                  <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
-                  <th>訂單內容&nbsp;<label class="label label-success">點擊查看</label></th>
-                  <th>取消時間</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% @orders.each do |order| %>
-                  <tr>
-                    <td>
-                      <%= order.id %>
-                    </td>
-                    <td>
-                      <%= link_to order.user_id, admin_user_path(order.user_id), target: '_blank' %>
-                    </td>
-                    <td>
-                      <ul class="list-unstyled">
-                        <% order.order_products.reject{|order_product| order_product.product.nil?}.each do |order_product| %>
-                          <li>
-                            <%= link_to order_product.product.product_translates.where(locale_id: Locale.where(lang: 'zh-TW').first.id).first.name, edit_admin_product_path(order_product.product), target: '_blank' %>
-                          </li>
-                        <% end %>
-                        <% order.order_custom_items.each do |order_custom_item| %>
-                          <li>
-                            <%= link_to '', admin_order_custom_item_path(order_custom_item), target: '_blank' %>
-                          </li>
-                        <% end %>
-                      </ul>
-                    </td>
-                    <td>
-                      <%= order.canceled_time.strftime('%Y/%m/%d %H:%M') %>
-                    </td>
-                  </tr>
-                <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+  <% unless flash[:id].nil? %>
+    <%= render 'message_deleted' %>
+  <% end %>
+
+  <%= render 'cancel_search_condition' %>
+
+  <div class="box bordered-box" style="margin-bottom:0;">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>付款編號</th>
+              <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+              <th>取消原因</th>
+              <th>取消時間</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @orders.each do |order| %>
+              <tr>
+                <td>
+                  <%= order.id %>
+                </td>
+                <td>
+                  <%= order.order_payment.id %>
+                </td>
+                <td>
+                  <%= link_to(info_admin_user_path(order.user_id),
+                              data: {toggle: 'modal', target: '#user-detail'}
+                      ) do %>
+                    <%= order.user_id %>
+                    <span class="text-muted">
+                          <i class="icon-info-sign"></i>
+                        </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= order.order_payment.cancel_reason.truncate(20, separator: /(，|。|\s)/) %>
+                </td>
+                <td>
+                  <%= order.order_payment.cancel_time.strftime('%Y/%m/%d %H:%I') %>
+                </td>
+                <td class="text-right">
+                  <%= link_to(admin_order_path(order, from_cancel: true), class: 'btn btn-danger', method: :delete, data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}) do %>
+                    <i class="icon-trash icon-fixed-width"></i>
+                  <% end %>
+                  <%= link_to(canceled_admin_order_path(order), class: 'btn btn-default') do %>
+                    <i class="icon-info icon-fixed-width"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

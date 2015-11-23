@@ -25,14 +25,46 @@ class Course < ActiveRecord::Base
     end.inject{|sum, attendance| sum + attendance} || 0
 
     if self.canceled?
-      I18n.translate('registration.cancel')
+      I18n.translate('course.canceled')
     elsif self.time < Time.now + 5.hours
       I18n.translate('course.past')
-    elsif attendance >= self.popular || self.full?
+    elsif register_full? || self.full?
       I18n.translate('registration.full')
     else
       ''
     end
+  end
+
+  # Include people who have not completed payment.
+  def applicants
+    registrations.reject do |registration|
+      registration.registration_payment.cancel?
+    end.map{|registration| registration.attendance}.inject{|sum, applicant| sum + applicant} || 0
+  end
+
+  # Registered people who already completed payment.
+  def applicants_completed
+    registrations.reject do |registration|
+      registration.registration_payment.refunded? || !registration.registration_payment.completed?
+    end.map{|registration| registration.attendance}.inject{|sum, applicant| sum + applicant} || 0
+  end
+
+  def register_full?
+    (applicants >= popular)
+  end
+
+  def email_registered?(email)
+    (registrations.where(email: email).size > 0)
+  end
+
+  def applicants_not_refund
+    registrations.reject do |registration|
+      registration.canceled? || !registration.registration_payment.completed? || registration.registration_payment.refunded?
+    end.size
+  end
+
+  def refund_completed?
+    (applicants_not_refund == 0)
   end
 
   def self.by_month(month)

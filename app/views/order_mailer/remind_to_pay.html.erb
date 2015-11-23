@@ -1,0 +1,155 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+       background="<%= image_url(@order.order_products.first.product.image.url(:medium)) %>" bgcolor="#3b464e"
+       style="background-image:url(<%= image_url(@order.order_products.first.product.image.url(:medium)) %>);background-repeat:no-repeat;background-size:cover;padding: 30px 0;"
+       class="100padleftright20x40">
+  <tr>
+    <td align="center" style="font-size:14px; color:#ffffff;">
+      <center>
+        <table border="0" cellspacing="0" cellpadding="0" width="360" class="100p">
+          <tr>
+            <td align="left" bgcolor="#EFEFEF" style="color:#585F69;font-size:14px;background-color: rgba(255,255,255,0.9) !important;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td height="10">
+                  </td>
+                </tr>
+              </table>
+              <%= render 'payment_info', order_payment: @order.order_payment %>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td height="10">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;color:#000000;"><%= t('mailer.dear') %></span><br />
+        <span style="font-size:14px;">
+          <%= t('mailer.text.order.payment',
+                days: (@order.order_payment.expire_time.nil?)? 3 :
+                    ((@order.order_payment.expire_time - @order.checkout_time) / 1.days).round) %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0 20px 20px 20px;font-size:14px;">
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <td style="padding: 0 0 5px 0;">
+            <%= t('mailer.text.order.list_header') %>&nbsp;
+            <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+              <a href="<%= order_url(@order) %>" style="color:#8A929D;"><%= "O#{@order.id}" %>&nbsp;<img alt="fa-info" width="14" height="14" border="0" style="width:14px;height:14px;" src="<%= image_url('fa-info-circle.png') %>"/></a>
+            </font>
+          </td>
+        </tr>
+        <% @order.order_custom_items.each do |order_item| %>
+          <tr>
+            <td style="padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= t('custom_order_no') %>&nbsp;C<%= order_item.custom_order.id %>
+            </td>
+            <td width="80" style="text-align:center;padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= number_to_currency(order_item.custom_order.price) %>
+            </td>
+          </tr>
+        <% end %>
+        <% @order.order_products.each do |order_product| %>
+          <tr>
+            <td style="padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= order_product.product.product_translates.find_by_locale_id(@locale_id).name %>
+              <%= '(' if order_product.order_product_options.size > 0 %>
+              <%= order_product.order_product_options.map{|order_option|
+                order_option.product_option.content
+              }.join(', ') %>
+              <%= ')' if order_product.order_product_options.size > 0 %>
+              &nbsp;x<%= order_product.quantity.to_i %>
+            </td>
+            <td width="80" style="text-align:center;padding:5px 0;border-bottom:1px solid #CCCCCC;">
+              <%= number_to_currency(order_product.price) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <h4 style="text-align:right">
+        <%= t('total_amount') %>&nbsp;<%= number_to_currency(@order.get_subtotal) %><br/>
+        <small>
+          (<%= t('shipping_fee') %>:&nbsp;
+                    <span class="shipping-fee-subtotal">
+                      <%= number_to_currency(@order.shipping_fee!) %>
+                    </span>
+          )
+        </small>
+      </h4>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0 20px 20px 20px">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          <!-- Remittance payment hint -->
+          <%= t('mailer.report_button') if @order.remittance? %>
+
+          <!-- Online payment hint -->
+          <%= t('click_to_continue_paying') if @order.paypal? || @order.alipay? || @order.webatm? %>
+
+          <!-- CVS Tutorial -->
+          <%= t('cvs_tutorial', cvs: t("#{@order.payment_method}")) if @order.cvs_ibon? || @order.cvs_family? %>
+
+          <%= t('atm_remind') if @order.atm? %>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td>
+      <a href="<%= order_url(@order.id) if @order.remittance? %>
+               <%= order_payment_url(@order.id, action: :webatm_resume) if @order.webatm? %>
+               <%= order_payment_url(@order.id, action: :alipay_resume) if @order.alipay? %>
+               <%= @order.order_payment.redirect_uri if @order.paypal? %>
+               <%= 'https://www.allpay.com.tw/Service/pay_way_cvpay' if @order.cvs_ibon? || @order.cvs_family? %>
+               <%= 'https://www.165.gov.tw/' if @order.atm? %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15"
+               bgcolor="<%= (@order.remittance? || @order.paypal? || @order.alipay? || @order.webatm?)? '#F38B2F' : '#72C8E6' %>">
+          <tr>
+            <td align="center" width="100%" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                <%= t('report_remittance') if @order.remittance? %>
+                <%= t('continue_on_alipay') if @order.alipay? %>
+                <%= t('continue_on_paypal') if @order.paypal? %>
+                <%= t('continue_pay_page') if @order.webatm? %>
+                <%= t('atm_remind_link') if @order.atm? %>
+                <%= t('cvs_tutorial_link') if @order.cvs_family? || @order.cvs_ibon? %>
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td style="font-size:20px;">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#000000">
+          <%= t('sincerely') %>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>

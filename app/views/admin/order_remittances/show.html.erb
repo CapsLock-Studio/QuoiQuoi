@@ -1,0 +1,95 @@
+<div class="col-xs-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-info icon-fixed-width"></i>
+      詳細匯款紀錄&nbsp;<span class="text-muted">回報編號:&nbsp;<%= @remittance.id %></span>
+    </h1>
+    <div class="pull-right">
+      <ul class="breadcrumb">
+        <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="col-md-8 col-sm-12">
+  <%= render 'admin/orders/order_detail', order: @remittance.order_payment.order %>
+</div>
+<div class="col-md-4 col-sm-12">
+  <div class="box">
+    <div class="box-header box-header-small">
+      <div class="title">
+        匯款相關訊息
+      </div>
+    </div>
+    <div class="box-content">
+      <div class="row">
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            應付金額
+          </div>
+          <%= number_to_currency(@remittance.order_payment.amount, locale: @remittance.order_payment.order.locale.lang) %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            匯款金額
+          </div>
+          <%= number_to_currency(@remittance.amount, locale: @remittance.order_payment.order.locale.lang) %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            匯款帳號末５碼
+          </div>
+          <%= @remittance.account %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            匯款日期
+          </div>
+          <%= @remittance.date.strftime('%Y/%m/%d') %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            聯絡人Email
+          </div>
+          <%= @remittance.order_payment.order.user.email %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            聯絡人姓名
+          </div>
+          <%= @remittance.order_payment.order.name %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            聯絡人電話
+          </div>
+          <%= @remittance.order_payment.order.phone %>
+        </div>
+
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            匯款確認狀態
+          </div>
+          <% if @remittance.confirm %>
+            <span class="label label-success">已確認匯款</span>
+          <% else %>
+            <span class="label label-danger">匯款資料有誤</span>
+          <% end %>
+          <small class="text-muted">(<%= @remittance.updated_at.strftime('%Y/%m/%d %H:%I:%S') %>)</small>
+
+          <% unless @remittance.confirm %>
+            <div>
+              回覆訊息: <%= @remittance.message %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

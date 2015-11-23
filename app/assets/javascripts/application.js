@@ -126,7 +126,12 @@
     initCartCalculate();
     initRefreshTuition();
     initLoadMore();
+    initReadMore();
+    initCollapseBoxInMobile();
     scrolltotop.init();
+    initAutoSendForm();
+    initSigninModel();
+    initCustomOrderModel();
 
     $('img').on('load', function(){
         $(this).animate({opacity: 1}, 500);
@@ -180,6 +185,10 @@
 
     $('[data-dismiss="disable"]').on('click', function(){
         $($(this).data('target')).prop('disabled', $(this).prop('checked'));
+    });
+
+    $('[data-dismiss="remove"]').on('click', function(){
+        $($(this).data('target')).remove();
     });
 
 //    $('.collapse-trigger').on('click', function(){

@@ -39,16 +39,19 @@ en:
 
   footer:
     login: 'Login Admin'
+  item: 'Item'
   view_detail: 'View Detail'
   product_detail: 'Product Detail'
   starting_time: 'Time'
   course_time: 'Time'
   teacher: 'Teacher'
   products: 'Products'
+  purchased_items: 'Purchased items'
 
   order:
+    all: 'All orders'
     my: 'My orders'
-    detail: 'Order detail'
+    detail: 'Order details'
     in_trading: 'Orders in trading'
     closed: 'Closed order'
     completed: 'Completed'
@@ -59,11 +62,18 @@ en:
     wait_paying: 'Wait paying'
     advice: 'Advice'
     received: 'Received'
-    cancel: 'Cancel order'
+    cancel: 'Cancel transition'
+    canceled: 'Canceled'
     no_s: 'Order No.'
+    back: 'Back'
+    next: 'Next step'
+    cancel_reason: 'Give us the reason why you want to cancel'
+    cancel_reason_hint: 'For providing you better service, please write down your message to us.'
 
     personalize: "To order"
   custom_order:
+    no_s: 'Order No.'
+    all: 'My customizations'
     my: 'Customization'
     prev: 'Prev'
     next: 'Next'
@@ -80,22 +90,36 @@ en:
     respond: 'Message'
     detail: 'Detail of custom order'
     about: 'About %{days} business days'
-    hint: 'If you do not sign in or sign up on this website, you will be required to sign in after pressing the “submit” button.'
+    hint: 'Please use Disqus to discuss your bag with us.<br/>If you want to contact us by other ways. <br/>Please call %{phone} or email to %{email}.<br/>We will reply as soon as possible!'
     first_hint: 'It is unnecessary to input your requirement in order. The information input is indispensable to the items with red asterisk.'
+    charge: 'Customization price'
 
   registration:
+    all: 'Registered courses'
     my: 'My courses'
     you_have_no_registrations: 'No registrations.'
     full: 'Full registration'
     hint: 'For communication, Please fill in the following blanks with your information'
     information: 'Register information'
-    attendance: 'Number'
+    attendance: 'Attending'
     to: 'To register'
     keep: 'See other courses'
     name: 'Course name'
     received: 'Remittance paid'
     detail: 'Course detail'
-    cancel: 'Canceled'
+    cancel: 'Cancel registration'
+    canceled: 'Registration canceled'
+    option: 'Options you chose'
+    no_s: 'Registration No.'
+    item: 'Registered courses'
+    wait_remittance: 'Wait remittance'
+    wait_confirm: 'Wait confirmation'
+    wait_paying: 'Wait paying'
+    wait_refund: 'Wait refund'
+    refunded: 'Refunded'
+    your: 'Your registration'
+    cancel_reason: 'Give us the reason why you want to cancel'
+    cancel_reason_hint: 'For providing you better service, please write down your message to us.'
 
   course:
     closed: 'Closed courses'
@@ -106,6 +130,7 @@ en:
     information: 'Course information'
     number: 'Number'
     over: 'Course over'
+    options: 'Course options'
 
   user:
     title: 'Profile information'
@@ -184,14 +209,22 @@ en:
     discount: '%{percent}% off'
 
   check_out: 'Check out'
+  proceed_to_checkout: 'Proceed to checkout'
   payment: 'PAYMENT'
-
-
+  checkout_time: 'Checkout time'
+  subscribe_rss: 'Subscribe RSS feed'
   no_data: 'No data'
   paypal_description: 'PayPal is the faster, safer way to send money, make an online payment'
   online_payment: 'Online Payment'
   offline_payment: 'Remittance'
   choose_payment: 'Choose payment'
+  payment_method: 'Payment method'
+  cvs_family: 'Famiport'
+  cvs_ibon: '7-Eleven ibon'
+  payment_no: 'Payment no.'
+  bankcode: 'Bank code'
+  virtual_account: 'Virtual account'
+  expire_time: 'Expire time'
   registrations: 'Registrations'
   ideation_sketches: 'IDEATION SKETCHED'
   account_name: 'Beneficiary'
@@ -204,8 +237,13 @@ en:
   remitted_date: 'Remittance Date'
   remitted_amount: 'Remittance Amount'
   amount_payable: 'Total amount'
+  report_in_process: 'Report in process'
+  report_confirmed: 'Remittance confirmed'
+  report_denied: 'Remittance denied'
+  submit_again: 'Submit again'
   mean: 'Mean'
   time: 'Time'
+  status: 'Status'
   amount: 'Amount'
   payment_information: 'Payment Information'
   shipping_information: 'Shipping information'
@@ -286,6 +324,9 @@ en:
   captcha_hint: 'Input the following verification code before sending'
   traffic_information: 'Traffic information'
   completion_payment: 'Completion payment'
+  payment_completed_time: 'Payment completed time'
+  expired: 'expired'
+  payment_expired: 'Sorry, payment has been canceled because expired.'
 
   add_to_cart: 'Add to cart'
   buy: 'Buy'
@@ -311,7 +352,6 @@ en:
   style: 'Style'
   material: 'Material'
   pay: 'Pay'
-  subtotal: 'Subtotal'
   single_subtotal: 'Single subtotal'
   shopping_list: 'Your shopping list'
   paid: 'Paid'
@@ -338,7 +378,7 @@ en:
   money_name: 'NTD '
   not_in_stock: 'Sold out'
   had_registered: 'You have registered'
-  had_registered_hint: 'You have registered again! If you want to register for others, please continue.'
+  had_registered_hint: 'You have registered again! If you want to register again, please continue.'
   recent_course: 'New courses'
   share_this_on_facebook: 'Share this on Facebook'
   share_this_on_pinterest: 'Share this on Pinterest'
@@ -400,7 +440,13 @@ en:
   used: 'Used'
   completed_payment: 'Completed payment'
   completed_report: 'Advice completion'
+  report_remittance_hint: 'Thank you for shopping on quoi quoi! We will deal your report as soon as possible.'
+  report_remittance_warning: 'So sorry. There was already a report waiting confirmed, please wait us checking.'
   completed_payment_hint: 'Thank you for shopping on quoi quoi. Other products and courses?'
+  registration_complete_hint: 'Thank you! Registration has been completed. Please note that registration will automatically canceled if payment was expired.'
+  registration_cancel: 'Your registration was canceled, Thank you for your cooperation.'
+  order_complete_hint: 'Thank you! Order has been completed. Please note that order will automatically canceled if payment was expired.'
+  order_cancel: 'Your order was canceled, Thank you for your cooperation.'
   keep_shopping: 'Keep shopping'
   other_courses: 'Other courses'
   beneficiary_information: 'Beneficiary information'
@@ -424,6 +470,7 @@ en:
   enter: 'Enter'
   person: 'Person'
   customizations: 'Customizations'
+  customization: 'Customization'
   personalized_products: 'Personalized products'
   check_hint: "Thank you for shopping at quoi quoi studio. Your order has been shipped.<br/>Please check your mailbox.<br/>Please consider the shipping distance to determine the arrival time.<br/>If you don't receive the products, please contact us by "
   remittance_edit_hint: 'Please transfer the money yourself to the following account. After transferring, please advice the remittance on "My account" of our website. If you pay the tuition of our courses, please go to "REMITTANCE ADVICE" item to advice.'
@@ -442,7 +489,53 @@ en:
   remarks: 'Remarks'
   others: 'Others'
   payment_completed: 'Your payment has been completed.'
+  payment_already_completed: 'Your payment has already completed ~!'
   paypal_hint: ""
+  webatm: 'Web ATM'
+  atm: 'ATM'
+  alipay: 'Ali PAY'
+  paypal: 'Paypal'
+  continue_on_paypal: 'Continue on Paypal'
+  continue_on_alipay: 'Continue on Alipay'
+  continue_pay_page: 'Continue to pay'
+  click_to_continue_paying: 'Click the button bellow to continue your payment.'
+  cvs_tutorial: 'Check the tutorial about who to use %{cvs}'
+  cvs_tutorial_link: 'Tutorials for pay at convenience store'
+  atm_remind: 'Reminds you, recently the ATM cheating case keeps pouring in, in case cheats please do dial 165 for consultations.'
+  atm_remind_link: 'National police agency'
+  registration_detail: 'Detail register information'
+  order_detail: 'Detail order information'
+  sorry: 'Sorry!'
+  thanks: 'Thank you! '
+  report_problem_hint: 'We will handle it as fast as possible. Thank you for your cooperation.'
+  custom_order_no: 'Customization order'
+  step: 'Step'
+  choose_some_materials: 'Choose some materials you like.'
+  which_type: 'Which type you want'
+  donot_know: "Don't know how to choice?"
+  some_clue: 'You can get some clues from '
+  our_past_work: 'Our past works.'
+  which_style: 'Which style you like'
+  let_choose_material: 'Choose some materials you like!'
+  must_fill: 'The information input is indispensable to the items with red asterisk.'
+  choose_ok: 'Ok'
+  check_signin_mail_hint: 'We just need to confirm this email address is yours'
+  check_signin_mail: 'We send a confirmation mail to you for check your identity.<br/>Please check your mailbox.'
+  basic_info_hint: 'Please give us your basic information. Our designer will discuss your case with you.'
+  sign_or_create: 'Sign in or create an account'
+  just_two_steps: 'Just two steps'
+  sign_in_with_google: 'Sign in with Google'
+  sign_in_with_fb: 'Sign in with Facebook'
+  use_email_sign_in: 'Use email to sign in or create a account'
+  your_custom_options: 'Options you chose'
+  material_you_like: 'Materials you like'
+  cusutomise_product: 'You want to customise the product'
+  product_no: 'Product id '
+  discussing: 'Discussing'
+  approved: 'Approved'
+  lets_discuss: 'Leave some details to us!'
+  ok: 'OK'
+
   outdated:
     title: 'Your browser is out-of-date!'
     content: 'Update your browser to view this website correctly.'
@@ -451,6 +544,66 @@ en:
   view_cart: 'View cart'
 
   mailer:
+    subject:
+      payment:
+        remittance: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
+        cvs: "[quoi quoi studio] Remind of paying at convenience store (Please don't reply this mail)"
+        online: "[quoi quoi studio] Remind of completing you payment (Please don't reply this mail)"
+        atm: "[quoi quoi studio] Remind of using ATM to complete you payment (Please don't reply this mail)"
+        remittance_report_fail: "[quoi quoi studio] Sorry！Something wrong in your remittance (Please don't reply this mail)"
+      registration: "[quoi quoi studio] Payment confirmation of your handmade course (Please don't reply this mail)"
+      order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
+      cancel_course: "[quoi quoi studio] Notification for course was canceled (Please don't reply this mail)"
+      cancel_registration: "[quoi quoi studio] Notification for registration was canceled (Please don't reply this mail)"
+      remind_before_course_start: "[quoi quoi studio] Remind of attending handmade class (Please don't reply this mail)"
+      delivered: "[quoi quoi studio] Notice that your order has been delivered (Please don't reply this mail)"
+      custom:
+        approve: "[quoi quoi studio] Notice that your customization order is accepted (Please don't reply this mail)"
+        dismiss: "[quoi quoi studio] Decline your customization order (Please don't reply this mail)"
+    text:
+      registration:
+        completed: "Thank you for registering our course. This email is to confirm that you have completed the payment. Your registration no. is %{link}"
+        remind: "Remind that you don't miss this course. The course time is at %{date}. We are expecting your come."
+        remittance_report_fail: 'Thank you for registering our course. Your remittance information is wrong. Please check your remittance and advice again.'
+        remittance_report_fail_hint: 'Message from manager blew.'
+        remind_before_course_start: "We remind you of attending the tomorrow handmade course - %{name} at quoi quoi studio. Please don't miss this course and make ready for the course requirement."
+        cancel:
+          alert: 'Your registration has been canceled.'
+          name: 'Sorry, Your registration for course - %{name} was canceled because some trouble, your consideration will be very much appreciated. The message below for you from manager.'
+          apologize: "Thank you for giving us the opportunity to serve for you and I hope this will not discourage you from considering quoi quoi studio's service as a potential outlet for you."
+          refund: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
+          detail: 'If you need to check your registration, please click the link.'
+      course:
+        cancel:
+          alert: 'The course has been canceled.'
+          name: 'Sorry, Course - %{name} was canceled because some trouble, your consideration will be very much appreciated. '
+          apologize: "Thank you for giving us the opportunity to serve for you and I hope this will not discourage you from considering quoi quoi studio's service as a potential outlet for you."
+          refund: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
+          registration: 'If you need to check your registration, please click the link.'
+      order:
+        payment: "Thank you for your shopping on quoi quoi website. Mind you, if you don't complete payment within %{days} days, the order will be canceled automatically."
+        list_header: 'Your orders'
+        remittance_report_fail: 'Thank you for your shopping on quoi quoi website. Your remittance information is wrong. Please check your remittance and advice again.'
+        remittance_report_fail_hint: 'Message from manager below.'
+        completed:
+          title: 'Your payment has been completed'
+          message: 'Thank you for your shopping on quoi quoi website. This email is to confirm that you have completed the payment. Your order no. is %{link}'
+        remind: 'We will send your orders as fast as possible. Thank you.'
+        delivered: "Thank you for shopping at quoi quoi studio. Your order has been shipped. Please check your mailbox, you will receive it about one week(Not including outside Taiwan). If you don't receive the products, your order no. is %{link}, please report at your order page or contact us by email"
+      custom:
+        detail: 'Customization order detail'
+        dismiss:
+          alert: 'Your customization order has been canceled.'
+          apologize: "We regret that we need to reject your order. The order was reviewed by the quoi quoi designer and our assessment is that the order is not well suited to our studio's production. Please note that in view of the quantity of orders we receive, we have to be selective in the orders we accept, and unfortunately we have to make difficult decisions. Thank you for giving us the opportunity to consider your order and I hope the decision will not discourage you from considering quoi quoi studio's products as a potential outlet for your future shopping."
+          hint: 'Message from manager below.'
+          detail: 'If you need to check your custom order, please click the link.'
+        approve:
+          alert: 'Your customization order is accepted!'
+          hint: 'Remind that full payment must be made before we produce the order.'
+      user:
+        sign_in: 'Sign in to quoi quoi'
+        sign_in_link: 'Click the button below or use the url.%{link}You can sign in to quoiquoi.tw. And this url will expire after 15 min.'
+        alert: 'Hi! There is somebody wants to use your email adress to sign in quoi quoi.<br/>We need to confirm that is you.'
     success: 'Send mail success.'
     subject_for_order: "[quoi quoi studio] Payment confirmation of your order (Please don't reply this mail)"
     subject_for_remittance_order: "[quoi quoi studio] Remind of remitting the money (Please don't reply this mail)"
@@ -484,6 +637,8 @@ en:
     help_return_tuition_hint: 'Because your payment is completed. Please reply this mail with remittance information to return the course tuition. (Account, Name, Bank...)'
     cancel_registration: "Thank you for register quoi quoi studio's course, your registration was canceled."
     dear: 'Dear customer'
+    report_button: 'Click the button below to report page.'
+    remind_text_for_registration: "Thank you for registering our course. Mind you, if you don't complete payment within %{days} days, the registration will be canceled automatically."
     custom_item_accept: 'We have accepted your customization order.'
     custom_item_decline: "We regret that we need to reject your order. The order was reviewed by the quoi quoi designer and our assessment is that the order is not well suited to our studio's production. <br/>Please note that in view of the quantity of orders we receive, we have to be selective in the orders we accept, and unfortunately we have to make difficult decisions.<br/><br/>Thank you for giving us the opportunity to consider your order and I hope the decision will not discourage you from considering quoi quoi studio's products as a potential outlet for your future shopping."
     suggestion_hint: 'please contact us by'
@@ -506,6 +661,7 @@ en:
       mind: 'Remind that full payment must be made before we produce the order.'
       add_to_cart: 'If you want to pay the bill, please go to'
       following: 'The order information is in the following.'
+
     remind_before_start: "[quoi quoi studio] Remind of attending handmade class (Please don't reply this mail)"
     dear_student: "Dear students"
     remind_before_start_content: "We remind you of attending the tomorrow handmade course at quoi quoi studio.<br/>
@@ -516,6 +672,8 @@ en:
   more: "More"
   no_content: "Sorry, no content"
   load_more: "Load more..."
+  read_more: "Read more..."
+  read_less: "Close"
   past_works: "Past Works"
   completion_date: "Completion Date"
   other_past_works: "Other past works"

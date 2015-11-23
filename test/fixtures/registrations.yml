@@ -1,11 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  course_id: 
-  user_id: 
-  accept: false
+  email: calvin.peak@gmail.com
+  name: Calvin
+  payment_method: 1
 
 two:
-  course_id: 
-  user_id: 
-  accept: false
+  email: ts01364362@gmail.com
+  name: 黃柏翔
+  payment_method: 6

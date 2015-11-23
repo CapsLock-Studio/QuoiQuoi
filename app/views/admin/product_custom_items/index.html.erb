@@ -5,7 +5,7 @@
       現貨修改可選項目&nbsp;
       <small>現貨名稱:&nbsp;</small>
       <span class="label label-danger">
-        <%= @product.product_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join('/') %>
+        <%= @product.product_translates.reject(&:blank?).map(&:name).join('/') %>
       </span>
     </h1>
     <div class="pull-right">
@@ -14,39 +14,77 @@
           <i class="icon-chevron-left"></i>
           回到現貨列表
         <% end %>
-        <%= link_to '新增項目', new_admin_product_product_custom_item_path(@product), class: 'btn btn-info' %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="row">
-        <% @product_custom_items.each do |item| %>
-          <div class="col-sm-3">
-            <div class="box image-preview-box">
-              <div class="box-header box-header-small">
-                <div class="title">
-                  <%= item.product_custom_item_translates.reject{|translate| translate.name.blank?}.collect{|translate| translate.name}.join(' / ') %>
-                </div>
-                <div class="actions">
-                  <%= link_to(edit_admin_product_product_custom_item_path(@product, item), class: 'btn btn-xs btn-link') do %>
-                    <i class="icon-pencil"></i>
-                  <% end %>
-                  <%= link_to(admin_product_product_custom_item_path(@product, item), class: 'btn btn-xs btn-link', method: :delete, data: {confirm: '確定要刪除這個項目嗎?'}) do %>
-                    <i class="icon-remove"></i>
-                  <% end %>
-                </div>
-              </div>
-              <%= image_tag item.image.url(:medium), class: 'img-responsive' %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <%= paginate @product_custom_items %>
-        </div>
       </div>
     </div>
   </div>
 </div>
+
+<% Locale.select(:id, :name).each do |locale| %>
+  <div class="col-xs-3">
+    <div class="box">
+      <div class="box-header box-header-small">
+        <div class="title">
+          <label class="label label-default"><%= locale.name %></label>
+        </div>
+      </div>
+      <div class="box-content box-no-padding">
+        <%= form_tag admin_product_product_custom_items_path(@product.id), class: 'form', method: :post do %>
+          <div class="row" style="padding:8px;">
+            <div class="col-xs-9">
+              <div class="form-group">
+                <%= text_field_tag :value, '', class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <%= hidden_field_tag :key, "product:#{@product.id}:locale:#{locale.id}" %>
+              <button type="submit" class="btn btn-primary pull-right">
+                新增
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <table class="table table-striped">
+          <tbody>
+          <% JSON.parse($redis.get("product:#{@product.id}:locale:#{locale.id}") || '[]').each_with_index do |item, index| %>
+            <tr>
+              <td>
+                <% if params[:key] == "product:#{@product.id}:locale:#{locale.id}" && params[:index].to_i == index %>
+                  <%= form_tag admin_product_custom_item_path(index, product_id: @product.id), class: 'form', method: :put do %>
+                    <div class="row">
+                      <div class="col-xs-9">
+                        <div class="form-group">
+                          <%= hidden_field_tag :key, "product:#{@product.id}:locale:#{locale.id}" %>
+                          <%= text_field_tag :value, item, class: 'form-control' %>
+                        </div>
+                      </div>
+                      <div class="col-xs-3 text-right">
+                        <%= link_to admin_product_product_custom_items_path(@product.id), class: 'btn btn-default btn-xs' do %>
+                          <i class="icon-remove"></i>
+                        <% end %>
+                        <button type="submit" class="btn btn-success btn-xs">
+                          <i class="icon-ok"></i>
+                        </button>
+                      </div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <%= item %>
+                  <div class="pull-right">
+                    <%= link_to admin_product_product_custom_items_path(@product.id, key: "product:#{@product.id}:locale:#{locale.id}", index: index), class: 'btn btn-default btn-xs' do %>
+                      <i class="icon-pencil"></i>
+                    <% end %>
+                    <%= link_to admin_product_custom_item_path(index, key: "product:#{@product.id}:locale:#{locale.id}"),
+                                method: :delete, class: 'btn btn-danger btn-xs' do %>
+                      <i class="icon-trash"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

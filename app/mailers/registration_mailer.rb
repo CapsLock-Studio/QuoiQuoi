@@ -1,71 +1,61 @@
-class RegistrationMailer < ActionMailer::Base
-  include Resque::Mailer
-  default from: 'admin@quoiquoi.tw'
+class RegistrationMailer < ApplicationMailer
+  def remind_to_pay(id, subject)
+    @registration = Registration.includes(:course).find(id)
+    @locale_id = @registration.locale_id
 
-  def remittance_remind(registration_id)
-    @registration = Registration.find(registration_id)
-    I18n.locale = Locale.find(@registration.locale_id).lang
+    I18n.locale = @registration.locale.lang
 
-    set_discount
+    # Setup expire payment clean job
+    CleanExpirePaymentsJob.set(
+        wait_until: (@registration.registration_payment.expire_time.nil?)? (Time.now + 3.days).end_of_day : @registration.registration_payment.expire_time
+    ).perform_later(@registration.registration_payment, t('payment_expired'))
 
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_remittance_registration'))
+    mail(to: @registration.email, subject: subject)
   end
 
-  def remittance_remind_three_days(registration_id)
-    @registration = Registration.find(registration_id)
-    I18n.locale = Locale.find(@registration.locale_id).lang
+  def request_remit_payment_again(id)
+    @report = RegistrationRemittanceReport.find(id)
+    @registration = @report.registration_payment.registration
+    @locale_id = @registration.locale_id
 
-    set_discount
+    I18n.locale = @registration.locale.lang
 
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_three_days'))
+    mail(to: @registration.email, subject: t('mailer.subject.payment.remittance_report_fail'))
   end
 
-  def remind(registration_id)
-    @registration = Registration.find(registration_id)
-    I18n.locale = Locale.find(@registration.locale_id).lang
+  def completed_confirmation(id)
+    @registration = Registration.includes(:course).find(id)
+    @locale_id = @registration.locale_id
 
-    set_discount
+    I18n.locale = @registration.locale.lang
 
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_registration'))
+    mail(to: @registration.email, subject: t('mailer.subject.registration'))
   end
 
-  def re_remittance_remind(registration_id, amount, identifier, pay_time)
-    @registration = Registration.find(registration_id)
-    I18n.locale = Locale.find(@registration.locale_id).lang
+  def remind_before_course_start(id)
+    @registration = Registration.includes(:course).find(id)
+    @locale_id = @registration.locale_id
 
-    @registration.payment.amount = amount
-    @registration.payment.identifier = identifier
-    @registration.payment.pay_time = pay_time
+    I18n.locale = @registration.locale.lang
 
-    set_discount
-
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: t('mailer.subject_for_re_remittance'))
+    mail(to: @registration.email, subject: t('mailer.subject.remind_before_course_start'))
   end
 
-  def cancel_remind(registration_id)
-    @registration = Registration.find(registration_id)
-    I18n.locale = Locale.find(@registration.locale_id).lang
+  def cancel_notification(id)
+    registration = Registration.find(id)
+    @registration_id = registration.id
+    @locale_id = registration.locale_id
+    @cancel_reason = registration.registration_payment.cancel_reason
+    @is_completed = registration.registration_payment.completed.to_s
+    @course_name = registration.course.course_translates.find_by_locale_id(@locale_id).name
+    I18n.locale = registration.locale.lang
 
-    set_discount
-
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: "#{t('mailer.subject_for_cancel_registration')} #{t('mailer.help_return_tuition') if @registration.payment && @registration.payment.completed?}")
+    mail(to: registration.email, subject: t('mailer.subject.cancel_registration'))
   end
 
-  def remind_before_start(registration_id)
-    @registration = Registration.find(registration_id)
-    I18n.locale = Locale.find(@registration.locale_id).lang
-
-    set_discount
-
-    mail(to: (@registration.user)? @registration.user.email : @registration.email, subject: "#{t('mailer.remind_before_start') if @registration.payment && @registration.payment.completed?}")
+  def remind_remittance_report(id)
+    @report = RegistrationRemittanceReport.find(id)
+    @registration = @report.registration_payment.registration
+    mail(to: $redis.get('about:locale:1:email'), subject: "[quoiquoi.tw] 系統提醒 報名編號#{@registration.id}有匯款回報 - 回報編號#{@report.id}待確認")
   end
-
-  private
-    def set_discount
-      @discount = 0
-      @user_gift_serials = UserGiftSerial.where(registration_id: @registration.id)
-      @user_gift_serials.each do |user_gift_serial|
-        @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @registration.locale_id).first.quota
-      end
-    end
 end

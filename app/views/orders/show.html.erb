@@ -1,229 +1,46 @@
-<% locale = Locale.where(id: @order.locale_id).first.lang %>
-
 <%= render 'layouts/breadcrumbs' %>
+
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
-    <div class="col-sm-9">
+    <div class="col-sm-9 col-xs-12">
+
       <%= render 'layouts/flash_message' %>
+
       <div class="row margin-bottom-40">
         <%= render 'layouts/nav_item' %>
-        <div class="col-xs-12">
-          <h4 class="margin-bottom-30">
-            <%= t('no_s') %>
-            <strong class="text-muted">P<%= @order.id %></strong>
-          </h4>
-        </div>
-        <div class="col-md-12 text-center text-muted">
-          <ul class="list-unstyled step">
-            <li class="col-xs-3 step-active">
-              <span>
-                <i class="fa fa-shopping-cart icon-round"></i>
-              </span>
-              <h4><%= t('check_out') %></h4>
-              <p><%= @order.checkout_time.strftime('%Y/%m/%d %H:%M') %></p>
-            </li>
-            <li class="col-xs-3 <%= 'step-active' if @order.paid? %>">
-              <span>
-                <i class="fa fa-credit-card icon-round"></i>
-              </span>
-              <h4><%= t('paid') %></h4>
-              <p><%= @order.payment.pay_time.strftime('%Y/%m/%d %H:%M') if @order.paid? && @order.payment.completed? %></p>
-              <span class="label label-success"><%= (@order.payment.amount == 0 || @order.payment.identifier.blank?)? t('order.wait_remittance') : t('order.wait_confirm') if @order.paid? && !@order.payment.completed? %></span>
-            </li>
-            <li class="col-xs-3 <%= 'step-active' if @order.paid? && @order.payment.completed? %>">
-              <span>
-                <i class="fa fa-truck icon-round"></i>
-              </span>
-              <h4><%= t('shipped') %></h4>
-              <p><%= @order.delivered_time.strftime('%Y/%m/%d %H:%M') if @order.delivered? %></p>
-            </li>
-            <li class="col-xs-3 <%= 'step-active' if @order.closed? %>">
-              <span>
-                <i class="fa fa-check icon-round"></i>
-              </span>
-              <h4><%= t('order.completed') %></h4>
-              <p><%= @order.closed_time.strftime('%Y/%m/%d %H:%M') if @order.closed? %></p>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row margin-bottom-40">
-        <% if @order.paid? && !@order.payment.identifier.blank? && !@order.payment.completed? %>
-          <div class="col-md-12">
-            <h5><%= t('remitted_information') %></h5>
-          </div>
-          <div class="col-md-12 margin-bottom-40">
-            <div class="row">
-              <div class="col-md-2 col-xs-3 text-right">
-                <%= t('remitted_amount') %>
-              </div>
-              <div class="col-md-10 col-xs-9">
-                <%= number_to_currency(@order.payment.amount, locale: locale) %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 col-xs-3 text-right">
-                <%= t('your_account') %>
-              </div>
-              <div class="col-md-10 col-xs-9">
-                <%= @order.payment.identifier %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 col-xs-3 text-right">
-                <%= t('remitted_date') %>
-              </div>
-              <div class="col-md-10 col-xs-9">
-                <%= @order.payment.pay_time.strftime('%Y/%m/%d') %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <div class="col-md-12">
-          <h5><%= t('shipping_information') %></h5>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-2 col-xs-5 text-right">
-              <%= t('name') %>
-            </div>
-            <div class="col-md-10 col-xs-7">
-              <%= @order.name %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2 col-xs-5 text-right">
-              <%= t('phone_number') %>
-            </div>
-            <div class="col-md-10 col-xs-7">
-              <%= @order.phone.gsub(/\d{4}$/, '****') %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2 col-xs-5 text-right">
-              <%= t('area') %>
-            </div>
-            <div class="col-md-10 col-xs-7">
-              <%= @shipping_fee.shipping_fee.area %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2 col-xs-5 text-right">
-              <%= t('address') %>
-            </div>
-            <div class="col-md-10 col-xs-7">
-              <%= @order.address %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2 col-xs-5 text-right">
-              <%= t('shipping_fee') %>
-            </div>
-            <div class="col-md-10 col-xs-7">
-              <%= number_to_currency(@shipping_fee.fee, locale: locale) %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header box-header-small grey-background">
-              <span class="text-muted"><%= t('no_s') %> <%= @order.id %></span>
-            </div>
-            <div class="box-content box-no-padding" style="border:0;">
-              <div class="responsive-table">
-                <div class="scrollable-area">
-                  <table class="table table-bordered text-center table-padding-20" style="margin-bottom:0;">
-                    <thead>
 
-                    </thead>
-                    <tbody>
-                    <% @order.order_products.reject{|object| object.product.nil?}.each do |order_product| %>
-                      <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: @order.locale_id).first %>
-                      <tr>
-                        <td class="text-left col-xs-6">
-                          <div class="row">
-                            <div class="col-md-2 col-sm-4 col-xs-8">
-                              <%= image_tag order_product.product.image.url(:thumb), class: 'img-responsive' %>
-                            </div>
-                            <div class="col-md-10 col-sm-8 hidden-xs">
-                              <%= translate.name %><br/>
-                              <small><%= order_product.product_option.content if order_product.product_option %></small>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="col-xs-1">
-                          <% if order_product.product_option %>
-                            <h5>
-                              <%= number_to_currency(translate.price) %><br/>
-                              <small><%= number_to_currency(order_product.product_option.price) %></small>
-                            </h5>
-                          <% end %>
-                          <%= number_to_currency(order_product.price) %>&nbsp;<span class="text-muted">*&nbsp;<%= order_product.quantity %></span>
-                        </td>
-                      </tr>
-                    <% end %>
-                    <% @order.order_custom_items.each do |custom_item| %>
-                      <tr>
-                        <td class="text-left col-xs-6">
-                          <div class="row">
-                            <div class="col-md-2 col-sm-4 col-xs-8">
-                              <%= custom_item_image_helper(custom_item) %>
-                            </div>
-                            <div class="col-md-10 col-sm-8 hidden-xs">
-                              <%= custom_item_name_helper(custom_item) %>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="col-xs-1">
-                          <%= number_to_currency(custom_item.order_custom_item_translates.where(locale_id: @order.locale_id).first.price, locale: locale) %>
-                        </td>
-                      </tr>
-                    <% end %>
-                    </tbody>
-                  </table>
+        <%= render 'delivery_message' if @order.delivered? && !@order.delivery_report? %>
+
+        <div class="col-xs-12">
+          <h5><%= t('order.detail') %></h5>
+        </div>
+
+        <div class="col-sm-7 col-xs-12">
+
+          <div class="box">
+            <div class="box-content">
+              <div class="row margin-bottom-10">
+                <div class="col-xs-12">
+                  <span class="text-muted">
+                    <%= t('order.no_s') %>
+                  </span>
+                </div>
+                <div class="col-xs-12">
+                  <%= "O#{@order.id}" %>
                 </div>
               </div>
+
+              <%= render 'customer_information', order: @order %>
+              <%= render 'transaction_information', order_payment: @order.order_payment if @order.order_payment %>
             </div>
           </div>
+
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <h4 class="text-right color-orange">
-            <%= t('total_amount') %>
-            <strong class="text-muted">
-              <%= number_to_currency(@order.subtotal, locale: locale) %>
-            </strong>
-            <% if @discount > 0 %>
-              <br/>
-              <small>
-                <%= t('user_gift.discount') %>
-                <%= number_to_currency(@discount, locale: locale) %>
-              </small>
-            <% end %>
-          </h4>
+
+        <div class="col-sm-5 col-xs-12">
+          <%= render 'order_items', order: @order %>
         </div>
-        <% if @order.payment && !@order.payment.completed? && (@order.payment.amount == 0 || @order.payment.identifier.blank?) %>
-          <hr/>
-          <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('order.advice'), edit_payment_path(@order.payment), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
-            <%= link_to t('order.cancel'), cancel_order_path(@order), method: :put %>
-          </div>
-        <% elsif @order.delivered? && !@order.closed? %>
-          <hr/>
-          <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('order.received'), close_order_path(@order), method: :put, class: 'btn btn-lg btn-orange btn-block hover-effect' %>
-          </div>
-        <% elsif !@order.paid? %>
-          <hr/>
-          <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('pay'), pay_order_path(@order), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
-            <%= link_to t('order.cancel'), cancel_order_path(@order), method: :put %>
-          </div>
-        <% end %>
       </div>
     </div>
   </div>

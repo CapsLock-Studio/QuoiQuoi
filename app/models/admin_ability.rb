@@ -20,6 +20,7 @@ class AdminAbility
       can :manage, Course
       can :manage, Order
       can :manage, OrderCustomItem
+      can :manage, OrderRemittanceReport
       can :manage, Slide
       can :manage, Broadcast
       can :manage, Material
@@ -49,6 +50,7 @@ class AdminAbility
       can :manage, Faq
       can :manage, ProductType
       can :manage, Top
+      can :manage, CustomOrder
     end
 
     # for development

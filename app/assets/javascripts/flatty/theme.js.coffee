@@ -17,7 +17,7 @@
       cssExceeded: "text-error"
 # --------------------------------------------------------------------------------------------------------------------
 
-# --------------------------------------------------------------------------------------------------------------------
+# -----------bootstrapSwitch---------------------------------------------------------------------------------------------------------
 # autosize feature for expanding textarea elements
 @setAutoSize = (selector = $(".autosize")) ->
   selector.autosize() if jQuery().autosize
@@ -76,9 +76,10 @@
         sDom: sdom
         bStateSave: true
         sPaginationType: "bootstrap"
-        "iDisplayLength": $(elem).data("pagination-records") || 10
+        "iDisplayLength": $(elem).data("pagination-records") || 25
         oLanguage:
           sLengthMenu: "_MENU_ 每頁"
+      dt.fnSort([[0, 'desc']])
       dt.columnFilter() if $(elem).hasClass("data-table-column-filter")
       dt.closest('.dataTables_wrapper').find('div[id$=_filter] input').css("width", "200px");
       dt.closest('.dataTables_wrapper').find('input').addClass("form-control input-sm").attr('placeholder', '關鍵字')

@@ -1,0 +1,82 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="page-header">
+        <h1 class="pull-left">
+          <i class="icon-check"></i>
+          詳細待確認匯款 <span class="text-muted">回報編號: <%= @remittance.id %></span>
+        </h1>
+        <div class="pull-right">
+          <ul class="breadcrumb">
+            <%= render_breadcrumbs tag: 'li', separator: ' <li class="separator"><i class="icon-angle-right"></i></li> ' %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= render 'admin/registrations/info', registration: @remittance.registration_payment.registration %>
+      <div class="row">
+        <div class="col-xs-12">
+          <a class="btn btn-info" data-toggle="modal" data-target="#registration-detail">查看課程詳細內容</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <%= render 'remittance_report', remittance: @remittance %>
+    </div>
+    <div class="col-sm-12">
+      <div class="pull-right">
+        <a class="btn btn-default" data-toggle="modal" data-target="#denied-message">匯款有誤</a>
+        <%= link_to admin_registration_remittance_path(@remittance, confirm: true, from_check: (request.path.include?('/check'))),
+                    class: 'btn btn-primary',
+                    method: :put do %>
+          <i class="icon-ok icon-fixed-width"></i>確認
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registration-detail">
+  <div class="modal-dialog" style="width: 80%;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <%= render 'registrations/course_information', registration: @remittance.registration_payment.registration %>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">關閉</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="denied-message">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+        <h4 class="modal-title">匯款有誤</h4>
+      </div>
+      <%= form_tag admin_registration_remittance_path(@remittance), class: 'form validate-form', method: :put do %>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>請敘述一下匯款內容錯誤的原因 <span class="text-muted">ex: 匯款金額有誤哦！</span></label>
+            <div class="controls">
+              <%= text_field_tag :message, @remittance.message, class: 'form-control', data: {'rule-required' => true} %>
+              <%= hidden_field_tag :confirm, false %>
+              <%= hidden_field_tag :from_check, (request.path.include?('/check')) %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+          <button type="submit" class="btn btn-primary">
+            送出
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

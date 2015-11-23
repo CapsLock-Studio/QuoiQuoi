@@ -1,0 +1,8 @@
+<div class="alert alert-success alert-dismissable">
+  <a class="close" data-dismiss="alert" href="#">×</a>
+  <%= link_to(admin_registration_path(flash[:id])) do %>
+    報名編號&nbsp;
+    <%= flash[:id] %>
+  <% end %>
+  &nbsp;已經被您取消, 系統已寄出通知信件通知, 請注意客戶是否需要處理退款事宜
+</div>

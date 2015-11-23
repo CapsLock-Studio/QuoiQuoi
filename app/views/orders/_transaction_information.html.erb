@@ -1,0 +1,228 @@
+<div class="row margin-bottom-10">
+  <div class="col-xs-12">
+    <span class="text-muted">
+      <%= t('payment_method') %>
+    </span>
+  </div>
+  <div class="col-xs-12">
+    <strong>
+      <%= t(order_payment.order.payment_method) %>
+    </strong>
+  </div>
+</div>
+
+<% if order_payment.order.remittance? %>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('account_name') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:name") %>
+      </strong>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('account_number') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:account") %>
+      </strong>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('bank_code') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:code") %>
+      </strong>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('bank_name') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:bank_name") %>
+      </strong>
+    </div>
+  </div>
+
+  <% unless $redis.get("remittance:locale:#{session[:locale_id]}:bank_address}").blank? %>
+    <div class="row margin-bottom-10">
+      <div class="col-xs-12">
+        <span class="text-muted">
+          <%= t('bank_address') %>
+        </span>
+      </div>
+      <div class="col-xs-12">
+        <strong class="text-orange">
+          <%= $redis.get("remittance:locale:#{session[:locale_id]}:bank_address}") %>
+        </strong>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%# When payment is atm or cvs or remittance will have expire_time %>
+<% if order_payment.order.has_expire_time? %>
+  <%# CVS payments %>
+  <% if order_payment.order.cvs_family? || order_payment.order.cvs_ibon? %>
+    <div class="row margin-bottom-10">
+      <div class="col-xs-12">
+        <span class="text-muted">
+          <%= t('payment_no') %>
+        </span>
+      </div>
+      <div class="col-xs-12">
+        <strong class="text-orange">
+          <%= order_payment.payment_no %>
+        </strong>
+      </div>
+    </div>
+  <% end %>
+
+  <% if order_payment.order.atm? %>
+    <div class="row margin-bottom-10">
+      <div class="col-xs-12">
+        <span class="text-muted">
+          <%= t('bankcode') %>
+        </span>
+      </div>
+      <div class="col-xs-12">
+        <strong class="text-orange">
+          <%= order_payment.bankcode %>
+        </strong>
+      </div>
+    </div>
+
+    <div class="row margin-bottom-10">
+      <div class="col-xs-12">
+        <span class="text-muted">
+          <%= t('virtual_account') %>
+        </span>
+      </div>
+      <div class="col-xs-12">
+        <strong class="text-orange">
+          <%= order_payment.account %>
+        </strong>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('expire_time') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= order_payment.expire_time.strftime('%Y/%m/%d %H:%I:%S') %>
+      </strong>
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <span class="text-muted">
+      <%= t('status') %>
+    </span>
+  </div>
+  <div class="col-xs-12">
+
+    <% if order_payment.cancel? %>
+      <%= t('order.canceled') %>&nbsp;(<%= order_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+      <div class="row margin-bottom-5">
+        <div class="col-xs-12">
+          <strong>
+            <i class="fa fa-fw fa-comment-o"></i>
+            <%= order_payment.cancel_reason %>
+          </strong>
+        </div>
+      </div>
+    <% elsif order_payment.completed? %>
+      <%= "#{(order_payment.order.remittance?)? t('report_confirmed') : t('completed_payment')} (#{order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')})" %>
+
+      <% if order_payment.order.delivered? %>
+        - 已寄出 (<%= order_payment.order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+        <% if Time.now - order_payment.order.delivered_time > 7.days %>
+          <div>
+            <a href="" class="btn-link btn-xs <%= 'disabled' if order_payment.order.delivery_report? %>"
+               data-toggle="modal"
+               data-target="#delivery-report-form">
+              已經距離寄出日期超過七天了, 可是我沒收到！
+            </a>
+          </div>
+
+          <%= render 'delivery_report_form', order_id: order_payment.order.id unless order_payment.order.delivery_report? %>
+        <% end %>
+      <% else %>
+        - 等待出貨
+      <% end %>
+
+      <%= render 'remittance_report_info', remittance_report: order_payment.order_remittance_reports.last if order_payment.order.remittance? %>
+    <% else %>
+      <% if !order_payment.order.remittance? || (order_payment.order.remittance? && !order_payment.has_valid_remittance_reports?) %>
+        <%= t('order.wait_paying') %>
+      <% elsif order_payment.has_valid_remittance_reports? && !order_payment.order_remittance_reports.last.confirm.nil? %>
+        <%= t('report_denied') %>
+      <% end %>
+
+      <%= t('report_in_process') if order_payment.remittance_reports_in_process? %>
+      <%= render 'remittance_report_info', remittance_report: order_payment.order_remittance_reports.last if order_payment.has_valid_remittance_reports? %>
+
+      <%= link_to(
+              t('continue_pay_page'),
+              url_for(controller: :order_payment, action: :webatm_resume, id: order_payment.order_id),
+              class: 'btn btn-primary btn-xs') if order_payment.order.webatm? %>
+      <%= link_to(
+              t('continue_pay_page'),
+              url_for(controller: :order_payment, action: :alipay_resume, id: order_payment.order_id),
+              class: 'btn btn-primary btn-xs') if order_payment.order.alipay? %>
+      <%= link_to t('continue_on_paypal'), order_payment.redirect_uri, class: 'btn btn-xs btn-primary' if order_payment.order.paypal? %>
+
+      <% if !order_payment.remittance_reports_in_process? %>
+        <% if order_payment.order.remittance? %>
+
+          <% if order_payment.has_valid_remittance_reports? && !order_payment.order_remittance_reports.last.confirm %>
+            <div class="row margin-bottom-5">
+              <div class="col-xs-12">
+                <strong>
+                  <i class="fa fa-fw fa-comment-o"></i>
+                  <%= order_payment.order_remittance_reports.last.message %>
+                </strong>
+              </div>
+            </div>
+          <% end %>
+
+          &nbsp;
+          <a class="btn-xs btn-primary" data-toggle="modal" data-target="#report-remittance-form" href="#">
+            <%= (order_payment.has_valid_remittance_reports?)? t('submit_again') : t('report_remittance') %>
+          </a>
+          <%= render 'report_remittance_form', order_id: order_payment.order.id %>
+        <% end %>
+
+        &nbsp;
+        <a class="btn-xs btn-link" data-toggle="modal" data-target="#cancel-form">
+          (<%= t('order.cancel') %>)
+        </a>
+        <%= render 'cancel_form', order_id: order_payment.order.id %>
+      <% end %>
+
+    <% end %>
+  </div>
+</div>

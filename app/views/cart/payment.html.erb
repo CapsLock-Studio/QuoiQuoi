@@ -1,0 +1,23 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-8 col-sm-6 col-xs-12">
+      <%= render 'list_in_cart' %>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="box">
+        <h4>你的結帳資訊</h4>
+        <div class="box-content">
+          <%= render 'orders/customer_information', order: @order_in_cart %>
+        </div>
+      </div>
+      <div class="box">
+        <h4><%= t('choose_payment') %></h4>
+        <!-- choose payment method -->
+        <%= render 'payment_methods' %>
+        <!-- choose payment method -->
+      </div>
+    </div>
+  </div>
+</div>

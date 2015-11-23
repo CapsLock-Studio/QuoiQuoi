@@ -1,117 +1,149 @@
-<% locale = Locale.where(id: order.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-  <div class="box-header">
-    <div class="title">訂單詳細內容</div>
-    <div class="actions">
-      <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
-      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+  <div class="box-header box-header-small">
+    <div class="title">
+      <strong>
+        <%= link_to("訂單編號: #{order.id}", admin_order_path(order.id)) %>
+      </strong>
     </div>
   </div>
-  <div class="box-content box-no-padding">
-    <div class="responsive-table">
-      <div class="scrollable-table">
-        <table class="data-table table table-striped" style="margin-bottom:0;">
-          <thead>
-          <tr>
-            <th>
-              <span class="label label-success">點擊圖片前往編輯</span>
-            </th>
-            <th>訂單項目</th>
-            <th>金額</th>
-            <th>客戶訂購數量</th>
-            <th>目前剩餘數量</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% order.order_products.reject{|object| object.product.nil?}.each do |order_product| %>
-            <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: order.locale_id).first %>
+
+  <% if order.order_custom_items.size > 0 %>
+    <div class="box-content margin-bottom-10">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="table table-striped" style="margin-bottom:0;">
+            <thead>
             <tr>
-              <td>
-                <% if order_product.product.product_type %>
-                  <%= link_to edit_admin_other_product_path(order_product.product), target: '_blank' do %>
-                    <%= image_tag order_product.product.image.url(:thumb) %>
-                  <% end %>
-                <% else %>
-                  <%= link_to edit_admin_product_path(order_product.product_id), target: '_blank' do %>
-                    <%= image_tag order_product.product.image.url(:thumb) %>
-                  <% end %>
-                <% end %>
-              </td>
-              <td>
-                <h4>
-                  <%= translate.name %>
-                </h4>
-                所選選項:
-                <ul class="list-inline">
-                  <% order_product.order_product_options.each do |option| %>
-                  <li>
-                    <span class="label label-primary">
-                      <%= option.product_option.content %>
-                    </span>
-                  </li>
-                  <% end %>
-                </ul>
-              </td>
-              <td>
-                <% if order_product.product_option %>
-                  <h5>
-                    <%= number_to_currency(translate.price) %><br/>
-                    <small><%= number_to_currency(order_product.product_option.price) %></small>
-                  </h5>
-                <% end %>
-                <%= number_to_currency(order_product.price) %>
-                <% if order_product.discount > 0 %>
-                  <br/>
-                  <small><%= '%g' % order_product.discount.to_f %>折優惠</small>
-                <% end %>
-              </td>
-              <td>
-                <%= order_product.quantity %>
-              </td>
-              <td>
-                <%= translate.product.quantity %>
-              </td>
+              <th>
+                訂製編號
+              </th>
+              <th>
+                訂製費用
+              </th>
+              <th></th>
             </tr>
-          <% end %>
-          <% order.order_custom_items.each do |custom_item| %>
-            <% translate = custom_item.order_custom_item_translates.where(locale_id: order.locale_id).first %>
-            <tr>
-              <td>
-                <%= link_to edit_admin_order_custom_item_path(custom_item), target: '_blank' do %>
-                  <%= custom_item_image_helper(custom_item) %>
-                <% end %>
-              </td>
-              <td>
-                <strong>
-                  <%= custom_item_name_helper(custom_item, order.locale_id) %>
-                </strong>
-              </td>
-              <td>
-                <%= number_to_currency(translate.price, locale: locale.lang) %>&nbsp;<small class="text-muted"><%= order.currency %></small>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+            <% order.order_custom_items.each do |order_custom_item| %>
+              <tr>
+                <td>
+                  <%= order_custom_item.custom_order.id %>
+                </td>
+                <td>
+                  <%= number_to_currency(order_custom_item.custom_order.price) %>
+                </td>
+                <td class="text-right">
+                  <%= link_to('詳細訂製內容', admin_custom_order_path(order_custom_item.custom_order.id), class: 'btn btn-default') %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+
+  <% if order.order_products.size > 0 %>
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>
+                商品編號
+              </th>
+              <th></th>
+              <th>訂單項目</th>
+              <th>小計</th>
+              <th>
+                <small class="label label-sm label-primary">
+                  訂購數量
+                </small>
+                <small class="label label-sm label-warning">
+                  剩餘數量
+                </small>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% order.order_products.reject{|object| object.product.nil?}.each do |order_product| %>
+              <% translate = ProductTranslate.where(product_id: order_product.product_id, locale_id: order.locale_id).first %>
+              <tr>
+                <td>
+                  <%= link_to(
+                          (order_product.product.product_type)?
+                              edit_admin_other_product_path(order_product.product) : edit_admin_product_path(order_product.product)) do %>
+                    <%= order_product.product_id %>
+                    <span class="text-muted">
+                    <i class="icon-info-sign"></i>
+                  </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= image_tag order_product.product.image.url(:thumb), style: 'height:50px', alt: '' %>
+                </td>
+                <td>
+                  <div>
+                    <strong>
+                      <%= truncate(order_product.product.product_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name, length: 14) %>
+                    </strong>
+
+                    <small class="text-muted">
+                      <%= truncate(order_product.product.product_translates.find_by_locale_id(Locale.find_by_lang('en').id).name, length: 30) %>
+                    </small>
+                  </div>
+                  <small class="text-muted">
+                    所選項目
+                  </small>
+                  <% ProductOptionGroup.where(locale_id: order.locale_id, product_id: order_product.product_id).each do |group| %>
+                    <div class="option-group">
+                      <small><%= group.name %></small>
+                      <div>
+                        <% if group.product_options.where(id: order_product.order_product_options.map{|option| option.product_option_id}).size > 0 %>
+                        <span class="label label-primary">
+                          <%= group.product_options.where(id: order_product.order_product_options.map{|option| option.product_option_id}).first.content %>
+                        </span>
+                        <% else %>
+                          <span class="label label-default"><i class="icon-warning-sign icon-fixed-width"></i>沒有所選項目</span>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
+                <td>
+                  <%= number_to_currency(order_product.price, locale: order.locale.lang) %>
+                </td>
+                <td>
+                  <small class="label label-sm label-primary">
+                    <%= order_product.quantity %>
+                  </small>
+                  <small class="label label-sm label-warning">
+                    <%= translate.product.quantity %>
+                  </small>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
 </div>
 <div class="row">
   <div class="col-sm-12">
     <h4 class="text-right">
       總金額 :
       <strong class="text-muted">
-        <%= number_to_currency(order.subtotal, locale: locale.lang) %><br/>
-        <small>運費: <%= number_to_currency(@shipping_fee.fee, locale: locale.lang) %><%= " / 禮券折抵金額: #{number_to_currency(@discount, locale: locale.lang)}" if @discount > 0 %></small>
+        <%= number_to_currency(order.get_subtotal, locale: order.locale.lang) %><br/>
+        <small>運費: <%= number_to_currency(order.shipping_fee!, locale: order.locale.lang) %></small>
       </strong><br>
-      <% if order.payment.completed? %>
-        <label class="label label-success">
-          <% item_work_days = order.order_custom_items.collect{|item| item.workday}.inject{|sum, attendance| sum + attendance} || 0 %>
-          工作天數: <%= (item_work_days > 5)? item_work_days : 5 %> 天
-        </label><br/>
+      <% if order.order_payment.completed? %>
         <small>
-          付款完成日期 <%= order.payment.pay_time.strftime('%Y/%m/%d') %>
+          付款完成日期 <%= order.order_payment.completed_time.strftime('%Y/%m/%d') %>
         </small>
       <% end %>
     </h4>

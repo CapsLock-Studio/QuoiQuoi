@@ -54,7 +54,7 @@
             <div class="col-md-10 col-md-offset-1">
               <%= f.button t('signup'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
               <%= link_to t('signin'), new_user_session_path, class: 'pull-left' %>
-              <a href="#" class="pull-right"><%= t('forget_password') %>?</a>
+              <%= link_to "#{t('forget_password')}?", new_user_password_path, class: 'pull-right' %>
             </div>
           </div>
         <% end %>

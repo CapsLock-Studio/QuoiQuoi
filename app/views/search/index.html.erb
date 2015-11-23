@@ -1,4 +1,4 @@
-<%= render 'layouts/breadcrumbs', title: t('handmadebag') %>
+<%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
   <div class="row">
     <div class="col-sm-12">
@@ -7,28 +7,27 @@
           <div class="headline">
             <h4>
               <%= t('shop') %>
-              <small><%= t('search_result', quantity: @products.length) %></small>
+              <small><%= t('search_result', quantity: @product_translates.size) %></small>
             </h4>
           </div>
         </div>
       </div>
     </div>
-    <% if @products.length > 0 %>
-      <% @products.each do |product| %>
-        <% translate = product.product_translates.where(locale_id: session[:locale_id]).first %>
-        <%= link_to product.product_type_id.nil?? product_path(product) : product_type_product_path(product.product_type_id, product), class: 'col-md-3 col-sm-6 col-xs-12' do %>
+    <% if @product_translates.size > 0 %>
+      <% @product_translates.each do |translate| %>
+        <%= link_to translate.product.product_type_id.nil?? product_path(translate.product) : product_type_product_path(translate.product.product_type_id, translate.product), class: 'col-md-3 col-sm-6 col-xs-12' do %>
           <div class="thumbnails thumbnail-style">
-            <%= image_tag product.image.url(:small), class: 'img-responsive' %>
+            <%= image_tag translate.product.image.url(:small), class: 'img-responsive' %>
             <div class="caption">
               <h4 style="margin-top: 10px; margin-bottom: 5px;">
                 <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
               </h4>
                 <span class="price">
-                  <%= number_to_currency(price_discount(translate.price, product.discount)) %>
+                  <%= number_to_currency(price_discount(translate.price, translate.product.discount)) %>
                 </span>
-              <% if product.discount > 0 %>
+              <% if translate.product.discount > 0 %>
                 <span class="text-ruby">
-                  <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(product.discount)) %>
+                  <i class="fa fa-gift fa-fw"></i><%= t('product.discount', percent: locale_discount(translate.product.discount)) %>
                 </span>
               <% end %>
             </div>
@@ -50,50 +49,46 @@
           <div class="headline">
             <h4>
               <%= t('course.title') %>
-              <small><%= t('search_result', quantity: @courses.length) %></small>
+              <small><%= t('search_result', quantity: @course_translates.size) %></small>
             </h4>
           </div>
         </div>
       </div>
     </div>
-    <% if @courses.length > 0 %>
-      <% @courses.each do |course| %>
-        <% attendance = course.registrations.reject{|registration| registration.canceled?}.collect{|registration| (registration.payment && registration.payment.completed?)? registration.attendance : 0}.inject{|sum, attendance| sum + attendance} || 0 %>
-        <% translate = course.course_translates.where(locale_id: session[:locale_id]).first %>
-        <% unless translate.name.blank? %>
-          <%= link_to course_path(course, month: course.time.strftime('%m').to_i), class: 'col-md-3 col-sm-6 col-xs-12 course' do %>
-            <div class="thumbnails thumbnail-style">
-              <%= image_tag course.image.url(:small), class: 'img-responsive' %>
-              <div class="caption">
-                <h4 style="margin-top: 10px; margin-bottom: 5px;">
-                  <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
-                </h4>
-                <ul class="list-unstyled">
-                  <li>
-                    <strong>
-                      <%= "#{t('starting_time')}： #{course.time.strftime('%Y/%m/%d %H:%M')} - #{(course.time + course.length.hours).strftime('%H:%M')}" %>
-                    </strong>
-                  </li>
-                  <li>
-                    <%= "#{t('teacher')}： #{translate.teacher}" %>
-                    <% if course.canceled? %>
+    <% if @course_translates.size > 0 %>
+      <% @course_translates.each do |translate| %>
+        <%= link_to course_path(translate.course, month: translate.course.time.strftime('%m').to_i), class: 'col-md-3 col-sm-6 col-xs-12 course' do %>
+          <div class="thumbnails thumbnail-style">
+            <%= image_tag translate.course.image.url(:small), class: 'img-responsive' %>
+            <div class="caption">
+              <h4 style="margin-top: 10px; margin-bottom: 5px;">
+                <%= truncate(translate.name, length: (session[:locale] == 'en')? 38 : 20) %>
+              </h4>
+              <ul class="list-unstyled">
+                <li>
+                  <strong>
+                    <%= "#{t('starting_time')}： #{translate.course.time.strftime('%Y/%m/%d %H:%M')} - #{(translate.course.time + translate.course.length.hours).strftime('%H:%M')}" %>
+                  </strong>
+                </li>
+                <li>
+                  <%= "#{t('teacher')}： #{translate.teacher}" %>
+                  <% if translate.course.canceled? %>
                         <span class="label label-default pull-right">
-                          <%= t('registration.cancel') %>
+                          <%= t('course.canceled') %>
                         </span>
-                    <% elsif course.time < Time.now + 5.hours %>
+                  <% elsif translate.course.time < Time.now + 5.hours %>
                         <span class="label label-default pull-right">
                           <%= t('course.past') %>
                         </span>
-                    <% elsif attendance >= course.popular || course.full? %>
+                  <% elsif translate.course.register_full? %>
                         <span class="label label-default pull-right">
                           <%= t('registration.full') %>
                         </span>
-                    <% end %>
-                  </li>
-                </ul>
-              </div>
+                  <% end %>
+                </li>
+              </ul>
             </div>
-          <% end %>
+          </div>
         <% end %>
       <% end %>
     <% else %>
@@ -111,13 +106,13 @@
           <div class="headline">
             <h4>
               <%= t('others') %>
-              <small><%= t('search_result', quantity: @articles.length + @travel_informations.length) %></small>
+              <small><%= t('search_result', quantity: @articles.size + @travel_informations.size) %></small>
             </h4>
           </div>
         </div>
       </div>
     </div>
-    <% if @travel_informations.length > 0 %>
+    <% if @travel_informations.size > 0 %>
       <div class="col-xs-12">
         <% @travel_informations.each_with_index do |travel_information, index| %>
           <div class="article">
@@ -150,7 +145,7 @@
           </div>
         <% end %>
       </div>
-    <% elsif @articles.length > 0 %>
+    <% elsif @articles.size > 0 %>
       <div class="col-xs-12">
         <% @articles.each_with_index do |article, index| %>
           <div class="article">
@@ -172,7 +167,7 @@
                 </div>
               </div>
             </div>
-            <% if index != @articles.length %>
+            <% if index != @articles.size %>
               <hr/>
             <% end %>
           </div>

@@ -2,92 +2,124 @@
   <div class="page-header page-header-with-buttons">
     <h1 class="pull-left">
       <i class="icon-truck"></i>
-      <span>待出貨訂單</span>
+      <span>訂單出貨情形</span>
     </h1>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-        <div class="box-header">
-          <div class="title">待出貨訂單列表</div>
-          <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
-            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-          </div>
-        </div>
-        <div class="box-content box-no-padding">
-          <div class="responsive-table">
-            <div class="scrollable-table">
-              <table class="data-table table table-striped" style="margin-bottom:0;">
-                <thead>
-                <tr>
-                  <th>訂單編號</th>
-                  <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
-                  <th>收件者</th>
-                  <th>付款完成時間</th>
-                  <th>狀態</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <% @orders.each do |order| %>
-                  <tr>
-                    <td>
-                      <%= order.id %>
-                    </td>
-                    <td>
-                      <%= link_to order.user.id, admin_user_path(order.user.id), target: '_blank' %>
-                    </td>
-                    <td>
-                      <%= order.name %>
-                    </td>
-                    <td>
-                      <%= order.payment.pay_time.strftime('%Y/%m/%d %H:%M') if order.paid? && order.payment.completed? && order.payment.pay_time %>
-                    </td>
-                    <td>
-                      <% if order.closed? %>
-                        <label class="label label-default">
-                          交易完成
-                        </label>
-                      <% elsif order.paid? %>
-                        <% if order.payment.completed? %>
-                          <% if order.delivered? %>
-                            <label class="label label-primary">
-                              等待收貨
-                            </label>
-                          <% else %>
-                            <label class="label label-danger">
-                              等待配送
-                            </label>
+
+  <% unless flash[:id].nil? %>
+    <% if flash[:delivered] == 'true' %>
+      <%= render 'message_delivered' %>
+    <% elsif flash[:closed] == 'true' %>
+      <%= render 'message_closed' %>
+    <% elsif flash[:delivery_report_handled] == 'true' %>
+      <%= render 'message_handled' %>
+    <% end %>
+  <% end %>
+
+  <%= render 'deliver_search_condition' %>
+
+  <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+              <th>收件人</th>
+              <th>聯絡電話</th>
+              <th>付款完成時間</th>
+              <th>出貨狀況</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @orders.each do |order| %>
+              <tr>
+                <td>
+                  <%= order.id %>
+                </td>
+                <td>
+                  <%= link_to(info_admin_user_path(order.user_id),
+                              data: {toggle: 'modal', target: '#user-detail'}
+                      ) do %>
+                    <%= order.user_id %>
+                    <span class="text-muted">
+                          <i class="icon-info-sign"></i>
+                        </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= order.name %>
+                </td>
+                <td>
+                  <%= order.phone %>
+                </td>
+                <td>
+                  <%= order.order_payment.completed_time.strftime('%Y/%m/%d %H:%I') %>
+                </td>
+                <td>
+                  <% if order.delivered? %>
+                    <% if order.delivery_report? %>
+                      <span class="label label-danger">寄出件有問題</span>
+                      <% if order.delivery_report_handled? %>
+                        <span class="label label-default">寄出件問題已解決</span>
+                        <div class="text-muted">
+                          剩餘<%= order.remaining_time_to_archive %>日訂單封存
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <span class="label label-success">已寄出</span>
+                      <div class="text-muted">
+                        剩餘<%= order.remaining_time_to_archive %>日訂單封存
+                      </div>
+                    <% end %>
+                  <% else %>
+                    <span class="label label-warning">等待出貨</span>
+                  <% end %>
+                </td>
+                <td class="text-right">
+                  <% if order.delivered? %>
+                    <% if order.delivery_report? %>
+                      <% if order.delivery_report_handled? %>
+                        <% unless order.closed? %>
+                          <%= link_to(admin_order_path(order, closed: true), class: 'btn btn-primary', method: :put) do %>
+                            直接封存
                           <% end %>
-                        <% elsif order.payment.amount == 0 || order.payment.identifier.blank? %>
-                          <label class="label label-contrast">
-                            等待匯款
-                          </label>
-                        <% else %>
-                          <label class="label label-danger">
-                            等待確認
-                          </label>
+                        <% end %>
+                        <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
+                          <i class="icon-edit icon-fixed-width"></i>
                         <% end %>
                       <% else %>
-                        <label class="label label-warning">
-                          等待付款
-                        </label>
+                        <%= link_to(edit_admin_order_path(order), class: 'btn btn-md btn-danger') do %>
+                          <i class="icon-exclamation icon-fixed-width"></i>
+                        <% end %>
                       <% end %>
-                    </td>
-                    <td class="text-right">
+                    <% else %>
+                      <% unless order.closed? %>
+                        <%= link_to(admin_order_path(order, closed: true), class: 'btn btn-primary', method: :put) do %>
+                          直接封存
+                        <% end %>
+                      <% end %>
                       <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
-                        <i class="icon-pencil"></i>
+                        <i class="icon-edit icon-fixed-width"></i>
                       <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                    <% end %>
+                  <% else %>
+                    <%= link_to(edit_admin_order_path(order), class: 'btn btn-md') do %>
+                      <i class="icon-pencil icon-fixed-width"></i>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

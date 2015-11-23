@@ -1,0 +1,82 @@
+<%= form_for @order_in_cart, url: cart_payment_path, method: :post, html: {class: 'validate-form'} do |f| %>
+  <div class="box">
+    <div class="box-content">
+      <div class="form-group">
+        <%= f.label :name do %>
+          <%= t('recipient_name') %>
+          <span class="color-red">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.text_field :name, value: @order_in_cart.name ||= current_user.name, class: 'form-control', data: {'rule-required' => true} %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :zip_code do %>
+          <%= t('zip_code') %>
+          <span class="color-red">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.text_field :zip_code, value: @order_in_cart.zip_code ||= current_user.zip_code, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '3', 'rule-maxlength' => '5'} %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :area do %>
+          <%= t('area') %>
+          <span class="color-red">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.select(
+                  :shipping_fee_id,
+                  ShippingFee.includes(:shipping_fee_translates)
+                      .where(shipping_fee_translates: {
+                                 locale_id: session[:locale_id]
+                             })
+                      .order(:id).map{|fee|
+                    [fee.area, fee.id, {
+                                 data: {
+                                     fee: fee.shipping_fee_translate.fee, 'free-condition' => fee.shipping_fee_translate.free_condition
+                                 }
+                             }]
+                  },
+                  {
+                      selected: @order_in_cart.shipping_fee_id ||= 0
+                  },
+                  {class: 'form-control shipping-fee selectpicker'}
+              ) %>
+          <small class="text-muted"><%= t('free_shipping_fee', free_condition: number_to_currency(ShippingFeeTranslate.where(locale_id: session[:locale_id]).first.free_condition)) %></small>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :address do %>
+          <%= t('address') %>
+          <span class="color-red">*</span>
+        <% end %>
+        <div class="controls">
+          <%= f.text_field :address, value: @order_in_cart.address ||= current_user.address, class: 'form-control', data: {'rule-required' => true} %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :phone do %>
+          <%= t('phone_number') %>
+        <% end %>
+        <div class="controls">
+          <%= f.text_field :phone, value: @order_in_cart.phone ||= current_user.phone, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <hr/>
+        </div>
+
+        <div class="col-xs-12">
+          <%= f.button t('order.next'), class: 'btn btn-lg btn-orange btn-block hover-effect one-page-btn' %>
+          <%= link_to cart_path do %>
+            <i class="fa fa-angle-left"></i>
+            <%= t('order.back') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

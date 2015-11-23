@@ -5,7 +5,7 @@ class PastWorksController < ApplicationController
 
   def index
     add_breadcrumb t('home'), :root_path
-    add_breadcrumb t('personalize'), :past_work_types_path
+    add_breadcrumb t('past_works'), :past_work_types_path
     add_breadcrumb @past_work_type.past_work_type_translates.find_by_locale_id(session[:locale_id]).name
 
     # set seo title
@@ -55,7 +55,7 @@ class PastWorksController < ApplicationController
 
   def show
     add_breadcrumb t('home'), :root_path
-    add_breadcrumb t('personalize'), :past_work_types_path
+    add_breadcrumb t('past_works'), :past_work_types_path
     add_breadcrumb @past_work_type.past_work_type_translates.find_by_locale_id(session[:locale_id]).name, past_work_type_past_works_path(@past_work_type)
     add_breadcrumb @past_work.past_work_translate.name
 

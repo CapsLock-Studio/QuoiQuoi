@@ -1,0 +1,8 @@
+<div class="alert alert-success alert-dismissable">
+  <a class="close" data-dismiss="alert" href="#">×</a>
+  <%= link_to(admin_registration_remittance_path(flash[:id])) do %>
+    回報編號&nbsp;
+    <%= flash[:id] %>
+  <% end %>
+  &nbsp;已確認完畢
+</div>

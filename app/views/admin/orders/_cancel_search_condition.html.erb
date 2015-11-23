@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      查詢條件
+    </div>
+    <div class="actions">
+      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content">
+    <%= form_tag canceled_admin_orders_path, method: :get, html: {class: 'form'} do %>
+      <div class="row">
+        <div class="col-sm-4 col-xs-5">
+          <span class="label label-default">取消時間</span>
+          <div class="daterange">
+            <div class="input-group">
+              <%= text_field_tag('search_filter[cancel_time]',
+                                 (!@search_filter.nil?)? @search_filter['cancel_time'] : '',
+                                 class: 'form-control',
+                                 placeholder: '所有時間') %>
+              <span class="input-group-addon">
+                    <i class='icon-time'></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-xs-4 text-right pull-right">
+          <div class="btn-toolbar">
+            <button type="submit" class="btn btn-sm btn-inverse">
+              <i class="icon-search"></i>
+              查詢
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-remove"></i>
+      <span>已取消訂單記錄</span>
+    </h1>
+  </div>
+
+  <% unless flash[:id].nil? %>
+    <%= render 'message_deleted' %>
+  <% end %>
+
+  <%= render 'cancel_search_condition' %>
+
+  <div class="box bregistrationed-box" style="margin-bottom:0;">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>付款編號</th>
+              <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+              <th>取消原因</th>
+              <th>取消時間</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @registrations.each do |registration| %>
+              <tr>
+                <td>
+                  <%= registration.id %>
+                </td>
+                <td>
+                  <%= registration.registration_payment.id %>
+                </td>
+                <td>
+                  <% if registration.user_id.nil? %>
+                    <div>
+                      非註冊用戶
+                    </div>
+                    <small class="text-muted"><%= registration.email %></small>
+                  <% else %>
+                    <%= link_to(info_admin_user_path(registration.user_id),
+                                data: {toggle: 'modal', target: '#user-detail'}
+                        ) do %>
+                      <%= registration.user_id %>
+                      <span class="text-muted">
+                        <i class="icon-info-sign"></i>
+                      </span>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= registration.registration_payment.cancel_reason.truncate(20, separator: /(，|。|\s)/) %>
+                </td>
+                <td>
+                  <%= registration.registration_payment.cancel_time.strftime('%Y/%m/%d %H:%I') %>
+                </td>
+                <td class="text-right">
+                  <%= link_to(admin_registration_path(registration, from_cancel: true), class: 'btn btn-danger', method: :delete, data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}) do %>
+                    <i class="icon-trash icon-fixed-width"></i>
+                  <% end %>
+                  <%= link_to(canceled_admin_registration_path(registration), class: 'btn btn-default') do %>
+                    <i class="icon-info icon-fixed-width"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

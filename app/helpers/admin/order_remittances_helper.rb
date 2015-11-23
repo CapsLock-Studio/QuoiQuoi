@@ -1,0 +1,2 @@
+module Admin::OrderRemittancesHelper
+end

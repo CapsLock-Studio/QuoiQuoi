@@ -27,7 +27,7 @@
 	border-color: #7f8c8d;
 }
 
-/*Responsive @Media 
+/*Responsive @Media
 ------------------------------------*/
 @media (min-width: 767px) {
 	/*Navbar*/
@@ -40,11 +40,11 @@
 	.header .navbar-default .navbar-nav > .open > a,
 	.header .navbar-default .navbar-nav > .open > a:hover,
 	.header .navbar-default .navbar-nav > .open > a:focus {
-		background: #787d80;		
+		background: #787d80;
 	}
 
 	/*Dropdown Menu*/
-	.header .dropdown-menu { 
-		border-top: solid 2px #787d80; 
+	.header .dropdown-menu {
+		border-top: solid 2px #787d80;
 	}
 }

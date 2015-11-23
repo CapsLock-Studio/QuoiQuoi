@@ -1,5 +1,7 @@
 class MaterialType < ActiveRecord::Base
   has_many :materials
+
+  has_one :material_type_translate
   has_many :material_type_translates
 
   has_many :product_material_types
