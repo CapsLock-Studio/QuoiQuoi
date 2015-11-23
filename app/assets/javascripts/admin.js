@@ -197,6 +197,8 @@
         })
     });
 
+    $('.reload-modal').on('hide.bs.modal', function() { $(this).removeData(); })
+
     // for option groups
     $('.table-block').on('click', '.destroy-record', function(event){
         event.preventDefault();
