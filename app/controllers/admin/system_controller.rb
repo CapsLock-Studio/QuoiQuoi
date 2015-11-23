@@ -3,20 +3,11 @@ class Admin::SystemController < AdminController
 
   end
 
-  def edit
-
-  end
-
   def update
-    $redis.set('seo:title', seo_params[:title])
-    $redis.set('seo:og:title', seo_params[:og][:title])
-    $redis.set('seo:description', seo_params[:description])
+    $redis.set("seo:locale:#{params[:locale_id]}:title", params['title'])
+    $redis.set("seo:locale:#{params[:locale_id]}:og:title", params['og:title'])
+    $redis.set("seo:locale:#{params[:locale_id]}:description", params['description'])
 
     redirect_to action: :show
-  end
-
-  private
-  def seo_params
-    params.require(:seo).permit(:title, :description, og: [:title])
   end
 end

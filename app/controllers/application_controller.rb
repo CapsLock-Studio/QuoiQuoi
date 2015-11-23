@@ -80,10 +80,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_seo_properties
-    @website_title = $redis.get('seo:title')
-    @meta_og_description = $redis.get('seo:description')
-    @meta_og_image = "https://quoiquoi.tw#{ActionController::Base.helpers.asset_path('logo-large.jpg')}"
-    @meta_og_title = $redis.get('seo:og:title')
+    @website_title = $redis.get("seo:locale:#{session[:locale_id]}:title")
+    @meta_og_description = $redis.get("seo:locale:#{session[:locale_id]}:description")
+    @meta_og_image = ActionController::Base.helpers.asset_url('logo-large.jpg')
+    @meta_og_title = $redis.get("seo:locale:#{session[:locale_id]}:og:title")
     @meta_og_type = 'website'
   end
 
