@@ -1,35 +1,15 @@
 <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
-  <h4 class="text-muted"><%= t('order.my') %></h4>
-  <ul class="list-group sidebar-nav-v1 margin-bottom-30">
-    <%= nav_item(orders_path, {rule: /#{orders_path}(\/\d+)?(?!\/close)$/, class: 'list-group-item'}) do %>
-      <%= link_to t('order.in_trading'), orders_path %>
+  <h4 class="text-muted"><%= t('control_panel') %></h4>
+  <ul class="list-group sidebar-nav-v1">
+    <%= nav_item(orders_path, {rule: /#{orders_path}.*/, class: 'list-group-item'}) do %>
+      <%= link_to t('order.all'), orders_path %>
     <% end %>
-    <%= nav_item(close_orders_path, {rule: /#{orders_path}(\/\d+)?\/close/, class: 'list-group-item'}) do %>
-      <%= link_to t('order.closed'), close_orders_path %>
+    <%= nav_item(registrations_path, {rule: /#{registrations_path}.*/, class: 'list-group-item'}) do %>
+      <%= link_to t('registration.all'), registrations_path
+      %>
     <% end %>
-    <%= nav_item(order_custom_items_path, {rule: /#{order_custom_items_path}.*/, class: 'list-group-item'}) do %>
-      <%= link_to t('custom_order.my'), order_custom_items_path %>
-    <% end %>
-  </ul>
-  <h4 class="text-muted"><%= t('registration.my') %></h4>
-  <ul class="list-group sidebar-nav-v1 margin-bottom-30">
-    <%= nav_item(registrations_path, {rule: /#{registrations_path}(\/\d+)?(?!\/close)$/, class: 'list-group-item'}) do %>
-      <%= link_to t('registrations'), registrations_path %>
-    <% end %>
-    <%= nav_item(registrations_path, {rule: /#{registrations_path}(\/\d+)?\/close/, class: 'list-group-item'}) do %>
-      <%= link_to t('course.past'), close_registrations_path %>
-    <% end %>
-  </ul>
-  <h4 class="text-muted"><%= t('account') %></h4>
-  <ul class="list-group sidebar-nav-v1 margin-bottom-30">
-    <%= nav_item(nil, {rule: /#{messages_path}/, class: 'list-group-item'}) do %>
-      <%= link_to t('message_box'), messages_path %>
-    <% end %>
-    <%= nav_item(user_path, {class: 'list-group-item'}) do %>
-      <%= link_to t('profile_management'), user_path %>
-    <% end %>
-    <%= nav_item(nil, {rule: /#{user_gifts_path}/, class: 'list-group-item'}) do %>
-      <%= link_to t('my_gift'), user_gifts_path %>
+    <%= nav_item(nil, {rule: /#{custom_orders_path}.*/, class: 'list-group-item'}) do %>
+      <%= link_to t('custom_order.my'), custom_orders_path %>
     <% end %>
   </ul>
 </div>

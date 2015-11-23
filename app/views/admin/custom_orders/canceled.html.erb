@@ -1,0 +1,80 @@
+<div class="col-xs-12">
+  <div class="page-header page-header-with-buttons">
+    <h1 class="pull-left">
+      <i class="icon-remove"></i>
+      <span>已取消訂製要求</span>
+    </h1>
+  </div>
+
+  <div class="box bordered-box" style="margin-bottom:0;">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>訂製編號</th>
+              <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+              <th>Email</th>
+              <th>電話</th>
+              <th>Line</th>
+              <th>建立時間</th>
+              <th>取消種類</th>
+              <th>取消日期</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @custom_orders.each do |custom_order| %>
+              <tr>
+                <td>
+                  <%= custom_order.id %>
+                </td>
+                <td>
+                  <%= link_to(info_admin_user_path(custom_order.user_id),
+                              data: {toggle: 'modal', target: '#user-detail'}
+                      ) do %>
+                    <%= custom_order.user_id %>
+                    <span class="text-muted">
+                          <i class="icon-info-sign"></i>
+                        </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= custom_order.email %>
+                </td>
+                <td>
+                  <%= (custom_order.phone.blank?)? '-' : custom_order.phone %>
+                </td>
+                <td>
+                  <%= (custom_order.line.blank?)? '-' : custom_order.line %>
+                </td>
+                <td>
+                  <%= custom_order.created_at.strftime('%Y/%m/%d %H:%I:%S') %>
+                </td>
+                <td>
+                  <% if custom_order.cancel %>
+                    客戶取消
+                  <% elsif !custom_order.approve %>
+                    管理者取消(不接受訂製)
+                  <% end %>
+                </td>
+                <td>
+                  <%= (custom_order.cancel_time.nil?)? custom_order.updated_at.strftime('%Y/%m/%d %H:%I:%S') : custom_order.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>
+                </td>
+                <td class="text-right">
+                  <%= link_to(canceled_admin_custom_order_path(custom_order), class: 'btn btn-md') do %>
+                    <i class="icon-info icon-fixed-width"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

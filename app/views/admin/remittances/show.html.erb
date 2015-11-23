@@ -27,61 +27,57 @@
           </div>
         </div>
         <div class="box-content box-padding">
-          <% if @remittance %>
-            <div class="row">
-              <% @remittance.remittance_translates.each do |translate| %>
-                <div class="col-sm-6">
-                  <div class="box">
-                    <div class="box-header">
-                      <div class="title">
-                        <%= translate.locale.name %>
-                      </div>
-                      <div class="actions">
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          <div class="row">
+            <% Locale.all.order(id: :desc).each_with_index do |locale, index| %>
+              <div class="col-sm-6">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="title">
+                      <%= locale.name %>
+                      <small style="margin-left:10px;">
+                        <span class="label label-danger">不可留空</span>
+                      </small>
+                    </div>
+                    <div class="actions">
+                      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="form-group">
+                      <label>帳戶名稱</label>
+                      <div class="controls">
+                        <%= text_field_tag :name, $redis.get("remittance:locale:#{locale.id}:name"), class: 'form-control', disabled: true%>
                       </div>
                     </div>
-                    <div class="box-content">
-                      <div class="form-group">
-                        <label>收款人姓名</label>
-                        <div class="controls">
-                          <%= text_field_tag :name, translate.name, class: 'form-control', disabled: 'disabled' %>
-                        </div>
+                    <div class="form-group">
+                      <label>銀行代碼(國內: Short Code / 國外: Swift Code)</label>
+                      <div class="controls">
+                        <%= text_field_tag :code, $redis.get("remittance:locale:#{locale.id}:code"), class: 'form-control', disabled: true%>
                       </div>
-                      <div class="form-group">
-                        <label>銀行代碼(國內: Short Code / 國外: Swift Code)</label>
-                        <div class="controls">
-                          <%= text_field_tag :code, translate.code, class: 'form-control', disabled: 'disabled' %>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>收款帳戶全部號碼(Full A/C No.)</label>
+                      <div class="controls">
+                        <%= text_field_tag :account, $redis.get("remittance:locale:#{locale.id}:account"), class: 'form-control', disabled: true%>
                       </div>
-                      <div class="form-group">
-                        <label>收款帳戶全部號碼(Full A/C No.)</label>
-                        <div class="controls">
-                          <%= text_field_tag :account, translate.account, class: 'form-control', disabled: 'disabled' %>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>銀行名稱</label>
+                      <div class="controls">
+                        <%= text_field_tag :bank_name, $redis.get("remittance:locale:#{locale.id}:bank_name"), class: 'form-control', disabled: true%>
                       </div>
-                      <div class="form-group">
-                        <label>銀行名稱</label>
-                        <div class="controls">
-                          <%= text_field_tag :bank_name, translate.bank_name, class: 'form-control', disabled: 'disabled' %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>銀行地址</label>
-                        <div class="controls">
-                          <%= text_field_tag :bank_address, translate.bank_address, class: 'form-control', disabled: 'disabled' %>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>銀行地址 - <span class="label label-danger">英文網站(海外匯款)不可留空</span></label>
+                      <div class="controls">
+                        <%= text_field_tag :bank_address, $redis.get("remittance:locale:#{locale.id}:bank_address"), class: 'form-control', disabled: true%>
                       </div>
                     </div>
                   </div>
                 </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="alert alert-info alert-dismissable">
-              <a class="close" data-dismiss="alert" href="#">×</a>
-              目前沒有設定匯款資訊，請按下 <%= link_to '新增', new_admin_remittances_path %> 設定匯款資訊
-            </div>
-          <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,78 @@
+<div class="col-sm-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-check"></i>
+      待確認匯款回報
+    </h1>
+  </div>
+
+  <% unless flash[:confirmed].nil? %>
+    <% if flash[:confirmed] %>
+      <%= render 'message_confirmed' %>
+    <% else %>
+      <%= render 'message_denied' %>
+    <% end %>
+  <% end %>
+
+  <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>回報編號</th>
+              <th>訂單編號</th>
+              <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+              <th>訂單聯絡人</th>
+              <th>匯款帳號末五碼</th>
+              <th>匯款時間</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @remittances.each do |remittance| %>
+              <tr>
+                <td>
+                  <%= remittance.id %>
+                </td>
+                <td>
+                  <%= remittance.order_payment.order_id %>
+                </td>
+                <td>
+                  <%= link_to(info_admin_user_path(remittance.order_payment.order.user_id),
+                              data: {toggle: 'modal', target: '#user-detail'}
+                      ) do %>
+                    <%= remittance.order_payment.order.user_id %>
+                    <span class="text-muted">
+                      <i class="icon-info-sign"></i>
+                    </span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= remittance.order_payment.order.name %>
+                </td>
+                <td>
+                  <%= remittance.account %>
+                </td>
+                <td>
+                  <%= remittance.date.strftime('%Y/%m/%d') %>
+                </td>
+                <td>
+                  <div class='text-right'>
+                    <%= link_to(check_admin_order_remittance_path(remittance), class: 'btn btn-default') do %>
+                      <i class='icon-pencil icon-fixed-width'></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->

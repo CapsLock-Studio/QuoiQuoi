@@ -1,20 +1,31 @@
 <div class="col-xs-12">
   <div class="page-header page-header-with-buttons">
-    <h1 class="pull-left">
-      <i class="icon-flag"></i>
-      <span>報名課程記錄</span>
-    </h1>
+    <div class="row" style="margin: 10px 0;">
+      <div class="col-xs-2">
+        <div class="img-preview">
+          <%= image_tag @course.image.url(:thumb) %>
+        </div>
+      </div>
+      <div class="col-xs-10">
+        <%= render 'course_preview', course: @course %>
+      </div>
+    </div>
   </div>
+
+  <% if !flash[:status].nil? %>
+    <% if flash[:status][:cancel] == 'true' %>
+      <%= render 'message_cancel' %>
+    <% elsif flash[:status][:refund] == 'true' %>
+      <%= render 'message_refund' %>
+    <% end %>
+  <% elsif !flash[:id].nil? %>
+    <%= render 'message_deleted' %>
+  <% end %>
+
   <div class="row">
     <div class="col-sm-12">
+      <h5>報名人列表</h5>
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
-        <div class="box-header">
-          <div class="title">所有報名課程列表</div>
-          <div class="actions">
-            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
-            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
-          </div>
-        </div>
         <div class="box-content box-no-padding">
           <div class="responsive-table">
             <div class="scrollable-table">
@@ -23,47 +34,90 @@
                 <tr>
                   <th>報名編號</th>
                   <th>用戶id&nbsp;<label class="label label-success">點擊查看</label></th>
+                  <th>聯絡人</th>
                   <th>報名人數</th>
-                  <th>狀態</th>
-                  <th>付款方式</th>
-                  <th>建立時間</th>
+                  <th>報名狀態</th>
+                  <th>費用</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @registrations.each do |registration| %>
+                <% @course.registrations.each do |registration| %>
                   <tr>
                     <td>
                       <%= registration.id %>
                     </td>
                     <td>
-                      <% if registration.user %>
-                        <%= link_to registration.user_id, admin_user_path(registration.user_id), target: '_blank' %>
+                      <% if registration.user_id.nil? %>
+                        <div>
+                          非註冊用戶
+                        </div>
+                        <small class="text-muted"><%= registration.email %></small>
                       <% else %>
-                        -
+                        <%= link_to(info_admin_user_path(registration.user_id),
+                                    data: {toggle: 'modal', target: '#user-detail'}
+                            ) do %>
+                          <%= registration.user_id %>
+                          <span class="text-muted">
+                        <i class="icon-info-sign"></i>
+                      </span>
+                        <% end %>
                       <% end %>
+                    </td>
+                    <td>
+                      <%= registration.name %>
                     </td>
                     <td>
                       <%= registration.attendance %>
                     </td>
                     <td>
-                      <%= render 'status', registration: registration %>
-                    </td>
-                    <td>
-                      <% if !registration.payment %>
-                        尚未付款完成
-                      <% elsif registration.payment.wait? %>
-                        匯款
+                      <% if registration.registration_payment.completed.nil? %>
+                        <span class="label label-warning">等待付款</span>
+                        <div>
+                          <small>
+                            使用&nbsp;<%= t("#{registration.payment_method}") %>&nbsp;付款
+                            <span class="text-muted">
+                              <%= registration.checkout_time.strftime('%Y/%m/%d %H:%I') %> 結帳
+                            </span>
+                          </small>
+                        </div>
+                      <% elsif registration.registration_payment.completed? %>
+                        <span class="label label-success">付款完成</span>
+                        <div>
+                          <small>使用&nbsp;<%= t("#{registration.payment_method}") %>&nbsp;付款 (<%= registration.registration_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)</small>
+                        </div>
                       <% else %>
-                        Paypal
+                        <span class="label label-danger">匯款有誤</span>
+                        <small class="text-muted">
+                          <%= registration.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳
+                        </small>
                       <% end %>
                     </td>
                     <td>
-                      <%= registration.created_at.strftime('%Y/%m/%d %H:%M') %>
+                      <%= number_to_currency(registration.registration_payment.amount, locale: registration.locale.lang) %>
                     </td>
                     <td class="text-right">
-                      <%= link_to("#{admin_registrations_path}/#{registration.id}", class: 'btn btn-md') do %>
-                        <i class="icon-eye-open"></i>
+                      <%=
+                          link_to_if(registration.registration_payment.refunded?, '已退款', '#', class: 'btn btn-default disabled') do
+                            link_to('確認退款', admin_registration_payment_path(registration.registration_payment, refund: true),
+                                    method: :put, class: 'btn btn-primary')
+                          end if registration.registration_payment.completed?
+                      %>
+                      <%= link_to_if(registration.registration_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
+                        <%= link_to('取消報名',
+                                    admin_registration_payment_path(registration.registration_payment),
+                                    class: "btn btn-default #{'disabled' if registration.course.canceled?}", data: {toggle: 'modal', target: '#cancel-dialog'}
+                            ) %>
+                      <% end %>
+                      <%= link_to(admin_registration_path(registration),
+                                  class: "btn btn-danger #{'disabled' unless (!registration.registration_payment.completed? ||
+                                      (registration.registration_payment.completed? && registration.registration_payment.refunded?)
+                                  ) && (registration.registration_payment.cancel? || (registration.course.canceled?))}",
+                                  data: {confirm: '永久刪除無法回復動作，確定要繼續嗎？'}, method: :delete) do %>
+                        <i class="icon-trash"></i>
+                      <% end %>
+                      <%= link_to(admin_registration_path(registration), class: 'btn btn-default') do %>
+                        <i class="icon-info icon-fixed-width"></i>
                       <% end %>
                     </td>
                   </tr>
@@ -77,3 +131,6 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="user-detail"></div><!-- /.modal -->
+<div class="modal fade" id="cancel-dialog"></div><!-- /.modal -->

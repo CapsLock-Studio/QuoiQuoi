@@ -23,12 +23,23 @@ class Admin::HomeController < AdminController
       }
 
       format.html {
-        @order_wait_confirm_remittance = Payment.where(completed: false).where.not(order_id: '', amount: 0, pay_time: nil).reject{|payment| !payment.order}.count
-        @order_pre_shipping = Payment.where(completed: true).where.not(order_id: ['', nil]).count
-        @closed_order = Order.where(checkout: true, canceled: false, closed: true).count
-        @custom_order_wait_confirm = OrderCustomItem.where(canceled: false, accept: nil, accept_time: nil).where.not(user_id: ['', nil]).count
-        @registration_wait_confirm_remittance = Payment.where(canceled: false, completed: false).where.not(registration_id: '', amount: 0, pay_time: nil).count
-        @user_gift__wait_confirm_remittance = Payment.where(canceled: false, completed: false).where.not(user_gift_id: '', amount: 0, pay_time: nil).count
+        @order = {
+            remittance_report_wait_confirm: OrderRemittanceReport.where(confirm: nil).size,
+            wait_deliver: Order.includes(:order_payment).where(order_payments: {completed: true}, delivered: false).size,
+            shipping_problem_not_solved: Order.includes(:order_payment).where(order_payments: {completed: true},
+                                                                              delivered: true,
+                                                                              delivery_report: true,
+                                                                              delivery_report_handled: false).size,
+            archived_this_week: Order.where(closed: true).where('closed_time > ? AND closed_time <= ?', Date.today.at_beginning_of_week, Date.today).size
+        }
+
+        @custom_order = {
+            discussing: CustomOrder.where(approve: nil).size
+        }
+
+        @registration = {
+            remittance_report_wait_confirm: '1'
+        }
       }
     end
   end

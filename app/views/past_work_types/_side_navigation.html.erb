@@ -1,0 +1,16 @@
+<div class="col-sm-3 col-xs-6 sidebar-offcanvas">
+  <ul class="list-group sidebar-nav-v1">
+    <%= nav_item(nil, {class: 'list-group-item', rule: /^#{past_work_types_path}$|^#{new_order_custom_item_path}$/}) do %>
+      <%= link_to t('past_works').titleize, past_work_types_path %>
+      <ul class="nav">
+        <% (@past_work_types || []).each do |past_work_type| %>
+          <%= nav_item(nil, {rule: /^#{past_work_type_past_works_path(past_work_type)}.*/}) do %>
+            <%= link_to(past_work_type_past_works_path(past_work_type)) do %>
+              <%= past_work_type.past_work_type_translate.name %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </ul>
+</div>

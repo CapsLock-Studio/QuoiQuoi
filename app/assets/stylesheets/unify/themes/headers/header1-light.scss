@@ -32,21 +32,11 @@
         border-bottom: 2px solid transparent;
       }
     }
-	.header .navbar-default .navbar-nav > li > a:hover,
-	.header .navbar-default .navbar-nav > .active > a {
-
-      border-bottom: 2px solid #787d80;
-	}
 
 	.header .navbar-default .navbar-nav > .open > a,
 	.header .navbar-default .navbar-nav > .open > a:hover,
 	.header .navbar-default .navbar-nav > .open > a:focus {
 		color: #787d80;
-	}
-
-	/*Dropdown Menu*/
-	.header .dropdown-menu { 
-		border-top: solid 2px #787d80; 
 	}
 
 }

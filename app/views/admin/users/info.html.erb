@@ -1,0 +1,58 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">
+        會員編號: <strong><%= @user.id %></strong> <small class="text-muted"><%= "(#{@user.email})" %></small>
+      </h4>
+    </div>
+    <div class="modal-body">
+      <form class="form" style="margin-bottom: 0;">
+        <div class="form-group">
+          <label>Email</label>
+          <div class="controls">
+            <%= text_field_tag :email, @user.email, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>姓名</label>
+          <div class="controls">
+            <%= text_field_tag :name, @user.name, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>電話</label>
+          <div class="controls">
+            <%= text_field_tag :phone, @user.phone, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Line</label>
+          <div class="controls">
+            <%= text_field_tag :line, @user.line, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>地址</label>
+          <div class="controls">
+            <%= text_field_tag :line, @user.address, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>帳號類型</label>
+          <div class="controls">
+            <%= text_field_tag :provider, @user.provider.blank?? 'Email建立' : @user.provider, class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>加入時間</label>
+          <div class="controls">
+            <%= text_field_tag :datetime, @user.created_at.strftime('%Y/%m/%d %H:%I:%S'), class: 'form-control', disabled: 'disabled' %>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" data-dismiss="modal" type="button">關閉</button>
+    </div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

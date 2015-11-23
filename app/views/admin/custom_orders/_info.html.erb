@@ -1,0 +1,54 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      客戶簡易聯絡資訊
+    </div>
+  </div>
+  <div class="box-content">
+    <div class="row">
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          Email
+        </div>
+        <%= custom_order.email %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          手機號碼
+        </div>
+        <%= (custom_order.phone.blank?)? '-' : custom_order.phone %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          Line
+        </div>
+        <%= (custom_order.line.blank?)? '-' : custom_order.line %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          狀態
+        </div>
+        <% if custom_order.cancel? || (!custom_order.approve.nil? && !custom_order.approve?) %>
+          <span class="label label-default">已取消</span>
+          <small class="text-muted">於 <%= custom_order.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %> 取消</small>
+        <% elsif custom_order.approve? %>
+          <span class="label label-success">接受訂製</span>
+          <small class="text-muted">於 <%= custom_order.approve_time.strftime('%Y/%m/%d %H:%I:%S') %></small>
+        <% else %>
+          <span class="label label-warning">討論中</span>
+          <small class="text-muted">於 <%= custom_order.created_at.strftime('%Y/%m/%d %H:%I:%S') %> 建立訂製</small>
+        <% end %>
+
+        <% if custom_order.cancel? %>
+          <div>
+            取消原因: <label><%= custom_order.cancel_reason %></label>
+          </div>
+        <% elsif !custom_order.approve.nil? && !custom_order.approve? %>
+          <div>
+            拒絕原因: <label><%= custom_order.dismiss_message %></label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

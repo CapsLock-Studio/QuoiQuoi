@@ -97,7 +97,9 @@ class CoursesController < ApplicationController
 
     @website_title = "#{@course.course_translate.name} | #{@website_title}"
     @meta_og_title = @course.course_translate.name
+
     @meta_og_description = ApplicationController.helpers.truncate(Sanitize.fragment(@course.course_translate.description), length: 100)
+
     @meta_og_type = 'product'
     @meta_og_image = "http://quoiquoi.tw#{@course.image.url(:large)}"
   end

@@ -1,0 +1,151 @@
+<div class="col-sm-12">
+  <div class="page-header">
+    <h1 class="pull-left">
+      <i class="icon-book"></i>
+      所有課程
+    </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增課程', new_admin_course_path, class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+
+  <% unless flash[:status].nil? %>
+    <% if flash[:status][:visible] == 'true' %>
+      <%= render 'message_visible' %>
+    <% elsif flash[:status][:visible] == 'false' %>
+      <%= render 'message_invisible' %>
+    <% elsif flash[:status][:full] == 'true' %>
+      <%= render 'message_full' %>
+    <% elsif flash[:status][:full] == 'false' %>
+      <%= render 'message_unfull' %>
+    <% elsif flash[:status][:canceled] == 'true' %>
+      <%= render 'message_cancel' %>
+    <% end %>
+  <% end %>
+
+  <% if flash[:update] == 'true' %>
+    <%= render 'message_update' %>
+  <% end %>
+
+  <% if flash[:destroy] == 'true' %>
+    <%= render 'message_destroy' %>
+  <% end %>
+
+  <%= render 'search_condition' %>
+
+  <div class="box">
+    <div class="box-content box-no-padding">
+      <div class="responsive-table">
+        <div class="scrollable-table">
+          <table class="data-table table table-striped" style="margin-bottom:0;">
+            <thead>
+            <tr>
+              <th>課程編號</th>
+              <th></th>
+              <th>課程名稱</th>
+              <th>開課時間</th>
+              <th>
+                <label class="label label-sm label-default">報名人數</label>
+                <label class="label label-sm label-warning">付款完成</label>
+                <label class="label label-sm label-success">課程上限</label>
+              </th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @courses.each do |course| %>
+              <tr>
+                <td>
+                  <%= course.id %>
+                </td>
+                <td>
+                  <div class="preview">
+                    <%= image_tag course.image.url(:thumb), style: 'height:50px;', alt: '' %>
+                  </div>
+                </td>
+                <td>
+                  <% course.course_translates.each do |translate| %>
+                    <% unless translate.name.blank? %>
+                      <div>
+                        <label class="label label-sm label-default">
+                          <%= translate.locale.name %>
+                        </label>
+                        &nbsp;
+                        <%= truncate(translate.name, length: 15) %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= course.time.strftime('%Y/%m/%d %H:%I') %>
+                  <small class="text-muted"><%= number_with_precision(course.length, strip_insignificant_zeros: true, precision: 1) %>小時</small>
+                </td>
+                <td>
+                  <label class="label label-default"><%= course.applicants %></label>&nbsp;
+                  <label class="label label-warning"><%= course.applicants_completed %></label>&nbsp;
+                  <label class="label label-success"><%= course.popular %></label>
+                </td>
+                <td>
+                  <div class="text-right">
+                    <% if course.register_full? %>
+                      <a href="#" class="btn btn-inverse disabled">
+                        報名額滿
+                      </a>
+                    <% else %>
+                      <%= link_to(
+                              (course.full?)? '取消額滿' : '設定額滿',
+                              status_admin_course_path(course, full: !course.full?),
+                              class: "btn btn-#{(course.full?)? 'primary' : 'info'}",
+                              method: :put
+                          ) %>
+                    <% end %>
+                    <% if course.canceled? %>
+                      <span class="append-notification-text">
+                        <%= link_to(
+                                admin_course_path(course),
+                                class: "btn btn-danger #{'disabled' unless course.refund_completed?}",
+                                method: :delete,
+                                data: {confirm: '你確定要刪除嗎？ 刪除動作是不可回復的哦！'}
+                            ) do %>
+                          <i class="icon-trash"></i>
+                          刪除
+                        <% end %>
+                        <% unless course.refund_completed? %>
+                          <small class="text-muted">
+                            <%= course.applicants_not_refund %>人未退費
+                          </small>
+                        <% end %>
+                      </span>
+                    <% else %>
+                      <%= link_to('取消', status_admin_course_path(course, canceled: true),
+                                  class: 'btn btn-default', method: :put, data: {confirm: '你確定要取消嗎？'}) %>
+                    <% end %>
+                    <%= link_to(edit_admin_course_path(course), class: 'btn btn-md') do %>
+                      <i class='icon-pencil'></i>
+                    <% end %>
+
+                    <% if course.visible? %>
+                      <%= link_to(status_admin_course_path(course, visible: false), class: 'btn btn-info btn-md', method: :put) do %>
+                        <i class="icon-level-down"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to(status_admin_course_path(course, visible: true), class: 'btn btn-primary btn-md', method: :put) do %>
+                        <i class="icon-level-up"></i>
+                      <% end %>
+                    <% end %>
+                    <%= link_to(admin_course_registrations_path(course), class: 'btn btn-default') do %>
+                      <i class="icon-male"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

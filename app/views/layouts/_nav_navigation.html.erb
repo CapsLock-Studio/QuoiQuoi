@@ -1,8 +1,5 @@
 <!-- Collect the nav links, forms, and other content for toggling -->
 <div style="height: 1px;" class="navbar-collapse navbar-responsive-collapse collapse">
-  <div class="pull-right hidden-xs">
-    <%= render 'layouts/top_navigation' %>
-  </div>
   <ul class="nav navbar-nav navbar-right">
     <li class="visible-xs">
       <%= form_tag search_path, method: :get do %>
@@ -21,7 +18,7 @@
         <i class="glyphicon glyphicon-home"></i>
       <% end %>
     <% end %>
-    <%= nav_item(products_path, {class: 'nav-dropdown-menu', rule: /#{:products}.*|#{order_custom_items_path}.*|#{order_products_path}.*|#{gifts_path}.*/}) do %>
+    <li class="nav-dropdown-menu">
       <a href="#" class="btn btn-link" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
         <%= t('shop') %>
         <i class="fa fa-angle-down"></i>
@@ -30,35 +27,27 @@
         <li>
           <%= link_to t('handmadebag'), products_path, class: 'btn btn-link' %>
         </li>
-        <li>
-          <%= link_to t('personalize'), past_work_types_path, class: 'btn btn-link' %>
-
-        </li>
         <% @product_types.each do |product_type| %>
           <li>
             <%= link_to product_type.product_type_translate.name, product_type_products_path(product_type), class: 'btn btn-link' %>
           </li>
         <% end %>
+        <!--
         <li>
           <%= link_to t('gift'), gifts_path, class: 'btn btn-link' %>
         </li>
+        -->
       </ul>
-    <% end %>
-    <%= nav_item(nil, {rule: /#{courses_path}.*/}) do %>
-      <%= link_to t('course.title'), courses_path, class: 'btn btn-link' %>
-    <% end %>
-    <%= nav_item(nil, {rule: /#{reports_path}/}) do %>
-      <%= link_to t('report_remittance'), reports_path, class: 'btn btn-link' %>
-    <% end %>
-    <%= nav_item(recruitments_path) do %>
-      <%= link_to t('recruitment'), recruitments_path, class: 'btn btn-link' %>
-    <% end %>
-    <%= nav_item(rents_path) do %>
-      <%= link_to t('rent'), rents_path, class: 'btn btn-link' %>
-    <% end %>
-    <%= nav_item(about_path) do %>
+    </li>
+    <li>
+      <%= link_to t('course.title'), courses_path(month: 'new'), class: 'btn btn-link' %>
+    </li>
+    <li>
+      <%= link_to t('past_works'), past_work_types_path, class: 'btn btn-link' %>
+    </li>
+    <li>
       <%= link_to t('about_us'), about_path, class: 'btn btn-link' %>
-    <% end %>
+    </li>
     <li class="hidden-xs hidden-sm">
       <a class="search btn btn-link">
         <i class="fa fa-search search-btn fa-fw"></i>
@@ -67,8 +56,7 @@
     <li class="hidden-xs">
       <a href="#" class="aside-menu-switch dropdown-toggle dropdown-form-toggle btn btn-link" title="Open sidebar">
         <i class="fa fa-shopping-cart">
-          <strong class="hidden-sm" style="margin-left:5px;">
-            <%= t('cart') %>
+          <strong>
             <% if !@order_in_cart.nil? && @order_in_cart.quantity > 0 %>
               <span class="badge badge-orange">
                 <%= @order_in_cart.quantity %>
@@ -76,6 +64,12 @@
             <% end %>
           </strong>
         </i>
+      </a>
+    </li>
+    <li class="hidden-xs">
+      <a href="#" class="btn btn-link btn-primary cta-btn" data-toggle="modal" data-target="#custom-order-modal">
+        <i class="icon icon-handwriting"></i>
+        <%= t('customization') %>
       </a>
     </li>
   </ul>

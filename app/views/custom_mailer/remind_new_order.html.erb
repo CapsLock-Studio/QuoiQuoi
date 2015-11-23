@@ -1,0 +1,113 @@
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+            <span>
+              有客戶建立了新的訂製訂單，編號<%= @custom_order.id %>, 提醒您需要與客戶討論訂製細節, 請按此前往管理介面&nbsp;<%= link_to('討論中訂製', discussing_admin_custom_order_url(@custom_order.id)) %>
+            </span>
+      </font>
+    </td>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" class="columns-container">
+  <tr>
+    <td class="force-col" style="padding-right: 20px;" valign="top">
+      <!-- ### COLUMN 1 ### -->
+      <table border="0" cellspacing="0" cellpadding="0" width="230" align="left" class="col-2">
+        <tr>
+          <td>
+            <h2>
+              訂單相關資訊
+            </h2>
+            <dl>
+              <% if @custom_order.product_id.nil? %>
+                <dt style="font-size: 14px; color: #848484">
+                  所選選項
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <u>
+                    <%= @custom_order.order_type %>、<%= @custom_order.style %>
+                  </u>
+                </dd>
+
+                <dt style="font-size: 14px; color: #848484">
+                  喜歡的布料
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <% Material.where(id: JSON.parse((@custom_order.materials.blank?)? '[]' : @custom_order.materials)).each do |material| %>
+                    <img src="<%= asset_url(material.image.url(:thumb)) %>" style="padding-bottom:10px;">
+                  <% end %>
+                </dd>
+              <% else %>
+                <dt style="font-size: 14px; color: #848484">
+                  修改現貨
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <u>
+                    商品編號<%= @custom_order.product.id %>:&nbsp;<%= @custom_order.product.product_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name %>
+                  </u>
+                </dd>
+              <% end %>
+
+              <dd style="padding: 0 0 10px 0"><%= link_to('其他詳細項目', discussing_admin_custom_order_url(@custom_order.id)) %></dd>
+            </dl>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td class="force-col" style="padding-right: 20px;" valign="top">
+      <!-- ### COLUMN 1 ### -->
+      <table border="0" cellspacing="0" cellpadding="0" width="230" align="left" class="col-2">
+        <tr>
+          <td>
+            <h2>
+              客戶簡易聯絡資訊
+            </h2>
+            <dl>
+              <dt style="font-size: 14px; color: #848484">
+                Email
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= @custom_order.email %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                聯絡電話
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= (@custom_order.phone.blank?)? '-' : @custom_order.phone %>
+              </dd>
+
+              <dt style="font-size: 14px; color: #848484">
+                Line
+              </dt>
+              <dd style="padding: 0 0 10px 0">
+                <%= (@custom_order.line.blank?)? '-' : @custom_order.line %>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padleftright" style="padding: 0px 20px;">
+  <tr>
+    <td>
+      <a href="<%= discussing_admin_custom_order_url(@custom_order) %>" style="text-decoration:none;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="15" bgcolor="#72C8E6">
+          <tr>
+            <td align="center" style="font-size:20px; color:#FFFFFF;">
+              <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+                討論中訂製
+              </font>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </td>
+  </tr>
+</table>
+
+<br/>

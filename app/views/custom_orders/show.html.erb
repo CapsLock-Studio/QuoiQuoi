@@ -1,0 +1,144 @@
+<%= render 'layouts/breadcrumbs' %>
+
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'user/side_navigation' %>
+    <div class="col-sm-9 col-xs-12">
+
+      <%= render 'layouts/flash_message' %>
+
+      <div class="row margin-bottom-40">
+        <%= render 'layouts/nav_item' %>
+
+        <div class="col-sm-6 col-xs-12">
+
+          <% if @custom_order.product_id.nil? %>
+            <div class="margin-bottom-10">
+              <div class="data-display-name">
+                <%= t('your_custom_options') %>
+              </div>
+              <div class="data-display-content" style="text-decoration: underline">
+                <%= @custom_order.order_type %>、<%= @custom_order.style %>
+              </div>
+            </div>
+
+            <div class="margin-bottom-10">
+              <div class="data-display-name">
+                <%= t('material_you_like') %>
+              </div>
+              <div class="data-display-content">
+                <% Material.where(id: JSON.parse((@custom_order.materials.blank?)? '[]' : @custom_order.materials)).each do |material| %>
+                  <a class="fancybox-button zoomer"
+                     title="<%= material.material_translates.find_by_locale_id(session[:locale_id]).name %>"
+                     href="<%= material.image.url(:original) %>">
+                    <span class="overlay-zoom main-image">
+                      <span class="material" style="background-image: url(<%= material.image.url(:thumb) %>);background-size: cover;"></span>
+                    </span>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="margin-bottom-10">
+              <div class="data-display-name">
+                <%= t('cusutomise_product') %>
+              </div>
+              <div class="data-display-content">
+                <%= link_to(product_path(@custom_order.product_id), target: '_blank') do %>
+                  <%= "#{t('product_no')}#{@custom_order.product_id}: #{@custom_order.product.product_translates.find_by_locale_id(session[:locale_id]).name}" %>
+                  <span class="text-muted">
+                    <i class="fa fa-info-circle"></i>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="margin-bottom-40">
+            <div class="data-display-name">
+              <%= t('status') %>
+            </div>
+            <div class="data-display-content">
+              <% if @custom_order.cancel? || (!@custom_order.approve.nil? && !@custom_order.approve?) %>
+                <label class="label label-default">
+                  <%= t('order.canceled') %>
+                </label>
+                <div>
+                  <strong>
+                    <i class="fa fa-fw fa-comment-o"></i>
+                    <%= @custom_order.dismiss_message %>
+                  </strong>
+                </div>
+              <% elsif @custom_order.approve.nil? %>
+                <label class="label label-warning">
+                  <%= t('discussing') %>
+                </label>
+                <a class="btn-xs btn-link" data-toggle="modal" data-target="#cancel-form">
+                  (<%= t('order.cancel') %>)
+                </a>
+                <%= render 'cancel_form', custom_order_id: @custom_order.id %>
+              <% else %>
+                <label class="label label-success">
+                  <%= t('approved') %>
+                </label>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @custom_order.approve.nil? %>
+            <p class="text-center">
+              <%== t('custom_order.hint', phone: $redis.get("about:locale:#{session[:locale_id]}:phone"), email: mail_to($redis.get("about:locale:#{session[:locale_id]}:email"))) %>
+            </p>
+          <% end %>
+          <% if @custom_order.approve %>
+            <h4 class="text-center"><%= t('custom_order.charge') %> <span class="text-muted"><%= number_to_currency(@custom_order.price) %></span></h4>
+            <p class="text-center">
+              <%= t('mailer.text.custom.approve.hint') %>
+            </p>
+            <%= link_to order_custom_items_path(custom_order_id: @custom_order.id), method: :post, class: 'btn btn-orange btn-lg btn-block' do %>
+              <i class="fa fa-shopping-cart fa-fw"></i>
+              <%= t('check_out') %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+          <div class="discussion" style="z-index: 11;background:#FFFFFF;position:relative;padding: 5px;">
+            <div id="disqus_thread" style=""></div>
+          </div>
+          <% if current_page?(build_custom_orders_path) %>
+            <div class="overlay-instruction">
+              <div class="text">
+                <h2 class="margin-bottom-20">
+                  <%= t('lets_discuss') %>
+                </h2>
+                <div class="btn btn-lg btn-default" data-dismiss="remove" data-target=".overlay-instruction">
+                  <%= t('ok') %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+             var disqus_config = function () {
+               this.page.url = "<%= custom_order_url(@custom_order) %>";  // Replace PAGE_URL with your page's canonical URL variable
+               this.page.identifier = "<%= "C#{@custom_order.id}" %>"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+             };
+            (function() {  // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+
+              s.src = '//quoiquoitw.disqus.com/embed.js';
+
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+            })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

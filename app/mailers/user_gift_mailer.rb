@@ -1,5 +1,4 @@
 class UserGiftMailer < ActionMailer::Base
-  include Resque::Mailer
   default from: 'admin@quoiquoi.tw'
 
   def remittance_remind(user_gift_id)

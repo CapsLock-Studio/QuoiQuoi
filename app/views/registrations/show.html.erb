@@ -1,0 +1,49 @@
+<%= render 'layouts/breadcrumbs' %>
+
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'user/side_navigation' %>
+    <div class="col-sm-9 col-xs-12">
+
+      <%= render 'layouts/flash_message' %>
+
+      <div class="row margin-bottom-40">
+        <%= render 'layouts/nav_item' %>
+
+        <div class="col-xs-12">
+          <h5><%= t('registration.your') %></h5>
+        </div>
+
+        <div class="col-sm-7 col-xs-12">
+
+          <div class="box">
+            <div class="box-content">
+              <div class="row margin-bottom-10">
+                <div class="col-xs-12">
+                  <span class="text-muted">
+                    <%= t('registration.no_s') %>
+                  </span>
+                </div>
+                <div class="col-xs-12">
+                  <%= "R#{@registration.id}" %>
+                </div>
+              </div>
+
+              <%= render 'register_information', registration: @registration %>
+              <%= render 'transaction_information', registration_payment: @registration.registration_payment if @registration.registration_payment %>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-sm-5 col-xs-12">
+          <div class="box">
+            <div class="box-content full-main-image">
+              <%= render 'course_information', registration: @registration %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

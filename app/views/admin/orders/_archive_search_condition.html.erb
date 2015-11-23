@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      查詢條件
+    </div>
+    <div class="actions">
+      <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+    </div>
+  </div>
+  <div class="box-content">
+    <%= form_tag archive_admin_orders_path, method: :get, html: {class: 'form'} do %>
+      <div class="row">
+        <% Order.payment_methods.each do |payment_method| %>
+          <div class="col-sm-3 col-xs-4 margin-bottom-10">
+            <span class="label label-default"><%= t("#{payment_method[0]}") %></span>
+            <div class='switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+              <%= check_box_tag 'search_filter[]', payment_method[1], @search_filter.include?(payment_method[1]) %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="col-sm-3 col-xs-4 text-right pull-right">
+          <div class="btn-toolbar">
+            <button type="submit" class="btn btn-inverse">
+              <i class="icon-search"></i>
+              查詢
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

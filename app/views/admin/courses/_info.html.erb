@@ -1,0 +1,72 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      <%= link_to(admin_course_registrations_path(@registration.course_id)) do %>
+        課程相關資訊&nbsp;<strong>課程編號: <%= course.id %></strong>
+      <% end %>
+      <% if course.visible? %>
+        <label class="label label-primary">上架中</label>
+      <% else %>
+        <label class="label label-info">下架中</label>
+      <% end %>
+
+      <% if course.register_full? %>
+        <label class="label label-inverse">報名額滿</label>
+      <% elsif course.full? %>
+        <label class="label label-default">已設為額滿</label>
+      <% end %>
+
+      <% if course.canceled %>
+        <label class="label label-default">已取消</label>
+      <% end %>
+    </div>
+  </div>
+  <div class="box-content">
+    <div class="row">
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          課程名稱
+        </div>
+        <%= truncate(course.course_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name, length: 16) %>
+
+        <small class="text-muted">
+          <%= truncate(course.course_translates.find_by_locale_id(Locale.find_by_lang('en').id).name, length: 40) %>
+        </small>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <%= image_tag course.image.url(:small), class: 'img-preview' %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          時間
+        </div>
+        <%= course.time.strftime('%Y/%m/%d %H:%I') %>&nbsp;
+        <small class="text-muted"><%= number_with_precision(course.length, precision: 1, significant: true) %>小時</small>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          老師
+        </div>
+        <%= course.course_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).teacher %>
+        <small class="text-muted">
+          <%= course.course_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).teacher %>
+        </small>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          課程狀態
+        </div>
+        <dl class="dl-horizontal">
+          <dt>報名人數</dt>
+          <dd><%= course.applicants %>&nbsp;人</dd>
+          
+          <dt>付款完成</dt>
+          <dd><%= course.applicants_completed %>&nbsp;人</dd>
+          
+          <dt>課程上限</dt>
+          <dd><%= course.popular %>&nbsp;人</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h4 style="margin-bottom: 10px;">
+      <%= course.course_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).name %>
+
+      <small class="text-muted">
+        <%= truncate(course.course_translates.find_by_locale_id(Locale.find_by_lang('en').id).name, length: 40) %>
+        <% if course.visible? %>
+          <label class="label label-primary">上架中</label>
+        <% else %>
+          <label class="label label-info">下架中</label>
+        <% end %>
+        
+        <% if course.register_full? %>
+          <label class="label label-inverse">報名額滿</label>
+        <% elsif course.full? %>
+          <label class="label label-default">已設為額滿</label>
+        <% end %>
+        
+        <% if course.canceled %>
+          <label class="label label-default">已取消</label>
+        <% end %>
+      </small>
+    </h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2">
+    <label class="text-muted">
+      課程編號
+    </label>
+  </div>
+  <div class="col-xs-3">
+    <%= course.id %>
+  </div>
+
+  <div class="col-xs-2">
+    <label class="text-muted">
+      報名人數
+    </label>
+  </div>
+  <div class="col-xs-3">
+    <%= course.applicants %>&nbsp;人
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2">
+    <label class="text-muted">
+      時間
+    </label>
+  </div>
+  <div class="col-xs-3">
+    <%= course.time.strftime('%Y/%m/%d %H:%I') %>&nbsp;
+    <small class="text-muted">
+      <%= number_with_precision(course.length, strip_insignificant_zeros: true, precision: 1) %>小時
+    </small>
+  </div>
+
+  <div class="col-xs-2">
+    <label class="text-muted">
+      付款完成
+    </label>
+  </div>
+  <div class="col-xs-3">
+    <%= course.applicants_completed %>&nbsp;人
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2">
+    <label class="text-muted">
+      老師
+    </label>
+  </div>
+  <div class="col-xs-3">
+    <%= course.course_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).teacher %>
+    <small class="text-muted">
+      <%= course.course_translates.find_by_locale_id(Locale.find_by_lang('zh-TW').id).teacher %>
+    </small>
+  </div>
+
+  <div class="col-xs-2">
+    <label class="text-muted">
+      課程上限
+    </label>
+  </div>
+  <div class="col-xs-3">
+    <%= course.popular %>&nbsp;人
+  </div>
+</div>

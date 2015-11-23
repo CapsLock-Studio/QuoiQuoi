@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :authenticate_user!, only: [:checkout, :payment]
+
   # GET /cart
   def index
     add_breadcrumb t('home')
@@ -22,15 +24,37 @@ class CartController < ApplicationController
         #  order_product.save
         #end
       end
-      redirect_to new_order_path
+      redirect_to cart_checkout_path
     else
       render head: :forbidden
     end
+  end
+
+  def checkout
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb I18n.t('cart'), :cart_path
+    add_breadcrumb I18n.t('check_out')
+
+    # default values
+    @order_in_cart.shipping_fee = ShippingFee.first if @order_in_cart.shipping_fee.nil?
+    @order_in_cart.locale_id = session[:locale_id]
+  end
+
+  def payment
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb I18n.t('cart'), :cart_path
+    add_breadcrumb I18n.t('check_out')
+
+    @order_in_cart.update_columns(checkout_info_params)
   end
 
   private
     def order_params
       params.fetch(:order, {}).permit(:id, order_products_attributes: [:id, :quantity, :product_option_id,
                                                                        order_product_options_attributes: [:id, :product_option_id]])
+    end
+
+    def checkout_info_params
+      params.require(:order).permit(:name, :address, :phone, :zip_code, :shipping_fee_id, :payment_method)
     end
 end

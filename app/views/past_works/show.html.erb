@@ -1,15 +1,11 @@
 <%= render 'layouts/breadcrumbs' %>
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
-    <%= render 'products/side_navigation' %>
+    <%= render 'past_work_types/side_navigation' %>
     <div class="col-sm-9">
       <div class="row margin-bottom-40">
         <%= render 'layouts/nav_item' %>
         <div class="col-xs-12">
-          <%= link_to new_order_custom_item_path, class: 'btn btn-link btn-xs pull-right text-blue hidden-xs' do %>
-            <%= t('order.personalize') %>
-            <i class="fa fa-angle-right"></i>
-          <% end %>
           <div class="headline">
             <h4>
               <%= @past_work_type.past_work_type_translates.find_by_locale_id(session[:locale_id]).name %>
@@ -17,28 +13,7 @@
           </div>
         </div>
         <div class="col-xs-12">
-          <div class="row">
-            <div class="col-md-12 col-xs-12 margin-bottom-50">
-              <h3 style="color:#666;">
-                <strong>
-                  <%= @past_work.past_work_translate.name %>
-                </strong>
-              </h3>
-              <div class="article-content">
-                <%== Sanitize.fragment(@past_work.past_work_translate.description, Sanitize::Config::ALLOWED) %>
-              </div>
-            </div>
-            <div class="col-md-offset-3 col-md-6 col-xs-12">
-              <div class="row">
-                <div class="col-xs-12 margin-bottom-10">
-                  <%= link_to(t('order.personalize'), new_order_custom_item_path, class: 'btn btn-lg btn-blue btn-block') %>
-                </div>
-                <div class="col-xs-12">
-                  <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@past_work.image.url(:large)}", text: "#{t('share_text')}#{@past_work.past_work_translate.name}" %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@past_work.image.url(:large)}", text: "#{t('share_text')}#{@past_work.past_work_translate.name}" %>
         </div>
       </div>
       <div class="row">

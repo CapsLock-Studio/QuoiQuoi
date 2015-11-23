@@ -24,10 +24,11 @@
   <!-- Aside menu start. -->
   <%= render 'layouts/aside_menu' %>
   <!-- Aside menu end. -->
-  <div class="col-md-12 wrapper right-0">
+  <div class="col-sm-12 wrapper right-0">
     <div class="navbar" style="margin-bottom:0;border:0;">
       <!-- Header start. -->
       <header class="header">
+        <%= render 'layouts/top_navigation' %>
         <%= render 'layouts/header_navigation' %>
       </header>
       <!-- Header end. -->
@@ -48,6 +49,12 @@
       <%= render 'layouts/footer' %>
     </div>
     <!-- Footer end. -->
+
+    <div class="others text-center">
+      <%= link_to t('recruitment'), recruitments_path, class: 'btn btn-link' %>
+      &nbsp;|&nbsp;
+      <%= link_to t('rent'), rents_path, class: 'btn btn-link' %>
+    </div>
 
     <!-- Copyright start. -->
     <div class="copyright">
@@ -73,6 +80,16 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<%= render 'user/sign_in_form_modal' %>
+<%= render 'custom_orders/form_modal' %>
+
+<div class="hidden" id="read-more-button">
+  <a href="#"><%= t('read_more') %></a>
+</div>
+<div class="hidden" id="read-less-button">
+  <a href="#"><%= t('read_less') %></a>
+</div>
 
 <!-- outdate browser handle start -->
 <%= render 'layouts/outdate_hint' %>

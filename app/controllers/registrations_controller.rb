@@ -1,17 +1,14 @@
 class RegistrationsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create, :pay_show]
+  before_action :set_registration, only: [:show, :cancel, :pay_show, :report_remittance]
+  before_action :authenticate_user!, except: [:new, :create, :pay_show, :payment]
+
+  skip_before_action :verify_authenticity_token, only: [:update, :return]
 
   def index
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registrations')
 
-    flash[:message]
-
-    @registrations = Registration.where(email: current_user.email).order(:id)
-
-    @registrations = @registrations.reject { |registration|
-      (registration.course.time < (Time.now + 5.hours))
-    }
+    @registrations = Registration.includes(:registration_payment).where(email: current_user.email).order(:id)
   end
 
   def close_index
@@ -44,68 +41,126 @@ class RegistrationsController < ApplicationController
 
     flash[:message] = nil
 
-    @registration = Registration.new(registration_params)
+    begin
+      course_model = Course
 
-    @registration.subtotal = @registration.course.course_translates.find_by_locale_id(session[:locale_id]).price
-    @registration.registration_options.each do |option|
-      @registration.subtotal += option.course_option.price
-    end
-  end
+      if CourseOptionGroup.where(locale_id: session[:locale_id], course_id: registration_params[:course_id]).size > 0
+        course_model = course_model.includes(course_option_groups: [:course_options])
+                           .where(course_option_groups: {locale_id: session[:locale_id]})
+                           .order('course_option_groups.id')
+                           .order('course_options.id')
+      end
 
-  def create
-    add_breadcrumb t('home'), :root_path
-    add_breadcrumb t('register')
+      @registration = course_model.find(registration_params[:course_id]).registrations.build(registration_params)
+      @registration.locale_id = session[:locale_id]
 
-    respond_to do |format|
-      course = Course.find(registration_params[:course_id])
-      translate = course.course_translates.where(locale_id: session[:locale_id]).first
+        #  -------- this way will delete current records --------
+        # trim the course_options
+        #@course.course_options = @course.course_options.where(locale_id: session[:locale_id])
 
-      @registration = Registration.where(course_id: registration_params[:course_id],email: (current_user)? current_user.email : registration_params[:email]).first
-
-      if @registration
+      # Warn message to login user when they had registered
+      if !current_user.nil? && Registration.where({course_id: @registration.course_id, email: current_user.email}).size > 0
         flash[:message] = t('had_registered_hint')
         flash[:status] = 'warning'
       end
 
-      @registration = Registration.new(registration_params)
+    rescue ActiveRecord::RecordNotFound
+      redirect_to action: :index
+    end
 
-      if current_user
-        @registration.email = current_user.email
-        @registration.user_id = current_user.id
+    # @registration.subtotal = @registration.course.course_translates.find_by_locale_id(session[:locale_id]).price
+    # @registration.registration_options.each do |option|
+    #   @registration.subtotal += option.course_option.price
+    # end
+
+
+  end
+
+  def create
+    if current_user.nil?
+      user = User.find_by_email(registration_params[:email])
+      if user.nil?
+        user = User.new(email: registration_params[:email])
+        unless params[:save].nil?
+          user.phone = registration_params[:phone]
+          user.name = registration_params[:name]
+        end
+        user.password = Devise.friendly_token[0, 20]
+        user.save!
       end
 
-      if course.popular >= (course.registrations.collect{|r| (r.payment && r.payment.completed? && !r.canceled?)? r.attendance : 0}.inject{|sum, attendance| sum + attendance}).to_i + @registration.attendance
-        course_tuition = translate.price
+      UserMailer.signin_confirmation(
+          user,
+          url_for(
+              controller: :registration_payment,
+              action: Registration.new(registration_params).payment_method,
+              params: params)).deliver_later
+      render 'user/email_confirmation'
+    else
+      unless params[:save].nil?
+        current_user.phone = registration_params[:phone]
+        current_user.name = registration_params[:name]
+        current_user.save!
+      end
 
-        @registration.registration_options.each do |option|
-          course_tuition += option.course_option.price
-        end
+      redirect_to controller: :registration_payment, action: Registration.new(registration_params).payment_method, params: params
+    end
+  end
 
-        @registration.subtotal = @registration.attendance * course_tuition
-        @registration.locale_id = translate.locale.id
-        @registration.currency = translate.locale.currency
+  # PUT/PATCH or POST /registrations/1
+  # Receive CVS and ATM result here.
+  def update
+    flash.now[:icon] = 'fa-smile-o'
+    flash.now[:message] = t('registration_complete_hint')
+    flash.now[:status] = 'success'
 
-        # if email has registered course can not register again
-        if Registration.count(conditions: {email: registration_params[:email], course_id: @registration.course_id}) > 0
-          flash[:message] = t('had_registered_hint')
-        end
+    @registration = Registration.find(params['MerchantTradeNo'].delete('R'))
+    # Check token to detect if post is from allpay
+    # When payment method is CVS, RtnCode will return '1010073',
+    # method is ATM, RtbCode will be '2'
+    unless @registration.registration_payment.nil?
 
-        if @registration.save
-          format.html {redirect_to pay_registration_path(@registration)}
+      if params['RtnCode'] == '10100073' || params['RtnCode'] == '2'
+        @registration.registration_payment.update_columns(
+            {
+                expire_time: params['ExpireDate'],
+                trade_no: params['TradeNo'],
+                trade_time: params['TradeDate'],
+                payment_no: params['PaymentNo'],
+                bankcode: params['BankCode'],
+                account: params['vAccount']
+            }
+        )
+
+        @registration.reload
+
+        if @registration.atm?
+          subject = t('mailer.subject.payment.atm')
         else
-          format.html {render json: @registration.errors}
+          subject = t('mailer.subject.payment.cvs')
         end
+
+        RegistrationMailer.remind_to_pay(@registration.id, subject).deliver_later
+
+        add_breadcrumb t('home'), :root_path
+        add_breadcrumb t('registrations')
+
+        render action: :show
       else
-        format.html {render json: 'Over registration max attendance.'}
+        render json: 'Not support payment method.'
       end
+    else
+      render json: 'Registration not found.'
     end
   end
 
   def show
-    respond_to do |format|
-      @registrations = Registration.where(email: current_user.email)
-      #format.html {render course_path(registration.course)}
-      format.html {render :index}
+    if (!@registration.registration_payment.cancel? && !@registration.course.canceled?) && @registration.empty_expire_time?
+      redirect_to controller: :registration_payment, action: :resume, id: @registration.id
+    else
+      add_breadcrumb t('home'), :root_path
+      add_breadcrumb t('registration.all')
+      add_breadcrumb t('detail')
     end
   end
 
@@ -133,6 +188,32 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def payment
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('register')
+    add_breadcrumb t('check_out')
+
+    @registration = Course.includes(:course_translate)
+                          .where(course_translates: {locale_id: session[:locale_id]}, id: registration_params[:course_id])
+                          .first
+                          .registrations.build(registration_params)
+    #
+    # @registration = Registration.new(registration_params)
+    #
+    # @registration.course.course_translate = CourseTranslate.find_by_course_id_and_locale_id(@registration.course_id, session[:locale_id])
+    @registration.locale_id = session[:locale_id]
+
+    unless current_user.nil?
+      @registration.email = current_user.email
+    end
+
+    #  Warn message for guest when the email address had registered course
+    if current_user.nil? && Registration.where({course_id: @registration.course_id, email: @registration.email}).size > 0
+      flash[:message] = t('had_registered_hint')
+      flash[:status] = 'warning'
+    end
+  end
+
   def destroy
     @registration = Registration.find(params[:id])
     if @registration.destroy
@@ -142,9 +223,88 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def cancel
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('registration.all'), :registrations_path
+    add_breadcrumb t('detail')
+
+    if !@registration.registration_payment.completed? && !@registration.registration_payment.cancel?
+      flash.now[:icon] = 'fa-user-times'
+      flash.now[:message] = t('registration_cancel')
+      flash.now[:status] = 'success'
+
+      @registration.registration_payment.cancel = true
+      @registration.registration_payment.cancel_reason = params[:cancel_reason]
+      @registration.registration_payment.cancel_time = Time.now
+      @registration.registration_payment.save!
+    else
+      flash.now[:icon] = 'fa-lightbulb-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_already_completed')
+    end
+
+    render action: :show
+  end
+
+  # Allpay online trade complete.
+  def return
+    flash.now[:icon] = 'fa-smile-o'
+    flash.now[:status] = 'success'
+    flash.now[:message] = t('payment_completed')
+
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('registration.all'), :registrations_path
+    add_breadcrumb t('detail')
+
+    @registration = Registration.find(params['MerchantTradeNo'].delete('R').split('t')[0])
+
+    # Not really update order entity, just show the newest status.
+    @registration.registration_payment.trade_no = params['TradeNo']
+    @registration.registration_payment.trade_time = params['TradeDate']
+    @registration.registration_payment.payment_time = params['PaymentDate']
+    @registration.registration_payment.completed =  true
+    @registration.registration_payment.completed_time = Time.now
+
+    @registration.registration_payment.save!
+
+    RegistrationMailer.completed_confirmation(@registration.id).deliver_later
+
+    render 'registrations/show'
+  end
+
+  def report_remittance
+    # Status ==> Waiting   -> confirm: nil
+    #            Confirmed -> confirm: true
+    #            Confirmed -> confirm: false
+    # If there are any reports waiting be reviewed, do nothing and show message to customer
+    if @registration.registration_payment.registration_remittance_reports.where(confirm: nil).size <= 0
+      report = @registration.registration_payment.registration_remittance_reports.create({
+                                                               amount: params[:amount],
+                                                               account: params[:account],
+                                                               date: params[:date]
+                                                           })
+      RegistrationMailer.remind_remittance_report(report).deliver_later
+
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('report_remittance_hint')
+    else
+      flash.now[:icon] = 'fa-frown-o'
+      flash.now[:status] = 'warning'
+      flash.now[:message] = t('report_remittance_warning')
+    end
+
+    render action: :show
+  end
+
   private
+    def set_registration
+      @registration = Registration.find_by_id_and_email(params[:id], current_user.email)
+    end
+
     def registration_params
-      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id, registration_options_attributes: [:id, :course_option_id])
+      params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id, :locale_id,
+                                           :payment_method, registration_options_attributes: [:id, :course_option_id])
     end
 
     def set_discount

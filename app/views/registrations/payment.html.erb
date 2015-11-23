@@ -1,0 +1,35 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <%= render 'layouts/flash_message' %>
+  <div class="row">
+    <div class="col-md-8 col-sm-6  col-xs-12">
+      <div class="box collapse-in-mobile">
+        <h4 class="box-collapse">
+          <a class="pull-right">
+            <i class="fa fa-angle-down fa-lg hidden-lg hidden-md hidden-sm"></i>
+          </a>
+          報名的課程資訊
+        </h4>
+        <div class="box-content">
+          <%= render 'course_information', registration: @registration %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-sm-6 col-xs-12">
+      <div class="box">
+        <h4>你的報名資訊</h4>
+        <div class="box-content">
+          <%= render 'register_information', registration: @registration %>
+        </div>
+      </div>
+
+      <div class="box">
+        <h4><%= t('choose_payment') %></h4>
+        <!-- choose payment method -->
+        <%= render 'payment_methods', registration: @registration %>
+        <!-- choose payment method -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ class Admin::CoursesController < AdminController
     query_condition << 'time > ?' unless @search_filter.include?('completed')
     query_condition << Time.now unless @search_filter.include?('completed')
 
-    @courses = Course.where(query_condition).order(time: :desc)
+    @courses = Course.includes(:course_translates).where(query_condition)
   end
 
   # GET /admin/courses/new
@@ -39,9 +39,16 @@ class Admin::CoursesController < AdminController
     @image_addition = CourseAdditionImage.new(course_id: @course.id)
   end
 
-  def visible
-    if @course.update_attribute(:visible, params[:visible])
-      redirect_to action: :index
+  def status
+    if @course.update_columns(status_params)
+      flash[:status] = status_params
+      flash[:id] = @course.id
+
+      if @course.canceled?
+        CourseMailer.cancel_notification(@course.id)
+      end
+
+      redirect_to :back
     else
       render json: @course.errors
     end
@@ -62,21 +69,24 @@ class Admin::CoursesController < AdminController
 
   # PUT/PATCH /admin/courses/1
   def update
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html {redirect_to action: :index, notice: 'Update Success.'}
-      else
-        format.html {render action: :edit, status: :unprocessable_entity}
-      end
+    if @course.update(course_params)
+      flash[:update] = 'true'
+      flash[:id] = @course.id
+
+      redirect_to action: :index
+    else
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /admin/courses/1
   def destroy
-    respond_to do |format|
-      if @course.destroy
-        format.html {redirect_to action: :index, notice: 'Delete Success.'}
-      end
+    flash[:id] = @course.id
+    if @course.destroy
+      flash[:destroy] = 'true'
+      redirect_to :back
+    else
+      render json: @course.errors
     end
   end
 
@@ -90,6 +100,13 @@ class Admin::CoursesController < AdminController
                                    course_images_attributes: [:_destroy, :id, :course_id, :image],
                                    course_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
                                    course_translates_attributes: [:_destroy, :id, :price, :course_id, :locale_id, :name, :teacher, :location, :description, :note])
+  end
+
+  def status_params
+    if params[:canceled]
+      params[:canceled_time] = Time.now
+    end
+    params.permit(:full, :visible, :canceled, :canceled_time)
   end
 
   def delete_empty_course

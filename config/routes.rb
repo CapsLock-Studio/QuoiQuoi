@@ -2,8 +2,8 @@ QuoiQuoi::Application.routes.draw do
   devise_for :admin, controller: { sessions: 'admin/sessions' }
 
   as :admin do
-    get 'admin/edit' => 'devise/registrations#edit', as: 'edit_admin_registration'
-    put 'admin' => 'devise/registrations#update', as: 'admin_registration'
+    get 'admin/edit' => 'devise/registrations#edit', as: 'edit_admin_account'
+    put 'admin' => 'devise/registrations#update', as: 'admin_account'
   end
 
   namespace :admin do
@@ -27,7 +27,7 @@ QuoiQuoi::Application.routes.draw do
         patch :visible
       end
 
-      resources :product_custom_items
+      resources :product_custom_items, shallow: true
 
       # This is one way to shallow nesting resource from http://weblog.jamisbuck.org/2007/2/5/nesting-resources
       # The article is written by Jamis on February 05, 2007 @ 01:00 PM
@@ -85,37 +85,29 @@ QuoiQuoi::Application.routes.draw do
     resources :questions
 
     resources :product_types
-    resources :courses do
+
+    resources :registrations do
       member do
-        put :visible
-        patch :visible
-      end
-
-      resources :course_addition_images, shallow: true
-      resources :course_option_groups, shallow: true do
-        resources :course_options, shallow: true
-      end
-    end
-    resources :course_registrations do
-      member do
-        get :cancel, action: :cancel_form
-        put :cancel, action: :cancel_one
-        patch :cancel, action: :cancel_one
-        put :full, action: :full_register
-        patch :full, action: :full_register
-        put :return
-        patch :return
-
-        get :canceled, action: :canceled_show
-        put :canceled, action: :canceled_return
-        patch :canceled, action: :canceled_return
-
-        get :closed, action: :closed_show
+        get :canceled, action: :show
       end
 
       collection do
         get :canceled
-        get :closed
+      end
+    end
+
+    resources :registration_payments
+
+    resources :courses do
+      member do
+        put :status
+        patch :status
+      end
+
+      resources :registrations, shallow: true
+      resources :course_addition_images, shallow: true
+      resources :course_option_groups, shallow: true do
+        resources :course_options, shallow: true
       end
     end
 
@@ -147,41 +139,59 @@ QuoiQuoi::Application.routes.draw do
 
     resource :requirement_intros
 
-    resources :registrations do
-      member do
-        get :check, action: :check_show
-      end
-
-      collection do
-        get :check
-      end
-    end
-
     resources :orders do
       member do
         get :check, action: :check_show
+        get :archive, action: :show
+        get :canceled, action: :show
       end
       collection do
         get :check
         get :accept
         get :closed
+        get :archive
         get :deliver
         get :canceled
       end
     end
 
-    resources :messages
+    resources :order_payments
 
-    resources :order_custom_items do
+    resources :order_remittances do
       member do
-        delete :delete
+        get :check, action: :edit
       end
+
       collection do
-        get :accepted
-        get :canceled
         get :check
       end
     end
+
+    resources :registration_remittances do
+      member do
+        get :check, action: :edit
+      end
+
+      collection do
+        get :check
+      end
+    end
+
+    resources :messages
+
+    resources :custom_orders do
+      member do
+        get :discussing, action: :show
+        get :canceled, action: :show
+      end
+
+      collection do
+        get :discussing
+        get :canceled
+      end
+    end
+
+    resources :custom_order_options
 
     resource :remittances
 
@@ -236,6 +246,10 @@ QuoiQuoi::Application.routes.draw do
 
     resources :users do
       resources :messages
+
+      member do
+        get :info
+      end
     end
 
     resources :gifts do
@@ -260,6 +274,20 @@ QuoiQuoi::Application.routes.draw do
 
   localized do
 
+    # For handling payment
+    get 'order_payment/:action(/:id)', controller: :order_payment, as: 'order_payment'
+    post 'order_payment_callback/allpay_complete' => 'order_payment_callback#allpay_complete'
+
+    get 'registration_payment/:action(/:id)', controller: :registration_payment, as: 'registration_payment'
+    post 'registration_payment_callback/allpay_complete' => 'registration_payment_callback#allpay_complete'
+
+    # Special for paypal payment feedback
+    get 'order_payment_callback/paypal' => 'order_payment_callback#paypal'
+    get 'orders/:id/cancel?token=EC-\w+' => 'orders#cancel'
+
+    get 'registration_payment_callback/paypal' => 'registration_payment_callback#paypal'
+    get 'registrations/:id/cancel?token=EC-\w+' => 'registrations#cancel'
+
     devise_for :users, controllers: {
         omniauth_callbacks: 'users/omniauth_callbacks'
     }
@@ -272,6 +300,11 @@ QuoiQuoi::Application.routes.draw do
     get 'cart' => 'cart#index'
     put 'cart' => 'cart#update'
     patch 'cart' => 'cart#update'
+    get 'cart/checkout' => 'cart#checkout'
+    post 'cart/payment' => 'cart#payment'
+    get 'user/token/:token' => 'user#email_signin', as: 'email_signin'
+    get 'user/email_confirmation' => 'user#email_confirmation'
+    post 'user/email_authencate' => 'user#email_authencate', as: 'email_authencate'
 
     devise_scope :user do
       get 'user' => 'user#index'
@@ -288,9 +321,7 @@ QuoiQuoi::Application.routes.draw do
       get 'style1' => 'home#style1'
       get 'style2' => 'home#style2'
     end
-    resources :products do
-      resource :order_custom_items
-    end
+    resources :products
     resources :news
     resources :courses do
       get 'calendar', on: :collection
@@ -328,33 +359,45 @@ QuoiQuoi::Application.routes.draw do
       collection do
         get :close, action: :close_index
       end
+
       member do
         get :close, action: :close_show
         get :pay, action: :pay_show
         put :close
         patch :close
         put :cancel
+        post :cancel
+
+        put :report_remittance
+        post :report_remittance
+
+        post :return
+        put :delivery_report
+
+        post action: :update
       end
     end
 
-    resources :order_custom_items do
-      collection do
-        get :material
-      end
-
-      member do
-        put :cancel
-      end
-    end
     resources :order_products
     resources :registrations do
       collection do
         get :close, action: :close_index
+        post :payment
       end
 
       member do
         get :close, action: :close_show
         get :pay, action: :pay_show
+
+        put :cancel
+        post :cancel
+
+        put :report_remittance
+        post :report_remittance
+
+        post :return
+
+        post action: :update
       end
     end
 
@@ -379,6 +422,19 @@ QuoiQuoi::Application.routes.draw do
     resources :areas do
       resources :travel_information
     end
+
+    resources :custom_orders do
+      member do
+        put :cancel
+        patch :cancel
+      end
+      collection do
+        get :build
+      end
+    end
+
+    resources :order_custom_items
+    resources :materials
 
     resource :terms_of_service, controller: :terms_of_service
     resource :privacy_statement, controller: :privacy_statement

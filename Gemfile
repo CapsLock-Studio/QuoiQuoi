@@ -49,13 +49,14 @@ gem 'kaminari'
 
 gem 'paypal-express'
 gem 'redis'
-gem 'resque'
-gem 'resque_mailer'
 gem 'activerecord-session_store'
 
 gem 'sqlite3'
 gem 'recaptcha'
 gem 'sanitize'
+# gem 'mailgun_rails'
+gem 'sidekiq'
+gem 'whenever', require: false
 
 gem 'route_translator'
 

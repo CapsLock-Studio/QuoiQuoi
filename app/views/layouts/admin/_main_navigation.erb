@@ -50,28 +50,28 @@
       <% end %>
 
       <%= nav_item_with_resource('#', nil, Order) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:orders) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:orders) || is_in(:order_remittances) %>" href="#">
           <i class="icon-file-text"></i>
           <span>訂單管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:orders) %>">
-          <%= nav_item_with_resource(check_admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?\/check/}, Payment) do %>
-            <%= link_to(check_admin_orders_path) do %>
+        <ul class="nav <%= 'in' if is_in(:orders) || is_in(:order_remittances) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_order_remittances_path}(\/\d+)?\/check/}, OrderRemittanceReport) do %>
+            <%= link_to(check_admin_order_remittances_path) do %>
               <i class="icon-check"></i>
-              <span>待確認匯款訂單</span>
+              <span>待確認匯款回報</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(deliver_admin_orders_path, {rule: /#{deliver_admin_orders_path}|#{admin_orders_path}\/\d+\/edit/}, Order) do %>
+          <%= nav_item_with_resource(nil, {rule: /#{deliver_admin_orders_path}|#{admin_orders_path}\/\d+\/edit/}, Order) do %>
             <%= link_to(deliver_admin_orders_path) do %>
               <i class="icon-truck"></i>
-              <span>待出貨訂單</span>
+              <span>訂單出貨情形</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(closed_admin_orders_path, nil, Order) do %>
-            <%= link_to (closed_admin_orders_path) do %>
+          <%= nav_item_with_resource(archive_admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?\/archive/}, Order) do %>
+            <%= link_to (archive_admin_orders_path) do %>
               <i class="icon-ok"></i>
-              <span>交易完成訂單</span>
+              <span>已封存訂單</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?(?!\/deliver)$/}, Order) do %>
@@ -80,7 +80,13 @@
               <span>訂單記錄</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(canceled_admin_orders_path, nil, Order) do %>
+          <%= nav_item_with_resource(admin_order_remittances_path, {rule: /#{admin_order_remittances_path}(\/\d+)?(\/edit)?(?!\/check)$/}, OrderRemittanceReport) do %>
+            <%= link_to(admin_order_remittances_path) do %>
+              <i class="icon-flag"></i>
+              <span>所有匯款紀錄</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(canceled_admin_orders_path, {rule: /#{admin_orders_path}(\/\d+)?\/canceled$/}, Order) do %>
             <%= link_to(canceled_admin_orders_path, class: 'text-muted') do %>
               <i class="icon-remove"></i>
               <span>已取消訂單</span>
@@ -90,41 +96,89 @@
       <% end %>
 
       <%= nav_item_with_resource('#', nil, OrderCustomItem) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:order_custom_items) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:custom_orders) or is_in(:custom_order_options) or (is_in(:materials) or is_in(:material_types)) %>" href="#">
           <i class="icon-tasks"></i>
-          <span>客製化訂單管理</span>
+          <span>客製化相關管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:order_custom_items) %>">
-          <%= nav_item_with_resource(check_admin_order_custom_items_path, nil, OrderCustomItem) do %>
-            <%= link_to(check_admin_order_custom_items_path) do %>
-              <i class="icon-check"></i>
-              <span>待確認訂製要求</span>
+        <ul class="nav <%= 'in' if is_in(:custom_orders) or is_in(:custom_order_options) or (is_in(:materials) or is_in(:material_types)) %>">
+          <%= nav_item_with_resource(nil, {rule: /custom_orders(\/\d+)?\/discussing/}, CustomOrder) do %>
+            <%= link_to(discussing_admin_custom_orders_path) do %>
+              <i class="icon-comments-alt"></i>
+              <span>討論中訂製</span>
             <% end %>
           <% end %>
-          <%= nav_item_with_resource(accepted_admin_order_custom_items_path, nil, OrderCustomItem) do %>
-            <%= link_to(accepted_admin_order_custom_items_path) do %>
-              <i class="icon-ok"></i>
-              <span>已接受訂製要求</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(admin_order_custom_items_path, {rule: /#{admin_order_custom_items_path}(\/\d+\/edit)?((?!\/accepted)|(?!\/check))$/}, OrderCustomItem) do %>
-            <%= link_to(admin_order_custom_items_path) do %>
+          <%= nav_item_with_resource(nil, {rule: /admin\/custom_orders(\/\d+)?((?!\/discussing)|(?!\/canceled))$/}, CustomOrder) do %>
+            <%= link_to(admin_custom_orders_path) do %>
               <i class="icon-flag"></i>
-              <span>訂製要求記錄</span>
+              <span>所有訂製紀錄</span>
             <% end %>
           <% end %>
-          <!--
-          <%= nav_item_with_resource(canceled_admin_order_custom_items_path, nil, OrderCustomItem) do %>
-            <%= link_to(canceled_admin_order_custom_items_path, class: 'text-muted') do %>
+          <%= nav_item_with_resource(nil, {rule: /^#{admin_custom_order_options_path}.*/}, CustomOrder) do %>
+            <%= link_to(admin_custom_order_options_path) do %>
+              <i class="icon-tag"></i>
+              <span>訂製選項標籤管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(admin_material_types_path, {rule: /^#{admin_material_types_path}.*/}, Material) do %>
+            <%= link_to(admin_material_types_path) do %>
+              <i class="icon-tag"></i>
+              <span>布料管理</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(canceled_admin_custom_orders_path, nil, CustomOrder) do %>
+            <%= link_to(canceled_admin_custom_orders_path, class: 'text-muted') do %>
               <i class="icon-remove"></i>
               <span>已取消訂製要求</span>
             <% end %>
           <% end %>
-          -->
         </ul>
       <% end %>
 
+      <%= nav_item_with_resource('#', nil, Registration) do %>
+        <a class="dropdown-collapse <%= 'in' if is_in(:registrations) or is_in(:courses) %>" href="#">
+          <i class="icon-check"></i>
+          <span>報名管理</span>
+          <i class="icon-angle-down"></i>
+        </a>
+        <ul class="nav <%= 'in' if is_in(:registrations) or is_in(:courses) or is_in(:registration_remittances) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_registration_remittances_path}(\/\d+)?\/check/}, Registration) do %>
+            <%= link_to(check_admin_registration_remittances_path) do %>
+              <i class="icon-check"></i>
+              <span>待確認報名課程匯款</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_courses_path}(\/\d+(\/edit)?)?(?!\/registrations)$/}, Registration) do %>
+            <%= link_to(admin_courses_path) do %>
+              <i class="icon-book"></i>
+              <span>所有課程</span>
+              <i class="icon-angle-down angle-down"></i>
+            <% end %>
+            <ul class="nav" style="display: block;">
+              <%= nav_item_with_resource(nil, {rule: /registrations(\/\d+)?(?!\/canceled)$/}, Registration) do %>
+                <%= link_to(admin_courses_path) do %>
+                  <i class="icon-flag"></i>
+                  <span>報名列表</span>
+                <% end %>
+              <% end %>
+            </ul>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /#{admin_registration_remittances_path}(\/\d+)?(\/edit)?(?!\/check)$/}, Registration) do %>
+            <%= link_to(admin_registration_remittances_path) do %>
+              <i class="icon-flag"></i>
+              <span>所有匯款紀錄</span>
+            <% end %>
+          <% end %>
+          <%= nav_item_with_resource(nil, {rule: /admin\/registrations(\/\d+)?\/canceled/}, Registration) do %>
+            <%= link_to(canceled_admin_registrations_path, class: 'text-muted') do %>
+              <i class="icon-remove"></i>
+              已取消報名
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <!--
       <%= nav_item_with_resource('#', nil, UserGift) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
           <i class="icon-gift"></i>
@@ -146,40 +200,7 @@
           <% end %>
         </ul>
       <% end %>
-
-      <%= nav_item_with_resource('#', nil, Registration) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>" href="#">
-          <i class="icon-check"></i>
-          <span>手作教室報名課程管理</span>
-          <i class="icon-angle-down"></i>
-        </a>
-        <ul class="nav <%= 'in' if is_in(:registrations) or is_in(:course_registrations) %>">
-          <%= nav_item_with_resource(nil, {rule: /#{admin_registrations_path}(\/\d+)?\/check/}, Registration) do %>
-            <%= link_to(check_admin_registrations_path) do %>
-              <i class="icon-check"></i>
-              <span>待確認報名課程匯款</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?(?!\/canceled)$/}, Registration) do %>
-            <%= link_to(admin_course_registrations_path) do %>
-              <i class="icon-book"></i>
-              <span>課程狀態管理</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(nil, {rule: /#{admin_course_registrations_path}(\/\d+)?\/closed/}, Registration) do %>
-            <%= link_to(closed_admin_course_registrations_path) do %>
-              <i class="icon-book"></i>
-              <span>已關閉課程管理</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(admin_registrations_path, {rule: /#{admin_registrations_path}(\/\d+)?(?!\/check)/}, Registration) do %>
-            <%= link_to(admin_registrations_path) do %>
-              <i class="icon-flag"></i>
-              <span>報名課程記錄</span>
-            <% end %>
-          <% end %>
-        </ul>
-      <% end %>
+      -->
 
       <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*|#{admin_product_types_path}.*)/}, Product) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) or is_in(:product_types) or is_in(:product_material_types) %>" href="#">
@@ -217,32 +238,21 @@
         </ul>
       <% end %>
 
-      <%= nav_item_with_resource(admin_courses_path, {rule: /#{admin_courses_path}.*/}, Course) do %>
-        <%= link_to(admin_courses_path) do %>
-          <i class="icon-book"></i>
-          <span>開設課程管理</span>
+      <%= nav_item_with_resource(admin_past_work_types_path, {rule: /admin\/(#{:past_work_types}|#{:past_works}|#{:past_work_translates}).*/}, Admin) do %>
+        <%= link_to(admin_past_work_types_path) do %>
+          <i class="icon-tag"></i>
+          <span>過去作品管理</span>
         <% end %>
       <% end %>
 
+      <!--
       <%= nav_item_with_resource('#', nil, Material) do %>
-        <a class="dropdown-collapse <%= 'in' if (is_in(:materials) or is_in(:material_types) or is_in(:order_information) or is_in(:instructions) or is_in(:past_work_types) or is_in(:past_works) or is_in(:past_work_translates)) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if (is_in(:order_information) or is_in(:instructions)) %>" href="#">
           <i class="icon-heart-empty"></i>
           <span>訂製手作包管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:materials) or is_in(:material_types) or is_in(:order_information) or is_in(:instructions) or is_in(:past_work_types) or is_in(:past_works) or is_in(:past_work_translates) %>">
-          <%= nav_item_with_resource(admin_past_work_types_path, {rule: /admin\/(#{:past_work_types}|#{:past_works}|#{:past_work_translates}).*/}, Admin) do %>
-            <%= link_to(admin_past_work_types_path) do %>
-              <i class="icon-tag"></i>
-              <span>過去作品管理</span>
-            <% end %>
-          <% end %>
-          <%= nav_item_with_resource(admin_material_types_path, {rule: /^#{admin_material_types_path}.*/}, Material) do %>
-            <%= link_to(admin_material_types_path) do %>
-              <i class="icon-tag"></i>
-              <span>布料管理</span>
-            <% end %>
-          <% end %>
+        <ul class="nav <%= 'in' if is_in(:order_information) or is_in(:instructions) %>">
           <% Locale.all.each do |locale| %>
             <%= nav_item_with_resource(nil, {rule: /#{admin_locale_order_information_index_path(locale)}.*/}, OrderInformation) do %>
               <%= link_to(admin_locale_order_information_index_path(locale)) do %>
@@ -261,6 +271,7 @@
           <% end %>
         </ul>
       <% end %>
+      -->
 
       <%= nav_item_with_resource('#', {rule: /#{admin_articles_path}.*|#{admin_article_types_path}.*/}, Article) do %>
       <a class="dropdown-collapse <%= 'in' if is_in(:articles) or is_in(:article_types) %>" href="#">
@@ -312,13 +323,6 @@
         <%= link_to(admin_board_index_path) do %>
           <i class="icon-comments-alt"></i>
           <span>訪客留言訊息管理</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(nil, {rule: /#{admin_messages_path}.*|#{admin_users_path}\/\d+\/messages.*/}, Message) do %>
-        <%= link_to(admin_messages_path) do %>
-          <i class="icon-comment-alt"></i>
-          <span>客戶留言訊息管理</span>
         <% end %>
       <% end %>
 
@@ -471,13 +475,6 @@
         <%= link_to(admin_system_path) do %>
           <i class="icon-gear"></i>
           <span>系統設定</span>
-        <% end %>
-      <% end %>
-
-      <%= nav_item_with_resource(admin_payments_path, {rule: /#{admin_payments_path}(\/\d+)?(?!\/edit)$/}, Payment) do %>
-        <%= link_to(admin_payments_path) do %>
-          <i class="icon-credit-card"></i>
-          <span>付款記錄</span>
         <% end %>
       <% end %>
     </ul>

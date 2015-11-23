@@ -17,4 +17,10 @@
     <i class="fa fa-phone fa-fw"></i>
     <span><%= $redis.get("about:locale:#{session[:locale_id]}:phone") %></span>
   </li>
+  <li>
+    <%= link_to(rss_path) do %>
+      <i class="fa fa-rss fa-fw"></i>
+      <%= t('subscribe_rss') %>
+    <% end %>
+  </li>
 </ul>
