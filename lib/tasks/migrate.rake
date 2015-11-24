@@ -173,4 +173,18 @@ namespace :migrate do
     # OrderRemittanceReport.where(date: nil).update_all(date: Time.new(0))
     # OrderPayment.where(cancel: true).update_all(cancel_reason: '')
   end
+
+  desc 'fix order and order payment'
+  task fix_order: :environment do
+    has_payment_orders = Payment.where.not(order_id: nil).pluck(:order_id)
+    Order.where(checkout: true, canceled: false).where.not(id: has_payment_orders).each do |order|
+      if order.order_payment.nil?
+        op = order.build_order_payment
+        op.amount = order.subtotal
+        op.created_at = order.created_at
+        op.updated_at = order.updated_at
+        op.save
+      end
+    end
+  end
 end
