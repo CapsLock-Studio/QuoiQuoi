@@ -12,6 +12,16 @@
             </h4>
           </div>
         </div>
+        <div class="col-xs-12 margin-bottom-50">
+              <h3 style="color:#666;">
+                <strong>
+                  <%= @past_work.past_work_translate.name %>
+                </strong>
+              </h3>
+              <div class="article-content">
+                <%== Sanitize.fragment(@past_work.past_work_translate.description, Sanitize::Config::ALLOWED) %>
+              </div>
+            </div>
         <div class="col-xs-12">
           <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@past_work.image.url(:large)}", text: "#{t('share_text')}#{@past_work.past_work_translate.name}" %>
         </div>
