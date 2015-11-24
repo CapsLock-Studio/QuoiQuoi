@@ -38,7 +38,7 @@ class Course < ActiveRecord::Base
   # Include people who have not completed payment.
   def applicants
     registrations.reject do |registration|
-      registration.registration_payment.cancel?
+      registration.registration_payment.nil? || registration.registration_payment.cancel?
     end.map{|registration| registration.attendance}.inject{|sum, applicant| sum + applicant} || 0
   end
 
