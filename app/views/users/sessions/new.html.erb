@@ -1,49 +1,50 @@
-<div class="modal" id="signin-modal" style="display:block;position:relative;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body" style="padding-top: 0;">
-        <div class="row">
-          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
-            <div id="social-signin">
-              <div class="text-center">
-                <h3>
-                  登入/建立 你的帳號<br/>
-                  <small>只需要簡單的兩個步驟</small>
-                </h3>
-              </div>
-              <%= link_to user_omniauth_authorize_path(:google_oauth2), class: 'btn btn-google btn-block social-btn' do %>
-                <i class="fa fa-google fa-fw"></i>
-                使用Google做身份驗證
-              <% end %>
-              <%= link_to user_omniauth_authorize_path(:facebook), class: 'btn btn-fb btn-block social-btn' do %>
-                <i class="fa fa-facebook fa-fw"></i>
-                使用Facebook做身份驗證
-              <% end %>
-              <hr/>
-              <button type="button" class="btn btn-link btn-block" id="email-signin-btn">使用Email登入或建立帳號</button>
-            </div>
-            <div id="user-email-form" style="display:none;">
-              <div class="text-center">
-                <h3>
-                  我們只需要確認這個信箱是您在使用
-                </h3>
-                <input type="text" class="form-control" name="email" placeholder="yourname@example.com" />
-                <button data-url="<%= email_authencate_path %>" type="submit" class="btn btn-link">登入</button>
-                <a class="btn text-muted" data-dismiss="modal">取消</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-12 text-center" id="user-email-sent" style="display:none;">
-            <h3>
-              <i class="fa fa-envelope-o fa-fw"></i>
-              我們寄了一個連結給你以用來確認身份<br/>請你檢查一下信箱
-            </h3>
+<div class="container">
+  <div class="row">
+    <!--Reg Block-->
+    <div class="col-md-6 col-md-offset-3" style="margin-top:40px;">
+      <div class="reg-page" style="border-top:0;">
+        <div class="reg-header">
+          <div class="text-center">
+            <h2><%= t('signin') %></h2>
           </div>
         </div>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'validate-form' }) do |f| %>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group">
+                <div class="controls margin-bottom-20">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <%= f.email_field :email, value: (flash[:email])? flash[:email] : f.object.email, class: 'form-control', 'placeholder' => t('email_placeholder'), data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls margin-bottom-20">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                    <%= f.password_field :password, class: 'form-control', 'placeholder' => t('password_placeholder'), data: { 'rule-required' => 'true' } %>
+                  </div>
+                </div>
+              </div>
+              <%= render 'layouts/messages' %>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <%= f.button t('signin'), class: 'btn btn-default btn-lg hover-effect btn-block', type: 'submit' %>
+              <%= link_to new_user_registration_path, class: 'pull-left' do %>
+                <i class="fa fa-pencil fa-fw"></i>
+                <%= t('signup') %>
+              <% end %>
+              <%= link_to "#{t('forget_password')}?", new_user_password_path, class: 'pull-right' %>
+            </div>
+          </div>
+        <% end %>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!--End Reg Block-->
+  </div>
+</div>
