@@ -27,23 +27,27 @@
           </div>
           <div>
             <% @order_in_cart.order_products.each do |order_product| %>
-              <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
-              <% subtotal += order_product.price * order_product.quantity %>
-              <div class="search-blocks search-blocks-colored side-menu-block">
-                <div class="col-sm-5 search-img">
-                  <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
-                </div>
-                <div class="col-sm-7">
-                  <%= link_to(order_product_path(order_product), class: 'btn pull-right', method: :delete) do %>
-                    <i class="fa fa-times"></i>
-                  <% end %>
-                  <h4>
-                    <%= translate.name %>
-                  </h4>
-                  <h5 class="text-muted"><%= "#{number_to_currency(order_product.price)} * #{order_product.quantity}" %></h5>
-                  <h5><%= order_product.product_option.content if order_product.product_option %></h5>
-                </div>
-              </div>
+              <% unless order_product.product.nil? %>
+                <% translate = order_product.product.product_translates.where(locale_id: session[:locale_id]).first %>
+                <% unless translate.nil? %>
+                <% subtotal += order_product.price * order_product.quantity %>
+                  <div class="search-blocks search-blocks-colored side-menu-block">
+                    <div class="col-sm-5 search-img">
+                      <%= image_tag order_product.product.image.url(:medium), class: 'img-responsive' %>
+                    </div>
+                    <div class="col-sm-7">
+                      <%= link_to(order_product_path(order_product), class: 'btn pull-right', method: :delete) do %>
+                        <i class="fa fa-times"></i>
+                      <% end %>
+                      <h4>
+                        <%= translate.name %>
+                      </h4>
+                      <h5 class="text-muted"><%= "#{number_to_currency(order_product.price)} * #{order_product.quantity}" %></h5>
+                      <h5><%= order_product.product_option.content if order_product.product_option %></h5>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
             <% end %>
           </div>
           <div class="box-content">
