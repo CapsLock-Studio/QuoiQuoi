@@ -32,18 +32,13 @@
       <li class="divider"></li>
       <% if user_signed_in? %>
         <li>
-          <div class="control-title">
-            <%= t('control_panel') %>
-          </div>
+          <%= link_to t('order.my'), orders_path %>
         </li>
         <li>
-          <%= link_to('所有訂單', orders_path) %>
+          <%= link_to t('registration.all'), registrations_path %>
         </li>
         <li>
-          <%= link_to('報名的課程', registrations_path) %>
-        </li>
-        <li>
-          <%= link_to('我的客製化訂製', '')  %>
+          <%= link_to t('custom_order.all'), custom_orders_path %>
         </li>
         <li class="divider"></li>
         <li>
@@ -53,6 +48,22 @@
           <% end %>
         </li>
       <% else %>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#signin-modal">
+            <%= t('order.my') %>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#signin-modal">
+            <%= t('registration.all') %>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#signin-modal">
+            <%= t('custom_order.all') %>
+          </a>
+        </li>
+        <li class="divider"></li>
         <li>
           <a href="#" data-toggle="modal" data-target="#signin-modal">
             <i class="fa fa-sign-in fa-fw"></i>
@@ -67,8 +78,8 @@
       <i class="fa fa-shopping-cart fa-2x"></i>
     </a>
   </li>
-  <li class="dropdown user-menu">
-    <a class="mobile-control-btn cta-btn" data-toggle="modal" data-target="#custom-order-modal">
+  <li class="dropdown user-menu" data-toggle="modal" data-target="#custom-order-modal">
+    <a class="mobile-control-btn cta-btn">
       <i class="icon icon-handwriting"></i>
     </a>
   </li>
