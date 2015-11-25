@@ -45,7 +45,7 @@ class Course < ActiveRecord::Base
   # Registered people who already completed payment.
   def applicants_completed
     registrations.reject do |registration|
-      registration.registration_payment.refunded? || !registration.registration_payment.completed?
+      registration.registration_payment.nil? || registration.registration_payment.refunded? || !registration.registration_payment.completed?
     end.map{|registration| registration.attendance}.inject{|sum, applicant| sum + applicant} || 0
   end
 
