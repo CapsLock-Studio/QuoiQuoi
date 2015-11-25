@@ -98,7 +98,7 @@
                     <div class="margin-bottom-10">
                       <label><%= t('registration.attendance') %></label>
                       <%= f.select :attendance,
-                                   options_for_select(1..@course.popular{|index| [index, index]}),
+                                   options_for_select(1..@course.attendance{|index| [index, index]}),
                                    {},
                                    {
                                        class: 'selectpicker attendance form-control',
