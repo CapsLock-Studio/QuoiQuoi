@@ -68,7 +68,7 @@ class OrderPaymentController < ApplicationController
     #render json: Paypal::Express::Request.new(PAYPAL_CONFIG)
     paypal_response = Paypal::Express::Request.new(PAYPAL_CONFIG).setup(
         Paypal::Payment::Request.new(
-            currency_code: Locale.find(@order.locale_id).currency_code,
+            currency_code: Locale.find(@order.locale_id).currency,
             description: @website_title,
             quantity: 1,
             amount: @order.subtotal
