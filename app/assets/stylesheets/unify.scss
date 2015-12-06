@@ -1185,13 +1185,13 @@ a[data-toggle=offcanvas] {
   display: inline-block;
 
   &.icon-handwriting-inverse {
-    background: image-url('HandwritingInverse.png') no-repeat;
+    background: image-url('HandwritingInverse@2x.png') no-repeat;
     background-size: cover;
     margin: -2px 3px -6px 0;
   }
 
   &.icon-handwriting {
-    background: image-url('Handwriting.png') no-repeat;
+    background: image-url('Handwriting@2x.png') no-repeat;
     background-size: cover;
     margin: -2px 3px -6px 0;
   }
