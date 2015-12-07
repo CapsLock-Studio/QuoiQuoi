@@ -1252,6 +1252,16 @@ a[data-toggle=offcanvas] {
   }
 }
 
+.material-like {
+  &.selected {
+    color: #E37E7E !important;
+  }
+}
+
+.selectable.selected {
+  color: #000000 !important;
+}
+
 .material {
   display: inline-block;
   width: 82px;

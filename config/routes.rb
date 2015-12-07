@@ -434,7 +434,12 @@ QuoiQuoi::Application.routes.draw do
     end
 
     resources :order_custom_items
-    resources :materials
+    resources :material_types
+    resources :materials do
+      collection do
+        get 'like'
+      end
+    end
 
     resource :terms_of_service, controller: :terms_of_service
     resource :privacy_statement, controller: :privacy_statement
