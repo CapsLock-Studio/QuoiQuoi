@@ -1,0 +1,42 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <%= render 'material_types/side_navigation' %>
+    <div class="col-md-9 col-sm-9">
+      <div class="row">
+        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12 margin-bottom-20">
+          <div class="btn-toolbar pull-right">
+            <%= link_to '用喜歡的布料量身訂製', new_custom_order_path, class: 'btn btn-default' %>
+          </div>
+        </div>
+        <% @materials.order(:material_type_id).group_by(&:material_type_id).each do |type, materials| %>
+          <div class="col-xs-12">
+            <div class="headline">
+              <h4><%= link_to @material_types.find(type).material_type_translate.name, material_type_path(type) %></h4>
+            </div>
+          </div>
+          <% materials.each do |material| %>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 removable-<%= material.id %>">
+              <div class="thumbnails thumbnail-style">
+                <a class="mediumnail fancybox-button zoomer" data-rel="fancybox-button" title="<%= material.material_translate.name %>" href="<%= asset_path material.image.url(:large) %>">
+                  <span class="overlay-zoom main-image">
+                    <%= image_tag material.image.url(:medium), class: 'img-responsive' %>
+                  </span>
+                </a>
+                <div class="caption">
+                  <h4 style="margin-top: 10px; margin-bottom: 5px; line-height: 30px;">
+                    <%= truncate(material.material_translate.name, length: (session[:locale] == 'en')? 26 : 13) %>
+                    <a href="#" class="text-muted material-like <%= 'selected' if JSON.parse(cookies['material-likes'] || '[]').include?(material.id) %>" data-id="<%= material.id %>" data-remove-target=".removable-<%= material.id %>">
+                      <i class="fa fa-heart fa-2x pull-right"></i>
+                    </a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

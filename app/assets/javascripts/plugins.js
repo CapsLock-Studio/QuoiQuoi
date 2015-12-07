@@ -342,6 +342,33 @@ var initSigninModel = function() {
     });
 };
 
+var initMaterialLikes = function() {
+    $('body').on('click', '.material-like', function(e) {
+        e.preventDefault();
+
+        $(this).toggleClass('selected');
+
+        var materials = decodeURIComponent(getCookie('material-likes'));
+        if (materials == null || materials == '') {
+            materials = []
+        } else {
+            materials = JSON.parse(materials);
+        }
+
+        if ($(this).hasClass('selected')) {
+            materials.push($(this).data('id'));
+            setCookie('material-likes', encodeURIComponent(JSON.stringify(materials)), 9999, '/');
+        } else {
+            if (materials.indexOf($(this).data('id')) > -1) {
+                materials.splice(materials.indexOf($(this).data('id')), 1);
+                setCookie('material-likes', encodeURIComponent(JSON.stringify(materials)), 9999, '/');
+
+                $($(this).data('remove-target')).fadeOut(500);
+            }
+        }
+    });
+};
+
 var initCustomOrderModel = function() {
     var customOrdeModal = $('.custom-order-modal');
     var step1 = customOrdeModal.find('.step1');
