@@ -17,7 +17,7 @@
         <div class="col-sm-7 col-xs-12">
 
           <div class="box">
-            <div class="box-content">
+            <div class="box-content text-2x">
               <div class="row margin-bottom-10">
                 <div class="col-xs-12">
                   <span class="text-muted">
@@ -30,6 +30,11 @@
               </div>
 
               <%= render 'register_information', registration: @registration %>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-content text-2x">
               <%= render 'transaction_information', registration_payment: @registration.registration_payment if @registration.registration_payment %>
             </div>
           </div>
