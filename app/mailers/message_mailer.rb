@@ -5,7 +5,7 @@ class MessageMailer < ApplicationMailer
     @locale_id = @message.custom_order.locale_id
     I18n.locale = @message.custom_order.locale.lang
 
-    mail(to: @message.custom_order.email, subject: '[quoi quoi 布知道] 新留言提醒')
+    mail(to: @message.custom_order.email, bcc: ['quoiquoi.tw@gmail.com'], subject: '[quoi quoi 布知道] 新留言提醒')
   end
 
   def remind_to_admin(id)

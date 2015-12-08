@@ -8,7 +8,7 @@ class CustomMailer < ApplicationMailer
     @locale_id = custom_order.locale_id
     I18n.locale = custom_order.locale.lang
 
-    mail(to: custom_order.email, subject: t('mailer.subject.custom.approve'))
+    mail(to: custom_order.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.custom.approve'))
   end
 
   def dismiss(id)
@@ -19,7 +19,7 @@ class CustomMailer < ApplicationMailer
 
     @locale_id = custom_order.locale_id
 
-    mail(to: custom_order.email, subject: t('mailer.subject.custom.dismiss'))
+    mail(to: custom_order.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.custom.dismiss'))
   end
 
   def remind_new_order(id)
