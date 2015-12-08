@@ -383,6 +383,10 @@ QuoiQuoi::Application.routes.draw do
       collection do
         get :close, action: :close_index
         post :payment
+        get :payment
+
+        get :email
+        post :verify
       end
 
       member do

@@ -1,6 +1,7 @@
 class RegistrationsController < ApplicationController
   before_action :set_registration, only: [:show, :cancel, :pay_show, :report_remittance]
-  before_action :authenticate_user!, except: [:new, :create, :pay_show, :payment]
+  before_action :authenticate_or_no, except: [:new, :create, :pay_show, :payment, :email, :verify]
+  before_action :auto_redirect, only: [:email, :verify]
 
   skip_before_action :verify_authenticity_token, only: [:update, :return]
 
@@ -8,7 +9,7 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registrations')
 
-    @registrations = Registration.includes(:registration_payment).where(email: current_user.email).order(:id)
+    @registrations = Registration.includes(:registration_payment).where(email: (current_user.nil?)? session[:no_authenticate_email] : current_user.email).order(:id)
   end
 
   def close_index
@@ -78,31 +79,15 @@ class RegistrationsController < ApplicationController
 
   def create
     if current_user.nil?
-      user = User.find_by_email(registration_params[:email])
-      if user.nil?
-        user = User.new(email: registration_params[:email])
-        unless params[:save].nil?
-          user.phone = registration_params[:phone]
-          user.name = registration_params[:name]
-        end
-        user.password = Devise.friendly_token[0, 20]
-        user.save!
+      if verify_recaptcha
+        session[:no_authenticate_verified] = true
+        session[:no_authenticate_email] = registration_params[:email]
+        redirect_to controller: :registration_payment, action: Registration.new(registration_params).payment_method, params: params
+      else
+        flash[:recaptcha] = '1'
+        redirect_to action: :payment, params: params
       end
-
-      UserMailer.signin_confirmation(
-          user,
-          url_for(
-              controller: :registration_payment,
-              action: Registration.new(registration_params).payment_method,
-              params: params)).deliver_later
-      render 'user/email_confirmation'
     else
-      unless params[:save].nil?
-        current_user.phone = registration_params[:phone]
-        current_user.name = registration_params[:name]
-        current_user.save!
-      end
-
       redirect_to controller: :registration_payment, action: Registration.new(registration_params).payment_method, params: params
     end
   end
@@ -208,8 +193,12 @@ class RegistrationsController < ApplicationController
     end
 
     #  Warn message for guest when the email address had registered course
-    if current_user.nil? && Registration.where({course_id: @registration.course_id, email: @registration.email}).size > 0
+    if flash[:recaptcha] != '1' && current_user.nil? && Registration.where({course_id: @registration.course_id, email: @registration.email}).size > 0
       flash[:message] = t('had_registered_hint')
+      flash[:status] = 'warning'
+    elsif flash[:recaptcha] == '1'
+      flash[:icon] = 'fa fa-exclamation'
+      flash[:message] = '請協助我們判斷您是不是機器人'
       flash[:status] = 'warning'
     end
   end
@@ -297,9 +286,32 @@ class RegistrationsController < ApplicationController
     render action: :show
   end
 
+  def email
+  end
+
+  def verify
+    registration_found_count = Registration.where(email: params[:email]).size
+    if verify_recaptcha && registration_found_count > 0
+      session[:no_authenticate_verified] = true
+      session[:no_authenticate_email] = params[:email]
+
+      redirect_to registrations_path
+    else
+      flash[:icon] = 'fa fa-exclamation'
+      flash[:status] = 'warning'
+      if registration_found_count > 0
+        flash[:message] = '請協助我們確認您是不是機器人'
+      else
+        flash[:message] = '找不到您的報名'
+      end
+
+      redirect_to action: :email
+    end
+  end
+
   private
     def set_registration
-      @registration = Registration.find_by_id_and_email(params[:id], current_user.email)
+      @registration = Registration.find_by_id_and_email(params[:id], (current_user.nil?)? session[:no_authenticate_email] : current_user.email)
     end
 
     def registration_params
@@ -313,4 +325,16 @@ class RegistrationsController < ApplicationController
         @discount += user_gift_serial.user_gift.gift.gift_translates.where(locale_id: @registration.locale_id).first.quota
       end
     end
+
+  def authenticate_or_no
+    if !session[:no_authenticate_verified] && !user_signed_in?
+      redirect_to action: :email
+    end
+  end
+
+  def auto_redirect
+    if session[:no_authenticate_verified] || user_signed_in?
+      redirect_to action: :index
+    end
+  end
 end
