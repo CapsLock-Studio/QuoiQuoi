@@ -67,4 +67,12 @@ class NotifierPreview < ActionMailer::Preview
   def custom_remind
     CustomMailer.remind_new_order(7)
   end
+
+  def remind_message_user
+    MessageMailer.remind_to_user(33)
+  end
+
+  def remind_message_admin
+    MessageMailer.remind_to_admin(35)
+  end
 end

@@ -22,11 +22,47 @@
             <dl>
               <% if @custom_order.product_id.nil? %>
                 <dt style="font-size: 14px; color: #848484">
+                  參考用資訊
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <u>
+                    <%= @custom_order.references %>
+                  </u>
+                </dd>
+
+                <dt style="font-size: 14px; color: #848484">
                   所選選項
                 </dt>
                 <dd style="padding: 0 0 10px 0">
                   <u>
                     <%= @custom_order.order_type %>、<%= @custom_order.style %>
+                  </u>
+                </dd>
+
+                <dt style="font-size: 14px; color: #848484">
+                  風格敘述
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <u>
+                    <%= @custom_order.style %>
+                  </u>
+                </dd>
+
+                <dt style="font-size: 14px; color: #848484">
+                  尺寸
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <u>
+                    <%= @custom_order.size %>
+                  </u>
+                </dd>
+
+                <dt style="font-size: 14px; color: #848484">
+                  其他需求
+                </dt>
+                <dd style="padding: 0 0 10px 0">
+                  <u>
+                    <%= @custom_order.description %>
                   </u>
                 </dd>
 

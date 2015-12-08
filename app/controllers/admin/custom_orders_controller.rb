@@ -5,7 +5,7 @@ class Admin::CustomOrdersController < AdminController
   end
 
   def show
-
+    @custom_order.messages.where(admin: false).update_all({read: true})
   end
 
   def update
