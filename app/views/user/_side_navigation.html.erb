@@ -1,15 +1,31 @@
 <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
   <h4 class="text-muted"><%= t('control_panel') %></h4>
   <ul class="list-group sidebar-nav-v1">
-    <%= nav_item(orders_path, {rule: /#{orders_path}.*/, class: 'list-group-item'}) do %>
-      <%= link_to t('order.all'), orders_path %>
+    <% if current_user.nil? %>
+      <li class="list-group-item">
+        <a href="#" data-toggle="modal" data-target="#signin-modal">
+          <%= t('order.all') %>
+        </a>
+      </li>
+    <% else %>
+      <%= nav_item(orders_path, {rule: /#{orders_path}.*/, class: 'list-group-item'}) do %>
+        <%= link_to t('order.all'), orders_path %>
+      <% end %>
     <% end %>
     <%= nav_item(registrations_path, {rule: /#{registrations_path}.*/, class: 'list-group-item'}) do %>
       <%= link_to t('registration.all'), registrations_path
       %>
     <% end %>
-    <%= nav_item(nil, {rule: /#{custom_orders_path}.*/, class: 'list-group-item'}) do %>
-      <%= link_to t('custom_order.my'), custom_orders_path %>
+    <% if current_user.nil? %>
+      <li class="list-group-item">
+        <a href="#" data-toggle="modal" data-target="#signin-modal">
+          <%= t('custom_order.my') %>
+        </a>
+      </li>
+    <% else %>
+      <%= nav_item(nil, {rule: /#{custom_orders_path}.*/, class: 'list-group-item'}) do %>
+        <%= link_to t('custom_order.my'), custom_orders_path %>
+      <% end %>
     <% end %>
   </ul>
 </div>
