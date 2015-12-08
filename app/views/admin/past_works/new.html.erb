@@ -56,6 +56,34 @@
                           <%= field.text_field :name, class: 'form-control' %>
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <%= field.label :order_type, '包款 (量身訂製預設選項)' %>
+                        <div class="controls">
+                          <% JSON.parse($redis.get("order_type:locale:#{session[:locale_id]}") || '[]').each_with_index do |value, index| %>
+                            <label class="radio-inline">
+                              <%= field.radio_button :order_type, value,
+                                                     selected: (value == field.object.order_type) %>
+                              <%= value %>
+                            </label>
+                          <% end %>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <%= field.label :style, '風格 (量身訂製預設選項)' %>
+                        <div class="controls">
+                          <%= field.text_field :style, class: 'form-control' %>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <%= field.label :size, '尺寸 (量身訂製預設選項)' %>
+                        <div class="controls">
+                          <%= field.text_field :size, class: 'form-control' %>
+                        </div>
+                      </div>
+
                       <div class="form-group">
                         <%= field.label :description, '敘述' %>
                         <%= field.text_area :description, class: 'form-control wysihtml5' %>
