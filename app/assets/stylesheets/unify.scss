@@ -1312,11 +1312,6 @@ a[data-toggle=offcanvas] {
   }
 }
 
-.modal-body {
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
 .data-display-name {
   margin: 5px 0;
   display: inline-block;
@@ -1344,38 +1339,12 @@ a[data-toggle=offcanvas] {
   }
 }
 
-.overlay-instruction {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 10;
-  text-align: center;
-  h2 {
-    color: #FFFFFF;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 1)
+.messages {
+  li {
+    padding: 10px;
   }
-
-  .text {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  div {
-    position: relative;
-  }
-}
-
-.discussion {
-  z-index: 11;
-  background:#FFFFFF;
-  position:relative;
-  padding: 5px;
-
-  .disqus-loader-spinner {
-    border-radius: 13px !important;
+  .name {
+    font-weight: bold;
   }
 }
 

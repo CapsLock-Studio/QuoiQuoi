@@ -397,8 +397,13 @@ var initCustomOrderModel = function() {
 
                         for (var j = 0; j < data[i].materials.length; j++) {
                             var material = materialTemplate.html();
-                            material = material.replace('{{id}}', data[i].materials[j].id);
-                            material = material.replace('{{image}}', data[i].materials[j].image);
+                            material = material.replace((new RegExp('{{id}}', 'g')), data[i].materials[j].id);
+                            material = material.replace((new RegExp('{{image}}', 'g')), data[i].materials[j].image);
+                            material = material.replace('{{original_image}}', data[i].materials[j].original_image);
+                            material = material.replace('{{thumb_image}}', data[i].materials[j].thumb_image);
+                            material = material.replace((new RegExp('{{selected}}', 'g')), data[i].materials[j].selected);
+                            material = material.replace('{{truncated_name}}', data[i].materials[j].truncated_name);
+                            material = material.replace('{{name}}', data[i].materials[j].name);
                             materials.find('.materials').append(material);
                         }
 
@@ -423,11 +428,12 @@ var initCustomOrderModel = function() {
         step2.show();
     });
 
-    customOrdeModal.on('click', '.selectable', function(){
-        $(this).toggleClass('selected').html(($(this).hasClass('selected'))? '<i class="fa fa-check fa-2x"></i>' : '');
+    customOrdeModal.on('click', '.selectable', function(e){
+        e.preventDefault();
+        $(this).toggleClass('selected').toggleClass('text-muted');
         if ($(this).hasClass('selected')) {
             var template = customOrdeModal.find('#removable-material-template');
-            $(template.html().replace('{{id}}', $(this).data('id'))).css('background-image', $(this).css('background-image')).insertBefore(template);
+            $(template.html().replace('{{id}}', $(this).data('id')).replace('{{image}}', $(this).data('image'))).insertBefore(template);
         } else {
             step1.find('.removable[data-id=' + $(this).data('id') + ']').remove();
         }
@@ -448,31 +454,36 @@ var initCustomOrderModel = function() {
                 materials[i] = $(this).data('id');
             });
 
-            $.ajax({
+            if (window.confirm(customOrdeModal.find('#confirm-message').text())) {
+              $.ajax({
                 url: $(this).data('url'),
                 data: {
-                    style: customOrdeModal.find('input[name=style]:checked').val(),
-                    order_type: customOrdeModal.find('input[name=order_type]:checked').val(),
-                    materials: JSON.stringify(materials),
-                    name: customOrdeModal.find('input[name=name]').val(),
-                    phone: customOrdeModal.find('input[name=phone]').val(),
-                    line: customOrdeModal.find('input[name=line]').val(),
-                    email: emailInput.val()
+                  style: customOrdeModal.find('input[name=style]').val(),
+                  order_type: customOrdeModal.find('input[name=order_type]:checked').val(),
+                  materials: JSON.stringify(materials),
+                  name: customOrdeModal.find('input[name=name]').val(),
+                  phone: customOrdeModal.find('input[name=phone]').val(),
+                  line: customOrdeModal.find('input[name=line]').val(),
+                  references: customOrdeModal.find('input[name=references]').val(),
+                  size: customOrdeModal.find('input[name=size]').val(),
+                  description: customOrdeModal.find('input[name=description]').val(),
+                  email: emailInput.val()
                 },
                 dataType: 'json',
                 type: 'post',
                 success: function(data) {
-                    if (data.redirectNow) {
-                        window.location.href = data.redirectUrl;
-                    } else {
-                        step2.hide();
-                        step3.show();
-                    }
+                  if (data.redirectNow) {
+                    window.location.href = data.redirectUrl;
+                  } else {
+                    step2.hide();
+                    step3.show();
+                  }
                 },
                 error: function() {
-                   window.alert('Authenticate wrong!');
+                  window.alert('Authenticate wrong!');
                 }
-            });
+              });
+            }
 
         } else {
             emailInput.css('border-color', 'red');
@@ -519,11 +530,11 @@ $.fn.marquee = function(animateTime, waitTime) {
     scrollUp(1, marqueeLength);
 };
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, exdays, path) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
+    document.cookie = cname + "=" + cvalue + "; " + expires + ((typeof path === 'undefined')? '' : ';path=' + path);
 }
 
 function getCookie(cname) {
