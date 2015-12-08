@@ -15,6 +15,18 @@ class Admin::RegistrationPaymentsController < AdminController
     elsif sanitize_params[:refund]
       @registration_payment.refunded = true
       @registration_payment.refunded_time = Time.now
+    elsif sanitize_params[:paid]
+      @registration_payment.completed = true
+      @registration_payment.completed_time = Time.now
+
+      remittance_report = @registration_payment.registration_remittance_reports.build
+      remittance_report.amount = @registration_payment.amount
+      remittance_report.account = '現場付款'
+      remittance_report.date = Time.now
+      remittance_report.confirm = true
+      remittance_report.save!
+
+      RegistrationMailer.completed_confirmation(@registration_payment.registration_id).deliver_later
     end
 
     @registration_payment.save!
@@ -31,6 +43,6 @@ class Admin::RegistrationPaymentsController < AdminController
   end
 
   def sanitize_params
-    params.permit(:cancel, :cancel_reason, :refund)
+    params.permit(:cancel, :cancel_reason, :refund, :paid)
   end
 end

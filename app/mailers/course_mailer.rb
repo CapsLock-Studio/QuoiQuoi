@@ -29,6 +29,6 @@ class CourseMailer < ApplicationMailer
     @registration_id = registration_id
     @is_completed = is_completed
 
-    mail(to: email, subject: t('mailer.subject.cancel_course'))
+    mail(to: email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.cancel_course'))
   end
 end

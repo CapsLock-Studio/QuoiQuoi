@@ -10,7 +10,7 @@ class OrderMailer < ApplicationMailer
         wait_until: (@order.order_payment.expire_time.nil?)? (Time.now + 3.days).end_of_day : @order.order_payment.expire_time
     ).perform_later(@order.order_payment, t('payment_expired'))
 
-    mail(to: @order.user.email, subject: subject)
+    mail(to: @order.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: subject)
   end
 
   def request_remit_payment_again(id)
@@ -20,7 +20,7 @@ class OrderMailer < ApplicationMailer
 
     I18n.locale = @order.locale.lang
 
-    mail(to: @order.user.email, subject: t('mailer.subject.payment.remittance_report_fail'))
+    mail(to: @order.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.payment.remittance_report_fail'))
   end
 
   def completed_confirmation(id)
@@ -29,7 +29,7 @@ class OrderMailer < ApplicationMailer
 
     I18n.locale = @order.locale.lang
 
-    mail(to: @order.user.email, subject: t('mailer.subject.order'))
+    mail(to: @order.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.order'))
 
     OrderMailer.remind_completed(@order.id).deliver_later
   end
@@ -40,7 +40,7 @@ class OrderMailer < ApplicationMailer
 
     I18n.locale = @order.locale.lang
 
-    mail(to: @order.user.email, subject: t('mailer.subject.delivered'))
+    mail(to: @order.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.delivered'))
   end
 
   # Send to manager for notification

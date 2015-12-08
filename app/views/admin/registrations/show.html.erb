@@ -26,6 +26,14 @@
                     method: :put, class: 'btn btn-primary')
           end if @registration.registration_payment.completed?
       %>
+
+      <% if !@registration.registration_payment.completed? && @registration.payment_method == 'remittance' %>
+        <%=
+            link_to('確認收款', admin_registration_payment_path(@registration.registration_payment, paid: true),
+                    method: :put, class: 'btn btn-info')
+        %>
+      <% end %>
+
       <%= link_to_if(@registration.registration_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
         <%= link_to('取消報名',
                     admin_registration_payment_path(@registration.registration_payment),
