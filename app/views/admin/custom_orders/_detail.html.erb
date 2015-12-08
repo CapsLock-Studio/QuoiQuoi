@@ -15,9 +15,33 @@
       <% if custom_order.product_id.nil? %>
         <div class="col-xs-12 margin-bottom-10">
           <div class="text-muted">
-            客戶所選選項
+            參考資料
           </div>
-          <u><%= custom_order.order_type %>、<%= custom_order.style %></u>
+          <u><%= custom_order.references %></u>
+        </div>
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            所選選項
+          </div>
+          <u><%= custom_order.order_type %></u>
+        </div>
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            風格敘述
+          </div>
+          <u><%= custom_order.style %></u>
+        </div>
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            尺寸
+          </div>
+          <u><%= custom_order.size %></u>
+        </div>
+        <div class="col-xs-12 margin-bottom-10">
+          <div class="text-muted">
+            其他需求
+          </div>
+          <u><%= custom_order.description %></u>
         </div>
         <div class="col-xs-12">
           <div class="text-muted margin-bottom-10">

@@ -10,7 +10,7 @@ class RegistrationMailer < ApplicationMailer
         wait_until: (@registration.registration_payment.expire_time.nil?)? (Time.now + 3.days).end_of_day : @registration.registration_payment.expire_time
     ).perform_later(@registration.registration_payment, t('payment_expired'))
 
-    mail(to: @registration.email, subject: subject)
+    mail(to: @registration.email, bcc: ['quoiquoi.tw@gmail.com'], subject: subject)
   end
 
   def request_remit_payment_again(id)
@@ -20,7 +20,7 @@ class RegistrationMailer < ApplicationMailer
 
     I18n.locale = @registration.locale.lang
 
-    mail(to: @registration.email, subject: t('mailer.subject.payment.remittance_report_fail'))
+    mail(to: @registration.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.payment.remittance_report_fail'))
   end
 
   def completed_confirmation(id)
@@ -29,7 +29,7 @@ class RegistrationMailer < ApplicationMailer
 
     I18n.locale = @registration.locale.lang
 
-    mail(to: @registration.email, subject: t('mailer.subject.registration'))
+    mail(to: @registration.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.registration'))
   end
 
   def remind_before_course_start(id)
@@ -38,7 +38,7 @@ class RegistrationMailer < ApplicationMailer
 
     I18n.locale = @registration.locale.lang
 
-    mail(to: @registration.email, subject: t('mailer.subject.remind_before_course_start'))
+    mail(to: @registration.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.remind_before_course_start'))
   end
 
   def cancel_notification(id)
@@ -50,7 +50,7 @@ class RegistrationMailer < ApplicationMailer
     @course_name = registration.course.course_translates.find_by_locale_id(@locale_id).name
     I18n.locale = registration.locale.lang
 
-    mail(to: registration.email, subject: t('mailer.subject.cancel_registration'))
+    mail(to: registration.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.cancel_registration'))
   end
 
   def remind_remittance_report(id)

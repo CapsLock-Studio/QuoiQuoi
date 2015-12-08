@@ -10,13 +10,17 @@ class CustomOrdersController < ApplicationController
   end
 
   def new
-
+    @material_likes = Material.includes(:material_translate).where(material_translates: {locale_id: session[:locale_id]},
+                                                                   id: JSON.parse(cookies['material-likes'] || '[]'))
   end
 
   def show
     add_breadcrumb t('home'), root_path
     add_breadcrumb t('custom_order.my'), custom_orders_path
     add_breadcrumb t('detail')
+
+    @messages = Message.where(custom_order_id: params[:id]).order(:created_at)
+    @messages.where(admin: true).update_all({read: true})
   end
 
   def build
@@ -27,19 +31,21 @@ class CustomOrdersController < ApplicationController
     @custom_order.email = sanitize_params[:email]
     @custom_order.phone = sanitize_params[:phone]
     @custom_order.line = sanitize_params[:line]
+    @custom_order.description = sanitize_params[:description]
+    @custom_order.size = sanitize_params[:size]
+    @custom_order.references = sanitize_params[:references]
     @custom_order.user_id = current_user.id
     @custom_order.locale_id = session[:locale_id]
     @custom_order.product_id = sanitize_params[:product_id]
 
     if @custom_order.save
-      add_breadcrumb t('home'), root_path
-      add_breadcrumb t('custom_order.my'), custom_orders_path
-      add_breadcrumb t('detail')
-      # redirect_to @custom_order
+      # add_breadcrumb t('home'), root_path
+      # add_breadcrumb t('custom_order.my'), custom_orders_path
+      # add_breadcrumb t('detail')
 
       CustomMailer.remind_new_order(@custom_order.id).deliver_later
 
-      render action: :show
+      redirect_to @custom_order
     else
       render json: 'Sorry, there is something wrong building order.'
     end
@@ -97,7 +103,7 @@ class CustomOrdersController < ApplicationController
 
   private
   def sanitize_params
-    params.permit(:order_type, :style, :materials, :name, :email, :phone, :line, :product_id)
+    params.permit(:order_type, :style, :materials, :name, :email, :phone, :size, :references, :description, :line, :product_id)
   end
 
   def set_custom_order

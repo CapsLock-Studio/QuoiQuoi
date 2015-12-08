@@ -1,5 +1,6 @@
 class Material < ActiveRecord::Base
   has_many :material_translates, dependent: :destroy
+  has_one :material_translate
   belongs_to :material_type
 
   accepts_nested_attributes_for :material_translates, allow_destroy: true

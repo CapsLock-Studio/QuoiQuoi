@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121090705) do
+ActiveRecord::Schema.define(version: 20151208074921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,25 +35,12 @@ ActiveRecord::Schema.define(version: 20151121090705) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
-  create_table "area_translates", force: :cascade do |t|
-    t.integer  "locale_id"
-    t.integer  "area_id"
-    t.string   "name",       limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "area_translates", ["area_id"], name: "index_area_translates_on_area_id", using: :btree
-  add_index "area_translates", ["locale_id"], name: "index_area_translates_on_locale_id", using: :btree
-
   create_table "areas", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",       limit: 255
     t.integer  "locale_id"
   end
-
-  add_index "areas", ["locale_id"], name: "index_areas_on_locale_id", using: :btree
 
   create_table "article_images", force: :cascade do |t|
     t.string   "image_file_name",    limit: 255
@@ -65,27 +52,12 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.integer  "article_id"
   end
 
-  add_index "article_images", ["article_id"], name: "index_article_images_on_article_id", using: :btree
-
-  create_table "article_type_translates", force: :cascade do |t|
-    t.integer  "article_type_id"
-    t.integer  "locale_id"
-    t.string   "name",            limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "article_type_translates", ["article_type_id"], name: "index_article_type_translates_on_article_type_id", using: :btree
-  add_index "article_type_translates", ["locale_id"], name: "index_article_type_translates_on_locale_id", using: :btree
-
   create_table "article_types", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",       limit: 255
     t.integer  "locale_id"
   end
-
-  add_index "article_types", ["locale_id"], name: "index_article_types_on_locale_id", using: :btree
 
   create_table "articles", force: :cascade do |t|
     t.integer  "article_type_id"
@@ -95,8 +67,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "updated_at"
   end
 
-  add_index "articles", ["article_type_id"], name: "index_articles_on_article_type_id", using: :btree
-
   create_table "broadcast_translates", force: :cascade do |t|
     t.integer  "broadcast_id"
     t.string   "notification", limit: 255
@@ -105,8 +75,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.integer  "locale_id"
     t.string   "link",         limit: 255
   end
-
-  add_index "broadcast_translates", ["broadcast_id"], name: "index_broadcast_translates_on_broadcast_id", using: :btree
 
   create_table "broadcasts", force: :cascade do |t|
     t.datetime "created_at"
@@ -122,17 +90,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "updated_at"
   end
 
-  create_table "contact_slides", force: :cascade do |t|
-    t.integer  "sort"
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.string   "youtube",            limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "contact_translates", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "locale_id"
@@ -144,9 +101,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.string   "address",       limit: 255
     t.text     "introduction"
   end
-
-  add_index "contact_translates", ["contact_id"], name: "index_contact_translates_on_contact_id", using: :btree
-  add_index "contact_translates", ["locale_id"], name: "index_contact_translates_on_locale_id", using: :btree
 
   create_table "contact_us", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -182,8 +136,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "course_images", ["course_id"], name: "index_course_images_on_course_id", using: :btree
 
   create_table "course_option_groups", force: :cascade do |t|
     t.integer  "course_id"
@@ -221,25 +173,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.float    "price"
   end
 
-  add_index "course_translates", ["course_id"], name: "index_course_translates_on_course_id", using: :btree
-  add_index "course_translates", ["locale_id"], name: "index_course_translates_on_locale_id", using: :btree
-
-  create_table "course_type_translates", force: :cascade do |t|
-    t.integer  "locale_id"
-    t.integer  "course_type_id"
-    t.string   "name",           limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "course_type_translates", ["course_type_id"], name: "index_course_type_translates_on_course_type_id", using: :btree
-  add_index "course_type_translates", ["locale_id"], name: "index_course_type_translates_on_locale_id", using: :btree
-
-  create_table "course_types", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "courses", force: :cascade do |t|
     t.datetime "time"
     t.datetime "created_at"
@@ -258,30 +191,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "full_time"
     t.boolean  "visible",                        default: true
   end
-
-  create_table "custom_order_payments", force: :cascade do |t|
-    t.float    "amount"
-    t.string   "token"
-    t.string   "bankcode"
-    t.string   "account"
-    t.datetime "expire_time"
-    t.string   "trade_no"
-    t.datetime "trade_time"
-    t.string   "payment_no"
-    t.boolean  "completed"
-    t.datetime "completed_time"
-    t.string   "redirect_uri"
-    t.integer  "custom_order_id"
-    t.boolean  "cancel",          default: false
-    t.text     "cancel_reason"
-    t.datetime "cancel_time"
-    t.string   "payer_id"
-    t.datetime "payment_time"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "custom_order_payments", ["custom_order_id"], name: "index_custom_order_payments_on_custom_order_id", using: :btree
 
   create_table "custom_orders", force: :cascade do |t|
     t.string   "style"
@@ -302,6 +211,9 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "cancel_time"
     t.text     "dismiss_message"
     t.integer  "locale_id"
+    t.string   "references"
+    t.string   "size"
+    t.text     "description"
   end
 
   add_index "custom_orders", ["user_id"], name: "index_custom_orders_on_user_id", using: :btree
@@ -316,9 +228,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.string   "message",      limit: 255
     t.string   "position",     limit: 255
   end
-
-  add_index "designer_translates", ["designer_id"], name: "index_designer_translates_on_designer_id", using: :btree
-  add_index "designer_translates", ["locale_id"], name: "index_designer_translates_on_locale_id", using: :btree
 
   create_table "designers", force: :cascade do |t|
     t.string   "photo_file_name",     limit: 255
@@ -356,9 +265,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.text     "description"
     t.float    "quota"
   end
-
-  add_index "gift_translates", ["gift_id"], name: "index_gift_translates_on_gift_id", using: :btree
-  add_index "gift_translates", ["locale_id"], name: "index_gift_translates_on_locale_id", using: :btree
 
   create_table "gifts", force: :cascade do |t|
     t.datetime "created_at"
@@ -409,13 +315,11 @@ ActiveRecord::Schema.define(version: 20151121090705) do
   end
 
   create_table "locales", force: :cascade do |t|
-    t.string   "lang",          limit: 255
+    t.string   "lang",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",          limit: 255
-    t.string   "currency_code", limit: 255
-    t.string   "money_name",    limit: 255
-    t.string   "currency",      limit: 255
+    t.string   "name",       limit: 255
+    t.string   "currency",   limit: 255
   end
 
   create_table "material_translates", force: :cascade do |t|
@@ -425,8 +329,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "updated_at"
     t.integer  "locale_id"
   end
-
-  add_index "material_translates", ["material_id"], name: "index_material_translates_on_material_id", using: :btree
 
   create_table "material_type_translates", force: :cascade do |t|
     t.integer  "material_type_id"
@@ -461,13 +363,12 @@ ActiveRecord::Schema.define(version: 20151121090705) do
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "content"
-    t.boolean  "admin",      default: false
+    t.boolean  "admin",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "read",       default: false
+    t.boolean  "read",            default: false
+    t.integer  "custom_order_id"
   end
-
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "models", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -497,17 +398,12 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "updated_at"
   end
 
-  add_index "order_custom_item_images", ["order_custom_item_id"], name: "index_order_custom_item_images_on_order_custom_item_id", using: :btree
-
   create_table "order_custom_item_materials", force: :cascade do |t|
     t.integer  "order_custom_item_id"
     t.integer  "material_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "order_custom_item_materials", ["material_id"], name: "index_order_custom_item_materials_on_material_id", using: :btree
-  add_index "order_custom_item_materials", ["order_custom_item_id"], name: "index_order_custom_item_materials_on_order_custom_item_id", using: :btree
 
   create_table "order_custom_item_product_custom_items", force: :cascade do |t|
     t.integer  "order_custom_item_id"
@@ -532,13 +428,30 @@ ActiveRecord::Schema.define(version: 20151121090705) do
 
   create_table "order_custom_items", force: :cascade do |t|
     t.integer  "order_id"
+    t.integer  "product_id"
+    t.string   "design",                 limit: 255
+    t.string   "style",                  limit: 255
+    t.string   "description",            limit: 255
+    t.string   "response",               limit: 255
+    t.integer  "workday"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "accept"
+    t.string   "name",                   limit: 255
+    t.string   "phone",                  limit: 255
+    t.string   "line",                   limit: 255
+    t.datetime "estimate_complete_time"
+    t.datetime "accept_time"
+    t.string   "image_file_name",        limit: 255
+    t.string   "image_content_type",     limit: 255
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean  "canceled",                           default: false
+    t.datetime "canceled_time"
+    t.integer  "user_id"
     t.integer  "locale_id"
     t.integer  "custom_order_id"
   end
-
-  add_index "order_custom_items", ["order_id"], name: "index_order_custom_items_on_order_id", using: :btree
 
   create_table "order_informations", force: :cascade do |t|
     t.string   "bag_type",   limit: 255
@@ -573,16 +486,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
 
   add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
 
-  create_table "order_product_custom_items", force: :cascade do |t|
-    t.integer  "order_product_id"
-    t.integer  "product_custom_item_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "order_product_custom_items", ["order_product_id"], name: "index_order_product_custom_items_on_order_product_id", using: :btree
-  add_index "order_product_custom_items", ["product_custom_item_id"], name: "index_order_product_custom_items_on_product_custom_item_id", using: :btree
-
   create_table "order_product_options", force: :cascade do |t|
     t.integer  "order_product_id"
     t.integer  "product_option_id"
@@ -605,8 +508,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.integer  "product_option_id"
   end
 
-  add_index "order_products", ["order_id"], name: "index_order_products_on_order_id", using: :btree
-  add_index "order_products", ["product_id"], name: "index_order_products_on_product_id", using: :btree
   add_index "order_products", ["product_option_id"], name: "index_order_products_on_product_option_id", using: :btree
 
   create_table "order_remittance_reports", force: :cascade do |t|
@@ -650,7 +551,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "delivery_report_handled_time"
   end
 
-  add_index "orders", ["shipping_fee_id"], name: "index_orders_on_shipping_fee_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "past_work_addition_images", force: :cascade do |t|
@@ -684,6 +584,10 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "order_type"
+    t.string   "style"
+    t.string   "size"
+    t.string   "materials"
   end
 
   add_index "past_work_translates", ["locale_id"], name: "index_past_work_translates_on_locale_id", using: :btree
@@ -748,8 +652,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.string   "currency",        limit: 255
   end
 
-  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
-
   create_table "product_addition_images", force: :cascade do |t|
     t.integer  "product_id"
     t.string   "image_file_name",    limit: 255
@@ -770,34 +672,12 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "updated_at"
   end
 
-  add_index "product_custom_item_translates", ["locale_id"], name: "index_product_custom_item_translates_on_locale_id", using: :btree
-  add_index "product_custom_item_translates", ["product_custom_item_id"], name: "index_product_custom_item_translates_on_product_custom_item_id", using: :btree
-
   create_table "product_custom_items", force: :cascade do |t|
     t.integer  "product_id"
     t.string   "image_file_name",    limit: 255
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "product_custom_items", ["product_id"], name: "index_product_custom_items_on_product_id", using: :btree
-
-  create_table "product_custom_type_translates", force: :cascade do |t|
-    t.integer  "locale_id"
-    t.string   "name",                   limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "product_custom_type_id"
-  end
-
-  add_index "product_custom_type_translates", ["locale_id"], name: "index_product_custom_type_translates_on_locale_id", using: :btree
-  add_index "product_custom_type_translates", ["product_custom_type_id"], name: "index_product_custom_type_translates_on_product_custom_type_id", using: :btree
-
-  create_table "product_custom_types", force: :cascade do |t|
-    t.boolean  "multi"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -811,8 +691,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
 
   create_table "product_material_types", force: :cascade do |t|
     t.integer  "product_id"
@@ -882,8 +760,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "product_youtubes", ["product_id"], name: "index_product_youtubes_on_product_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.integer  "quantity"
@@ -973,9 +849,7 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "checkout_time"
   end
 
-  add_index "registrations", ["course_id"], name: "index_registrations_on_course_id", using: :btree
   add_index "registrations", ["course_option_id"], name: "index_registrations_on_course_option_id", using: :btree
-  add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "remittance_translates", force: :cascade do |t|
     t.integer  "locale_id"
@@ -989,32 +863,9 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.integer  "remittance_id"
   end
 
-  add_index "remittance_translates", ["locale_id"], name: "index_remittance_translates_on_locale_id", using: :btree
   add_index "remittance_translates", ["remittance_id"], name: "index remittance_trnaslates on remittance_id", using: :btree
 
   create_table "remittances", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "rent_contact_translates", force: :cascade do |t|
-    t.integer  "rent_contact_id"
-    t.integer  "locale_id"
-    t.string   "email",           limit: 255
-    t.string   "phone",           limit: 255
-    t.string   "mobile",          limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "rent_contact_translates", ["locale_id"], name: "index_rent_contact_translates_on_locale_id", using: :btree
-  add_index "rent_contact_translates", ["rent_contact_id"], name: "index_rent_contact_translates_on_rent_contact_id", using: :btree
-
-  create_table "rent_contacts", force: :cascade do |t|
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -1037,9 +888,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "updated_at"
   end
 
-  add_index "rent_info_translates", ["locale_id"], name: "index_rent_info_translates_on_locale_id", using: :btree
-  add_index "rent_info_translates", ["rent_info_id"], name: "index_rent_info_translates_on_rent_info_id", using: :btree
-
   create_table "rent_infos", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1052,9 +900,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "rent_intro_translates", ["locale_id"], name: "index_rent_intro_translates_on_locale_id", using: :btree
-  add_index "rent_intro_translates", ["rent_intro_id"], name: "index_rent_intro_translates_on_rent_intro_id", using: :btree
 
   create_table "rent_intros", force: :cascade do |t|
     t.string   "image_file_name",    limit: 255
@@ -1074,9 +919,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.string   "title",                limit: 255
   end
 
-  add_index "requirement_intro_translates", ["locale_id"], name: "index_requirement_intro_translates_on_locale_id", using: :btree
-  add_index "requirement_intro_translates", ["requirement_intro_id"], name: "index_requirement_intro_translates_on_requirement_intro_id", using: :btree
-
   create_table "requirement_intros", force: :cascade do |t|
     t.string   "image_file_name",    limit: 255
     t.string   "image_content_type", limit: 255
@@ -1094,9 +936,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.integer  "locale_id"
     t.string   "title",          limit: 255
   end
-
-  add_index "requirement_translates", ["locale_id"], name: "index_requirement_translates_on_locale_id", using: :btree
-  add_index "requirement_translates", ["requirement_id"], name: "index_requirement_translates_on_requirement_id", using: :btree
 
   create_table "requirements", force: :cascade do |t|
     t.datetime "created_at"
@@ -1161,9 +1000,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.string   "link",        limit: 255
   end
 
-  add_index "slide_translates", ["locale_id"], name: "index_slide_translates_on_locale_id", using: :btree
-  add_index "slide_translates", ["slide_id"], name: "index_slide_translates_on_slide_id", using: :btree
-
   create_table "slides", force: :cascade do |t|
     t.integer  "sort"
     t.string   "image_file_name",    limit: 255
@@ -1181,8 +1017,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "top_products", ["product_id"], name: "index_top_products_on_product_id", using: :btree
 
   create_table "top_translates", force: :cascade do |t|
     t.integer  "top_id"
@@ -1217,8 +1051,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "image_updated_at"
   end
 
-  add_index "travel_informations", ["area_id"], name: "index_travel_informations_on_area_id", using: :btree
-
   create_table "travel_photos", force: :cascade do |t|
     t.integer  "travel_information_id"
     t.string   "photo_file_name",       limit: 255
@@ -1228,8 +1060,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "travel_photos", ["travel_information_id"], name: "index_travel_photos_on_travel_information_id", using: :btree
 
   create_table "user_gift_serials", force: :cascade do |t|
     t.integer  "user_gift_id"
@@ -1251,17 +1081,15 @@ ActiveRecord::Schema.define(version: 20151121090705) do
     t.integer  "gift_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "currency",        limit: 255
     t.integer  "locale_id"
+    t.string   "currency",        limit: 255
     t.integer  "order_id"
     t.integer  "registration_id"
     t.integer  "quantity"
   end
 
-  add_index "user_gifts", ["gift_id"], name: "index_user_gifts_on_gift_id", using: :btree
   add_index "user_gifts", ["order_id"], name: "index_user_gifts_on_order_id", using: :btree
   add_index "user_gifts", ["registration_id"], name: "index_user_gifts_on_registration_id", using: :btree
-  add_index "user_gifts", ["user_id"], name: "index_user_gifts_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -1292,7 +1120,6 @@ ActiveRecord::Schema.define(version: 20151121090705) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "custom_order_payments", "custom_orders"
   add_foreign_key "order_remittance_reports", "order_payments"
   add_foreign_key "registration_remittance_reports", "registration_payments"
 end

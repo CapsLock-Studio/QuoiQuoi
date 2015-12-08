@@ -541,7 +541,7 @@ zh-TW:
   our_past_work: '我們過去的作品'
   which_style: '你喜歡哪種風格呢'
   let_choose_material: '選幾個你喜歡的布料吧！'
-  must_fill: '紅色記號部分請一定要填寫'
+  must_fill: '溝通均以Email做聯繫，請務必填寫紅色星號欄位'
   choose_ok: '選好了'
   check_signin_mail_hint: '我們只需要確認這個信箱是您在使用'
   check_signin_mail: '我們寄了一個連結給你以用來確認身份<br/>請你檢查一下信箱'
@@ -699,6 +699,7 @@ zh-TW:
   read_more: "看全部..."
   read_less: "關閉"
   past_works: "過去作品"
+  last_past_works: '最新作品'
   completion_date: "完成時間"
   other_past_works: "其他作品"
   wrong_user_warning: "這個訂製要求不是你的喔，如果您是本人請嘗試更換為提出要求的帳戶以便完成付款手續"
