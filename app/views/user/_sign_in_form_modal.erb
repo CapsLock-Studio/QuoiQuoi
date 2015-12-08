@@ -43,7 +43,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-link btn-block social-signin" id="email-signin-btn"><%= t('use_email_sign_in') %></button>
-        <%= link_to '或是用舊的登入方式', new_user_session_path, class: 'btn btn-sm text-muted btn-block social-signin' %>
+        <%= link_to '或是用帳號密碼登入', new_user_session_path, class: 'btn btn-sm text-muted btn-block social-signin' %>
         <div class="user-email-form text-center" style="display:none;">
           <a class="btn text-muted" data-dismiss="modal"><%= t('cancel') %></a>
           <button data-url="<%= email_authencate_path %>" type="submit" class="btn btn-default"><%= t('signin') %></button>
