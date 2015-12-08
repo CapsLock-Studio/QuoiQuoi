@@ -131,6 +131,7 @@
     scrolltotop.init();
     initAutoSendForm();
     initSigninModel();
+    initMaterialLikes();
     initCustomOrderModel();
 
     $('img').on('load', function(){

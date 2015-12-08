@@ -1,0 +1,15 @@
+<div class="col-sm-3 col-xs-6 sidebar-offcanvas">
+  <ul class="list-group sidebar-nav-v1">
+    <%= nav_item(nil, {class: 'list-group-item', rule: /^#{past_work_types_path}$|^#{new_order_custom_item_path}$/}) do %>
+      <ul class="nav">
+        <% @material_types.each do |type| %>
+          <%= nav_item(nil, {rule: /^#{material_type_path(type)}.*/}) do %>
+            <%= link_to(material_type_path(type)) do %>
+              <%= type.material_type_translate.name %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </ul>
+</div>

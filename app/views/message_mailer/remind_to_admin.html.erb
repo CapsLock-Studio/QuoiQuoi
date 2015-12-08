@@ -1,0 +1,39 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#50C771" class="100pad" style="padding: 20px 20px;">
+  <tr>
+    <td align="center">
+      <center>
+        <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif">
+          <span style="color:#FFFFFF;font-size:16px;">
+            Hello!
+          </span>
+          <span style="color:#C0FFD2;font-size:16px;">
+            有給管理者的新留言喔
+          </span>
+        </font>
+      </center>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0px 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          以下為訊息內容<br/>
+        </span>
+        <strong style="font-size:14px;color:#000000;"><%= @message.content %></strong>
+      </font>
+    </td>
+  </tr>
+</table>
+<table width="540" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="100padbottom" style="padding: 0px 20px 20px;">
+  <tr>
+    <td>
+      <font face="'Source Sans Pro', '微軟正黑體', 'Helvetica Neue', Arial, sans-serif" color="#848484">
+        <span style="font-size:14px;">
+          請按這裡前往管理介面回覆訊息 <a href="<%= custom_order_url(@message.custom_order_id) %>" style="color:#8A929D;"><%= "C#{@message.custom_order_id}" %>&nbsp;<img alt="fa-info" width="14" height="14" border="0" style="width:14px;height:14px;" src="<%= image_url('fa-info-circle.png') %>"/></a>
+        </span>
+      </font>
+    </td>
+  </tr>
+</table>
