@@ -210,7 +210,7 @@
           <% end %>
 
           &nbsp;
-          <a class="btn-xs btn-primary" data-toggle="modal" data-target="#report-remittance-form" href="#">
+          <a class="btn-sm btn-primary" data-toggle="modal" data-target="#report-remittance-form" href="#">
             <%= (order_payment.has_valid_remittance_reports?)? t('submit_again') : t('report_remittance') %>
           </a>
           <%= render 'report_remittance_form', order_id: order_payment.order.id %>

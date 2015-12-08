@@ -36,7 +36,7 @@
           <% @past_work_type.past_works.each do |past_work| %>
           <tr>
             <td><%= past_work.id %></td>
-            <td><%= image_tag past_work.image.url(:thumb) %></td>
+            <td><%= image_tag past_work.image.url(:thumb), alt: '' %></td>
             <td>
               <% past_work.past_work_translates.order(:id).each do |translate| %>
                 <label class="label label-default"><%=translate.locale.name %></label>

@@ -1,7 +1,7 @@
 class RegistrationPaymentController < ApplicationController
   before_action :set_registration, except: [:resume, :webatm_resume, :alipay_resume]
   before_action :check_payment_is_completed, only: [:resume, :webatm_resume, :alipay_resume]
-  before_action :authenticate_user!
+  before_action :authenticate_or_no
   before_action :set_breadcrumb
 
   def remittance
@@ -213,6 +213,14 @@ class RegistrationPaymentController < ApplicationController
       flash[:message] = t('payment_already_completed')
 
       redirect_to registration_path(registration)
+    end
+  end
+
+  private
+  def authenticate_or_no
+    if session[:no_authenticate_verified]
+    else
+      authenticate_user!
     end
   end
 end

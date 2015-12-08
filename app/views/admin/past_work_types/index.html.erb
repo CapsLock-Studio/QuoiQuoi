@@ -66,7 +66,7 @@
                       <%= past_work_type.id %>
                     </td>
                     <td>
-                      <%= image_tag past_work_type.thumbnail.url(:medium), class: 'responsive-img', style: 'width: 100px;' %>
+                      <%= image_tag past_work_type.thumbnail.url(:medium), class: 'responsive-img', style: 'width: 100px;', alt: '' %>
                     </td>
                     <td>
                       <% past_work_type.past_work_type_translates.each do |past_work_type_translate| %>
