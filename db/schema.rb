@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207120208) do
+ActiveRecord::Schema.define(version: 20151208074921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -584,6 +584,10 @@ ActiveRecord::Schema.define(version: 20151207120208) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "order_type"
+    t.string   "style"
+    t.string   "size"
+    t.string   "materials"
   end
 
   add_index "past_work_translates", ["locale_id"], name: "index_past_work_translates_on_locale_id", using: :btree

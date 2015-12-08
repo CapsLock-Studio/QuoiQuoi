@@ -25,7 +25,7 @@
           <div class="row step1" style="">
             <div class="col-xs-12 margin-bottom-20">
               <h4>您喜歡的quoiquoi包款, (可提供照片及網址連結給我們知道)</h4>
-              <input type="text" class="form-control" name="references">
+              <input type="text" class="form-control" name="references" value="<%= params[:references] %>">
             </div>
 
             <div class="col-xs-12 margin-bottom-20 text-center">
@@ -41,7 +41,7 @@
               <h4>包款</h4>
               <% JSON.parse($redis.get("order_type:locale:#{session[:locale_id]}") || '[]').each_with_index do |value, index| %>
                 <label class="radio-inline style-label">
-                  <input type="radio" name="order_type" value="<%= value %>" <%= 'checked="checked""' if index == 0 %>>
+                  <input type="radio" name="order_type" value="<%= value %>" <%= 'checked="checked""' if (params[:order_type].blank?? (index == 0) : (value == params[:order_type])) %>>
                   <span></span>
                   <%= value %>
                 </label>
@@ -50,12 +50,12 @@
 
             <div class="col-xs-12 margin-bottom-20">
               <h4>大小：長寬高CM</h4>
-              <input type="text" class="form-control" name="size">
+              <input type="text" class="form-control" name="size" value="<%= params[:size] %>">
             </div>
 
             <div class="col-xs-12 margin-bottom-20">
               <h4>風格：日式復古雜貨、法式蕾絲浪漫、碎花小輕新、簡約大方、男用…)</h4>
-              <input type="text" class="form-control" name="style">
+              <input type="text" class="form-control" name="style" value="<%= params[:style] %>">
             </div>
 
             <div class="col-xs-12 margin-bottom-20">

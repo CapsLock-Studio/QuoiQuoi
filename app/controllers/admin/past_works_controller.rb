@@ -67,7 +67,7 @@ class Admin::PastWorksController < AdminController
 
   def past_work_params
     params.require(:past_work).permit(:id, :image, :completion_time,
-                                      past_work_translates_attributes: [:id, :name, :description, :locale_id])
+                                      past_work_translates_attributes: [:id, :name, :order_type, :style, :size, :description, :locale_id])
   end
 
   def delete_empty_past_work
