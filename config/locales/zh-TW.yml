@@ -699,6 +699,7 @@ zh-TW:
   read_more: "看全部..."
   read_less: "關閉"
   past_works: "過去作品"
+  last_past_works: '最新作品'
   completion_date: "完成時間"
   other_past_works: "其他作品"
   wrong_user_warning: "這個訂製要求不是你的喔，如果您是本人請嘗試更換為提出要求的帳戶以便完成付款手續"

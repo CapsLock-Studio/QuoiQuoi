@@ -289,10 +289,11 @@ var initLoadMore = function() {
 };
 
 var initReadMore = function() {
-    $('.article-collapse').readmore({
-        collapsedHeight: 260,
-        moreLink: $('#read-more-button').html(),
-        lessLink: $('#read-less-button').html()
+    var aricle = $('.article-collapse');
+    aricle.readmore({
+        collapsedHeight: aricle.data('collapsed-height'),
+        moreLink: $(aricle.data('read-more')).html(),
+        lessLink: $(aricle.data('read-less')).html()
     });
 };
 
