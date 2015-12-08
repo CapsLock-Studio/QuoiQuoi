@@ -19,7 +19,7 @@
         <div class="col-sm-7 col-xs-12">
 
           <div class="box">
-            <div class="box-content">
+            <div class="box-content text-2x">
               <div class="row margin-bottom-10">
                 <div class="col-xs-12">
                   <span class="text-muted">
@@ -32,13 +32,18 @@
               </div>
 
               <%= render 'customer_information', order: @order %>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-content text-2x">
               <%= render 'transaction_information', order_payment: @order.order_payment if @order.order_payment %>
             </div>
           </div>
 
         </div>
 
-        <div class="col-sm-5 col-xs-12">
+        <div class="col-sm-5 col-xs-12 text-2x">
           <%= render 'order_items', order: @order %>
         </div>
       </div>
