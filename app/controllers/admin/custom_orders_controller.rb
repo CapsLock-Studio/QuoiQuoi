@@ -21,6 +21,9 @@ class Admin::CustomOrdersController < AdminController
 
         CustomMailer.approve(@custom_order.id).deliver_later
       else
+        @custom_order.cancel_time = Time.now
+        @custom_order.save
+        
         CustomMailer.dismiss(@custom_order.id).deliver_later
       end
 
