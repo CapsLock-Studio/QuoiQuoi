@@ -38,7 +38,7 @@ class RegistrationPaymentCallbackController < ApplicationController
         registration_payment.token,
         params[:PayerID],
         Paypal::Payment::Request.new(
-            currency_code: Locale.find(registration_payment.registration.locale_id).currency_code,
+            currency_code: Locale.find(registration_payment.registration.locale_id).currency,
             description: @website_title,
             quantity: 1,
             amount: registration_payment.amount
