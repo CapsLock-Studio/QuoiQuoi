@@ -36,7 +36,7 @@ class OrderPaymentCallbackController < ApplicationController
         order_payment.token,
         params[:PayerID],
         Paypal::Payment::Request.new(
-            currency_code: Locale.find(order_payment.order.locale_id).currency_code,
+            currency_code: Locale.find(order_payment.order.locale_id).currency,
             description: @website_title,
             quantity: 1,
             amount: order_payment.amount
