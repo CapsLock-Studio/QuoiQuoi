@@ -21,8 +21,9 @@
                 </strong>
               </h3>
             </a>
-            <div class="article-content article-collapse" data-collapsed-height="500" data-read-more="#read-more-button-<%= past_work.id %>" data-read-less="#read-less-button-<%= past_work.id %>">
-              <%== Sanitize.fragment(past_work.past_work_translate.description, Sanitize::Config::ALLOWED) %>
+            <div class="article-content text-center">
+              <%= image_tag past_work.image.url(:medium), class: 'img-responsive' %>
+              <%= link_to '看全部...', past_work_type_past_work_path(past_work.past_work_type_id, past_work), class: 'btn btn-sm' %>
             </div>
           </div>
 
