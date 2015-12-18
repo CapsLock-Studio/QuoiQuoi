@@ -40,7 +40,7 @@
                     <%= t('registration.item') %>
                   </div>
                   <div class="col-sm-3 col-xs-12 margin-bottom-xs-5">
-                    <%= "#{registration.course.course_translates.find_by_locale_id(registration.locale_id).name} - #{registration.attendance}人" %>
+                    <%= "#{registration.course.course_translates.find_by_locale_id(registration.locale_id).name} - #{registration.attendance}人" rescue '課程已刪除' %>
                   </div>
 
                   <div class="col-xs-12 visible-xs text-muted">
@@ -54,47 +54,49 @@
                     <%= t('status') %>
                   </div>
                   <div class="col-sm-4 col-xs-9 margin-bottom-xs-5">
-                    <% if registration.course.canceled? %>
-                      <span class="text-muted">
-                        <%= t('course.canceled') %>
-                      </span>
-                    <% elsif registration.registration_payment.cancel? %>
-                      <span class="text-muted">
-                        <%= t('registration.canceled') %>&nbsp;(<%= registration.registration_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>)
-                      </span>
-                    <% elsif registration.registration_payment.completed? %>
-                      <%= "#{t('completed_payment')}" %>
-                      <div>
-                        <small>
-                          <%= "#{t('payment_method')}: #{t(registration.payment_method)}" %>
-                        </small>
-                      </div>
-                      <div>
-                        <small>
-                          <%= "#{t('payment_completed_time')}: #{registration.registration_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')}" %>
-                        </small>
-                      </div>
-                    <% else %>
-                      <label>
-                        <%= t('registration.wait_paying') %>
-                      </label>
-                      <div>
-                        <small>
-                          <%= "#{t('payment_method')}: #{t(registration.payment_method)}" %>
-                        </small>
-                      </div>
-                      <% if registration.has_expire_time? %>
-                        <div class="text-muted">
+                    <% unless registration.course.nil? %>
+                      <% if registration.course.canceled? %>
+                        <span class="text-muted">
+                          <%= t('course.canceled') %>
+                        </span>
+                      <% elsif registration.registration_payment.cancel? %>
+                        <span class="text-muted">
+                          <%= t('registration.canceled') %>&nbsp;(<%= registration.registration_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+                        </span>
+                      <% elsif registration.registration_payment.completed? %>
+                        <%= "#{t('completed_payment')}" %>
+                        <div>
                           <small>
-                            <%= "#{registration.registration_payment.expire_time.strftime('%Y/%m/%d %H:%I:%S')} #{t('expired')}" %>
+                            <%= "#{t('payment_method')}: #{t(registration.payment_method)}" %>
+                          </small>
+                        </div>
+                        <div>
+                          <small>
+                            <%= "#{t('payment_completed_time')}: #{registration.registration_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')}" %>
+                          </small>
+                        </div>
+                      <% else %>
+                        <label>
+                          <%= t('registration.wait_paying') %>
+                        </label>
+                        <div>
+                          <small>
+                            <%= "#{t('payment_method')}: #{t(registration.payment_method)}" %>
+                          </small>
+                        </div>
+                        <% if registration.has_expire_time? %>
+                          <div class="text-muted">
+                            <small>
+                              <%= "#{registration.registration_payment.expire_time.strftime('%Y/%m/%d %H:%I:%S')} #{t('expired')}" %>
+                            </small>
+                          </div>
+                        <% end %>
+                        <div>
+                          <small>
+                            <%= "#{t('checkout_time')}: #{registration.checkout_time.strftime('%Y/%m/%d %H:%I:%S')}" %>
                           </small>
                         </div>
                       <% end %>
-                      <div>
-                        <small>
-                          <%= "#{t('checkout_time')}: #{registration.checkout_time.strftime('%Y/%m/%d %H:%I:%S')}" %>
-                        </small>
-                      </div>
                     <% end %>
                   </div>
                   <div class="col-sm-1 col-xs-3">

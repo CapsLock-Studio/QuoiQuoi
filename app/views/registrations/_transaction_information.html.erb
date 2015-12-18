@@ -208,7 +208,7 @@
           </strong>
         </div>
       </div>
-    <% elsif registration_payment.registration.course.canceled? %>
+    <% elsif !registration_payment.registration.course.nil? && registration_payment.registration.course.canceled? %>
       <%= t('course.canceled') %>
       <% if registration_payment.completed? %>
         &nbsp;-&nbsp;<%= (registration_payment.refunded?)? t('registration.refunded') : t('registration.wait_refund') %>
