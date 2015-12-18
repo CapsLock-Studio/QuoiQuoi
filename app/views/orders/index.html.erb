@@ -43,7 +43,7 @@
                     <ul class="list-unstyled">
                       <% order.order_products.each do |order_products| %>
                         <li>
-                          <%= "#{order_products.product.product_translates.find_by_locale_id(order.locale_id).name} x #{order_products.quantity}" %>
+                          <%= "#{order_products.product.product_translates.find_by_locale_id(order.locale_id).name} x #{order_products.quantity}" rescue '商品已刪除' %>
                         </li>
                       <% end %>
                     </ul>
