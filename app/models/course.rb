@@ -10,6 +10,8 @@ class Course < ActiveRecord::Base
   has_many :course_option_groups
   has_many :course_options, through: :course_option_groups
 
+  has_many :registrations
+
   accepts_nested_attributes_for :course_options, allow_destroy: true
 
   has_attached_file :image, styles: {thumb: '100x75#', small: '300x225#', medium: '500x375#', large: '1000x750#'}, default_url: '/system/placeholder/:style.gif'
