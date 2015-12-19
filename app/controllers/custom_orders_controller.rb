@@ -98,6 +98,9 @@ class CustomOrdersController < ApplicationController
       flash.now[:message] = t('payment_already_completed')
     end
 
+    @messages = Message.where(custom_order_id: params[:id]).order(:created_at)
+    @messages.where(admin: true).update_all({read: true})
+    
     render action: :show
   end
 
