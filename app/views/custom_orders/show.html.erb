@@ -102,7 +102,11 @@
                 <div>
                   <strong>
                     <i class="fa fa-fw fa-comment-o"></i>
-                    <%= @custom_order.dismiss_message %>
+                    <% if @custom_order.cancel? %>
+                      <%= @custom_order.cancel_reason %>
+                    <% else %>
+                      <%= @custom_order.dismiss_message %>
+                    <% end %>
                   </strong>
                 </div>
               <% elsif @custom_order.approve.nil? %>
