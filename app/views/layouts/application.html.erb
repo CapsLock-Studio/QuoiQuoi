@@ -119,37 +119,6 @@
   ga('send', 'pageview');
 </script>
 
-<!-- Notification -->
-<div id="special-modal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
-        <%= image_tag 'logo.png', style: 'width: 110px;position:absolute;' %>
-      </div>
-      <div class="modal-body">
-        <h3 class="text-center">你好！親愛的顧客</h3>
-        <p class="text-center">
-          為了帶給各位更為舒適的瀏覽體驗以及保護各位的個人資訊<br/>
-          我們在確認身份的方式上過了一些改進<br/>
-          這些改變需要確認Email使用人是不是本人，以防有心人士取得您的課程報名或是訂單資訊<br/><br/>
-          過去使用不註冊報名的同學不用擔心<br/>
-          只要到右上角 <strong>報名的課程</strong> <strong>使用你報名的信箱驗證</strong><span class="hidden-xs">，</span><br class="visible-xs" />就可以查詢到你的報名資訊<br/><br/>
-          <img src="http://i.imgur.com/7igHxVS.png" class="hidden-xs" />
-          <img src="http://i.imgur.com/udsm7bG.png" class="visible-xs img-responsive" />
-          <br/>
-          如果造成您的不便請見諒，我們會盡力提升服務品質<br/><br/>
-          <strong>最後祝您能有美好的一天。</strong>
-        </p>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-block not-remind" data-dismiss="modal">
-          不再提醒我
-        </a>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script>
 (function(){
   if (getCookie('hide-notification') != 'true') {
