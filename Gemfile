@@ -52,7 +52,7 @@ gem 'redis'
 gem 'activerecord-session_store'
 
 gem 'sqlite3'
-gem 'recaptcha', '0.4.0'
+gem 'recaptcha', require: 'recaptcha/rails'
 gem 'sanitize'
 # gem 'mailgun_rails'
 gem 'sidekiq'
