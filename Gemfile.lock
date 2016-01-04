@@ -312,7 +312,7 @@ DEPENDENCIES
   paypal-express
   pg
   rails (~> 4.2)
-  recaptcha (= 0.4.0)
+  recaptcha
   redis
   route_translator
   sanitize
