@@ -312,7 +312,7 @@ DEPENDENCIES
   paypal-express
   pg
   rails (~> 4.2)
-  recaptcha
+  recaptcha (= 0.4.0)
   redis
   route_translator
   sanitize
@@ -325,3 +325,6 @@ DEPENDENCIES
   unicorn
   unicorn-worker-killer
   whenever
+
+BUNDLED WITH
+   1.10.6
