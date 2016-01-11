@@ -90,9 +90,24 @@ en:
     respond: 'Message'
     detail: 'Detail of custom order'
     about: 'About %{days} business days'
-    hint: 'Please use Disqus to discuss your bag with us.<br/>If you want to contact us by other ways. <br/>Please call %{phone} or email to %{email}.<br/>We will reply as soon as possible!'
+    hint: 'Please leave messages in the message blank.<br/>Or email to %{email}.<br/>We will reply as soon as possible!'
     first_hint: 'It is unnecessary to input your requirement in order. The information input is indispensable to the items with red asterisk.'
     charge: 'Customization price'
+    ask_for_reference: 'What is your favorite quoi quoi bag? Please provide us the link of photos or website.'
+    category: 'Category'
+    size_of_bag: 'Size of the bag'
+    style_of_bag: 'Style'
+    other_request: 'Other request'
+    remind_alert: |
+      We do not accept knockoff customization, except our products.
+      Comparing to factory manufactured bags, the main difference of handmade bags is the accuracy of the seam.
+      We will do our best to hand produce the bag, please be not too picky.
+    your_reference: 'Reference'
+    style_description: 'Style'
+    others: 'Others'
+    size: 'Size'
+
+
 
   registration:
     all: 'Registered courses'
@@ -208,6 +223,12 @@ en:
   order_product:
     discount: '%{percent}% off'
 
+  fabrics_for_customization: 'Fabrics for customization'
+  picked_to_order: 'Already picked and to order'
+  fabrics_management: 'Fabrics management'
+  build_date: 'Built date'
+  read: 'Read'
+  leave_messages: 'Leave messages'
   check_out: 'Check out'
   proceed_to_checkout: 'Proceed to checkout'
   payment: 'PAYMENT'

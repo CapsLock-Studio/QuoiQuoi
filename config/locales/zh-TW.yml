@@ -120,6 +120,20 @@ zh-TW:
     hint: '歡迎使用留言系統給我們知道關於你心目中包包的細節<br/>另外如果您想要主動聯絡我們，可以請你<br/>撥打&nbsp;%{phone}&nbsp;或&nbsp;寄Email到&nbsp;%{email}<br/>我們會盡快替您處理，謝謝！'
     first_hint: '您可以不照順序填寫你的需求, 而右上角有紅色星號標記的項目請一定要填寫資料'
     charge: '訂製費用'
+    ask_for_reference: '您喜歡的quoiquoi包款, (可提供照片及網址連結給我們知道)'
+    category: '包款'
+    size_of_bag: '大小：長寬高CM'
+    style_of_bag: '風格：日式復古雜貨、法式蕾絲浪漫、碎花小輕新、簡約大方、男用…)'
+    other_request: '其他需求'
+    remind_alert: |
+      手作包不比工廠製作，若要求車線完美、對花精準者，請審慎考慮後才訂製哦
+      交給quoiquoi布知道設計的款式，請告知需求，我們儘量達成，製作完成後不提供退換貨服務，請審慎考慮後才訂製哦
+      布類選擇以本官網布料為主，不另外代購布品。您選擇的布款我們最後會選擇一塊主布，其他由quoiquoi布知道協助搭配
+      不接受仿作(即提供非屬quoiquoI布知道的包包網址要求製作出一模一樣的包)
+    your_reference: '您給我們的參考'
+    style_description: '風格敘述'
+    others: '其他需求'
+    size: '尺寸'
 
   registration:
     all: '報名的課程'
@@ -234,7 +248,13 @@ zh-TW:
     course:
       title: '我們開設的課程能讓你學會如何打造自己的手作品噢!'
 
+  fabrics_for_customization: '精選訂製布料'
+  picked_to_order: '用喜歡的布料量身訂製'
+  fabrics_management: '布料收藏管理'
+  bild_date: '建立日期'
+  read: '已讀'
   check_out: '結帳'
+  leave_messages: '留言'
   proceed_to_checkout: '前往結帳'
   payment: '付款'
   checkout_time: '結帳時間'

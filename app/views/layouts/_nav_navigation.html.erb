@@ -46,7 +46,7 @@
       <%= link_to t('past_works'), past_work_types_path, class: 'btn btn-link' %>
     </li>
     <li>
-      <%= link_to '精選訂製布料', material_type_path(MaterialType.order(:id).limit(1).pluck(:id)), class: 'btn btn-link' %>
+      <%= link_to t('fabrics_for_customization'), material_type_path(MaterialType.order(:id).limit(1).pluck(:id)), class: 'btn btn-link' %>
     </li>
     <li>
       <%= link_to t('about_us'), about_path, class: 'btn btn-link' %>
