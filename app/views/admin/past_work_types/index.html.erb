@@ -71,14 +71,14 @@
                     <td>
                       <% past_work_type.past_work_type_translates.each do |past_work_type_translate| %>
                         <label class="label label-default"><%= past_work_type_translate.locale.name %></label>
-                        <%= past_work_type_translate.name %>
+                        <%= truncate(past_work_type_translate.name, length: 14) %>
                         <br/>
                       <% end %>
                     </td>
                     <td>
                       <% past_work_type.past_work_type_translates.each do |past_work_type_translate| %>
                         <label class="label label-default"><%= past_work_type_translate.locale.name %></label>
-                        <%= truncate(past_work_type_translate.description, length: 40) %>
+                        <%= truncate(past_work_type_translate.description, length: 34) %>
                         <br/>
                       <% end %>
                     </td>
