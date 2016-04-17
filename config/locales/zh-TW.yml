@@ -581,6 +581,7 @@ zh-TW:
   approved: '接受訂製'
   lets_discuss: '跟我們討論一下吧！'
   ok: '好的'
+  leave_messages_to_designer: '留一些訊息給設計師'
 
   outdated:
     title: '你的瀏覽器已經過時！'
