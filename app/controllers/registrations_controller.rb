@@ -140,13 +140,15 @@ class RegistrationsController < ApplicationController
   end
 
   def show
-    if (!@registration.registration_payment.cancel? && !@registration.course.canceled?) && @registration.empty_expire_time?
-      redirect_to controller: :registration_payment, action: :resume, id: @registration.id
-    else
-      add_breadcrumb t('home'), :root_path
-      add_breadcrumb t('registration.all')
-      add_breadcrumb t('detail')
+    unless (@registration.course.nil?)
+      if (!@registration.registration_payment.cancel? && !@registration.course.canceled?) && @registration.empty_expire_time?
+        redirect_to controller: :registration_payment, action: :resume, id: @registration.id
+      end
     end
+
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('registration.all')
+    add_breadcrumb t('detail')
   end
 
   def pay_show

@@ -25,8 +25,8 @@ class CustomOrdersController < ApplicationController
 
   def build
     @custom_order = CustomOrder.new
-    @custom_order.order_type = sanitize_params[:order_type]
-    @custom_order.style = sanitize_params[:style]
+    @custom_order.order_type = sanitize_params[:order_type] || '現貨修改'
+    @custom_order.style = sanitize_params[:style] || '現貨修改'
     @custom_order.materials = sanitize_params[:materials]
     @custom_order.email = sanitize_params[:email]
     @custom_order.phone = sanitize_params[:phone]
@@ -98,6 +98,9 @@ class CustomOrdersController < ApplicationController
       flash.now[:message] = t('payment_already_completed')
     end
 
+    @messages = Message.where(custom_order_id: params[:id]).order(:created_at)
+    @messages.where(admin: true).update_all({read: true})
+    
     render action: :show
   end
 

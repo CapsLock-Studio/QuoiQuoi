@@ -325,3 +325,6 @@ DEPENDENCIES
   unicorn
   unicorn-worker-killer
   whenever
+
+BUNDLED WITH
+   1.10.6

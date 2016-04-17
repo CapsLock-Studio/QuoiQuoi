@@ -15,7 +15,7 @@
           <% if @custom_order.product_id.nil? %>
             <div class="margin-bottom-10">
               <div class="data-display-name">
-                您給我們的參考
+                <%= t('custom_order.your_reference') %>
               </div>
               <div class="data-display-content">
                 <%= @custom_order.references %>
@@ -33,7 +33,7 @@
 
             <div class="margin-bottom-10">
               <div class="data-display-name">
-                風格敘述
+                <%= t('custom_order.style_description') %>
               </div>
               <div class="data-display-content">
                 <%= @custom_order.style %>
@@ -42,7 +42,7 @@
 
             <div class="margin-bottom-10">
               <div class="data-display-name">
-                尺寸
+                <%= t('custom_order.size') %>
               </div>
               <div class="data-display-content">
                 <%= @custom_order.size %>
@@ -51,7 +51,7 @@
 
             <div class="margin-bottom-10">
               <div class="data-display-name">
-                其他需求
+                <%= t('custom_order.others') %>
               </div>
               <div class="data-display-content">
                 <%= @custom_order.description %>
@@ -102,7 +102,11 @@
                 <div>
                   <strong>
                     <i class="fa fa-fw fa-comment-o"></i>
-                    <%= @custom_order.dismiss_message %>
+                    <% if @custom_order.cancel? %>
+                      <%= @custom_order.cancel_reason %>
+                    <% else %>
+                      <%= @custom_order.dismiss_message %>
+                    <% end %>
                   </strong>
                 </div>
               <% elsif @custom_order.approve.nil? %>
@@ -145,16 +149,16 @@
                 <div class="body">
                   <% if message.admin? %>
                     <div class="name text-ruby">
-                      管理者
+                      quoi quoi
                       <small class="pull-right text-success">
                         <%== '<i class="fa fa-check"></i>' if message.read? %>
                       </small>
                     </div>
                   <% else %>
                     <div class="name">
-                      <i class="fa fa-user fa-fw"></i>您
+                      <i class="fa fa-user fa-fw"></i>Me
                       <small class="pull-right text-muted">
-                        <%= '已讀' if message.read? %>
+                        <%= t('read') if message.read? %>
                       </small>
                     </div>
                   <% end %>
@@ -173,7 +177,7 @@
           <%= form_for(Message.new(custom_order_id: @custom_order.id), html: {class: 'form valid-form'}) do |f| %>
             <%= f.text_area :content, class: 'form-control margin-bottom-10', placeholder: (@messages.size <= 0)? '留一些訊息給設計師' : '' %>
             <%= f.hidden_field :custom_order_id %>
-            <button type="submit" class="btn btn-default pull-right">留言</button>
+            <button type="submit" class="btn btn-default pull-right"><%= t('leave_messages') %></button>
           <% end %>
         </div>
       </div>

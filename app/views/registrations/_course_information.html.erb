@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-6 col-sm-12 col-xs-12">
-    <%= image_tag registration.course.image.url(:medium), class: 'img-responsive' %>
+    <%= image_tag registration.course.image.url(:medium), class: 'img-responsive' rescue '' %>
   </div>
   <div class="col-md-6 col-sm-12 col-xs-12">
-    <h4><%= registration.course.course_translates.find_by_locale_id(registration.locale_id).name %></h4>
+    <h4><%= registration.course.course_translates.find_by_locale_id(registration.locale_id).name rescue '課程已刪除' %></h4>
     <div class="row">
       <div class="col-xs-12 text-muted">
         <%= t('course_time') %>
       </div>
       <div class="col-xs-12">
         <strong>
-          <%= "#{registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(registration.course.time + registration.course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[registration.course.time.strftime('%u').to_i - 1]})" %>
+          <%= "#{registration.course.time.strftime('%Y/%m/%d %H:%M')} - #{(registration.course.time + registration.course.length.hours).strftime('%H:%M')} (#{t('date.day_names')[registration.course.time.strftime('%u').to_i - 1]})" rescue '課程已刪除' %>
         </strong>
       </div>
     </div>
@@ -20,7 +20,7 @@
       </div>
       <div class="col-xs-12">
         <strong>
-          <%= registration.course.course_translates.find_by_locale_id(registration.locale_id).teacher %>
+          <%= registration.course.course_translates.find_by_locale_id(registration.locale_id).teacher rescue '課程已刪除' %>
         </strong>
       </div>
     </div>
@@ -30,7 +30,7 @@
           <%== Sanitize.fragment(
                    registration.course.course_translates.find_by_locale_id(registration.locale_id).description,
                    Sanitize::Config::ALLOWED
-               ) %>
+               ) rescue '課程已刪除' %>
         </article>
       </div>
     </div>
