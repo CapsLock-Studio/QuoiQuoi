@@ -7,10 +7,10 @@ class Course < ActiveRecord::Base
   has_many :locales, through: :course_translates
   accepts_nested_attributes_for :course_translates
 
-  has_many :registrations, dependent: :destroy
-
   has_many :course_option_groups
   has_many :course_options, through: :course_option_groups
+
+  has_many :registrations
 
   accepts_nested_attributes_for :course_options, allow_destroy: true
 

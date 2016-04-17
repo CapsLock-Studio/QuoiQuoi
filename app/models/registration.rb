@@ -1,5 +1,5 @@
 class Registration < ActiveRecord::Base
-  enum payment_method: {remittance: 0, paypal: 1, cvs_family: 2, cvs_ibon: 3, webatm: 4, atm: 5, alipay: 6}
+  enum payment_method: {remittance: 0, paypal: 1, cvs_family: 2, cvs_ibon: 3, webatm: 4, atm: 5, alipay: 6, credit_card: 7}
 
   belongs_to :course
   belongs_to :user

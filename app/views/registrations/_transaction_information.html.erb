@@ -161,6 +161,10 @@
               class: 'btn btn-primary btn-xs') if registration_payment.registration.webatm? %>
       <%= link_to(
               t('continue_pay_page'),
+              url_for(controller: :registration_payment, action: :credit_card_resume, id: registration_payment.registration_id),
+              class: 'btn btn-primary btn-xs') if registration_payment.registration.credit_card? %>
+      <%= link_to(
+              t('continue_pay_page'),
               url_for(controller: :registration_payment, action: :alipay_resume, id: registration_payment.registration_id),
               class: 'btn btn-primary btn-xs') if registration_payment.registration.alipay? %>
       <%= link_to t('continue_on_paypal'), registration_payment.redirect_uri, class: 'btn btn-xs btn-primary' if registration_payment.registration.paypal? %>
@@ -208,7 +212,7 @@
           </strong>
         </div>
       </div>
-    <% elsif registration_payment.registration.course.canceled? %>
+    <% elsif !registration_payment.registration.course.nil? && registration_payment.registration.course.canceled? %>
       <%= t('course.canceled') %>
       <% if registration_payment.completed? %>
         &nbsp;-&nbsp;<%= (registration_payment.refunded?)? t('registration.refunded') : t('registration.wait_refund') %>

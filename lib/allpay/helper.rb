@@ -1,4 +1,14 @@
 module AllPay
+  module CustomizedCGI
+    def self.escape(string)
+      encoding = string.encoding
+
+      # For .NET encode
+      string.b.gsub(/([^!*() a-zA-Z0-9_.-]+)/) do |m|
+        '%' + m.unpack('H2' * m.bytesize).join('%').upcase
+      end.tr(' ', '+').force_encoding(encoding)
+    end
+  end
   module Helper
     def self.check_mac_value(fields)
 
@@ -9,7 +19,7 @@ module AllPay
         "#{field}=#{value}" if field!='utf8' && field!='authenticity_token' && field!='commit'
       }.join('&')
 
-      Digest::MD5.hexdigest(CGI::escape("HashKey=#{AllPay.hash_key}&#{raw_data}&HashIV=#{AllPay.hash_iv}").downcase).upcase
+      Digest::MD5.hexdigest(AllPay::CustomizedCGI::escape("HashKey=#{AllPay.hash_key}&#{raw_data}&HashIV=#{AllPay.hash_iv}").downcase).upcase
 
       # HashKey=5294y06JbISpM5x9&ChoosePayment=CVS&ChooseSubPayment=FAMILY&ItemName=測試 x 2#測試找字看看 x 1#測試 x 1&MerchantID=2000132&MerchantTradeDate=2015-03-23 04:50:41&MerchantTradeNo=ORDER_361&PaymentType=aio&ReturnURL=http://localhost:3000/order_payment_callback/cvs_family&TotalAmount=6510.0&TradeDesc=quoi quoi 布知道&HashIV=v77hoKGq4kWxNNIS
     end
