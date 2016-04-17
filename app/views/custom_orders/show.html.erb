@@ -175,7 +175,7 @@
           </ul>
 
           <%= form_for(Message.new(custom_order_id: @custom_order.id), html: {class: 'form valid-form'}) do |f| %>
-            <%= f.text_area :content, class: 'form-control margin-bottom-10', placeholder: (@messages.size <= 0)? '留一些訊息給設計師' : '' %>
+            <%= f.text_area :content, class: 'form-control margin-bottom-10', placeholder: (@messages.size <= 0)? t('leave_messages_to_designer') : '' %>
             <%= f.hidden_field :custom_order_id %>
             <button type="submit" class="btn btn-default pull-right"><%= t('leave_messages') %></button>
           <% end %>

@@ -1,6 +1,6 @@
 class OrderPaymentController < ApplicationController
-  before_action :checkout, except: [:resume, :webatm_resume, :alipay_resume]
-  before_action :check_payment_is_completed, only: [:resume, :alipay_resume, :webatm_resume]
+  before_action :checkout, except: [:resume, :webatm_resume, :credit_card_resume, :alipay_resume]
+  before_action :check_payment_is_completed, only: [:resume, :alipay_resume, :credit_card_resume, :webatm_resume]
   before_action :set_breadcrumb
 
   def remittance
@@ -91,6 +91,24 @@ class OrderPaymentController < ApplicationController
     OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@order.order_payment)
 
     redirect_to paypal_response.redirect_uri
+  end
+
+  def credit_card
+    send_request_to_allpay(@order, 'Credit', {
+                                          OrderResultURL: return_order_url(@order)
+                                      })
+
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@order.order_payment)
+  end
+
+  def credit_card_resume
+    order = Order.find(params[:id])
+
+    # Resend a order payment to AllPay
+    send_request_to_allpay(order, 'Credit', {
+                                    OrderResultURL: return_order_url(order)
+                                })
   end
 
   def webatm
