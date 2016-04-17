@@ -1,6 +1,6 @@
 class RegistrationPaymentController < ApplicationController
-  before_action :set_registration, except: [:resume, :webatm_resume, :alipay_resume]
-  before_action :check_payment_is_completed, only: [:resume, :webatm_resume, :alipay_resume]
+  before_action :set_registration, except: [:resume, :webatm_resume, :credit_card_resume, :alipay_resume]
+  before_action :check_payment_is_completed, only: [:resume, :webatm_resume, :credit_card_resume, :alipay_resume]
   before_action :authenticate_or_no
   before_action :set_breadcrumb
 
@@ -92,6 +92,24 @@ class RegistrationPaymentController < ApplicationController
     OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@registration.registration_payment)
 
     redirect_to paypal_response.redirect_uri
+  end
+
+  def credit_card
+    send_request_to_allpay(@registration, 'Credit', {
+                                          OrderResultURL: return_registration_url(@registration)
+                                      })
+
+    # Send email to customer at tomorrow midnight if his/her payment is not completed
+    OnlinePaymentRemindJob.set(wait_until: Date.tomorrow.midnight).perform_later(@registration.registration_payment)
+  end
+
+  def credit_card_resume
+    registration = Registration.find(params[:id])
+
+    # Resend a order payment to AllPay
+    send_request_to_allpay(registration, 'Credit', {
+                                    OrderResultURL: return_registration_url(registration)
+                                })
   end
 
   def webatm

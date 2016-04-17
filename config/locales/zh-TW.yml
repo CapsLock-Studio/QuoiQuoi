@@ -538,7 +538,9 @@ zh-TW:
   webatm: '網路ATM'
   atm: 'ATM櫃員機'
   alipay: '支付寶'
+  alipay_hint: '選擇支付寶付款需要您填寫電話號碼'
   paypal: 'Paypal'
+  credit_card: '信用卡'
   continue_on_paypal: '繼續在Paypal上付款'
   continue_on_alipay: '繼續在支付寶網站上付款'
   continue_pay_page: '前往付款頁面'
@@ -579,6 +581,7 @@ zh-TW:
   approved: '接受訂製'
   lets_discuss: '跟我們討論一下吧！'
   ok: '好的'
+  leave_messages_to_designer: '留一些訊息給設計師'
 
   outdated:
     title: '你的瀏覽器已經過時！'
