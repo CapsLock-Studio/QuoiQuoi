@@ -27,7 +27,7 @@
           <% if is_show_full %>
             <%= order.delivery_report_message %>
           <% else %>
-            <%= turncate(order.delivery_report_message, length: 15) %>
+            <%= truncate(order.delivery_report_message, length: 15) %>
           <% end %>
         </label>
       </div>
