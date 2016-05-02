@@ -35,9 +35,6 @@ class Admin::OrdersController < AdminController
       end
 
       @orders = @orders.where(conditions)
-      @orders.each do |order|
-        order.delivery_report_message = ApplicationController.helpers.truncate(order.delivery_report_message, length: 15)
-      end
     end
   end
 
