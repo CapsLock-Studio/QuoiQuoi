@@ -74,7 +74,7 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= render 'delivery_status', order: order if order.order_payment.completed?, is_show_full: false %>
+                  <%= render 'delivery_status', is_show_full: false, order: order if order.order_payment.completed? %>
                 </td>
                 <td class="text-right">
                   <%= link_to_if(order.order_payment.cancel?, '已取消', '#', class: 'btn btn-default disabled') do %>
