@@ -42,7 +42,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% @course.registrations.each do |registration| %>
+                <% @course.registrations.reject{|registration| registration.registration_payment.nil?}.each do |registration| %>
                   <tr>
                     <td>
                       <%= registration.id %>
