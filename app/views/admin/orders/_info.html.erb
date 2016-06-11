@@ -68,6 +68,15 @@
             <div>
               <small>使用&nbsp;<span class="label label-default"><%= t("#{order.payment_method}") %></span>&nbsp;付款</small>
             </div>
+            <% if order.payment_method == 'remittance' %>
+              <label>
+                匯款帳號末５碼: <%= order.order_payment.order_remittance_reports.last.account %>
+              </label>
+            <% else %>
+              <label>
+                交易序號: <%= order.order_payment.trade_no %>
+              </label>
+            <% end %>
           <% else %>
             <span class="label label-danger">匯款有誤</span>
             <small class="text-muted">於 <%= order.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳</small>
