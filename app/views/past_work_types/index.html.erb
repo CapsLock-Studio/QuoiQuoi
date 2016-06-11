@@ -23,7 +23,7 @@
             </a>
             <div class="article-content">
               <%= image_tag past_work.image.url(:medium) %>
-              <%= link_to '看全部...', past_work_type_past_work_path(past_work.past_work_type_id, past_work), class: 'btn btn-sm' %>
+              <%= link_to t('see_all'), past_work_type_past_work_path(past_work.past_work_type_id, past_work), class: 'btn btn-sm' %>
             </div>
           </div>
 
