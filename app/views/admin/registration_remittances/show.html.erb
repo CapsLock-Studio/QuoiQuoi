@@ -12,7 +12,7 @@
   </div>
 </div>
 <div class="col-md-6 col-sm-12">
-  <%= render 'admin/courses/info', course: @remittance.registration_payment.registration.course %>
+  <%= render 'admin/courses/info', course: @remittance.registration_payment.registration.course rescue '課程資訊不存在' %>
 </div>
 <div class="col-md-6 col-sm-12">
   <div class="box">
