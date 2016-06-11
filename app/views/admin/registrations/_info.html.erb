@@ -73,6 +73,15 @@
             <div>
               <small>使用&nbsp;<span class="label label-default"><%= t("#{registration.payment_method}") %></span>&nbsp;付款</small>
             </div>
+            <% if registration.payment_method == 'remittance' %>
+              <label>
+                匯款帳號末５碼: <%= registration.registration_payment.registration_remittance_reports.last.account %>
+              </label>
+            <% else %>
+              <label>
+                交易序號: <%= registration.registration_payment.trade_no %>
+              </label>
+            <% end %>
           <% else %>
             <span class="label label-danger">匯款有誤</span>
             <small class="text-muted">於 <%= registration.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳</small>
