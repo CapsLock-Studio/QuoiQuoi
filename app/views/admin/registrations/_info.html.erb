@@ -75,7 +75,7 @@
             </div>
             <% if registration.payment_method == 'remittance' %>
               <label>
-                匯款帳號末５碼: <%= registration.registration_payment.registration_remittance_reports.last.account %>
+                匯款帳號末５碼: <%= registration.registration_payment.registration_remittance_reports.last.account rescue '沒有紀錄' %>
               </label>
             <% else %>
               <label>
