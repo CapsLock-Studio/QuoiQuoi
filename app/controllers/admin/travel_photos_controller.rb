@@ -9,10 +9,10 @@ class Admin::TravelPhotosController < AdminController
     render json:
                @travel_photos.collect { |travel_photo|
                  {
-                     name: travel_photo.photo.name,
-                     size: travel_photo.photo.size,
-                     url: "#{request.protocol}#{request.host_with_port}#{travel_photo.photo.url}",
-                     thumbnail_url: travel_photo.photo.url(:thumb),
+                     name: travel_photo.image.name,
+                     size: travel_photo.image.size,
+                     url: "#{request.protocol}#{request.host_with_port}#{travel_photo.image.url}",
+                     thumbnail_url: travel_photo.image.url(:thumb),
                      delete_url: admin_travel_photo_path(travel_photo),
                      delete_type: 'DELETE'
                  }
@@ -25,10 +25,10 @@ class Admin::TravelPhotosController < AdminController
       if @travel_photo.save
         format.html {}
         format.json { render json: {files: [{
-                                                name: @travel_photo.photo.name,
-                                                size: @travel_photo.photo.size,
-                                                url: "#{request.protocol}#{request.host_with_port}#{@travel_photo.photo.url}",
-                                                thumbnail_url: @travel_photo.photo.url(:thumb),
+                                                name: @travel_photo.image.name,
+                                                size: @travel_photo.image.size,
+                                                url: "#{request.protocol}#{request.host_with_port}#{@travel_photo.image.url}",
+                                                thumbnail_url: @travel_photo.image.url(:thumb),
                                                 delete_url: admin_travel_photo_path(@travel_photo),
                                                 delete_type: 'DELETE'
                                             }]}, status: :created, location: admin_travel_photo_path(@travel_photo) }
@@ -49,7 +49,7 @@ class Admin::TravelPhotosController < AdminController
 
   private
   def travel_photo_params
-    params.require(:travel_photo).permit(:id, :photo, :_destroy)
+    params.require(:travel_photo).permit(:id, :image, :_destroy)
   end
 
   def set_travel_photo
