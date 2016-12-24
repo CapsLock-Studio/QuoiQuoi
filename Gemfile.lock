@@ -219,7 +219,8 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (4.2.0)
-    recaptcha (0.4.0)
+    recaptcha (4.0.1)
+      json
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -312,7 +313,7 @@ DEPENDENCIES
   paypal-express
   pg
   rails (~> 4.2)
-  recaptcha
+  recaptcha (~> 4.0)
   redis
   route_translator
   sanitize
@@ -327,4 +328,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.10.6
+   1.12.5
