@@ -34,7 +34,7 @@ end
 
 gem 'compass-rails', '~> 2.0.0'
 gem 'cancan'
-gem 'devise'
+gem 'devise', '~> 4.0'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
