@@ -227,8 +227,8 @@
     if ($('#map').length > 0) {
         map = new GMaps({
             div: '#map',
-            lat: 25.1359486,
-            lng: 121.4612855,
+            lat: 25.1351676,
+            lng: 121.4610843,
             zoom: 17,
             options: {
                 draggable: true,
@@ -237,8 +237,8 @@
             }
         });
         marker = map.addMarker({
-            lat: 25.1359486,
-            lng: 121.4612855,
+            lat: 25.1351676,
+            lng: 121.4610843,
             title: '布知道(quoi quoi)工作室'
         });
     }
