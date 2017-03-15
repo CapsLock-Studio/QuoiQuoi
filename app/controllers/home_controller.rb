@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @slides = Slide.all.order(:sort)
     @broadcasts = Broadcast.all.order(:sort)
     @tops = []
-    Top.order(:sort).limit(6).each do |top|
+    Top.order(:sort).each do |top|
       @tops << {image: top.image.url(:medium), link: top.top_translates.where(locale_id: session[:locale_id]).first.link}
     end
 
