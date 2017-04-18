@@ -1,4 +1,4 @@
-class RegistrationPayment < ActiveRecord::Base
+class RegistrationPayment < ApplicationRecord
   belongs_to :registration
 
   has_many :registration_remittance_reports, dependent: :delete_all

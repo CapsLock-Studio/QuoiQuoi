@@ -1,4 +1,4 @@
-class ProductCustomItem < ActiveRecord::Base
+class ProductCustomItem < ApplicationRecord
   belongs_to :product
   has_many :order_custom_item_product_custom_items
   has_many :product_custom_item_translates

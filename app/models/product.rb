@@ -1,4 +1,4 @@
-class Product < ActiveRecord::Base
+class Product < ApplicationRecord
   belongs_to :product_type
 
   has_one :product_translate

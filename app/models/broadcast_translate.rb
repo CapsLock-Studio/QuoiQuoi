@@ -1,4 +1,4 @@
-class BroadcastTranslate < ActiveRecord::Base
+class BroadcastTranslate < ApplicationRecord
   belongs_to :broadcast
   belongs_to :locale
 

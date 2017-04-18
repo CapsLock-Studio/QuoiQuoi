@@ -1,4 +1,4 @@
-class ShippingFee < ActiveRecord::Base
+class ShippingFee < ApplicationRecord
   has_many :shipping_fee_translates, dependent: :destroy
 
   has_one :shipping_fee_translate

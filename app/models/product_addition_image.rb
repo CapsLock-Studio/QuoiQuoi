@@ -1,4 +1,4 @@
-class ProductAdditionImage < ActiveRecord::Base
+class ProductAdditionImage < ApplicationRecord
   belongs_to :product
 
   has_attached_file :image, styles: {thumb: '100', fit_width: '500'}, default_url: '/system/placeholder/general.gif'

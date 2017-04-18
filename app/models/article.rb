@@ -1,4 +1,4 @@
-class Article < ActiveRecord::Base
+class Article < ApplicationRecord
   belongs_to :article_type
 
   has_many :article_images, dependent: :destroy

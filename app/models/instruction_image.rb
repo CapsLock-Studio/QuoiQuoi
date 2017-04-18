@@ -1,4 +1,4 @@
-class InstructionImage < ActiveRecord::Base
+class InstructionImage < ApplicationRecord
   belongs_to :instruction
 
   has_attached_file :image, styles: {thumb: 'x80'}

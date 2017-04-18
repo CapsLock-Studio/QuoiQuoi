@@ -1,4 +1,4 @@
-class CourseOptionGroup < ActiveRecord::Base
+class CourseOptionGroup < ApplicationRecord
   default_scope ->() {order(:id)}
 
   validates :name, presence: true

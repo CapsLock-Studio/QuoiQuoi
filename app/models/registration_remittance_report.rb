@@ -1,4 +1,4 @@
-class RegistrationRemittanceReport < ActiveRecord::Base
+class RegistrationRemittanceReport < ApplicationRecord
   belongs_to :registration_payment
 
   def status

@@ -1,2 +1,2 @@
-class IntroduceYoutube < ActiveRecord::Base
+class IntroduceYoutube < ApplicationRecord
 end

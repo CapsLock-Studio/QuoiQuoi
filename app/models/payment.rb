@@ -1,4 +1,4 @@
-class Payment < ActiveRecord::Base
+class Payment < ApplicationRecord
   belongs_to :user
   belongs_to :order
   belongs_to :registration

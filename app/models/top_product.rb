@@ -1,3 +1,3 @@
-class TopProduct < ActiveRecord::Base
+class TopProduct < ApplicationRecord
   belongs_to :product
 end
