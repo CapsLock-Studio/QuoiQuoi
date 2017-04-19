@@ -40,7 +40,7 @@ class Admin::CoursesController < AdminController
   end
 
   def status
-    if @course.update_columns(status_params)
+    if @course.update(status_params)
       flash[:status] = status_params
       flash[:id] = @course.id
 

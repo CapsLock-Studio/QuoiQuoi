@@ -106,7 +106,7 @@ class RegistrationsController < ApplicationController
     unless @registration.registration_payment.nil?
 
       if params['RtnCode'] == '10100073' || params['RtnCode'] == '2'
-        @registration.registration_payment.update_columns(
+        @registration.registration_payment.update(
             {
                 expire_time: params['ExpireDate'],
                 trade_no: params['TradeNo'],

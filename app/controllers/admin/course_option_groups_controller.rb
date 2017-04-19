@@ -32,7 +32,7 @@ class Admin::CourseOptionGroupsController < AdminController
   def update
     course_option_group = CourseOptionGroup.find(params[:id])
 
-    if course_option_group.update_columns(course_option_group_params)
+    if course_option_group.update(course_option_group_params)
       render :show, layout: false, locals: {course_option_group: course_option_group}
     else
       render nothing: true, status: :unprocessable_entity

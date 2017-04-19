@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
     # @order_in_cart.checkout_time = Time.now
     @order_in_cart.subtotal = @order_in_cart.get_subtotal
 
-    if @order_in_cart.update_columns(order_params) && @order_in_cart.save
+    if @order_in_cart.update(order_params) && @order_in_cart.save
 
       @order_in_cart.reload
 
@@ -64,7 +64,7 @@ class OrdersController < ApplicationController
     unless @order.order_payment.nil?
 
       if params['RtnCode'] == '10100073' || params['RtnCode'] == '2'
-        @order.order_payment.update_columns(
+        @order.order_payment.update(
             {
                 expire_time: params['ExpireDate'],
                 trade_no: params['TradeNo'],
