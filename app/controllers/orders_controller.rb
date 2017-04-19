@@ -262,6 +262,8 @@ class OrdersController < ApplicationController
     end
 
     def order_params
+      params[:order][:payment_method] = params[:order][:payment_method].to_i
+
       params.require(:order).permit(:name, :address, :phone, :zip_code, :shipping_fee_id, :payment_method)
     end
 
