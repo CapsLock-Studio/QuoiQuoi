@@ -9,7 +9,7 @@ class OrderPaymentCallbackController < ApplicationController
 
     # RtnCode's value 1 means the transaction was success.
     # In this method, just like the other callback handlers, updating the order payment status.
-    if params['RtnCode'] == '1'
+    if params['RtnCode'] == '1' || params['RtnCode'] == '3'
       order_payment = OrderPayment.find_by_order_id!(params['MerchantTradeNo'].delete('O').split('t')[0])
 
       order_payment.trade_no = params['TradeNo']
