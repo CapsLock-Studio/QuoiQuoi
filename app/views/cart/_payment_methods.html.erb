@@ -36,6 +36,19 @@
           </label>
         </div>
       </div>
+
+      <div class="col-xs-12">
+        <div class="radio">
+          <label>
+            <%= form.radio_button :payment_method, Order.payment_methods[:paypal] %>
+            <%= image_tag 'paypal.png', class: 'img-responsive', style: 'max-width: 70px;' %>
+          </label>
+        </div>
+        <label class="pull-left">
+          <%= t('paypal_hint').html_safe %>
+        </label>
+
+      </div>
     </div>
 
     <hr/>

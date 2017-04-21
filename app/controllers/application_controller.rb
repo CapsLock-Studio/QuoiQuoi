@@ -59,9 +59,7 @@ class ApplicationController < ActionController::Base
   def configure_devise_params
 
     # custom the user sign up parameters
-    devise_parameter_sanitizer.for(:sign_up) do |u|
-      u.permit(:name, :email, :password, :password_confirmation)
-    end
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :password_confirmation])
   end
 
   private

@@ -77,7 +77,8 @@ class UserController < ApplicationController
   def email_authencate
     user = User.find_by_email(params[:email])
     if user.nil?
-      user = User.create(email: params[:email])
+      user = User.new(email: params[:email])
+      user.save!(validate: false)
     end
 
     UserMailer.signin_confirmation(

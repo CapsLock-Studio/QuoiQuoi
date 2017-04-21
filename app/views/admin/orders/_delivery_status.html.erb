@@ -22,7 +22,14 @@
         貨件寄出時間 <%= order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') %>
       </small>
       <div>
-        回報訊息內容: <label><%= order.delivery_report_message %></label>
+        回報訊息內容: 
+        <label>
+          <% if is_show_full %>
+            <%= order.delivery_report_message %>
+          <% else %>
+            <%= truncate(order.delivery_report_message, length: 15) %>
+          <% end %>
+        </label>
       </div>
     <% end %>
   <% else %>

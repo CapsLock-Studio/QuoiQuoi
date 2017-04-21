@@ -14,11 +14,11 @@
                   <small><%= t('just_two_steps') %></small>
                 </h3>
               </div>
-              <%= link_to user_omniauth_authorize_path(:google_oauth2), class: 'btn btn-google btn-block social-btn' do %>
+              <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-google btn-block social-btn' do %>
                 <i class="fa fa-google fa-fw"></i>
                 <%= t('sign_in_with_google') %>
               <% end %>
-              <%= link_to user_omniauth_authorize_path(:facebook), class: 'btn btn-fb btn-block social-btn' do %>
+              <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-fb btn-block social-btn' do %>
                 <i class="fa fa-facebook fa-fw"></i>
                 <%= t('sign_in_with_fb') %>
               <% end %>
