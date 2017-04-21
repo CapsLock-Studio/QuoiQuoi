@@ -235,6 +235,7 @@ en:
   checkout_time: 'Checkout time'
   subscribe_rss: 'Subscribe RSS feed'
   no_data: 'No data'
+  error_code: 'Error code'
   paypal_description: 'PayPal is the faster, safer way to send money, make an online payment'
   online_payment: 'Online Payment'
   offline_payment: 'Remittance'
@@ -510,6 +511,7 @@ en:
   remarks: 'Remarks'
   others: 'Others'
   payment_completed: 'Your payment has been completed.'
+  payment_failed: 'Something wrong, please check your payment info and proceed payment again.'
   payment_already_completed: 'Your payment has already completed ~!'
   paypal_hint: ""
   webatm: 'Web ATM'

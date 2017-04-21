@@ -1,4 +1,4 @@
-class Instruction < ActiveRecord::Base
+class Instruction < ApplicationRecord
   belongs_to :locale
 
   has_many :instruction_images, dependent: :destroy

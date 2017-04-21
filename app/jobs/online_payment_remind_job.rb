@@ -1,4 +1,4 @@
-class OnlinePaymentRemindJob < ActiveJob::Base
+class OnlinePaymentRemindJob < ApplicationJob
   queue_as :default
 
   def perform(payment_object)

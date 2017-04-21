@@ -1,4 +1,4 @@
-class Designer < ActiveRecord::Base
+class Designer < ApplicationRecord
   has_many :designer_translates, dependent: :destroy
   accepts_nested_attributes_for :designer_translates, allow_destroy: true
 

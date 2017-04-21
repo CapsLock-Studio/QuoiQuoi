@@ -1,4 +1,4 @@
-class MaterialType < ActiveRecord::Base
+class MaterialType < ApplicationRecord
   has_many :materials
 
   has_one :material_type_translate

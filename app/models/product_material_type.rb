@@ -1,4 +1,4 @@
-class ProductMaterialType < ActiveRecord::Base
+class ProductMaterialType < ApplicationRecord
   belongs_to :product
   belongs_to :material_type
 

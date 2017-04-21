@@ -239,26 +239,34 @@ class RegistrationsController < ApplicationController
 
   # Allpay online trade complete.
   def return
-    flash.now[:icon] = 'fa-smile-o'
-    flash.now[:status] = 'success'
-    flash.now[:message] = t('payment_completed')
-
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registration.all'), :registrations_path
     add_breadcrumb t('detail')
 
     @registration = Registration.find(params['MerchantTradeNo'].delete('R').split('t')[0])
 
-    # Not really update order entity, just show the newest status.
-    @registration.registration_payment.trade_no = params['TradeNo']
-    @registration.registration_payment.trade_time = params['TradeDate']
-    @registration.registration_payment.payment_time = params['PaymentDate']
-    @registration.registration_payment.completed =  true
-    @registration.registration_payment.completed_time = Time.now
+    if params['RtnCode'] == '1' || params['RtnCode'] == '3'
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
 
-    @registration.registration_payment.save!
+      # Not really update order entity, just show the newest status.
+      @registration.registration_payment.trade_no = params['TradeNo']
+      @registration.registration_payment.trade_time = params['TradeDate']
+      @registration.registration_payment.payment_time = params['PaymentDate']
+      @registration.registration_payment.completed =  true
+      @registration.registration_payment.completed_time = Time.now
 
-    RegistrationMailer.completed_confirmation(@registration.id).deliver_later
+      @registration.registration_payment.save!
+
+      RegistrationMailer.completed_confirmation(@registration.id).deliver_later
+    else
+      errorCodes = JSON.parse(File.read('app/assets/javascripts/ecpayErrorCodes.json'))
+
+      flash.now[:icon] = 'fa-exclamation-triangle'
+      flash.now[:status] = 'danger'
+      flash.now[:message] = "#{t('error_code')}: #{params['RtnCode']}, #{errorCodes[params['RtnCode']]} 🚫 #{t('payment_failed')}"
+    end
 
     render 'registrations/show'
   end

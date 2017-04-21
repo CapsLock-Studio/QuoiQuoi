@@ -1,4 +1,4 @@
-class Material < ActiveRecord::Base
+class Material < ApplicationRecord
   has_many :material_translates, dependent: :destroy
   has_one :material_translate
   belongs_to :material_type

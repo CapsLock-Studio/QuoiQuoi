@@ -1,4 +1,4 @@
-class OrderRemittanceReport < ActiveRecord::Base
+class OrderRemittanceReport < ApplicationRecord
   belongs_to :order_payment
 
   def status

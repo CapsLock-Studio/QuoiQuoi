@@ -1,4 +1,4 @@
-class CourseAdditionImage < ActiveRecord::Base
+class CourseAdditionImage < ApplicationRecord
   belongs_to :course
 
   has_attached_file :image, styles: {thumb: '100', medium: '500'}, default_url: '/system/placeholder/general.gif'

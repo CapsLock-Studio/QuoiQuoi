@@ -1,4 +1,4 @@
-class RentIntro < ActiveRecord::Base
+class RentIntro < ApplicationRecord
   has_many :rent_intro_translates, dependent: :destroy
   accepts_nested_attributes_for :rent_intro_translates, allow_destroy: true
 

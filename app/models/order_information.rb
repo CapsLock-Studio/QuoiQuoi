@@ -1,2 +1,2 @@
-class OrderInformation < ActiveRecord::Base
+class OrderInformation < ApplicationRecord
 end

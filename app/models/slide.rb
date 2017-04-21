@@ -1,4 +1,4 @@
-class Slide < ActiveRecord::Base
+class Slide < ApplicationRecord
   belongs_to :slide_position
 
   has_many :slide_translates, dependent: :destroy

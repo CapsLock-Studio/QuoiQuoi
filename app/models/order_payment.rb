@@ -1,4 +1,4 @@
-class OrderPayment < ActiveRecord::Base
+class OrderPayment < ApplicationRecord
   belongs_to :order
 
   has_many :order_remittance_reports, dependent: :delete_all

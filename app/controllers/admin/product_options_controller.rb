@@ -26,7 +26,7 @@ class Admin::ProductOptionsController < AdminController
 
   def update
     product_option = ProductOption.find(params[:id])
-    if product_option.update_columns(product_option_params)
+    if product_option.update(product_option_params)
       render :show, layout: false, locals: {product_option: product_option}
     else
       render nothing: true, status: :unprocessable_entity

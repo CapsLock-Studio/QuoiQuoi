@@ -1,4 +1,4 @@
-class PastWorkType < ActiveRecord::Base
+class PastWorkType < ApplicationRecord
   has_many :past_works
   has_many :past_work_type_translates
   accepts_nested_attributes_for :past_work_type_translates

@@ -1,4 +1,4 @@
-class CleanExpirePaymentsJob < ActiveJob::Base
+class CleanExpirePaymentsJob < ApplicationJob
   queue_as :default
 
   def perform(payment_object, reason)

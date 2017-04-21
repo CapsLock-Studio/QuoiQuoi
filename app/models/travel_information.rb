@@ -1,4 +1,4 @@
-class TravelInformation < ActiveRecord::Base
+class TravelInformation < ApplicationRecord
   belongs_to :area
   has_many :travel_photos, dependent: :destroy
 

@@ -11,9 +11,9 @@ module AllPay
   def self.service_url
     # Only in production use the regular url.
     if Rails.env.production?
-      'https://payment.allpay.com.tw/Cashier/AioCheckOut'
+      'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V4'
     else
-      'http://payment-stage.allpay.com.tw/Cashier/AioCheckOut'
+      'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V4'
     end
   end
 

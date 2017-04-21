@@ -1,4 +1,4 @@
-class Locale < ActiveRecord::Base
+class Locale < ApplicationRecord
   validates :lang, presence: true
   validates :name, presence: true
 
