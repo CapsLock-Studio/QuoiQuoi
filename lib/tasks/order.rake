@@ -12,12 +12,12 @@ namespace :order do
       if order.delivery_report?
         if order.delivery_report_handled?
           if ((Time.now - order.delivery_report_handled_time) / 1.days).to_i >= 30
-            order.update_columns({closed: true, closed_time: Time.now})
+            order.update({closed: true, closed_time: Time.now})
           end
         end
       else
         if ((Time.now - order.delivered_time) / 1.days).to_i >= 30
-          order.update_columns({closed: true, closed_time: Time.now})
+          order.update({closed: true, closed_time: Time.now})
         end
       end
     end
