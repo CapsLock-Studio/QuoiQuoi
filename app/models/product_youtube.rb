@@ -1,3 +1,3 @@
-class ProductYoutube < ActiveRecord::Base
+class ProductYoutube < ApplicationRecord
   belongs_to :product
 end

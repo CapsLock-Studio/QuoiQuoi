@@ -45,7 +45,7 @@ class CartController < ApplicationController
     add_breadcrumb I18n.t('cart'), :cart_path
     add_breadcrumb I18n.t('check_out')
 
-    @order_in_cart.update_columns(checkout_info_params)
+    @order_in_cart.update(checkout_info_params)
   end
 
   private
@@ -55,6 +55,9 @@ class CartController < ApplicationController
     end
 
     def checkout_info_params
-      params.require(:order).permit(:name, :address, :phone, :zip_code, :shipping_fee_id, :payment_method)
+      result = params.require(:order).permit(:name, :address, :phone, :zip_code, :shipping_fee_id, :payment_method)
+      # result[:shipping_fee_id] = result[:shipping_fee_id].to_i
+
+      result
     end
 end

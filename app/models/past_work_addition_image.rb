@@ -1,4 +1,4 @@
-class PastWorkAdditionImage < ActiveRecord::Base
+class PastWorkAdditionImage < ApplicationRecord
   belongs_to :past_work
 
   has_attached_file :image, styles: {thumb: '100', fit_width: '500'}, default_url: '/system/placeholder/general.gif'

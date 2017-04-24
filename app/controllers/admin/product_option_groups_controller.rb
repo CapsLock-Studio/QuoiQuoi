@@ -32,7 +32,7 @@ class Admin::ProductOptionGroupsController < AdminController
   def update
     product_option_group = ProductOptionGroup.find(params[:id])
 
-    if product_option_group.update_columns(product_option_group_params)
+    if product_option_group.update(product_option_group_params)
       render :show, layout: false, locals: {product_option_group: product_option_group}
     else
       render nothing: true, status: :unprocessable_entity

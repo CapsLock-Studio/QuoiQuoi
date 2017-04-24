@@ -1,4 +1,4 @@
-class PastWorkTranslate < ActiveRecord::Base
+class PastWorkTranslate < ApplicationRecord
   default_scope -> { order(:locale_id) }
   belongs_to :locale
   belongs_to :past_work

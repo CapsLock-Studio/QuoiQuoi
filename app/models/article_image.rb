@@ -1,4 +1,4 @@
-class ArticleImage < ActiveRecord::Base
+class ArticleImage < ApplicationRecord
   belongs_to :article
 
   has_attached_file :image, styles: {thumb: 'x80'}

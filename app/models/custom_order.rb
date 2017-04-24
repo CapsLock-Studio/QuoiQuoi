@@ -1,4 +1,4 @@
-class CustomOrder < ActiveRecord::Base
+class CustomOrder < ApplicationRecord
   belongs_to :user
   belongs_to :locale
   belongs_to :product

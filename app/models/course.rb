@@ -1,4 +1,4 @@
-class Course < ActiveRecord::Base
+class Course < ApplicationRecord
   has_many :course_images, dependent: :destroy
   accepts_nested_attributes_for :course_images, allow_destroy: true
 

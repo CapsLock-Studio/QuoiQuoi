@@ -1,4 +1,4 @@
-class PastWork < ActiveRecord::Base
+class PastWork < ApplicationRecord
   scope :destroy_empty, ->() {where(completion_time: nil).destroy_all}
 
   belongs_to :past_work_type

@@ -1,4 +1,4 @@
-class RequirementIntro < ActiveRecord::Base
+class RequirementIntro < ApplicationRecord
   has_many :requirement_intro_translates, dependent: :destroy
   accepts_nested_attributes_for :requirement_intro_translates, allow_destroy: true
 

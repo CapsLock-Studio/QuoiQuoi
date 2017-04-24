@@ -187,8 +187,21 @@ class RegistrationPaymentController < ApplicationController
   end
 
   def registration_params
-    params.require(:registration).permit(:attendance, :email, :name, :phone, :course_id, :course_option_id, :locale_id,
-                                         :payment_method, registration_options_attributes: [:id, :course_option_id])
+    registration_info = params.require(:registration)
+
+    if registration_info.is_a? String
+      recombined_raw_params = registration_info.split('&').map do |raw_data|
+        pair_data = raw_data.split('=')
+        "registration%5B#{pair_data[0]}%5D=#{pair_data[1]}"
+      end.join('&')
+
+      raw_params = Rack::Utils.parse_nested_query recombined_raw_params
+
+      registration_info = ActionController::Parameters.new(raw_params).require(:registration)
+    end
+
+    registration_info.permit(:attendance, :email, :name, :phone, :course_id, :course_option_id, :locale_id, :payment_method,
+                             registration_options_attributes: [:id, :course_option_id])
   end
 
   def send_request_to_allpay(registration, payment, options = nil)

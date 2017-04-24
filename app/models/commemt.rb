@@ -1,2 +1,2 @@
-class Commemt < ActiveRecord::Base
+class Commemt < ApplicationRecord
 end

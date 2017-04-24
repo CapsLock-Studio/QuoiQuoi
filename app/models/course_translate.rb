@@ -1,4 +1,4 @@
-class CourseTranslate < ActiveRecord::Base
+class CourseTranslate < ApplicationRecord
   belongs_to :course
   belongs_to :locale
 

@@ -1,4 +1,4 @@
-class TravelPhoto < ActiveRecord::Base
+class TravelPhoto < ApplicationRecord
   belongs_to :travel_information
 
   has_attached_file :image, styles: {thumb: 'x80'}

@@ -1,4 +1,4 @@
-class ProductTranslate < ActiveRecord::Base
+class ProductTranslate < ApplicationRecord
   default_scope -> { order(:locale_id) }
 
   belongs_to :product

@@ -1,4 +1,4 @@
-class CourseImage < ActiveRecord::Base
+class CourseImage < ApplicationRecord
   default_scope ->(){ order(:id) }
   belongs_to :course
 

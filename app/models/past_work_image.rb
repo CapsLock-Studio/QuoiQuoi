@@ -1,4 +1,4 @@
-class PastWorkImage < ActiveRecord::Base
+class PastWorkImage < ApplicationRecord
   default_scope ->() {order(:id)}
 
   belongs_to :past_work

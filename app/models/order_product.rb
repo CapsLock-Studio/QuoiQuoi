@@ -1,4 +1,4 @@
-class OrderProduct < ActiveRecord::Base
+class OrderProduct < ApplicationRecord
   default_scope ->(){ order(:id) }
 
   belongs_to :order

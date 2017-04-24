@@ -1,4 +1,4 @@
-class ProductOptionGroup < ActiveRecord::Base
+class ProductOptionGroup < ApplicationRecord
   default_scope ->() {order(:id)}
 
   validates :name, presence: true

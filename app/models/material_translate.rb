@@ -1,4 +1,4 @@
-class MaterialTranslate < ActiveRecord::Base
+class MaterialTranslate < ApplicationRecord
   belongs_to :material
   belongs_to :locale
 end

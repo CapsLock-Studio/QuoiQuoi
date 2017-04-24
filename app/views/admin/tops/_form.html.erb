@@ -4,7 +4,7 @@
       <div class="col-sm-6">
         <div class="box image-preview-box">
           <%= image_tag f.object.image.url(:medium), class: 'img-responsive' %>
-          <%= f.file_field :image, title: '選擇圖片', class: 'btn-block' %>
+          <%= f.file_field :image, title: '選擇圖片', class: 'btn-block fit-placeholder-size' %>
         </div>
       </div>
       <div class="col-sm-6">

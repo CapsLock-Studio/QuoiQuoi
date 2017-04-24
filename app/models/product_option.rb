@@ -1,4 +1,4 @@
-class ProductOption < ActiveRecord::Base
+class ProductOption < ApplicationRecord
   default_scope ->() {order(:id)}
 
   validates :price, numericality: true, presence: true

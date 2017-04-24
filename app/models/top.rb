@@ -1,4 +1,4 @@
-class Top < ActiveRecord::Base
+class Top < ApplicationRecord
   has_many :top_translates, dependent: :destroy
 
   accepts_nested_attributes_for :top_translates

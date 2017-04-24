@@ -1,3 +1,3 @@
-class Ship < ActiveRecord::Base
+class Ship < ApplicationRecord
   belongs_to :order
 end

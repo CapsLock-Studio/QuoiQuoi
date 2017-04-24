@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
     # @order_in_cart.checkout_time = Time.now
     @order_in_cart.subtotal = @order_in_cart.get_subtotal
 
-    if @order_in_cart.update_columns(order_params) && @order_in_cart.save
+    if @order_in_cart.update(order_params) && @order_in_cart.save
 
       @order_in_cart.reload
 
@@ -64,7 +64,7 @@ class OrdersController < ApplicationController
     unless @order.order_payment.nil?
 
       if params['RtnCode'] == '10100073' || params['RtnCode'] == '2'
-        @order.order_payment.update_columns(
+        @order.order_payment.update(
             {
                 expire_time: params['ExpireDate'],
                 trade_no: params['TradeNo'],
@@ -232,26 +232,34 @@ class OrdersController < ApplicationController
   ###################### Discarded code ##########################
 
   def return
-    flash.now[:icon] = 'fa-smile-o'
-    flash.now[:status] = 'success'
-    flash.now[:message] = t('payment_completed')
-
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('order.in_trading'), :orders_path
     add_breadcrumb t('detail')
 
-    @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
+    if params['RtnCode'] == '1' || params['RtnCode'] == '3'
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
 
-    # Not really update order entity, just show the newest status.
-    @order.order_payment.trade_no = params['TradeNo']
-    @order.order_payment.trade_time = params['TradeDate']
-    @order.order_payment.payment_time = params['PaymentDate']
-    @order.order_payment.completed =  true
-    @order.order_payment.completed_time = Time.now
+      @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
 
-    @order.order_payment.save!
+      # Not really update order entity, just show the newest status.
+      @order.order_payment.trade_no = params['TradeNo']
+      @order.order_payment.trade_time = params['TradeDate']
+      @order.order_payment.payment_time = params['PaymentDate']
+      @order.order_payment.completed =  true
+      @order.order_payment.completed_time = Time.now
 
-    OrderMailer.completed_confirmation(@order.id).deliver_later
+      @order.order_payment.save!
+
+      OrderMailer.completed_confirmation(@order.id).deliver_later
+    else
+      errorCodes = JSON.parse(File.read('app/assets/javascripts/ecpayErrorCodes.json'))
+
+      flash.now[:icon] = 'fa-exclamation-triangle'
+      flash.now[:status] = 'danger'
+      flash.now[:message] = "#{t('error_code')}: #{params['RtnCode']}, #{errorCodes[params['RtnCode']]} 🚫 #{t('payment_failed')}"
+    end
 
     render 'orders/show'
   end
@@ -262,6 +270,8 @@ class OrdersController < ApplicationController
     end
 
     def order_params
+      params[:order][:payment_method] = params[:order][:payment_method].to_i
+
       params.require(:order).permit(:name, :address, :phone, :zip_code, :shipping_fee_id, :payment_method)
     end
 
