@@ -324,6 +324,7 @@ DEPENDENCIES
   omniauth-twitter
   paperclip
   paypal-express
+  pg
   puma (~> 3.0)
   rails (~> 5.0.2)
   recaptcha
