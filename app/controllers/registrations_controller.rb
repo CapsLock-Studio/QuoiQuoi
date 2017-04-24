@@ -9,7 +9,9 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registrations')
 
-    @registrations = Registration.includes(:registration_payment).where(email: (current_user.nil?)? session[:no_authenticate_email] : current_user.email).order(:id)
+    @registrations = Registration.includes(:registration_payment)
+                         .where(email: (current_user.nil?)? session[:no_authenticate_email] : current_user.email)
+                         .order(:id)
   end
 
   def close_index
