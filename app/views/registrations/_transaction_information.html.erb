@@ -145,7 +145,7 @@
       <%= "#{(registration_payment.registration.remittance?)? t('report_confirmed') : t('completed_payment')} (#{registration_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')})" %>
       <%= render 'remittance_report_info', remittance_report: registration_payment.registration_remittance_reports.last if registration_payment.registration.remittance? %>
 
-    <% elsif !registration_payment.registration.course.canceled? && !registration_payment.cancel? %>
+    <% elsif !(registration_payment.registration.course ||= Course.new).canceled? && !registration_payment.cancel? %>
       <% if !registration_payment.registration.remittance? || (registration_payment.registration.remittance? && !registration_payment.has_valid_remittance_reports?) %>
         <%= t('registration.wait_paying') %>
       <% elsif registration_payment.has_valid_remittance_reports? && !registration_payment.registration_remittance_reports.last.confirm.nil? %>
