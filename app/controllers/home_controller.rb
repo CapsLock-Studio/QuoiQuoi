@@ -5,6 +5,9 @@ class HomeController < ApplicationController
     @slides = Slide.all.order(:sort)
     @broadcasts = Broadcast.all.order(:sort)
     @tops = []
+    @latest_product = Product.last
+    @latest_course = Course.last
+
     Top.order(:sort).each do |top|
       @tops << {image: top.image.url(:medium), link: top.top_translates.where(locale_id: session[:locale_id]).first.link}
     end
