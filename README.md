@@ -88,3 +88,18 @@ end
 ```
 
 ECPay will send the payment result at path `http://domain.com/order_payment_callback/allpay_complete`, `http://domain.com/registration_payment_callback/allpay_complete` by `POST` method. So if you want to try payment in localhost it will be impossible.
+
+## Start Rails App
+### Migrate DB
+Ensure your role have privilege to create database and run `rake db:create` or `rake db:create RAILS_ENV=production`, if no, you need do it manually.
+ 
+QuoiQuoi use PostgreSQL in production environment, you can use SQLite in dev but this is not recommended because `extract` query is not supported in SQLite.
+
+### Precompile assets
+`rake assets:precompile RAILS_ENV=production` or just start up webrick server `rails s`, compass will compile all scss files automatically in dev.
+
+### Run sidekiq for jobs queue
+`sidekiq -q mailers,1 -q default,1`. You can run the [Supervisor](http://supervisord.org/) to protect sidekiq job. 
+
+### Unicorn
+Modify `config/unicorn.config` to fit your requirement then run `unicorn -c config/unicorn.config -D -E production`.
