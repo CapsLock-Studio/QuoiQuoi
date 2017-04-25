@@ -47,3 +47,44 @@ Recaptcha.configure do |config|
 end
 ```
 Unfortunately we has not upgrade to invisible reCAPTCHA, it is a TO-DO item.
+
+### Paypal
+Register a REST app in paypal developer.
+```yaml
+development: &sandbox # change to your own
+  username: SET_YOUR_OWN
+  password: SET_YOUR_OWN
+  signature: SET_YOUR_OWN
+  sandbox: true
+
+test:
+  <<: *sandbox
+
+production: &production
+  username: SET_YOUR_OWN
+  password: SET_YOUR_OWN
+  signature: SET_YOUR_OWN
+  sandbox: false
+```
+
+### ECPay
+ECPay is a payment solution and pretty easy to integrate in Taiwan. 
+
+You have to register the developer account in [ECPay](https://www.ecpay.com.tw), then put your merchant id, hash key, and iv to `config/initializers/allpay.rb`.
+```ruby
+require 'allpay'
+
+AllPay.setup do |allpay|
+  if Rails.env.production?
+    allpay.merchant_id = 'write your production merchant_id'
+    allpay.hash_key    = 'write your production hash_key'
+    allpay.hash_iv     = 'write your production hash_iv'
+  else
+    allpay.merchant_id = 'write your development merchant_id'
+    allpay.hash_key    = 'write your development hash key'
+    allpay.hash_iv     = 'write your development hash iv'
+  end
+end
+```
+
+ECPay will send the payment result at path `http://domain.com/order_payment_callback/allpay_complete`, `http://domain.com/registration_payment_callback/allpay_complete` by `POST` method. So if you want to try payment in localhost it will be impossible.
