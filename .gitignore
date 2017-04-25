@@ -32,3 +32,4 @@ test_db
 secret_token.rb
 devise.rb
 omniauth.rb
+paypal.yml
