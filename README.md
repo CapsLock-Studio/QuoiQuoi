@@ -18,7 +18,7 @@ You can use this project to the case study for Rails in real business website.
 ## Configurations
 ### Use a strong token to protect your cookie
 Run `rake secret` to obtain a strong secret token and put it into `config/initializers/secret_token.rb`.
-```
+```ruby
 QuoiQuoi::Application.config.secret_key_base = 'TOKEN FROM [rake secret]'
 ```
 
@@ -29,7 +29,7 @@ Run `devise:install` command in your project. [Devise getting started](https://g
 QuoiQuoi support user sign in with Google or Facebook by omni-auth. You have to apply your test app at [Google API Console](https://console.developers.google.com) and [Facebook for Developers](https://developers.facebook.com).
 
 After registering your app and putting these keys and secrets into `config/initiailizers/omniauth.rb`. There is a little different to [OmniAuth getting started](https://github.com/omniauth/omniauth#getting-started) document. We supply omni-auth hull host variable for sign in from email token. 
-```
+```ruby
 OmniAuth.config.full_host = Rails.env.production? ? 'https://YOUR_PRODUCTION_DOMAIN' : 'http://localhost:3000'
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, 'OAUTH_TOKEN'
@@ -40,7 +40,7 @@ end
 
 ### Set up reCAPTCHA v2
 QuoiQuoi allows users to register courses without sign in, reCAPTCHA protect our service from BOT attack, it really good. You have to [Get reCAPTCHA](https://www.google.com/recaptcha/admin#list) and add key and secret to `config/initializers/recaptcha.rb` ([Alternative API key setup](https://github.com/ambethia/recaptcha#alternative-api-key-setup)).
-```
+```ruby
 Recaptcha.configure do |config|
   config.site_key  = 'YOUR_RECAPTCHA_SITE_KEY'
   config.secret_key = 'YOUR_RECAPTCHA_SECRET_KEY'
