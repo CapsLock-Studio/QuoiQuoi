@@ -27,6 +27,10 @@ class UserGiftsController < ApplicationController
 
     flash[:message] = nil
 
+    @gift = Gift.includes(:gift_translate)
+        .where(id: user_gift_params[:gift_id], gift_translates: { locale_id: session[:locale_id] })
+        .first
+
     @user_gift = UserGift.new(user_gift_params)
   end
 
