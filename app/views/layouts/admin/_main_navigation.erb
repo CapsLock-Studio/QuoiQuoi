@@ -178,7 +178,6 @@
         </ul>
       <% end %>
 
-      <!--
       <%= nav_item_with_resource('#', nil, UserGift) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
           <i class="icon-gift"></i>
@@ -200,7 +199,6 @@
           <% end %>
         </ul>
       <% end %>
-      -->
 
       <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*|#{admin_product_types_path}.*)/}, Product) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) or is_in(:product_types) or is_in(:product_material_types) %>" href="#">
@@ -244,34 +242,6 @@
           <span>過去作品管理</span>
         <% end %>
       <% end %>
-
-      <!--
-      <%= nav_item_with_resource('#', nil, Material) do %>
-        <a class="dropdown-collapse <%= 'in' if (is_in(:order_information) or is_in(:instructions)) %>" href="#">
-          <i class="icon-heart-empty"></i>
-          <span>訂製手作包管理</span>
-          <i class="icon-angle-down"></i>
-        </a>
-        <ul class="nav <%= 'in' if is_in(:order_information) or is_in(:instructions) %>">
-          <% Locale.all.each do |locale| %>
-            <%= nav_item_with_resource(nil, {rule: /#{admin_locale_order_information_index_path(locale)}.*/}, OrderInformation) do %>
-              <%= link_to(admin_locale_order_information_index_path(locale)) do %>
-                <i class="icon-info"></i>
-                <span>訂購須知管理 (<%= locale.name %>)</span>
-              <% end %>
-            <% end %>
-          <% end %>
-          <% Locale.all.each do |locale| %>
-            <%= nav_item_with_resource(nil, {rule: /#{admin_locale_instructions_path(locale)}.*/}, Instruction) do %>
-              <%= link_to(admin_locale_instructions_path(locale)) do %>
-                <i class="icon-info-sign"></i>
-                <span>訂購說明管理 (<%= locale.name %>)</span>
-              <% end %>
-            <% end %>
-          <% end %>
-        </ul>
-      <% end %>
-      -->
 
       <%= nav_item_with_resource('#', {rule: /#{admin_articles_path}.*|#{admin_article_types_path}.*/}, Article) do %>
       <a class="dropdown-collapse <%= 'in' if is_in(:articles) or is_in(:article_types) %>" href="#">
