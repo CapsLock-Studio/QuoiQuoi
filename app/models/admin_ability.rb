@@ -43,9 +43,6 @@ class AdminAbility
       can :manage, ShippingFee
       can :manage, TravelInformation
       can :manage, TravelPhoto
-      can :manage, OrderInformation
-      can :manage, Instruction
-      can :manage, InstructionImage
       can :manage, Area
       can :manage, Faq
       can :manage, ProductType
