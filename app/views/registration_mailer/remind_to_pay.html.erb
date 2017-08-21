@@ -72,7 +72,7 @@
           <%= t('mailer.report_button') if @registration.remittance? %>
 
           <!-- Online payment hint -->
-          <%= t('click_to_continue_paying') if @registration.paypal? || @registration.alipay? || @registration.webatm? %>
+          <%= t('click_to_continue_paying') if @registration.paypal? || @registration.alipay? || @registration.webatm? || @registration.credit_card? %>
 
           <!-- CVS Tutorial -->
           <%= t('cvs_tutorial', cvs: t("#{@registration.payment_method}")) if @registration.cvs_ibon? || @registration.cvs_family? %>

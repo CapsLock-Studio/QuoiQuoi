@@ -103,7 +103,7 @@
           <%= t('mailer.report_button') if @order.remittance? %>
 
           <!-- Online payment hint -->
-          <%= t('click_to_continue_paying') if @order.paypal? || @order.alipay? || @order.webatm? %>
+          <%= t('click_to_continue_paying') if @order.paypal? || @order.alipay? || @order.webatm? || @order.credit_card? %>
 
           <!-- CVS Tutorial -->
           <%= t('cvs_tutorial', cvs: t("#{@order.payment_method}")) if @order.cvs_ibon? || @order.cvs_family? %>
