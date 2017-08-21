@@ -11,6 +11,10 @@ class OnlinePaymentRemindJob < ApplicationJob
       if payment_object.is_a?(OrderPayment)
         OrderMailer.remind_to_pay(payment_object.order_id, I18n.translate('mailer.subject.payment.online')).deliver_later
       end
+
+      if payment_object.is_a?(UserGiftPayment)
+        UserGiftMailer.remind_to_pay(payment_object.user_gift_id, I18n.translate('mailer.subject.payment.online')).deliver_later
+      end
     end
   end
 end
