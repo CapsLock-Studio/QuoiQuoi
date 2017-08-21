@@ -27,11 +27,11 @@ class UserGiftsController < ApplicationController
 
     flash[:message] = nil
 
-    @gift = Gift.includes(:gift_translate)
-        .where(id: user_gift_params[:gift_id], gift_translates: { locale_id: session[:locale_id] })
-        .first
-
-    @user_gift = UserGift.new(user_gift_params)
+    @user_gift = Gift.includes(:gift_translate)
+                     .where(gift_translates: { locale: session[:locale_id] }, id: user_gift_params[:gift_id])
+                     .first
+                     .user_gifts
+                     .build(user_gift_params)
   end
 
   def send_email
@@ -70,20 +70,17 @@ class UserGiftsController < ApplicationController
     end
   end
 
-  def pay_show
+  def payment
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('register')
+    add_breadcrumb t('check_out')
 
-    #respond_to do |format|
-    #  format.html {render json: @user_gift.gift.gift_translates.where(locale_id: session[:locale_id])}
-    #end
+    @user_gift = Gift.includes(:gift_translate)
+                        .where(gift_translates: {locale_id: session[:locale_id]}, id: user_gift_params[:gift_id])
+                        .first
+                        .user_gifts.build(user_gift_params)
 
-    if @user_gift.payment && @user_gift.payment.completed?
-      redirect_to user_gift_path(@user_gift)
-    elsif @user_gift.payment
-      @user_gift.payment.destroy
-      @payment = @user_gift.build_payment
-    else
-      @payment = @user_gift.build_payment
-    end
+    @user_gift.locale_id = session[:locale_id]
   end
 
   def search
