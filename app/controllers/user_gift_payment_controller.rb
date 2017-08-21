@@ -1,0 +1,2 @@
+class UserGiftPaymentController < ApplicationController
+end
