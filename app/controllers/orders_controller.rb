@@ -236,12 +236,12 @@ class OrdersController < ApplicationController
     add_breadcrumb t('order.in_trading'), :orders_path
     add_breadcrumb t('detail')
 
+    @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
+
     if params['RtnCode'] == '1' || params['RtnCode'] == '3'
       flash.now[:icon] = 'fa-smile-o'
       flash.now[:status] = 'success'
       flash.now[:message] = t('payment_completed')
-
-      @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
 
       # Not really update order entity, just show the newest status.
       @order.order_payment.trade_no = params['TradeNo']
