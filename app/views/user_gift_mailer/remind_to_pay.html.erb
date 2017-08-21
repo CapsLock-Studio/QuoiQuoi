@@ -86,6 +86,7 @@
       <a href="<%= user_gift_url(@user_gift.id) if @user_gift.remittance? %>
                <%= user_gift_payment_url(@user_gift.id, action: :webatm_resume) if @user_gift.webatm? %>
                <%= user_gift_payment_url(@user_gift.id, action: :alipay_resume) if @user_gift.alipay? %>
+               <%= user_gift_payment_url(@user_gift.id, action: :credit_card_resume) if @user_gift.credit_card? %>
                <%= @user_gift.user_gift_payment.redirect_uri if @user_gift.paypal? %>
                <%= 'https://www.allpay.com.tw/Service/pay_way_cvpay' if @user_gift.cvs_ibon? || @user_gift.cvs_family? %>
                <%= 'https://www.165.gov.tw/' if @user_gift.atm? %>" style="text-decoration:none;">
@@ -97,7 +98,7 @@
                 <%= t('report_remittance') if @user_gift.remittance? %>
                 <%= t('continue_on_alipay') if @user_gift.alipay? %>
                 <%= t('continue_on_paypal') if @user_gift.paypal? %>
-                <%= t('continue_pay_page') if @user_gift.webatm? %>
+                <%= t('continue_pay_page') if @user_gift.webatm? || @user_gift.credit_card? %>
                 <%= t('atm_remind_link') if @user_gift.atm? %>
                 <%= t('cvs_tutorial_link') if @user_gift.cvs_family? || @user_gift.cvs_ibon? %>
               </font>
