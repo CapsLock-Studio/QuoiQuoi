@@ -214,6 +214,7 @@ zh-TW:
     discount: '%{percent}折優惠'
 
   user_gift:
+    no_s: '禮券編號'
     success: '禮券扣款成功!'
     danger: '禮券扣款失敗, 請聯絡店家查明原因'
     not_found: '這不是有效的禮券序號'
