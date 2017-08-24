@@ -5,11 +5,14 @@ class UserGift < ApplicationRecord
   belongs_to :gift
   belongs_to :order
   belongs_to :registration
+  belongs_to :locale
 
   has_one :payment
   has_many :user_gift_serials, dependent: :destroy
 
   belongs_to :used_user, class_name: 'User', foreign_key: 'used_user_id'
+
+  has_one :user_gift_payment, dependent: :destroy
 
   def paid?
     self.payment
