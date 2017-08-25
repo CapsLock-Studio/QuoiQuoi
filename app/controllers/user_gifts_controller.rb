@@ -20,20 +20,6 @@ class UserGiftsController < ApplicationController
     flash[:message] = nil
   end
 
-  def new
-    add_breadcrumb t('home'), root_path
-    add_breadcrumb t('gift'), gifts_path
-    add_breadcrumb t('check_out')
-
-    flash[:message] = nil
-
-    @user_gift = Gift.includes(:gift_translate)
-                     .where(gift_translates: { locale: session[:locale_id] }, id: user_gift_params[:gift_id])
-                     .first
-                     .user_gifts
-                     .build(user_gift_params)
-  end
-
   def send_email
     flash[:message] = t('mailer.success')
     flash[:status] = 'success'
