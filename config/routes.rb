@@ -352,6 +352,20 @@ QuoiQuoi::Application.routes.draw do
     resources :user_gifts do
       member do
         post :send_email, action: :send_email
+
+        get :close, action: :close_show
+        put :close
+        patch :close
+        put :cancel
+        post :cancel
+
+        put :report_remittance
+        post :report_remittance
+
+        post :return
+        put :delivery_report
+
+        post action: :update
       end
 
       collection do
