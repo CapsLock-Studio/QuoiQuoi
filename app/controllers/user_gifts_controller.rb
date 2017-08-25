@@ -3,6 +3,8 @@ class UserGiftsController < ApplicationController
   before_action :set_user_gift, except: [:index, :search]
   before_action :set_user_gift_serial_by_serial, only: [:search, :discount]
 
+  skip_before_action :verify_authenticity_token, only: [:update, :return]
+
   def index
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('my_gift'), :user_gifts_path
@@ -29,19 +31,7 @@ class UserGiftsController < ApplicationController
   end
 
   def create
-
-    locale = Locale.find(session[:locale_id])
-    @user_gift = UserGift.new(user_gift_params.merge({user_id: current_user.id}))
-    @user_gift.currency = locale.currency
-    @user_gift.locale_id = locale.id
-
-    respond_to do |format|
-      if @user_gift.save
-        format.html {redirect_to pay_user_gift_path(@user_gift)}
-      else
-        format.html {redirect_to gift_path(@user_gift.gift)}
-      end
-    end
+    redirect_to controller: :user_gift_payment, action: UserGift.new(user_gift_params).payment_method, params: params
   end
 
   def update
@@ -56,6 +46,39 @@ class UserGiftsController < ApplicationController
     end
   end
 
+  def return
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('order.in_trading'), :orders_path
+    add_breadcrumb t('detail')
+
+    @user_gift = UserGift.find(params['MerchantTradeNo'].delete('G').split('t')[0])
+
+    if params['RtnCode'] == '1' || params['RtnCode'] == '3'
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
+
+      # Not really update order entity, just show the newest status.
+      @user_gift.user_gift_payment.trade_no = params['TradeNo']
+      @user_gift.user_gift_payment.trade_time = params['TradeDate']
+      @user_gift.user_gift_payment.payment_time = params['PaymentDate']
+      @user_gift.user_gift_payment.completed =  true
+      @user_gift.user_gift_payment.completed_time = Time.now
+
+      @user_gift.user_gift_payment.save!
+
+      UserGiftMailer.completed_confirmation(@user_gift.id).deliver_later
+    else
+      errorCodes = JSON.parse(File.read('app/assets/javascripts/ecpayErrorCodes.json'))
+
+      flash.now[:icon] = 'fa-exclamation-triangle'
+      flash.now[:status] = 'danger'
+      flash.now[:message] = "#{t('error_code')}: #{params['RtnCode']}, #{errorCodes[params['RtnCode']]} 🚫 #{t('payment_failed')}"
+    end
+
+    render 'user_gifts/show'
+  end
+  
   def payment
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('register')
@@ -181,7 +204,7 @@ class UserGiftsController < ApplicationController
 
   private
     def user_gift_params
-      params.require(:user_gift).permit(:id, :gift_id, :quantity)
+      params.require(:user_gift).permit(:id, :gift_id, :quantity, :payment_method)
     end
 
     def set_user_gift
