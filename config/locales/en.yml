@@ -181,6 +181,7 @@ en:
     add: 'Add'
 
   user_gift:
+    no_s: 'Gift Card No.'
     success: 'Use gift card successfully!'
     danger: 'Use gift card failed, please contact us to find out the reason.'
     not_found: 'This is not valid serial number'
