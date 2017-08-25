@@ -43,6 +43,13 @@
             <%= link_to t('registration.all'), registrations_path %>
           </div>
         </li>
+        <% if has_user_gifts? %>
+          <li>
+            <div>
+              <%= link_to t('user_gift.my'), user_gifts_path %>
+            </div>
+          </li>
+        <% end %>
         <li>
           <div>
             <%= link_to t('custom_order.all'), custom_orders_path %>
