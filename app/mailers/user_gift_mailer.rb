@@ -1,37 +1,46 @@
 class UserGiftMailer < ActionMailer::Base
   default from: 'admin@quoiquoi.tw'
 
-  def remittance_remind(user_gift_id)
-    @user_gift = UserGift.find(user_gift_id)
-    I18n.locale = Locale.find(@user_gift.locale_id).lang
+  def remind_to_pay(id, subject)
+    @user_gift = UserGift.find(id)
+    @locale_id = @user_gift.locale_id
 
-    mail(to: @user_gift.user.email, subject: t('mailer.subject_for_remittance_gift'))
+    I18n.locale = @user_gift.locale.lang
+
+    # Setup expire payment clean job
+    CleanExpirePaymentsJob.set(
+        wait_until: (@user_gift.user_gift_payment.expire_time.nil?)? (Time.now + 3.days).end_of_day : @user_gift.user_gift_payment.expire_time
+    ).perform_later(@user_gift.user_gift_payment, t('payment_expired'))
+
+    mail(to: @user_gift.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: subject)
   end
 
-  def remittance_remind_three_days(user_gift_id)
-    @user_gift = UserGift.find(user_gift_id)
-    I18n.locale = Locale.find(@user_gift.locale_id).lang
+  def request_remit_payment_again(id)
+    @report = UserGiftRemittanceReport.find(id)
+    @user_gift = @report.user_gift_payment.user_gift
+    @locale_id = @user_gift.locale_id
 
-    mail(to: @user_gift.user.email, subject: t('mailer.subject_for_three_days'))
+    I18n.locale = @user_gift.locale.lang
+
+    mail(to: @user_gift.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject.payment.remittance_report_fail'))
   end
 
-  def re_remittance_remind(user_gift_id, amount, identifier, pay_time)
-    @user_gift = UserGift.find(user_gift_id)
-    I18n.locale = Locale.find(@user_gift.locale_id).lang
+  def completed_confirmation(id)
+    @user_gift = Order.find(id)
+    @locale_id = @user_gift.locale_id
 
-    @user_gift.payment.amount = amount
-    @user_gift.payment.identifier = identifier
-    @user_gift.payment.pay_time = pay_time
+    I18n.locale = @user_gift.locale.lang
 
-    mail(to: @user_gift.user.email, subject: t('mailer.subject_for_re_remittance'))
+    mail(to: @user_gift.user.email, bcc: ['quoiquoi.tw@gmail.com'], subject: t('mailer.subject_for_completed_gift'))
+
+    OrderMailer.remind_completed(@user_gift.id).deliver_later
   end
 
-  def completed_remind(user_gift_id)
-    @user_gift = UserGift.find(user_gift_id)
-    @locale_lang = Locale.find(@user_gift.locale_id).lang
-    I18n.locale = @locale_lang
-
-    mail(to: @user_gift.user.email, subject: t('mailer.subject_for_completed_gift'))
+  # Send to manager for notification
+  def remind_remittance_report(id)
+    @report = UserGiftRemittanceReport.find(id)
+    @user_gift = @report.user_gift_payment.user_gift
+    mail(to: $redis.get('about:locale:1:email'), subject: "[quoiquoi.tw] 系統提醒 禮券購買編號#{@user_gift.id}有匯款回報 - 回報編號#{@report.id}待確認")
   end
 
   def send_to_other(user_gift_serial_id, email)
