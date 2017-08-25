@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-md-6 col-sm-12 col-xs-12">
-    <%= image_tag gift.image.url(:thumb) %>
+    <%= image_tag @user_gift.gift.image.url(:thumb) %>
   </div>
   <div class="col-md-6 col-sm-12 col-xs-12">
-    <h4><%= gift.gift_translate.name %></h4>
+    <h4><%= "#{@user_gift.gift.gift_translate.name} x #{@user_gift.quantity}" %></h4>
     <div class="row">
       <div class="col-xs-12 text-muted">
         <%= t('user_gift.quota') %>
       </div>
       <div class="col-xs-12">
-        <%= number_to_currency(gift.gift_translate.quota) %>
+        <%= number_to_currency(@user_gift.gift.gift_translate.quota) %>
       </div>
     </div>
   </div>
