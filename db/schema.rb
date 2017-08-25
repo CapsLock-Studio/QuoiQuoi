@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821032353) do
+ActiveRecord::Schema.define(version: 20170821074354) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -999,6 +999,40 @@ ActiveRecord::Schema.define(version: 20170821032353) do
     t.datetime "image_updated_at"
   end
 
+  create_table "user_gift_payments", force: :cascade do |t|
+    t.float    "amount"
+    t.string   "token"
+    t.string   "bankcode"
+    t.string   "account"
+    t.datetime "expire_time"
+    t.string   "trade_no"
+    t.datetime "trade_time"
+    t.string   "payment_no"
+    t.boolean  "completed"
+    t.datetime "completed_time"
+    t.string   "redirect_uri"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "user_gift_id"
+    t.boolean  "cancel",         default: false
+    t.text     "cancel_reason"
+    t.datetime "cancel_time"
+    t.string   "payer_id"
+    t.datetime "payment_time"
+    t.index ["user_gift_id"], name: "index_user_gift_payments_on_user_gift_id"
+  end
+
+  create_table "user_gift_remittance_reports", force: :cascade do |t|
+    t.float    "amount"
+    t.integer  "account"
+    t.datetime "date"
+    t.boolean  "confirm",              default: false
+    t.integer  "user_gift_payment_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.index ["user_gift_payment_id"], name: "index_user_gift_remittance_reports_on_user_gift_payment_id"
+  end
+
   create_table "user_gift_serials", force: :cascade do |t|
     t.integer  "user_gift_id"
     t.string   "serial"
@@ -1024,6 +1058,8 @@ ActiveRecord::Schema.define(version: 20170821032353) do
     t.integer  "registration_id"
     t.integer  "quantity"
     t.integer  "payment_method",  default: 0
+    t.boolean  "checkout"
+    t.datetime "checkout_time"
     t.index ["order_id"], name: "index_user_gifts_on_order_id"
     t.index ["registration_id"], name: "index_user_gifts_on_registration_id"
   end
