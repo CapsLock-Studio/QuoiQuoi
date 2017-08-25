@@ -1,0 +1,215 @@
+<div class="row margin-bottom-10">
+  <div class="col-xs-12">
+    <span class="text-muted">
+      <%= t('payment_method') %>
+    </span>
+  </div>
+  <div class="col-xs-12">
+    <%= t(user_gift_payment.user_gift.payment_method) %>
+  </div>
+</div>
+
+<% if user_gift_payment.user_gift.remittance? %>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('account_name') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:name") %>
+      </strong>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('account_number') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:account") %>
+      </strong>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('bank_code') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:code") %>
+      </strong>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('bank_name') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= $redis.get("remittance:locale:#{session[:locale_id]}:bank_name") %>
+      </strong>
+    </div>
+  </div>
+
+  <% unless $redis.get("remittance:locale:#{session[:locale_id]}:bank_address}").blank? %>
+    <div class="row margin-bottom-10">
+      <div class="col-xs-12">
+        <span class="text-muted">
+          <%= t('bank_address') %>
+        </span>
+      </div>
+      <div class="col-xs-12">
+        <strong class="text-orange">
+          <%= $redis.get("remittance:locale:#{session[:locale_id]}:bank_address}") %>
+        </strong>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<%# CVS payments %>
+<% if user_gift_payment.user_gift.cvs_family? || user_gift_payment.user_gift.cvs_ibon? %>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('payment_no') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= user_gift_payment.payment_no ||= '尚未取得' %>
+      </strong>
+    </div>
+  </div>
+<% end %>
+
+<% if user_gift_payment.user_gift.atm? %>
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('bankcode') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= user_gift_payment.bankcode %>
+      </strong>
+    </div>
+  </div>
+
+  <div class="row margin-bottom-10">
+    <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('virtual_account') %>
+      </span>
+    </div>
+    <div class="col-xs-12">
+      <strong class="text-orange">
+        <%= user_gift_payment.account %>
+      </strong>
+    </div>
+  </div>
+<% end %>
+
+<div class="row margin-bottom-10">
+  <div class="col-xs-12">
+      <span class="text-muted">
+        <%= t('expire_time') %>
+      </span>
+  </div>
+  <div class="col-xs-12">
+    <strong class="text-orange">
+      <%= (user_gift_payment.expire_time ||= (user_gift_payment.user_gift.checkout_time + 3.days).end_of_day).strftime('%Y/%m/%d %H:%I') %>
+    </strong>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <span class="text-muted">
+      <%= t('status') %>
+    </span>
+  </div>
+  <div class="col-xs-12">
+    <% if user_gift_payment.completed? %>
+      <%= "#{(user_gift_payment.user_gift.remittance?)? t('report_confirmed') : t('completed_payment')} (#{user_gift_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')})" %>
+      <%= render 'remittance_report_info', remittance_report: user_gift_payment.user_gift_remittance_reports.last if user_gift_payment.user_gift.remittance? %>
+
+    <% elsif !user_gift_payment.cancel? %>
+      <% if !user_gift_payment.user_gift.remittance? || (user_gift_payment.user_gift.remittance? && !user_gift_payment.has_valid_remittance_reports?) %>
+        <%= t('order.wait_paying') %>
+      <% elsif user_gift_payment.has_valid_remittance_reports? && !user_gift_payment.user_gift_remittance_reports.last.confirm.nil? %>
+        <%= t('report_denied') %>
+      <% end %>
+
+      <%= t('report_in_process') if user_gift_payment.remittance_reports_in_process? %>
+      <%= render 'remittance_report_info', remittance_report: user_gift_payment.user_gift_remittance_reports.last if user_gift_payment.has_valid_remittance_reports? %>
+
+      <%= link_to(
+              t('continue_pay_page'),
+              url_for(controller: :user_gift_payment, action: :webatm_resume, id: user_gift_payment.user_gift_id),
+              class: 'btn btn-primary btn-xs') if user_gift_payment.user_gift.webatm? %>
+      <%= link_to(
+              t('continue_pay_page'),
+              url_for(controller: :user_gift_payment, action: :credit_card_resume, id: user_gift_payment.user_gift_id),
+              class: 'btn btn-primary btn-xs') if user_gift_payment.user_gift.credit_card? %>
+      <%= link_to(
+              t('continue_pay_page'),
+              url_for(controller: :user_gift_payment, action: :alipay_resume, id: user_gift_payment.user_gift_id),
+              class: 'btn btn-primary btn-xs') if user_gift_payment.user_gift.alipay? %>
+      <%= link_to t('continue_on_paypal'), user_gift_payment.redirect_uri, class: 'btn btn-xs btn-primary' if user_gift_payment.user_gift.paypal? %>
+
+      <% if !user_gift_payment.remittance_reports_in_process? %>
+        <% if user_gift_payment.user_gift.remittance? %>
+
+          <% if user_gift_payment.has_valid_remittance_reports? && !user_gift_payment.user_gift_remittance_reports.last.confirm %>
+            <div class="row margin-bottom-5">
+              <div class="col-xs-12">
+                <strong>
+                  <i class="fa fa-fw fa-comment-o"></i>
+                  <%= user_gift_payment.user_gift_remittance_reports.last.message %>
+                </strong>
+              </div>
+            </div>
+          <% end %>
+
+          &nbsp;
+          <a class="btn-sm btn-primary" data-toggle="modal" data-target="#report-remittance-form" href="#">
+            <%= (user_gift_payment.has_valid_remittance_reports?)? t('submit_again') : t('report_remittance') %>
+          </a>
+          <%= render 'report_remittance_form', user_gift_id: user_gift_payment.user_gift.id %>
+        <% end %>
+
+        &nbsp;
+        <a class="btn-xs btn-link" data-toggle="modal" data-target="#cancel-form">
+          (<%= t('user_gift.cancel') %>)
+        </a>
+        <%= render 'cancel_form', user_gift_id: user_gift_payment.user_gift.id %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-xs-12">
+    <% if user_gift_payment.cancel? %>
+      <%= t('user_gift.canceled') %>
+      <% if user_gift_payment.completed? %>
+        &nbsp;-&nbsp;<%= (user_gift_payment.refunded?)? t('user_gift.refunded') : t('user_gift.wait_refund') %>
+      <% end %>
+      <div class="row margin-bottom-5">
+        <div class="col-xs-12">
+          <strong>
+            <i class="fa fa-fw fa-comment-o"></i>
+            <%= user_gift_payment.cancel_reason %>
+          </strong>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
