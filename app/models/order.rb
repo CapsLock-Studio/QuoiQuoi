@@ -15,7 +15,7 @@ class Order < ApplicationRecord
   has_many :order_custom_items
   accepts_nested_attributes_for :order_custom_items
 
-  has_many :user_gifts
+  has_one :user_gift_serial
 
   has_one :order_payment, dependent: :destroy
 
