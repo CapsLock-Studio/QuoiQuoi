@@ -48,6 +48,29 @@ class OrdersController < ApplicationController
     # @order_in_cart.checkout_time = Time.now
     @order_in_cart.subtotal = @order_in_cart.get_subtotal
 
+    begin
+      if !params[:user_gift_serial].nil? && params[:user_gift_serial] != ''
+        user_gift_serial = UserGiftSerial.find_by_serial(params[:user_gift_serial])
+        discount = user_gift_serial
+                        .user_gift
+                        .gift
+                        .gift_translates
+                        .find_by_locale_id(@order_in_cart.locale_id)
+                        .quota
+
+        @order_in_cart.subtotal -= discount
+
+        user_gift_serial.order_id = @order_in_cart.id
+        user_gift_serial.used_time = Time.now
+        user_gift_serial.email = @order_in_cart.user.email
+        user_gift_serial.save
+
+        UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+      end
+    rescue
+
+    end
+
     if @order_in_cart.update(order_params) && @order_in_cart.save
 
       @order_in_cart.reload
