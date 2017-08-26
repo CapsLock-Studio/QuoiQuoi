@@ -8,7 +8,7 @@ class Registration < ApplicationRecord
 
   belongs_to :course_option
 
-  has_many :user_gifts
+  has_one :user_gift_serial
 
   has_many :registration_options, dependent: :delete_all
   accepts_nested_attributes_for :registration_options
