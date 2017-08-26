@@ -148,6 +148,18 @@ class RegistrationsController < ApplicationController
       end
     end
 
+    @discount = 0
+
+    begin
+      @discount = @registration
+                      .user_gift_serial
+                      .user_gift
+                      .gift
+                      .gift_translates
+                      .find_by_locale_id(@registration.locale_id)
+                      .quota
+    end
+
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('registration.all')
     add_breadcrumb t('detail')
@@ -182,6 +194,9 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('register')
     add_breadcrumb t('check_out')
 
+    @gift_card_quota = 0
+    @gift_card_serial = params[:gift_card_serial]
+
     @registration = Course.includes(:course_translate)
                           .where(course_translates: {locale_id: session[:locale_id]}, id: registration_params[:course_id])
                           .first
@@ -196,8 +211,32 @@ class RegistrationsController < ApplicationController
       @registration.email = current_user.email
     end
 
+    if !@gift_card_serial.nil? and @gift_card_serial != ''
+      begin
+        user_gift_serial = UserGiftSerial.find_by_serial(@gift_card_serial)
+
+        if user_gift_serial.used_time.nil?
+          @gift_card_quota = user_gift_serial
+                                 .user_gift
+                                 .gift
+                                 .gift_translates
+                                 .find_by_locale_id(session[:locale_id])
+                                 .quota
+        else
+          @gift_card_serial = '';
+
+          flash.now[:icon] = 'fa-frown-o'
+          flash.now[:status] = 'warning'
+          flash.now[:message] = t('user_gift.oops')
+        end
+      rescue
+        flash.now[:icon] = 'fa-frown-o'
+        flash.now[:status] = 'warning'
+        flash.now[:message] = t('user_gift.not_found')
+      end
+
     #  Warn message for guest when the email address had registered course
-    if flash[:recaptcha] != '1' && current_user.nil? && Registration.where({course_id: @registration.course_id, email: @registration.email}).size > 0
+    elsif flash[:recaptcha] != '1' && current_user.nil? && Registration.where({course_id: @registration.course_id, email: @registration.email}).size > 0
       flash[:message] = t('had_registered_hint')
       flash[:status] = 'warning'
     elsif flash[:recaptcha] == '1'
