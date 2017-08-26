@@ -66,7 +66,18 @@
 
       <div class="row">
         <div class="col-xs-12">
+          <div class="text-center">
+            <a id="show-gift-card-field" href="#"><%= t('use_gift_card') %></a>
+          </div>
+
           <hr/>
+
+          <div id="gift-card-field" class="form-group" style="display: none;">
+            <label><%= t('user_gift.serial') %></label>
+            <div class="controls">
+              <input class="form-control" name="gift_card_serial" />
+            </div>
+          </div>
         </div>
 
         <div class="col-xs-12">
