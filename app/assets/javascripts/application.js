@@ -165,6 +165,7 @@
 
     $('.send-serial-btn').on('click', function(){
         $('[name=user_gift_serial_id]').val($(this).data('id'));
+        $('#send-email-modal').modal('show');
     });
 
     $('.refresh-price-source').on('change', function(){
