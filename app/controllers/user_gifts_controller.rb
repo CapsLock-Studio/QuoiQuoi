@@ -23,6 +23,7 @@ class UserGiftsController < ApplicationController
   end
 
   def send_email
+    flash.now[:icon] = 'fa-lightbulb-o'
     flash[:message] = t('mailer.success')
     flash[:status] = 'success'
     UserGiftMailer.send_to_other(params[:user_gift_serial_id], params[:email]).deliver
