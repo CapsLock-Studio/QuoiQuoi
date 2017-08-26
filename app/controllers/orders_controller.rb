@@ -62,6 +62,10 @@ class OrdersController < ApplicationController
 
           @order_in_cart.subtotal -= discount
 
+          if @order_in_cart.subtotal < 0
+            @order_in_cart.subtotal = 0
+          end
+
           user_gift_serial.order_id = @order_in_cart.id
           user_gift_serial.used_time = Time.now
           user_gift_serial.email = @order_in_cart.user.email
