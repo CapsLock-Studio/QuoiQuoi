@@ -4,7 +4,7 @@ class CreateUserGiftRemittanceReports < ActiveRecord::Migration[5.0]
       t.float :amount
       t.integer :account
       t.datetime :date
-      t.boolean :confirm, default: false
+      t.boolean :confirm
       t.references :user_gift_payment, index: true, foreign_key: true
 
       t.timestamps
