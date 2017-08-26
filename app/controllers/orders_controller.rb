@@ -51,21 +51,24 @@ class OrdersController < ApplicationController
     begin
       if !params[:user_gift_serial].nil? && params[:user_gift_serial] != ''
         user_gift_serial = UserGiftSerial.find_by_serial(params[:user_gift_serial])
-        discount = user_gift_serial
-                        .user_gift
-                        .gift
-                        .gift_translates
-                        .find_by_locale_id(@order_in_cart.locale_id)
-                        .quota
 
-        @order_in_cart.subtotal -= discount
+        if user_gift_serial.used_time.nil?
+          discount = user_gift_serial
+                         .user_gift
+                         .gift
+                         .gift_translates
+                         .find_by_locale_id(@order_in_cart.locale_id)
+                         .quota
 
-        user_gift_serial.order_id = @order_in_cart.id
-        user_gift_serial.used_time = Time.now
-        user_gift_serial.email = @order_in_cart.user.email
-        user_gift_serial.save
+          @order_in_cart.subtotal -= discount
 
-        UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+          user_gift_serial.order_id = @order_in_cart.id
+          user_gift_serial.used_time = Time.now
+          user_gift_serial.email = @order_in_cart.user.email
+          user_gift_serial.save
+
+          UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+        end
       end
     rescue
 

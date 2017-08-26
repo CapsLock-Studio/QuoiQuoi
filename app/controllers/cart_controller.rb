@@ -52,12 +52,22 @@ class CartController < ApplicationController
 
     if !@gift_card_serial.nil? and @gift_card_serial != ''
       begin
-        @gift_card_quota = UserGiftSerial.find_by_serial(@gift_card_serial)
-                               .user_gift
-                               .gift
-                               .gift_translates
-                               .find_by_locale_id(session[:locale_id])
-                               .quota
+        user_gift_serial = UserGiftSerial.find_by_serial(@gift_card_serial)
+
+        if user_gift_serial.used_time.nil?
+          @gift_card_quota = user_gift_serial
+                                 .user_gift
+                                 .gift
+                                 .gift_translates
+                                 .find_by_locale_id(session[:locale_id])
+                                 .quota
+        else
+          @gift_card_serial = '';
+
+          flash.now[:icon] = 'fa-frown-o'
+          flash.now[:status] = 'warning'
+          flash.now[:message] = t('user_gift.oops')
+        end
       rescue
         flash.now[:icon] = 'fa-frown-o'
         flash.now[:status] = 'warning'
