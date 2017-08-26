@@ -26,7 +26,7 @@ class UserGiftMailer < ActionMailer::Base
   end
 
   def completed_confirmation(id)
-    @user_gift = Order.find(id)
+    @user_gift = UserGift.find(id)
     @locale_id = @user_gift.locale_id
 
     I18n.locale = @user_gift.locale.lang
