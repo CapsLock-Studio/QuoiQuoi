@@ -269,6 +269,7 @@ zh-TW:
   payment_method: '付款方式'
   cvs_family: '全家famiport繳費'
   cvs_ibon: '7-11 ibon繳費'
+  free: '免費'
   payment_no: '繳費代碼'
   bankcode: '繳費銀行代碼'
   virtual_account: '繳費虛擬帳號'

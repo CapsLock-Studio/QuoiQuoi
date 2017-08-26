@@ -244,6 +244,7 @@ en:
   payment_method: 'Payment method'
   cvs_family: 'Famiport'
   cvs_ibon: '7-Eleven ibon'
+  free: 'Free'
   payment_no: 'Payment no.'
   bankcode: 'Bank code'
   virtual_account: 'Virtual account'
