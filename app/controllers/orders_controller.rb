@@ -19,11 +19,21 @@ class OrdersController < ApplicationController
       add_breadcrumb t('home'), :root_path
       add_breadcrumb t('order.all'), :orders_path
       add_breadcrumb t('detail')
+
+      @discount = 0
+
+      begin
+        @discount = @order
+                        .user_gift_serial
+                        .user_gift.gift
+                        .gift_translates
+                        .find_by_locale_id(@order.locale_id)
+                        .quota
+      end
     end
   end
 
   def create
-
     @order_in_cart.order_products.each do |order_product|
       product = Product.find(order_product.product)
       if product.quantity - order_product.quantity < 0
