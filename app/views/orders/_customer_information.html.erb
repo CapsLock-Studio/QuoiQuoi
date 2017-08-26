@@ -45,7 +45,8 @@
   </div>
   <div class="col-xs-12">
     <strong>
-      <%= number_to_currency(order.get_subtotal - discount, locale: order.locale.lang) %>
+      <% amount = order.get_subtotal - discount %>
+      <%= number_to_currency(amount > 0 ? amount : 0, locale: order.locale.lang) %>
     </strong>
     <%= "(#{t('shipping_fee')}: #{number_to_currency(order.shipping_fee!, locale: order.locale.lang)})" %>
   </div>
