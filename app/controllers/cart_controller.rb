@@ -46,6 +46,24 @@ class CartController < ApplicationController
     add_breadcrumb I18n.t('check_out')
 
     @order_in_cart.update(checkout_info_params)
+
+    @gift_card_quota = 0
+    @gift_card_serial = params[:gift_card_serial]
+
+    if !@gift_card_serial.nil? and @gift_card_serial != ''
+      begin
+        @gift_card_quota = UserGiftSerial.find_by_serial(@gift_card_serial)
+                               .user_gift
+                               .gift
+                               .gift_translates
+                               .find_by_locale_id(session[:locale_id])
+                               .quota
+      rescue
+        flash.now[:icon] = 'fa-frown-o'
+        flash.now[:status] = 'warning'
+        flash.now[:message] = t('user_gift.not_found')
+      end
+    end
   end
 
   private
