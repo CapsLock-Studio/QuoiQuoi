@@ -46,6 +46,29 @@ class UserGiftsController < ApplicationController
     end
   end
 
+  def cancel
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('user_gift.my'), :user_gifts_path
+    add_breadcrumb t('detail')
+
+    if !@user_gift.user_gift_payment.completed? && !@user_gift.user_gift_payment.cancel?
+      flash.now[:icon] = 'fa-user-times'
+      flash.now[:message] = t('user_gift.cancel')
+      flash.now[:status] = 'success'
+
+      @user_gift.user_gift_payment.cancel = true
+      @user_gift.user_gift_payment.cancel_reason = params[:cancel_reason]
+      @user_gift.user_gift_payment.cancel_time = Time.now
+      @user_gift.user_gift_payment.save!
+    else
+      flash.now[:icon] = 'fa-lightbulb-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_already_completed')
+    end
+
+    render action: :show
+  end
+
   def return
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('order.in_trading'), :orders_path
@@ -90,6 +113,31 @@ class UserGiftsController < ApplicationController
                         .user_gifts.build(user_gift_params)
 
     @user_gift.locale_id = session[:locale_id]
+  end
+
+  def report_remittance
+    # Status ==> Waiting   -> confirm: nil
+    #            Confirmed -> confirm: true
+    #            Confirmed -> confirm: false
+    # If there are any reports waiting be reviewed, do nothing and show message to customer
+    if @user_gift.user_gift_payment.user_gift_remittance_reports.where(confirm: nil).size <= 0
+      report = @user_gift.user_gift_payment.user_gift_remittance_reports.create({
+                                                                                             amount: params[:amount],
+                                                                                             account: params[:account],
+                                                                                             date: params[:date]
+                                                                                         })
+      UserGiftMailer.remind_remittance_report(report).deliver_later
+
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('report_remittance_hint')
+    else
+      flash.now[:icon] = 'fa-frown-o'
+      flash.now[:status] = 'warning'
+      flash.now[:message] = t('report_remittance_warning')
+    end
+
+    render action: :show
   end
 
   def search
