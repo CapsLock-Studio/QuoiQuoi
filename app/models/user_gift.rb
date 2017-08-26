@@ -22,4 +22,14 @@ class UserGift < ApplicationRecord
   def payment_method=(value)
     write_attribute(:payment_method, (value.is_a?(Integer))? value : value.to_i)
   end
+
+  def has_expire_time?
+    (self.remittance? || self.cvs_family? || self.cvs_ibon? || self.atm?) &&
+        (!self.user_gift_payment.expire_time.nil?)
+  end
+
+  def empty_expire_time?
+    (self.remittance? || self.cvs_family? || self.cvs_ibon? || self.atm?) &&
+        (self.user_gift_payment.expire_time.nil?)
+  end
 end
