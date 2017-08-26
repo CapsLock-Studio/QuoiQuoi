@@ -78,7 +78,7 @@
                                   <input <%= 'disabled="disabled"' if serial.used_time %> type="text" class="form-control text-center" value="<%= serial.serial %>" onclick="this.select();" />
 
                                   <div class="input-group-btn hidden-xs">
-                                    <button class="btn btn-default send-serial-btn" data-id="<%= serial.id %>">
+                                    <button class="btn btn-default send-serial-btn" data-id="<%= serial.id %>" <%= 'disabled="disabled"' if serial.used_time %>>
                                       <i class="fa fa-send"></i>
                                     </button>
                                   </div>
