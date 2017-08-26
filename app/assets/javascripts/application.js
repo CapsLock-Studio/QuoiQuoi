@@ -168,6 +168,12 @@
         $('#send-email-modal').modal('show');
     });
 
+    $('#show-gift-card-field').on('click', function(e) {
+        e.preventDefault();
+        $('#gift-card-field').show();
+        $(this).hide();
+    });
+
     $('.refresh-price-source').on('change', function(){
         var priceTarget = $('.refresh-price-target');
         var subtotal = parseFloat(priceTarget.data('price')) * parseInt($(this).val(), 10);
