@@ -293,6 +293,7 @@ en:
   price: 'Price'
   gift: 'Gift Cards'
   my_gift: 'My Gift Cards'
+  gift_quota: 'Discount by gift card'
   business_hours: 'Business Hours'
   position_designer: 'Designer'
   free_shipping_fee: ''

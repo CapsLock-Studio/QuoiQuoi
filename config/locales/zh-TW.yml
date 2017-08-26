@@ -322,6 +322,7 @@ zh-TW:
   price: '價格'
   gift: '禮券'
   my_gift: '我的禮券'
+  gift_quota: '禮券抵用金額'
   business_hours: '營業時間'
   position_designer: '設計師'
   free_shipping_fee: '國內滿%{free_condition}免運費'
