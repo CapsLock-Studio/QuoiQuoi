@@ -215,15 +215,6 @@ class UserGiftsController < ApplicationController
       @user_gift_serial = UserGiftSerial.find_by_serial(params[:serial])
     end
 
-    def get_uniqueness_random_string
-      uniqueness_random_string = SecureRandom.hex(20)
-      while UserGift.where(token: uniqueness_random_string).first
-        uniqueness_random_string = SecureRandom.hex(20)
-      end
-
-      uniqueness_random_string
-    end
-
     def redirect_to_order_or_registration
       if !params[:order_id].blank?
         redirect_to pay_order_path(params[:order_id])
