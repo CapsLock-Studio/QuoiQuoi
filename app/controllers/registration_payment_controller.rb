@@ -177,7 +177,38 @@ class RegistrationPaymentController < ApplicationController
     @registration.checkout = true
     @registration.checkout_time = Time.now
 
+    user_gift_serial = UserGiftSerial.find_by_serial(params[:user_gift_serial])
+
+    begin
+      if !params[:user_gift_serial].nil? && params[:user_gift_serial] != ''
+
+        if user_gift_serial.used_time.nil?
+          discount = user_gift_serial
+                         .user_gift
+                         .gift
+                         .gift_translates
+                         .find_by_locale_id(@registration.locale_id)
+                         .quota
+
+          @registration.subtotal -= discount
+
+          if @registration.subtotal < 0
+            @registration.subtotal = 0
+          end
+        end
+      end
+    end
+
     @registration.save!
+
+    begin
+      user_gift_serial.registration_id = @registration.id
+      user_gift_serial.used_time = Time.now
+      user_gift_serial.email = @registration.user.nil? ? @registration.email : @registration.user.email
+      user_gift_serial.save
+
+      UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+    end
   end
 
   def set_breadcrumb
