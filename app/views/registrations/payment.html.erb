@@ -27,7 +27,7 @@
       <div class="box">
         <h4><%= t('choose_payment') %></h4>
         <!-- choose payment method -->
-        <%= render 'payment_methods', registration: @registration %>
+        <%= render 'payment_methods', registration: @registration, discount: @gift_card_quota %>
         <!-- choose payment method -->
       </div>
     </div>
