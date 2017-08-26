@@ -162,6 +162,26 @@ class RegistrationPaymentController < ApplicationController
                                                    })
   end
 
+  def free
+    # Record payment information
+    if @registration.registration_payment.nil? && @registration.subtotal == 0
+      registration_payment = @registration.build_registration_payment
+      registration_payment.amount = @registration.subtotal
+      registration_payment.payment_time = Time.now
+      registration_payment.completed =  true
+      registration_payment.completed_time = Time.now
+      registration_payment.save!
+
+      RegistrationMailer.completed_confirmation(registration_payment.registration_id).deliver_later
+
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
+
+      redirect_to registration_path(@registration.id)
+    end
+  end
+
   private
 
   # Complete register here to prevent that is the registration but no registration_payment
