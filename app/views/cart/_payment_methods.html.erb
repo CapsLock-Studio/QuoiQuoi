@@ -1,54 +1,65 @@
 <%= form_for @order_in_cart, url: orders_path, method: :post, html: {class: 'form'} do |form| %>
   <div class="box-content">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Order.payment_methods[:remittance], checked: true %>
-            <%= t('remittance') %>
-          </label>
+      <% if (@order_in_cart.get_subtotal - discount) > 0 %>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:remittance], checked: true %>
+              <%= t('remittance') %>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Order.payment_methods[:credit_card] %>
-            <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
-          </label>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:credit_card] %>
+              <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Order.payment_methods[:cvs_family] %>
-            <%= image_tag 'famiport.png', class: 'img-responsive', style: 'max-width: 130px;' %>
-          </label>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:cvs_family] %>
+              <%= image_tag 'famiport.png', class: 'img-responsive', style: 'max-width: 130px;' %>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Order.payment_methods[:cvs_ibon] %>
-            <%= image_tag 'ibon.png', class: 'img-responsive', style: 'max-width: 100px;' %>
-          </label>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:cvs_ibon] %>
+              <%= image_tag 'ibon.png', class: 'img-responsive', style: 'max-width: 100px;' %>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Order.payment_methods[:paypal] %>
-            <%= image_tag 'paypal.png', class: 'img-responsive', style: 'max-width: 70px;' %>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:paypal] %>
+              <%= image_tag 'paypal.png', class: 'img-responsive', style: 'max-width: 70px;' %>
+            </label>
+          </div>
+          <label class="pull-left">
+            <%= t('paypal_hint').html_safe %>
           </label>
-        </div>
-        <label class="pull-left">
-          <%= t('paypal_hint').html_safe %>
-        </label>
 
-      </div>
+        </div>
+      <% else %>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:free], checked: true %>
+              <%= t('free') %>
+            </label>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <input type="hidden" name="user_gift_serial" value="<%= @gift_card_serial %>" />
