@@ -1,4 +1,5 @@
 class Gift < ApplicationRecord
+  has_one :gift_translate
   has_many :gift_translates, dependent: :destroy
   accepts_nested_attributes_for :gift_translates
 

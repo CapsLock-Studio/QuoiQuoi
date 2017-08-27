@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 1.5
+  token: MyString
+  bankcode: MyString
+  account: MyString
+  expire_time: 2017-08-20 21:12:41
+  trade_no: MyString
+  trade_time: 2017-08-20 21:12:41
+  payment_no: MyString
+  completed: false
+  completed_time: 2017-08-20 21:12:41
+  redirect_uri: MyString
+
+two:
+  amount: 1.5
+  token: MyString
+  bankcode: MyString
+  account: MyString
+  expire_time: 2017-08-20 21:12:41
+  trade_no: MyString
+  trade_time: 2017-08-20 21:12:41
+  payment_no: MyString
+  completed: false
+  completed_time: 2017-08-20 21:12:41
+  redirect_uri: MyString

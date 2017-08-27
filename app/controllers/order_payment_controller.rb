@@ -181,6 +181,26 @@ class OrderPaymentController < ApplicationController
                                                    })
   end
 
+  def free
+    # Record payment information
+    if @order.order_payment.nil? && @order.subtotal == 0
+      order_payment = @order.build_order_payment
+      order_payment.amount = @order.subtotal
+      order_payment.payment_time = Time.now
+      order_payment.completed =  true
+      order_payment.completed_time = Time.now
+      order_payment.save!
+
+      OrderMailer.completed_confirmation(order_payment.order_id).deliver_later
+
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
+
+      redirect_to order_path(@order.id)
+    end
+  end
+
   private
   def checkout
     @order = @order_in_cart

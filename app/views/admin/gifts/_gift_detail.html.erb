@@ -1,4 +1,3 @@
-<% translate = GiftTranslate.where(gift_id: @user_gift.gift.id, locale_id: @user_gift.locale_id).first %>
 <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
   <div class="box-header">
     <div class="title">禮品券詳細內容</div>
@@ -22,13 +21,23 @@
           <tbody>
           <tr>
             <td>
-              <%= image_tag @user_gift.gift.image.url(:thumb), class: 'img-responsive' %>
+              <%= image_tag @user_gift.gift.image.url(:thumb), style: { width: '20px' } %>
             </td>
             <td>
-              <%= translate.name %>
+              <% if @user_gift.locale_id %>
+                <%= @user_gift.gift.gift_translates.find_by_locale_id(@user_gift.locale_id).name %>
+              <% else %>
+                <% translates = GiftTranslate.where(gift_id: @user_gift.gift_id) %>
+                <%= translates.map{|translate| translate.name}.join(' / ') %>
+              <% end %>
             </td>
             <td>
-              <%= number_to_currency(translate.quota) %>
+              <% if @user_gift.locale_id %>
+                <%= number_to_currency(@user_gift.gift.gift_translates.find_by_locale_id(@user_gift.locale_id).quota) %>
+              <% else %>
+                <% translates = GiftTranslate.where(gift_id: @user_gift.gift_id) %>
+                <%= translates.map{|translate| number_to_currency(translate.quota, locale: translate.locale.lang)}.join(' / ') %>
+              <% end %>
             </td>
             <td>
               <%= @user_gift.quantity %>
@@ -40,63 +49,86 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-12">
-    <h4 class="text-right">
-      總金額 :
-      <strong class="text-muted">
-        <%= number_to_currency(translate.quota * @user_gift.quantity.to_f) %><br/>
-      </strong>
-    </h4>
-  </div>
-</div>
-<% if @user_gift.payment && @user_gift.payment.completed? %>
+<% if @user_gift.locale_id %>
   <div class="row">
     <div class="col-sm-12">
-      <div class="responsive-table">
-        <div class="scrollable-table">
-          <table class="data-table table table-striped" style="margin-bottom:0;">
-            <thead>
-            <tr>
-              <th>編號</th>
-              <th>序號</th>
-              <th>狀態</th>
-              <th>使用人</th>
-              <th>使用時間</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% @user_gift.user_gift_serials.each do |serial| %>
+      <h4 class="text-right">
+        總金額 :
+        <strong class="text-muted">
+          <%= number_to_currency(@user_gift.gift.gift_translates.find_by_locale_id(@user_gift.locale_id).quota * @user_gift.quantity.to_f) %><br/>
+        </strong>
+      </h4>
+    </div>
+  </div>
+<% end %>
+<% if @user_gift.user_gift_payment.cancel? %>
+    <span class="label label-default">已取消</span>
+<% elsif @user_gift.user_gift_payment.completed.nil? %>
+    <span class="label label-warning">等待付款</span>
+    <div>
+      <small>
+        使用&nbsp;<%= t("#{@user_gift.payment_method}") %>&nbsp;付款
+        <span class="text-muted">
+                              <%= @user_gift.checkout_time.strftime('%Y/%m/%d %H:%I') %> 結帳
+                            </span>
+      </small>
+    </div>
+<% elsif @user_gift.user_gift_payment.completed? %>
+    <span class="label label-success">付款完成</span>
+    <div>
+      <small>使用&nbsp;<%= t("#{@user_gift.payment_method}") %>&nbsp;付款 (<%= @user_gift.user_gift_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)</small>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="responsive-table">
+          <div class="scrollable-table">
+            <table class="data-table table table-striped" style="margin-bottom:0;">
+              <thead>
               <tr>
-                <td>
-                  <%= serial.id %>
-                </td>
-                <td>
-                  <%= serial.serial %>
-                </td>
-                <td>
-                  <% if serial.used_time && serial.email %>
+                <th>編號</th>
+                <th>序號</th>
+                <th>狀態</th>
+                <th>使用人</th>
+                <th>使用時間</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @user_gift.user_gift_serials.each do |serial| %>
+                  <tr>
+                    <td>
+                      <%= serial.id %>
+                    </td>
+                    <td>
+                      <%= serial.serial %>
+                    </td>
+                    <td>
+                      <% if serial.used_time && serial.email %>
                     <span class="label label-default">
                       已使用
                     </span>
-                  <% else %>
+                      <% else %>
                     <span class="label label-success">
                       尚未使用
                     </span>
-                  <% end %>
-                </td>
-                <td>
-                  <%= (serial.email)? serial.email : '-' %>
-                </td>
-                <td>
-                  <%= serial.used_time.strftime('%Y/%m/%d %H:%I:%S') if serial.used_time %>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= (serial.email)? serial.email : '-' %>
+                    </td>
+                    <td>
+                      <%= serial.used_time.strftime('%Y/%m/%d %H:%I:%S') if serial.used_time %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+<% else %>
+    <span class="label label-danger">匯款有誤</span>
+    <small class="text-muted">
+      <%= @user_gift.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳
+    </small>
 <% end %>

@@ -177,6 +177,16 @@ QuoiQuoi::Application.routes.draw do
       end
     end
 
+    resources :user_gift_remittances do
+      member do
+        get :check, action: :edit
+      end
+
+      collection do
+        get :check
+      end
+    end
+
     resources :messages
 
     resources :custom_orders do
@@ -281,12 +291,18 @@ QuoiQuoi::Application.routes.draw do
     get 'registration_payment/:action(/:id)', controller: :registration_payment, as: 'registration_payment'
     post 'registration_payment_callback/allpay_complete' => 'registration_payment_callback#allpay_complete'
 
+    get 'user_gift_payment/:action(/:id)', controller: :user_gift_payment, as: 'user_gift_payment'
+    post 'user_gift_payment_callback/allpay_complete' => 'user_gift_payment_callback#allpay_complete'
+
     # Special for paypal payment feedback
     get 'order_payment_callback/paypal' => 'order_payment_callback#paypal'
     get 'orders/:id/cancel?token=EC-\w+' => 'orders#cancel'
 
     get 'registration_payment_callback/paypal' => 'registration_payment_callback#paypal'
     get 'registrations/:id/cancel?token=EC-\w+' => 'registrations#cancel'
+
+    get 'user_gift_payment_callback/paypal' => 'user_gift_callback#paypal'
+    get 'user_gifts/:id/cancel?token=EC-\w+' => 'user_gifts#cancel'
 
     devise_for :users, controllers: {
         omniauth_callbacks: 'users/omniauth_callbacks'
@@ -345,11 +361,26 @@ QuoiQuoi::Application.routes.draw do
     resources :gifts
     resources :user_gifts do
       member do
-        get :pay, action: :pay_show
         post :send_email, action: :send_email
+
+        get :close, action: :close_show
+        put :close
+        patch :close
+        put :cancel
+        post :cancel
+
+        put :report_remittance
+        post :report_remittance
+
+        post :return
+        put :delivery_report
+
+        post action: :update
       end
 
       collection do
+        post :payment
+        get :payment
         post :search
         put :discount
       end

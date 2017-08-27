@@ -19,11 +19,23 @@ class OrdersController < ApplicationController
       add_breadcrumb t('home'), :root_path
       add_breadcrumb t('order.all'), :orders_path
       add_breadcrumb t('detail')
+
+      @discount = 0
+
+      begin
+        @discount = @order
+                        .user_gift_serial
+                        .user_gift
+                        .gift
+                        .gift_translates
+                        .find_by_locale_id(@order.locale_id)
+                        .quota
+      rescue
+      end
     end
   end
 
   def create
-
     @order_in_cart.order_products.each do |order_product|
       product = Product.find(order_product.product)
       if product.quantity - order_product.quantity < 0
@@ -37,6 +49,36 @@ class OrdersController < ApplicationController
     # @order_in_cart.checkout = true
     # @order_in_cart.checkout_time = Time.now
     @order_in_cart.subtotal = @order_in_cart.get_subtotal
+
+    begin
+      if !params[:user_gift_serial].nil? && params[:user_gift_serial] != ''
+        user_gift_serial = UserGiftSerial.find_by_serial(params[:user_gift_serial])
+
+        if user_gift_serial.used_time.nil?
+          discount = user_gift_serial
+                         .user_gift
+                         .gift
+                         .gift_translates
+                         .find_by_locale_id(@order_in_cart.locale_id)
+                         .quota
+
+          @order_in_cart.subtotal -= discount
+
+          if @order_in_cart.subtotal < 0
+            @order_in_cart.subtotal = 0
+          end
+
+          user_gift_serial.order_id = @order_in_cart.id
+          user_gift_serial.used_time = Time.now
+          user_gift_serial.email = @order_in_cart.user.email
+          user_gift_serial.save
+
+          UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+        end
+      end
+    rescue
+
+    end
 
     if @order_in_cart.update(order_params) && @order_in_cart.save
 
@@ -142,6 +184,19 @@ class OrdersController < ApplicationController
   end
 
   def report_remittance
+    @discount = 0
+
+    begin
+      @discount = @order
+                      .user_gift_serial
+                      .user_gift
+                      .gift
+                      .gift_translates
+                      .find_by_locale_id(@order.locale_id)
+                      .quota
+    rescue
+    end
+
     # Status ==> Waiting   -> confirm: nil
     #            Confirmed -> confirm: true
     #            Confirmed -> confirm: false
@@ -236,12 +291,12 @@ class OrdersController < ApplicationController
     add_breadcrumb t('order.in_trading'), :orders_path
     add_breadcrumb t('detail')
 
+    @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
+
     if params['RtnCode'] == '1' || params['RtnCode'] == '3'
       flash.now[:icon] = 'fa-smile-o'
       flash.now[:status] = 'success'
       flash.now[:message] = t('payment_completed')
-
-      @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
 
       # Not really update order entity, just show the newest status.
       @order.order_payment.trade_no = params['TradeNo']

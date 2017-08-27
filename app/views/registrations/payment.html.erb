@@ -20,14 +20,14 @@
       <div class="box">
         <h4>你的報名資訊</h4>
         <div class="box-content">
-          <%= render 'register_information', registration: @registration %>
+          <%= render 'register_information', registration: @registration, discount: @gift_card_quota %>
         </div>
       </div>
 
       <div class="box">
         <h4><%= t('choose_payment') %></h4>
         <!-- choose payment method -->
-        <%= render 'payment_methods', registration: @registration %>
+        <%= render 'payment_methods', registration: @registration, discount: @gift_card_quota %>
         <!-- choose payment method -->
       </div>
     </div>

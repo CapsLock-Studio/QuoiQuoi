@@ -181,6 +181,7 @@ en:
     add: 'Add'
 
   user_gift:
+    no_s: 'Gift Card No.'
     success: 'Use gift card successfully!'
     danger: 'Use gift card failed, please contact us to find out the reason.'
     not_found: 'This is not valid serial number'
@@ -243,6 +244,7 @@ en:
   payment_method: 'Payment method'
   cvs_family: 'Famiport'
   cvs_ibon: '7-Eleven ibon'
+  free: 'Free'
   payment_no: 'Payment no.'
   bankcode: 'Bank code'
   virtual_account: 'Virtual account'
@@ -292,6 +294,7 @@ en:
   price: 'Price'
   gift: 'Gift Cards'
   my_gift: 'My Gift Cards'
+  gift_quota: 'Discount by gift card'
   business_hours: 'Business Hours'
   position_designer: 'Designer'
   free_shipping_fee: ''

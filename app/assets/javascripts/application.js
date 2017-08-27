@@ -165,6 +165,13 @@
 
     $('.send-serial-btn').on('click', function(){
         $('[name=user_gift_serial_id]').val($(this).data('id'));
+        $('#send-email-modal').modal('show');
+    });
+
+    $('#show-gift-card-field').on('click', function(e) {
+        e.preventDefault();
+        $('#gift-card-field').show();
+        $(this).hide();
     });
 
     $('.refresh-price-source').on('change', function(){

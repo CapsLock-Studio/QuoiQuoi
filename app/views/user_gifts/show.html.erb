@@ -1,168 +1,112 @@
-<% translate = GiftTranslate.where(gift_id: @user_gift.gift_id, locale_id: session[:locale_id]).first %>
 <%= render 'layouts/breadcrumbs' %>
+
 <div class="container main-container">
   <div class="row row-offcanvas row-offcanvas-left">
     <%= render 'user/side_navigation' %>
     <div class="col-sm-9 col-xs-12">
+
       <%= render 'layouts/flash_message' %>
+
       <div class="row margin-bottom-40">
         <%= render 'layouts/nav_item' %>
-        <div class="col-xs-12">
-          <h4 class="margin-bottom-30">
-            <%= t('no_s') %>
-            <strong class="text-muted">G<%= @user_gift.id %></strong>
-          </h4>
-        </div>
-        <div class="col-md-xs text-center text-muted">
-          <ul class="list-unstyled step">
-            <li class="col-xs-3 step-active">
-              <span>
-                <i class="fa fa-gift icon-round"></i>
-              </span>
-              <h4><%= t('buy') %></h4>
-              <p><%= @user_gift.created_at.strftime('%Y/%m/%d %H:%M') %></p>
-            </li>
-            <li class="col-xs-3 <%= 'step-active' if @user_gift.payment && @user_gift.payment.completed? %>">
-              <span>
-                <i class="fa fa-credit-card icon-round"></i>
-              </span>
-              <h4><%= t('pay') %></h4>
-              <p><%= @user_gift.payment.pay_time.strftime('%Y/%m/%d') if @user_gift.payment && @user_gift.payment.completed? %></p>
-              <span class="label label-success"><%= (@user_gift.payment.amount == 0 || @user_gift.payment.identifier.blank?)? t('order.wait_remittance') : t('order.wait_confirm') if @user_gift.payment && !@user_gift.payment.completed? %></span>
-            </li>
-            <li class="col-xs-3 <%= 'step-active' if @user_gift.payment && @user_gift.payment.completed? %>">
-              <span>
-                <% if @user_gift.payment && @user_gift.payment.completed? %>
-                  <i class="fa fa-smile-o icon-round"></i>
-                <% else %>
-                  <i class="fa fa-check icon-round"></i>
-                <% end %>
-              </span>
-              <% if @user_gift.payment && @user_gift.payment.completed? %>
-                <h4><%= t('user_gift.great') %></h4>
-              <% end %>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row margin-bottom-40">
-        <% if @user_gift.payment && !@user_gift.payment.identifier.blank? && !@user_gift.payment.completed? %>
-          <div class="col-md-12">
-            <h5><%= t('remitted_information') %></h5>
-          </div>
-          <div class="col-md-12 margin-bottom-40">
-            <div class="row">
-              <div class="col-md-2 col-xs-3 text-right">
-                <%= t('remitted_amount') %>
-              </div>
-              <div class="col-md-10 col-xs-9">
-                <%= number_to_currency(@user_gift.payment.amount) %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 col-xs-3 text-right">
-                <%= t('your_account') %>
-              </div>
-              <div class="col-md-10 col-xs-9">
-                <%= @user_gift.payment.identifier %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 col-xs-3 text-right">
-                <%= t('remitted_date') %>
-              </div>
-              <div class="col-md-10 col-xs-9">
-                <%= @user_gift.payment.pay_time.strftime('%Y/%m/%d') %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <% if @user_gift.payment && @user_gift.payment.completed? %>
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header box-header-small grey-background">
-                <h4>
-                  <%= "#{t('gift')} #{number_to_currency(translate.quota)}" %>
-                  <span class="text-muted"><%= t('user_gift.hint') %></span>
-                </h4>
-              </div>
-              <div class="box-content box-no-padding" style="border:0;">
-                <div class="responsive-table">
-                  <div class="scrollable-area">
-                    <table class="table table-bordered text-left table-padding-20" style="margin-bottom:0;">
-                      <thead>
 
-                      </thead>
-                      <tbody>
-                      <% @user_gift.user_gift_serials.order(:id).each do |serial| %>
-                      <tr>
-                        <td>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <div class="input-group serial-number">
-                                <span class="input-group-addon hidden-xs">
-                                  <%= "#{t('no_s')}: #{serial.id}" %>&nbsp;
-                                </span>
-                                <input <%= 'disabled="disabled"' if serial.used_time %> type="text" class="form-control text-center" value="<%= serial.serial %>" onclick="this.select();" />
+        <div class="col-xs-12">
+          <h5><%= t('user_gift.my') %></h5>
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+
+          <div class="box">
+            <div class="box-content text-2x">
+              <div class="row margin-bottom-10">
+                <div class="col-xs-12">
+                  <span class="text-muted">
+                    <%= t('user_gift.no_s') %>
+                  </span>
+                </div>
+                <div class="col-xs-12">
+                  <%= "G#{@user_gift.id}" %>
+                </div>
+              </div>
+
+              <%= render 'gift_card_information', user_gift: @user_gift %>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-content text-2x">
+              <%= render 'transaction_information', user_gift_payment: @user_gift.user_gift_payment if @user_gift.user_gift_payment %>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+          <div class="box">
+            <div class="box-header box-header-small grey-background">
+              <h4>
+                <i class="fa fa-exclamation"></i>
+                <%= t('user_gift.instruction') %>
+                <small class="text-center text-muted"><%= t('user_gift.hint') %></small>
+              </h4>
+              <%= simple_format(@user_gift.gift.gift_translate.description) %>
+            </div>
+            <div class="box-content box-no-padding" style="border:0;">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-bordered text-left" style="margin-bottom:0;">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <% if !@user_gift.user_gift_payment || !@user_gift.user_gift_payment.completed? %>
+                        <tr>
+                          <td>
+                            <h4 class="text-center"><%= t('order.wait_paying') %></h4>
+                          </td>
+                        </tr>
+                    <% end %>
+                    <% @user_gift.user_gift_serials.order(:id).each do |serial| %>
+                        <tr>
+                          <td>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="input-group serial-number">
+                                  <span class="input-group-addon hidden-xs">
+                                    <%= "#{t('no_s')}: #{serial.id}" %>&nbsp;
+                                  </span>
+                                  <input <%= 'disabled="disabled"' if serial.used_time %> type="text" class="form-control text-center" value="<%= serial.serial %>" onclick="this.select();" />
+
+                                  <div class="input-group-btn hidden-xs">
+                                    <button class="btn btn-default send-serial-btn" data-id="<%= serial.id %>" <%= 'disabled="disabled"' if serial.used_time %>>
+                                      <i class="fa fa-send"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xs-12 text-center">
+                                <% if serial.used_time %>
+                                    <label class="label label-default">
+                                      <%= "#{t('used_time')}: #{serial.used_time.strftime('%Y/%m/%d %H:%I:%S')} - #{t('used_who')}: #{serial.email}" %>
+                                    </label>
+                                <% end %>
                               </div>
                             </div>
-                            <div class="col-xs-12 text-center">
-                              <% if serial.used_time %>
-                                <label class="label label-default">
-                                  <%= "#{t('used_time')}: #{serial.used_time.strftime('%Y/%m/%d %H:%I:%S')} - #{t('used_who')}: #{serial.email}" %>
-                                </label>
-                              <% end %>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <% end %>
-                      </tbody>
-                    </table>
-                  </div>
+                          </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-            <h4>
-              <i class="fa fa-exclamation"></i>
-              <%= t('user_gift.instruction') %>
-            </h4>
-            <%= simple_format(translate.description) %>
           </div>
-        <% elsif @user_gift.payment %>
-          <div class="col-md-12 text-center">
-            <h3>
-              <i class="icon-exclamation"></i>
-              <%= t('order.wait_remittance') %>
-            </h3>
-          </div>
-        <% else %>
-          <div class="col-md-12 text-center">
-            <h3>
-              <i class="icon-exclamation"></i>
-              <%= t('order.wait_paying') %>
-            </h3>
-          </div>
-        <% end %>
-      </div>
-      <div class="row">
-        <% if @user_gift.payment && (@user_gift.payment.amount == 0 || @user_gift.payment.identifier.blank?) %>
-          <hr/>
-          <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('order.advice'), edit_payment_path(@user_gift.payment), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
-            <%= link_to t('user_gift.cancel'), user_gift_path(@user_gift), method: :delete %>
-          </div>
-        <% elsif !@user_gift.payment %>
-          <hr/>
-          <div class="col-sm-4 col-sm-offset-4">
-            <%= link_to t('payment'), pay_user_gift_path(@user_gift), class: 'btn btn-lg btn-orange btn-block hover-effect' %>
-            <%= link_to t('user_gift.cancel'), user_gift_path(@user_gift), method: :delete %>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 <%= form_tag send_email_user_gift_path, class: 'form form-horizontal validate-form' do %>
   <div class="modal fade" id="send-email-modal">
     <div class="modal-dialog">

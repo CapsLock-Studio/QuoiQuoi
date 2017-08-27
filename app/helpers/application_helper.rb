@@ -114,4 +114,8 @@ module ApplicationHelper
   def total_pages(array, perPage)
     (array.length.to_f / perPage).ceil
   end
+
+  def has_user_gifts?
+    UserGift.select(:id).where(user_id: current_user.id).count > 0
+  end
 end

@@ -1,54 +1,66 @@
 <%= form_for registration, method: :post, html: {class: 'form'} do |form| %>
   <div class="box-content">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Registration.payment_methods[:remittance], checked: true %>
-            <%= t('remittance') %>
-          </label>
+      <% amount = ((registration.registration_payment.nil?)? registration.tuition : registration.registration_payment.amount) - discount %>
+      <% if amount > 0 %>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Registration.payment_methods[:remittance], checked: true %>
+              <%= t('remittance') %>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Order.payment_methods[:credit_card] %>
-            <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
-          </label>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Registration.payment_methods[:credit_card] %>
+              <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Registration.payment_methods[:cvs_family] %>
-            <%= image_tag 'famiport.png', class: 'img-responsive', style: 'max-width: 130px;' %>
-          </label>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Registration.payment_methods[:cvs_family] %>
+              <%= image_tag 'famiport.png', class: 'img-responsive', style: 'max-width: 130px;' %>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Registration.payment_methods[:cvs_ibon] %>
-            <%= image_tag 'ibon.png', class: 'img-responsive', style: 'max-width: 100px;' %>
-          </label>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Registration.payment_methods[:cvs_ibon] %>
+              <%= image_tag 'ibon.png', class: 'img-responsive', style: 'max-width: 100px;' %>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="col-xs-12">
-        <div class="radio">
-          <label>
-            <%= form.radio_button :payment_method, Registration.payment_methods[:paypal] %>
-            <%= image_tag 'paypal.png', class: 'img-responsive', style: 'max-width: 70px;' %>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Registration.payment_methods[:paypal] %>
+              <%= image_tag 'paypal.png', class: 'img-responsive', style: 'max-width: 70px;' %>
+            </label>
+          </div>
+          <label class="pull-left">
+            <%= t('paypal_hint').html_safe %>
           </label>
-        </div>
-        <label class="pull-left">
-          <%= t('paypal_hint').html_safe %>
-        </label>
 
-      </div>
+        </div>
+      <% else %>
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Registration.payment_methods[:free], checked: true %>
+              <%= t('free') %>
+            </label>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <!-- The hidden field for information of register -->
@@ -64,6 +76,8 @@
 
     <%= form.hidden_field :locale_id %>
     <!-- end. -->
+
+    <input type="hidden" name="user_gift_serial" value="<%= @gift_card_serial %>" />
 
     <hr/>
     <div class="row">

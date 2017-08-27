@@ -3,6 +3,8 @@ class UserGiftsController < ApplicationController
   before_action :set_user_gift, except: [:index, :search]
   before_action :set_user_gift_serial_by_serial, only: [:search, :discount]
 
+  skip_before_action :verify_authenticity_token, only: [:update, :return]
+
   def index
     add_breadcrumb t('home'), :root_path
     add_breadcrumb t('my_gift'), :user_gifts_path
@@ -20,17 +22,8 @@ class UserGiftsController < ApplicationController
     flash[:message] = nil
   end
 
-  def new
-    add_breadcrumb t('home'), root_path
-    add_breadcrumb t('gift'), gifts_path
-    add_breadcrumb t('check_out')
-
-    flash[:message] = nil
-
-    @user_gift = UserGift.new(user_gift_params)
-  end
-
   def send_email
+    flash.now[:icon] = 'fa-lightbulb-o'
     flash[:message] = t('mailer.success')
     flash[:status] = 'success'
     UserGiftMailer.send_to_other(params[:user_gift_serial_id], params[:email]).deliver
@@ -39,19 +32,7 @@ class UserGiftsController < ApplicationController
   end
 
   def create
-
-    locale = Locale.find(session[:locale_id])
-    @user_gift = UserGift.new(user_gift_params.merge({user_id: current_user.id}))
-    @user_gift.currency = locale.currency
-    @user_gift.locale_id = locale.id
-
-    respond_to do |format|
-      if @user_gift.save
-        format.html {redirect_to pay_user_gift_path(@user_gift)}
-      else
-        format.html {redirect_to gift_path(@user_gift.gift)}
-      end
-    end
+    redirect_to controller: :user_gift_payment, action: UserGift.new(user_gift_params).payment_method, params: params
   end
 
   def update
@@ -66,20 +47,98 @@ class UserGiftsController < ApplicationController
     end
   end
 
-  def pay_show
+  def cancel
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('user_gift.my'), :user_gifts_path
+    add_breadcrumb t('detail')
 
-    #respond_to do |format|
-    #  format.html {render json: @user_gift.gift.gift_translates.where(locale_id: session[:locale_id])}
-    #end
+    if !@user_gift.user_gift_payment.completed? && !@user_gift.user_gift_payment.cancel?
+      flash.now[:icon] = 'fa-user-times'
+      flash.now[:message] = t('user_gift.cancel')
+      flash.now[:status] = 'success'
 
-    if @user_gift.payment && @user_gift.payment.completed?
-      redirect_to user_gift_path(@user_gift)
-    elsif @user_gift.payment
-      @user_gift.payment.destroy
-      @payment = @user_gift.build_payment
+      @user_gift.user_gift_payment.cancel = true
+      @user_gift.user_gift_payment.cancel_reason = params[:cancel_reason]
+      @user_gift.user_gift_payment.cancel_time = Time.now
+      @user_gift.user_gift_payment.save!
     else
-      @payment = @user_gift.build_payment
+      flash.now[:icon] = 'fa-lightbulb-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_already_completed')
     end
+
+    render action: :show
+  end
+
+  def return
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('order.in_trading'), :orders_path
+    add_breadcrumb t('detail')
+
+    @user_gift = UserGift.find(params['MerchantTradeNo'].delete('G').split('t')[0])
+
+    if params['RtnCode'] == '1' || params['RtnCode'] == '3'
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
+
+      # Not really update order entity, just show the newest status.
+      @user_gift.user_gift_payment.trade_no = params['TradeNo']
+      @user_gift.user_gift_payment.trade_time = params['TradeDate']
+      @user_gift.user_gift_payment.payment_time = params['PaymentDate']
+      @user_gift.user_gift_payment.completed =  true
+      @user_gift.user_gift_payment.completed_time = Time.now
+
+      @user_gift.user_gift_payment.save!
+
+      UserGiftMailer.completed_confirmation(@user_gift.id).deliver_later
+    else
+      errorCodes = JSON.parse(File.read('app/assets/javascripts/ecpayErrorCodes.json'))
+
+      flash.now[:icon] = 'fa-exclamation-triangle'
+      flash.now[:status] = 'danger'
+      flash.now[:message] = "#{t('error_code')}: #{params['RtnCode']}, #{errorCodes[params['RtnCode']]} 🚫 #{t('payment_failed')}"
+    end
+
+    render 'user_gifts/show'
+  end
+  
+  def payment
+    add_breadcrumb t('home'), :root_path
+    add_breadcrumb t('register')
+    add_breadcrumb t('check_out')
+
+    @user_gift = Gift.includes(:gift_translate)
+                        .where(gift_translates: {locale_id: session[:locale_id]}, id: user_gift_params[:gift_id])
+                        .first
+                        .user_gifts.build(user_gift_params)
+
+    @user_gift.locale_id = session[:locale_id]
+  end
+
+  def report_remittance
+    # Status ==> Waiting   -> confirm: nil
+    #            Confirmed -> confirm: true
+    #            Confirmed -> confirm: false
+    # If there are any reports waiting be reviewed, do nothing and show message to customer
+    if @user_gift.user_gift_payment.user_gift_remittance_reports.where(confirm: nil).size <= 0
+      report = @user_gift.user_gift_payment.user_gift_remittance_reports.create({
+                                                                                             amount: params[:amount],
+                                                                                             account: params[:account],
+                                                                                             date: params[:date]
+                                                                                         })
+      UserGiftMailer.remind_remittance_report(report).deliver_later
+
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('report_remittance_hint')
+    else
+      flash.now[:icon] = 'fa-frown-o'
+      flash.now[:status] = 'warning'
+      flash.now[:message] = t('report_remittance_warning')
+    end
+
+    render action: :show
   end
 
   def search
@@ -194,7 +253,7 @@ class UserGiftsController < ApplicationController
 
   private
     def user_gift_params
-      params.require(:user_gift).permit(:id, :gift_id, :quantity)
+      params.require(:user_gift).permit(:id, :gift_id, :quantity, :payment_method)
     end
 
     def set_user_gift
@@ -203,15 +262,6 @@ class UserGiftsController < ApplicationController
 
     def set_user_gift_serial_by_serial
       @user_gift_serial = UserGiftSerial.find_by_serial(params[:serial])
-    end
-
-    def get_uniqueness_random_string
-      uniqueness_random_string = SecureRandom.hex(20)
-      while UserGift.where(token: uniqueness_random_string).first
-        uniqueness_random_string = SecureRandom.hex(20)
-      end
-
-      uniqueness_random_string
     end
 
     def redirect_to_order_or_registration

@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <%= image_tag @user_gift.gift.image.url(:thumb) %>
+  </div>
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <h4><%= "#{@user_gift.gift.gift_translates.find_by_locale_id(@user_gift.locale_id).name} x #{@user_gift.quantity}" %></h4>
+    <div class="row">
+      <div class="col-xs-12 text-muted">
+        <%= t('user_gift.quota') %>
+      </div>
+      <div class="col-xs-12">
+        <%= number_to_currency(@user_gift.gift.gift_translates.find_by_locale_id(@user_gift.locale_id).quota) %>
+      </div>
+    </div>
+  </div>
+</div>

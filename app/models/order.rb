@@ -1,5 +1,15 @@
 class Order < ApplicationRecord
-  enum payment_method: {remittance: 0, paypal: 1, cvs_family: 2, cvs_ibon: 3, webatm: 4, atm: 5, alipay: 6, credit_card: 7}
+  enum payment_method: {
+      remittance: 0,
+      paypal: 1,
+      cvs_family: 2,
+      cvs_ibon: 3,
+      webatm: 4,
+      atm: 5,
+      alipay: 6,
+      credit_card: 7,
+      free: 8,
+  }
 
   validates :user_id, presence: true
 
@@ -15,7 +25,7 @@ class Order < ApplicationRecord
   has_many :order_custom_items
   accepts_nested_attributes_for :order_custom_items
 
-  has_many :user_gifts
+  has_one :user_gift_serial
 
   has_one :order_payment, dependent: :destroy
 

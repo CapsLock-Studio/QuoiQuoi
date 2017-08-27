@@ -1,0 +1,60 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      禮券購買相關資訊&nbsp;<strong>禮券編號: <%= user_gift.id %></strong>&nbsp;
+      <% if user_gift.user_gift_payment && user_gift.user_gift_payment.cancel? %>
+        <span class="label label-inverse">已取消</span>
+        <small class="text-muted">
+          於&nbsp;<%= user_gift.user_gift_payment.cancel_time.strftime('%Y/%m/%d %H:%I') %>&nbsp;取消
+        </small>
+      <% end %>
+    </div>
+  </div>
+  <div class="box-content">
+    <div class="row">
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          費用
+        </div>
+        <%= number_to_currency(user_gift.user_gift_payment.amount, locale: user_gift.locale.lang) %>
+      </div>
+      <div class="col-xs-12 margin-bottom-10">
+        <div class="text-muted">
+          付款狀態
+        </div>
+        <% if user_gift.user_gift_payment %>
+          <% if user_gift.user_gift_payment.completed.nil? %>
+            <span class="label label-warning">等待付款</span>
+            <small class="text-muted">於 <%= user_gift.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳</small>
+            <div>
+              <small>使用&nbsp;<span class="label label-default"><%= t("#{user_gift.payment_method}") %></span>&nbsp;付款</small>
+            </div>
+          <% elsif user_gift.user_gift_payment.completed? %>
+            <span class="label label-success">付款完成</span>
+            <small class="text-muted">於 <%= user_gift.user_gift_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %> 付款完成</small>
+            <div>
+              <small>使用&nbsp;<span class="label label-default"><%= t("#{user_gift.payment_method}") %></span>&nbsp;付款</small>
+            </div>
+            <% if user_gift.payment_method == 'remittance' %>
+              <label>
+                匯款帳號末５碼: <%= user_gift.user_gift_payment.user_gift_remittance_reports.last.account rescue '沒有紀錄' %>
+              </label>
+            <% else %>
+              <label>
+                交易序號: <%= user_gift.user_gift_payment.trade_no %>
+              </label>
+            <% end %>
+          <% else %>
+            <span class="label label-danger">匯款有誤</span>
+            <small class="text-muted">於 <%= user_gift.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳</small>
+          <% end %>
+          <% if user_gift.user_gift_payment.cancel? %>
+            <div>
+              取消原因: <label><%= user_gift.user_gift_payment.cancel_reason %></label>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
