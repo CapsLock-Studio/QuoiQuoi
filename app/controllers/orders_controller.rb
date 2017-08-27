@@ -25,10 +25,12 @@ class OrdersController < ApplicationController
       begin
         @discount = @order
                         .user_gift_serial
-                        .user_gift.gift
+                        .user_gift
+                        .gift
                         .gift_translates
                         .find_by_locale_id(@order.locale_id)
                         .quota
+      rescue
       end
     end
   end
@@ -182,6 +184,19 @@ class OrdersController < ApplicationController
   end
 
   def report_remittance
+    @discount = 0
+
+    begin
+      @discount = @order
+                      .user_gift_serial
+                      .user_gift
+                      .gift
+                      .gift_translates
+                      .find_by_locale_id(@order.locale_id)
+                      .quota
+    rescue
+    end
+
     # Status ==> Waiting   -> confirm: nil
     #            Confirmed -> confirm: true
     #            Confirmed -> confirm: false
