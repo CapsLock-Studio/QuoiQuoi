@@ -4,12 +4,72 @@
       <i class="icon-flag"></i>
       <span>禮券記錄</span>
     </h1>
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to '新增活動用序號', new_admin_user_gift_path, class: 'btn btn-info' %>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
         <div class="box-header">
-          <div class="title">所有禮券列表</div>
+          <div class="title">活動禮券列表</div>
+          <div class="actions">
+            <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
+            <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
+          </div>
+        </div>
+        <div class="box-content box-no-padding">
+          <div class="responsive-table">
+            <div class="scrollable-table">
+              <table class="data-table table table-striped" style="margin-bottom:0;">
+                <thead>
+                <tr>
+                  <th>編號</th>
+                  <th>禮券名稱&nbsp;<label class="label label-success">點擊前往編輯</label></th>
+                  <th>額度</th>
+                  <th>張數</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @event_gifts.each do |user_gift| %>
+                    <% translates = GiftTranslate.where(gift_id: user_gift.gift_id) %>
+                    <tr>
+                      <td>
+                        <%= user_gift.id %>
+                      </td>
+                      <td>
+                        <%= link_to translates.map{|translate| translate.name}.join(' / '), admin_gift_path(user_gift.gift_id) %>
+                      </td>
+                      <td>
+                        <%= translates.map{|translate| number_to_currency(translate.quota, locale: translate.locale.lang)}.join(' / ') %>
+                      </td>
+                      <td>
+                        <%= user_gift.quantity %>
+                      </td>
+                      <td>
+                        <span class="label label-info">活動用禮券</span>
+                      </td>
+                      <td class="text-right">
+                        <%= link_to(admin_user_gift_path(user_gift), class: 'btn btn-md') do %>
+                            <i class="icon-eye-open"></i>
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
+        <div class="box-header">
+          <div class="title">售出禮券列表</div>
           <div class="actions">
             <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i></a>
             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i></a>
@@ -26,8 +86,7 @@
                   <th>禮券名稱&nbsp;<label class="label label-success">點擊前往編輯</label></th>
                   <th>額度</th>
                   <th>張數</th>
-                  <th>狀態</th>
-                  <th>付款方式</th>
+                  <th>付款狀態</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -51,15 +110,28 @@
                       <%= user_gift.quantity %>
                     </td>
                     <td>
-                      <%= render 'status', user_gift: user_gift %>
-                    </td>
-                    <td>
-                      <% if !user_gift.payment %>
-                        尚未付款完成
-                      <% elsif user_gift.payment.wait? %>
-                        匯款
+                      <% if user_gift.user_gift_payment.cancel? %>
+                          <span class="label label-default">已取消</span>
+                      <% elsif user_gift.user_gift_payment.completed.nil? %>
+                          <span class="label label-warning">等待付款</span>
+                          <div>
+                            <small>
+                              使用&nbsp;<%= t("#{user_gift.payment_method}") %>&nbsp;付款
+                              <span class="text-muted">
+                              <%= user_gift.checkout_time.strftime('%Y/%m/%d %H:%I') %> 結帳
+                            </span>
+                            </small>
+                          </div>
+                      <% elsif user_gift.user_gift_payment.completed? %>
+                          <span class="label label-success">付款完成</span>
+                          <div>
+                            <small>使用&nbsp;<%= t("#{user_gift.payment_method}") %>&nbsp;付款 (<%= user_gift.user_gift_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') %>)</small>
+                          </div>
                       <% else %>
-                        Paypal
+                          <span class="label label-danger">匯款有誤</span>
+                          <small class="text-muted">
+                            <%= user_gift.checkout_time.strftime('%Y/%m/%d %H:%I:%S') %> 結帳
+                          </small>
                       <% end %>
                     </td>
                     <td class="text-right">
