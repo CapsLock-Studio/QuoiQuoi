@@ -177,6 +177,16 @@ QuoiQuoi::Application.routes.draw do
       end
     end
 
+    resources :user_gift_remittances do
+      member do
+        get :check, action: :edit
+      end
+
+      collection do
+        get :check
+      end
+    end
+
     resources :messages
 
     resources :custom_orders do
