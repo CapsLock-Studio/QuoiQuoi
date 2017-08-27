@@ -222,12 +222,14 @@ class RegistrationPaymentController < ApplicationController
     @registration.save!
 
     begin
-      user_gift_serial.registration_id = @registration.id
-      user_gift_serial.used_time = Time.now
-      user_gift_serial.email = @registration.user.nil? ? @registration.email : @registration.user.email
-      user_gift_serial.save
+      if !user_gift_serial.nil?
+        user_gift_serial.registration_id = @registration.id
+        user_gift_serial.used_time = Time.now
+        user_gift_serial.email = @registration.user.nil? ? @registration.email : @registration.user.email
+        user_gift_serial.save
 
-      UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+        UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+      end
     end
   end
 
