@@ -27,6 +27,7 @@ class AdminAbility
       can :manage, Payment
       can :manage, Gift
       can :manage, UserGift
+      can :manage, UserGiftRemittanceReport
       can :manage, Message
       can :manage, Registration
       can :manage, Designer
