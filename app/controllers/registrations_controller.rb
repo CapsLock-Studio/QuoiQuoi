@@ -158,6 +158,7 @@ class RegistrationsController < ApplicationController
                       .gift_translates
                       .find_by_locale_id(@registration.locale_id)
                       .quota
+    rescue
     end
 
     add_breadcrumb t('home'), :root_path
@@ -313,6 +314,19 @@ class RegistrationsController < ApplicationController
   end
 
   def report_remittance
+    @discount = 0
+
+    begin
+      @discount = @registration
+                      .user_gift_serial
+                      .user_gift
+                      .gift
+                      .gift_translates
+                      .find_by_locale_id(@registration.locale_id)
+                      .quota
+    rescue
+    end
+
     # Status ==> Waiting   -> confirm: nil
     #            Confirmed -> confirm: true
     #            Confirmed -> confirm: false
