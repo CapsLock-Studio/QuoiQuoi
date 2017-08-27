@@ -1,5 +1,15 @@
 class UserGift < ApplicationRecord
-  enum payment_method: {remittance: 0, paypal: 1, cvs_family: 2, cvs_ibon: 3, webatm: 4, atm: 5, alipay: 6, credit_card: 7}
+  enum payment_method: {
+      remittance: 0,
+      paypal: 1,
+      cvs_family: 2,
+      cvs_ibon: 3,
+      webatm: 4,
+      atm: 5,
+      alipay: 6,
+      credit_card: 7,
+      event: 8,
+  }
 
   belongs_to :user
   belongs_to :gift
