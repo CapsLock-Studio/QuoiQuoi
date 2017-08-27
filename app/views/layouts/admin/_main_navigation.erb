@@ -179,22 +179,22 @@
       <% end %>
 
       <%= nav_item_with_resource('#', nil, UserGift) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) || is_in(:user_gift_remittances) %>" href="#">
           <i class="icon-gift"></i>
           <span>禮券交易管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:user_gifts) %>">
-          <%= nav_item_with_resource(check_admin_user_gifts_path, {rule: /#{admin_user_gifts_path}(\/\d+)?\/check/}, UserGift) do %>
-            <%= link_to(check_admin_user_gifts_path) do %>
-              <i class="icon-check"></i>
-              <span>待確認購買禮券匯款</span>
+        <ul class="nav <%= 'in' if is_in(:user_gifts) || is_in(:user_gift_remittances) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_user_gift_remittances_path}(\/\d+)?\/check/}, UserGiftRemittanceReport) do %>
+            <%= link_to(check_admin_user_gift_remittances_path) do %>
+                <i class="icon-check"></i>
+                <span>待確認匯款回報</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(nil, {rule: /#{admin_user_gifts_path}(\/\d+)?(?!\/check)/}, UserGift) do %>
             <%= link_to(admin_user_gifts_path) do %>
               <i class="icon-flag"></i>
-              <span>禮券記錄</span>
+              <span>所有禮券管理</span>
             <% end %>
           <% end %>
         </ul>
