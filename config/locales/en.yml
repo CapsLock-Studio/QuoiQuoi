@@ -311,6 +311,7 @@ en:
   search: 'Search'
   search_result: '%{quantity} results'
   nav_item: 'Subitem'
+  other_materials: 'Other materials'
   account: 'Account'
   message_box: 'Message box'
   profile_management: 'Profile'
