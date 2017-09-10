@@ -4,7 +4,12 @@
     <%= render 'side_navigation' %>
     <div class="col-md-9 col-sm-9">
       <div class="row">
-        <%= render 'layouts/nav_item' %>
+        <div class="col-xs-12 visible-xs">
+          <a href="#" class="btn btn-xs" data-toggle="offcanvas">
+            <i class="fa fa-angle-left fa-fw"></i>
+            <%= t('other_materials') %>
+          </a>
+        </div>
         <div class="col-xs-12 margin-bottom-20">
           <div class="btn-toolbar pull-right">
             <%= link_to(t('fabrics_management'), like_materials_path, class: 'btn btn-default') %>

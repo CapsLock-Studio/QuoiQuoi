@@ -342,6 +342,7 @@ zh-TW:
   search: '查詢'
   search_result: '%{quantity} 個查詢結果'
   nav_item: '其他項目'
+  other_materials: '其他布料'
   account: '我的帳號'
   message_box: '訊息匣'
   profile_management: '個人資料管理'
