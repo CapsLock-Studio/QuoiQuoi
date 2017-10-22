@@ -132,6 +132,19 @@ class RegistrationsController < ApplicationController
         add_breadcrumb t('home'), :root_path
         add_breadcrumb t('registrations')
 
+        @discount = 0
+
+        begin
+          @discount = @registration
+                          .user_gift_serial
+                          .user_gift
+                          .gift
+                          .gift_translates
+                          .find_by_locale_id(@registration.locale_id)
+                          .quota
+        rescue
+        end
+
         render action: :show
       else
         render json: 'Not support payment method.'
@@ -286,6 +299,19 @@ class RegistrationsController < ApplicationController
     add_breadcrumb t('detail')
 
     @registration = Registration.find(params['MerchantTradeNo'].delete('R').split('t')[0])
+
+    @discount = 0
+
+    begin
+      @discount = @registration
+                      .user_gift_serial
+                      .user_gift
+                      .gift
+                      .gift_translates
+                      .find_by_locale_id(@registration.locale_id)
+                      .quota
+    rescue
+    end
 
     if params['RtnCode'] == '1' || params['RtnCode'] == '3'
       flash.now[:icon] = 'fa-smile-o'
