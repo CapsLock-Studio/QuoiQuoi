@@ -64,18 +64,26 @@ QuoiQuoi::Application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => "quoiquoi.tw" }
-  config.action_mailer.asset_host = "http://quoiquoi.tw"
-  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.default_url_options = { :host => "quoiquoi.tw", protocol: 'https' }
+  config.action_controller.default_url_options = { :host => "quoiquoi.tw", protocol: 'https' }
+  config.action_mailer.asset_host = "https://quoiquoi.tw"
+  config.action_controller.asset_host = 'https://quoiquoi.tw'
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              '...',
+      address:              'smtp.mailgun.org',
       port:                 587,
-      domain:               'example.domain',
-      user_name:            'example@domain',
-      password:             '...',
+      domain:               'quoiquoi.tw',
+      user_name:            'postmaster@quoiquoi.tw',
+      password:             'ff6367d0a29d1973a1df041cdbe14762',
       authentication:       'plain',
       enable_starttls_auto: true
+      #:address => "smtp.gmail.com",
+      #:port => "587",
+      #:domain => "gmail.com",
+      #:authentication => "plain",
+      #:user_name => "quoiquoi.tw@gmail.com",
+      #:password => "quoiquoitw12364362",
+      #:enable_starttls_auto => true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
