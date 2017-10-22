@@ -131,6 +131,19 @@ class OrdersController < ApplicationController
         add_breadcrumb t('order.all'), :orders_path
         add_breadcrumb t('detail')
 
+        @discount = 0
+
+        begin
+          @discount = @order
+                          .user_gift_serial
+                          .user_gift
+                          .gift
+                          .gift_translates
+                          .find_by_locale_id(@order.locale_id)
+                          .quota
+        rescue
+        end
+
         render action: :show
       else
         render json: 'Not support payment method.'
@@ -292,6 +305,19 @@ class OrdersController < ApplicationController
     add_breadcrumb t('detail')
 
     @order = Order.find(params['MerchantTradeNo'].delete('O').split('t')[0])
+
+    @discount = 0
+
+    begin
+      @discount = @order
+                      .user_gift_serial
+                      .user_gift
+                      .gift
+                      .gift_translates
+                      .find_by_locale_id(@order.locale_id)
+                      .quota
+    rescue
+    end
 
     if params['RtnCode'] == '1' || params['RtnCode'] == '3'
       flash.now[:icon] = 'fa-smile-o'
