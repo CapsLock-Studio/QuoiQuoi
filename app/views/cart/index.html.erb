@@ -1,5 +1,5 @@
 <%= render 'layouts/breadcrumbs' %>
-<%= form_for @order_in_cart, url: cart_path, method: :put do |f| %>
+<%= form_for @order_in_cart ||= Order.new, url: cart_path, method: :put do |f| %>
   <div class="container main-container">
     <div class="row">
       <div class="col-md-8 col-sm-6 col-xs-12">
