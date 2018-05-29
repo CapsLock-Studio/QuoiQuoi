@@ -54,6 +54,15 @@ class Order < ApplicationRecord
     self.get_raw_subtotal + self.shipping_fee!
   end
 
+  def get_ntd_subtotal
+    locale = Locale.where(lang: 'zh-TW').first
+
+    custom_items_subtotal = order_custom_items.map{ |item| (item.custom_order.locale_id != locale.id) ? (custom_order.price * 30) : custom_order.price  }.sum
+    products_subtotal = self.order_products.map{|order_product| order_product.raw_price(locale.id) * order_product.quantity}.sum
+
+    custom_items_subtotal + products_subtotal
+  end
+
   def shipping_fee!
     shipping_fee = ShippingFeeTranslate.find_by_shipping_fee_id_and_locale_id(self.shipping_fee_id, self.locale_id)
     if shipping_fee.free_condition.blank? || self.get_raw_subtotal < shipping_fee.free_condition
