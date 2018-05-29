@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
     # Checkout when payment complete
     # @order_in_cart.checkout = true
     # @order_in_cart.checkout_time = Time.now
-    @order_in_cart.subtotal = @order_in_cart.get_subtotal
+    @order_in_cart.subtotal = @order_in_cart.get_ntd_subtotal
 
     begin
       if !params[:user_gift_serial].nil? && params[:user_gift_serial] != ''
