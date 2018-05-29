@@ -53,7 +53,7 @@
                     <%= t('total_amount') %>
                   </div>
                   <div class="col-sm-2 col-xs-12 margin-bottom-xs-5">
-                    <%= number_to_currency(order.order_payment.amount) %>
+                    <%= number_to_currency(order.order_payment.amount, locale: 'zh-TW') %>
                   </div>
 
                   <div class="col-xs-12 visible-xs text-muted">
