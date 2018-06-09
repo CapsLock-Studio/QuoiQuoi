@@ -218,6 +218,10 @@ class OrderPaymentController < ApplicationController
   end
 
   def send_request_to_allpay(order, payment, options = nil)
+    if order.locale_id == Locale.where(lang: 'en').first.id
+      order.subtotal = order.get_ntd_subtotal
+      order.save
+    end
     @form_data = {
         MerchantID: AllPay.merchant_id,
         MerchantTradeNo: "O#{order.id}t#{Time.now.to_i}",
