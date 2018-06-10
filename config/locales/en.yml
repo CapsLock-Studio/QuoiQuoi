@@ -523,6 +523,7 @@ en:
   alipay: 'Ali PAY'
   alipay_hint: 'If you want to use Alipay, you have fill the phone number field.'
   paypal: 'Paypal'
+  stripe: 'Credit card'
   credit_card: 'Credit card'
   continue_on_paypal: 'Continue on Paypal'
   continue_on_alipay: 'Continue on Alipay'

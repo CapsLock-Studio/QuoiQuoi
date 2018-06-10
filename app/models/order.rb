@@ -9,6 +9,7 @@ class Order < ApplicationRecord
       alipay: 6,
       credit_card: 7,
       free: 8,
+      stripe: 9,
   }
 
   validates :user_id, presence: true
@@ -56,6 +57,15 @@ class Order < ApplicationRecord
 
   def get_ntd_subtotal
     locale = Locale.where(lang: 'zh-TW').first
+
+    custom_items_subtotal = order_custom_items.map{ |item| (item.custom_order.locale_id != locale.id) ? (custom_order.price * 30) : custom_order.price  }.sum
+    products_subtotal = self.order_products.map{|order_product| order_product.raw_price(locale.id) * order_product.quantity}.sum
+
+    custom_items_subtotal + products_subtotal
+  end
+
+  def get_usd_subtotal
+    locale = Locale.where(lang: 'en').first
 
     custom_items_subtotal = order_custom_items.map{ |item| (item.custom_order.locale_id != locale.id) ? (custom_order.price * 30) : custom_order.price  }.sum
     products_subtotal = self.order_products.map{|order_product| order_product.raw_price(locale.id) * order_product.quantity}.sum

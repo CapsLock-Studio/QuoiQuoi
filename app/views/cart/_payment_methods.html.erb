@@ -11,14 +11,25 @@
           </div>
         </div>
 
-        <div class="col-xs-12">
-          <div class="radio">
-            <label>
-              <%= form.radio_button :payment_method, Order.payment_methods[:credit_card] %>
-              <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
-            </label>
+        <% if I18n.locale == 'en' %>
+          <div class="col-xs-12">
+            <div class="radio">
+              <label>
+                <%= form.radio_button :payment_method, Order.payment_methods[:stripe] %>
+                <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
+              </label>
+            </div>
           </div>
-        </div>
+        <% else %>
+          <div class="col-xs-12">
+            <div class="radio">
+              <label>
+                <%= form.radio_button :payment_method, Order.payment_methods[:credit_card] %>
+                <%= t('credit_card') %> <i class="fa fa-credit-card"></i>
+              </label>
+            </div>
+          </div>
+        <% end %>
 
         <div class="col-xs-12">
           <div class="radio">
@@ -48,7 +59,15 @@
           <label class="pull-left">
             <%= t('paypal_hint').html_safe %>
           </label>
+        </div>
 
+        <div class="col-xs-12">
+          <div class="radio">
+            <label>
+              <%= form.radio_button :payment_method, Order.payment_methods[:alipay] %>
+              <%= image_tag 'alipay.png', class: 'img-responsive', style: 'max-width: 100px;' %>
+            </label>
+          </div>
         </div>
       <% else %>
         <div class="col-xs-12">

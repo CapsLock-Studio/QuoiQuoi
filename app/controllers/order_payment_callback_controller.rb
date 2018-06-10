@@ -58,4 +58,93 @@ class OrderPaymentCallbackController < ApplicationController
 
     redirect_to order_path(order_payment.order)
   end
+
+  def stripe
+    order = Order.find_by_id(params[:order_id])
+
+    order_payment = order.order_payment
+
+    amount = order_payment.amount.to_i * 100
+
+    customer = Stripe::Customer.create(
+      :email => params[:stripeEmail],
+      :source  => params[:stripeToken]
+    )
+
+    charge = Stripe::Charge.create(
+      :customer    => customer.id,
+      :amount      => amount,
+      :description => @website_title,
+      :currency    => 'usd'
+    )
+
+    order_payment.trade_no = charge.id
+    order_payment.trade_time = Time.now
+    order_payment.payment_time = Time.now
+
+    if charge.status == 'succeeded'
+      flash[:icon] = 'fa-smile-o'
+      flash[:status] = 'success'
+      flash[:message] = t('payment_completed')
+
+      order_payment.completed =  true
+      order_payment.completed_time = Time.now
+    else
+      flash[:icon] = 'fa-exclamation-triangle'
+      flash[:status] = 'danger'
+      flash[:message] = "🚫 #{t('payment_failed')}"
+    end
+
+    order_payment.save!
+
+    redirect_to order_path(order)
+
+  rescue Exception => e
+    flash[:icon] = 'fa-exclamation-triangle'
+    flash[:status] = 'danger'
+    flash[:message] = "🚫 #{t('payment_failed')}"
+
+    render template: 'order_payment/stripe'
+  end
+
+  def alipay
+    order = Order.find(params[:order_id])
+
+    order_payment = order.order_payment
+
+    amount = order_payment.amount.to_i * 100
+    charge = Stripe::Charge.create(
+      :amount      => amount,
+      :currency    => 'usd',
+      :source      => params[:source],
+    )
+
+    order_payment.trade_no = charge.id
+    order_payment.trade_time = Time.now
+    order_payment.payment_time = Time.now
+
+    if charge.status == 'succeeded'
+      flash[:icon] = 'fa-smile-o'
+      flash[:status] = 'success'
+      flash[:message] = t('payment_completed')
+
+      order_payment.completed =  true
+      order_payment.completed_time = Time.now
+    else
+      flash[:icon] = 'fa-exclamation-triangle'
+      flash[:status] = 'danger'
+      flash[:message] = "🚫 #{t('payment_failed')}"
+    end
+
+    order_payment.save!
+
+    redirect_to order_path(order)
+
+  rescue Exception => e
+    flash[:icon] = 'fa-exclamation-triangle'
+    flash[:status] = 'danger'
+    flash[:message] = "🚫 #{t('payment_failed')}"
+
+    redirect_to order_path(order)
+  end
 end

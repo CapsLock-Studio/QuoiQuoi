@@ -1,0 +1,36 @@
+<%= render 'layouts/breadcrumbs' %>
+<div class="container main-container">
+  <div class="row">
+    <div class="col-xs-12">
+      <%= render 'layouts/flash_message' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-sm-6 col-xs-12">
+      <%= render 'cart/list_in_cart' %>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="box">
+        <h4>你的結帳資訊</h4>
+        <div class="box-content">
+          <%= render 'orders/customer_information', order: @order, discount: @gift_card_quota %>
+        </div>
+      </div>
+      <div class="box">
+        <!-- choose payment method -->
+        <%= form_tag url_for(controller: :order_payment_callback, action: :stripe) do %>
+          <%= hidden_field_tag 'order_id', @order.id %>
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="<%= @website_title %>"
+            data-amount="<%= @order.get_usd_subtotal * 100 %>"
+            data-locale="auto"
+            data-currency="usd"
+          >
+          </script>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

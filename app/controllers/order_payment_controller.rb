@@ -1,6 +1,6 @@
 class OrderPaymentController < ApplicationController
   before_action :checkout, except: [:resume, :webatm_resume, :credit_card_resume, :alipay_resume]
-  before_action :check_payment_is_completed, only: [:resume, :alipay_resume, :credit_card_resume, :webatm_resume]
+  before_action :check_payment_is_completed, only: [:resume, :alipay_resume, :credit_card_resume, :webatm_resume, :alipay_resume]
   before_action :set_breadcrumb
 
   def remittance
@@ -159,26 +159,19 @@ class OrderPaymentController < ApplicationController
 
   def alipay_resume
     order = Order.find(params[:id])
+    source = Stripe::Source.create(
+      :type => "alipay",
+      :amount => order.get_usd_subtotal.to_i * 100,
+      :currency => 'usd',
+      :owner => {
+        :email => 'quoiquoistudio@gmail.com',
+      },
+      redirect: {
+        return_url: url_for(controller: :order_payment_callback, action: :alipay, params: { order_id: order.id }),
+      },
+    )
 
-    item_names = order.order_products.map{|order_products| "#{order_products.product.product_translates.find_by_locale_id(order.locale_id).name}" }
-    item_counts = order.order_products.map{|order_products| "#{order_products.quantity}" }
-    item_prices = order.order_products.map{|order_products| "#{order_products.price.to_i}" }
-
-    if order.shipping_fee! > 0
-      item_names << "#{t('shipping_fee')}"
-      item_counts << "1"
-      item_prices << "#{order.shipping_fee!.to_i}"
-    end
-
-    # Resend a order payment to AllPay
-    send_request_to_allpay(order, 'Alipay', {
-                                                       AlipayItemName: item_names.join('#'),
-                                                       AlipayItemCounts: item_counts.join('#'),
-                                                       AlipayItemPrice: item_prices.join('#'),
-                                                       Email: order.user.email,
-                                                       PhoneNo: order.phone,
-                                                       UserName: order.name
-                                                   })
+    redirect_to source.redirect.url
   end
 
   def free
@@ -199,6 +192,32 @@ class OrderPaymentController < ApplicationController
 
       redirect_to order_path(@order.id)
     end
+  end
+
+  def stripe
+    order_payment = @order.build_order_payment
+    order_payment.amount = @order.get_usd_subtotal
+    order_payment.save!
+  end
+
+  def alipay
+    order_payment = @order.build_order_payment
+    order_payment.amount = @order.get_usd_subtotal
+    order_payment.save!
+
+    source = Stripe::Source.create(
+      :type => "alipay",
+      :amount => @order.get_usd_subtotal.to_i * 100,
+      :currency => 'usd',
+      :owner => {
+        :email => 'quoiquoistudio@gmail.com',
+      },
+      redirect: {
+        return_url: url_for(controller: :order_payment_callback, action: :alipay, params: { order_id: @order.id }),
+      },
+    )
+
+    redirect_to source.redirect.url
   end
 
   private
