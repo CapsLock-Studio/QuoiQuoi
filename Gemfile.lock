@@ -191,9 +191,10 @@ GEM
       activesupport (>= 2.3)
       attr_required (>= 0.0.5)
       rest-client
+    pg (0.20.0)
     puma (3.8.2)
-    rack (2.0.1)
-    rack-protection (1.5.3)
+    rack (2.0.3)
+    rack-protection (2.0.0)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -248,11 +249,11 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sidekiq (4.2.10)
+    sidekiq (5.0.4)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
-      redis (~> 3.2, >= 3.2.1)
+      redis (~> 3.3, >= 3.3.3)
     spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -324,6 +325,7 @@ DEPENDENCIES
   omniauth-twitter
   paperclip
   paypal-express
+  pg
   puma (~> 3.0)
   rails (~> 5.0.2)
   recaptcha

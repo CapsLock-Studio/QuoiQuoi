@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header box-header-small">
+    <div class="title">
+      客戶匯款資訊
+    </div>
+  </div>
+  <div class="box-content">
+    <div class="form-group">
+      <label for="amount-to-pay" class="text-danger">應付金額</label>
+      <div class="controls">
+        <input id="amount-to-pay" class="form-control" disabled="disabled" value="<%= number_to_currency(remittance.user_gift_payment.amount, locale: remittance.user_gift_payment.user_gift.locale.lang) %>" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>匯款金額</label>
+      <div class="controls">
+        <%= text_field_tag :amount, number_to_currency(remittance.amount, locale: remittance.user_gift_payment.user_gift.locale.lang), class: 'form-control', disabled: 'disabled' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>匯款帳號後五碼</label>
+      <div class="controls">
+        <%= text_field_tag :identifier, remittance.account, class: 'form-control', disabled: 'disabled' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>匯款日期</label>
+      <div class="controls">
+        <%= text_field_tag :date, remittance.date.strftime('%Y/%m/%d'), class: 'form-control', disabled: 'disabled' %>
+      </div>
+    </div>
+  </div>
+</div>

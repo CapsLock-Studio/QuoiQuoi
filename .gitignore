@@ -22,3 +22,14 @@ public/assets
 !public/system/placeholder/
 
 .sass-cache/*
+
+# Ignore SQLite file
+QuoiQuoi_development
+QuoiQuoi_production
+test_db
+
+# Ingore sensitive configs
+secret_token.rb
+devise.rb
+omniauth.rb
+paypal.yml

@@ -75,7 +75,13 @@
   </div>
   <div class="col-xs-12">
     <strong>
-      <%= number_to_currency(((registration.registration_payment.nil?)? registration.tuition : registration.registration_payment.amount)) %>
+      <% amount = ((registration.registration_payment.nil?)? registration.tuition : registration.registration_payment.amount) - discount %>
+      <%= number_to_currency(amount > 0 ? amount : 0) %>
     </strong>
   </div>
+  <% if discount > 0 %>
+      <div class="col-xs-12 text-muted">
+        <%= t('gift_quota') %>: <%= number_to_currency(discount, locale: registration.locale.lang) %>
+      </div>
+  <% end %>
 </div>

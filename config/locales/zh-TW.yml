@@ -214,6 +214,7 @@ zh-TW:
     discount: '%{percent}折優惠'
 
   user_gift:
+    no_s: '禮券編號'
     success: '禮券扣款成功!'
     danger: '禮券扣款失敗, 請聯絡店家查明原因'
     not_found: '這不是有效的禮券序號'
@@ -268,6 +269,7 @@ zh-TW:
   payment_method: '付款方式'
   cvs_family: '全家famiport繳費'
   cvs_ibon: '7-11 ibon繳費'
+  free: '免費'
   payment_no: '繳費代碼'
   bankcode: '繳費銀行代碼'
   virtual_account: '繳費虛擬帳號'
@@ -321,6 +323,7 @@ zh-TW:
   price: '價格'
   gift: '禮券'
   my_gift: '我的禮券'
+  gift_quota: '禮券抵用金額'
   business_hours: '營業時間'
   position_designer: '設計師'
   free_shipping_fee: '國內滿%{free_condition}免運費'
@@ -339,6 +342,7 @@ zh-TW:
   search: '查詢'
   search_result: '%{quantity} 個查詢結果'
   nav_item: '其他項目'
+  other_materials: '其他布料'
   account: '我的帳號'
   message_box: '訊息匣'
   profile_management: '個人資料管理'

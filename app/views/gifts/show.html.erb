@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <%= form_for @user_gift, url: new_user_gift_path, method: :get do |f| %>
+          <%= form_for @user_gift, url: payment_user_gifts_path, method: :get do |f| %>
             <%= f.hidden_field :gift_id %>
             <% translate = @user_gift.gift.gift_translates.select([:quota, :name, :description]).where(locale_id: session[:locale_id]).first %>
             <div class="row">
@@ -35,8 +35,10 @@
                   <h4 class="margin-bottom-20">
                     <strong style="color:#666;" id="product-price" data-price="<%= translate.quota %>"><%= number_to_currency(translate.quota) %></strong>
                   </h4>
-                  <label><%= t('quantity') %></label>
-                  <%= f.select :quantity, (1..10).collect{|number| [number, number]}, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                  <div class="margin-bottom-10">
+                    <label><%= t('quantity') %></label>
+                    <%= f.select :quantity, (1..10).collect{|number| [number, number]}, {}, class: 'selectpicker form-control', data: {width: '100%'} %>
+                  </div>
                   <%= f.button class: 'btn btn-lg btn-default btn-block hover-effect one-page-btn', type: 'submit' do %>
                     <i class="fa fa-gift"></i>
                     <span><%= t('check_out') %></span>

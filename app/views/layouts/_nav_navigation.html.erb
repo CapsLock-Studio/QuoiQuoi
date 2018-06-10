@@ -13,30 +13,23 @@
         </div><!-- /input-group -->
       <% end %>
     </li>
-    <%= nav_item(root_path, class: 'hidden-xs hidden-sm') do %>
-      <%= link_to(root_path, class: 'btn btn-link') do %>
-        <i class="glyphicon glyphicon-home"></i>
-      <% end %>
-    <% end %>
+    <li>
+      <%= link_to t('handmadebag'), products_path, class: 'btn btn-link' %>
+    </li>
     <li class="nav-dropdown-menu">
       <a href="#" class="btn btn-link" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">
         <%= t('shop') %>
         <i class="fa fa-angle-down"></i>
       </a>
       <ul class="dropdown-menu">
-        <li>
-          <%= link_to t('handmadebag'), products_path, class: 'btn btn-link' %>
-        </li>
         <% @product_types.each do |product_type| %>
           <li>
             <%= link_to product_type.product_type_translate.name, product_type_products_path(product_type), class: 'btn btn-link' %>
           </li>
         <% end %>
-        <!--
         <li>
           <%= link_to t('gift'), gifts_path, class: 'btn btn-link' %>
         </li>
-        -->
       </ul>
     </li>
     <li>

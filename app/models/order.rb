@@ -1,5 +1,15 @@
 class Order < ApplicationRecord
-  enum payment_method: {remittance: 0, paypal: 1, cvs_family: 2, cvs_ibon: 3, webatm: 4, atm: 5, alipay: 6, credit_card: 7}
+  enum payment_method: {
+      remittance: 0,
+      paypal: 1,
+      cvs_family: 2,
+      cvs_ibon: 3,
+      webatm: 4,
+      atm: 5,
+      alipay: 6,
+      credit_card: 7,
+      free: 8,
+  }
 
   validates :user_id, presence: true
 
@@ -15,7 +25,7 @@ class Order < ApplicationRecord
   has_many :order_custom_items
   accepts_nested_attributes_for :order_custom_items
 
-  has_many :user_gifts
+  has_one :user_gift_serial
 
   has_one :order_payment, dependent: :destroy
 
@@ -42,6 +52,15 @@ class Order < ApplicationRecord
   # Order.includes(:order_custom_items, :order_products).find(317).amount <======= For test
   def get_subtotal
     self.get_raw_subtotal + self.shipping_fee!
+  end
+
+  def get_ntd_subtotal
+    locale = Locale.where(lang: 'zh-TW').first
+
+    custom_items_subtotal = order_custom_items.map{ |item| (item.custom_order.locale_id != locale.id) ? (custom_order.price * 30) : custom_order.price  }.sum
+    products_subtotal = self.order_products.map{|order_product| order_product.raw_price(locale.id) * order_product.quantity}.sum
+
+    custom_items_subtotal + products_subtotal
   end
 
   def shipping_fee!

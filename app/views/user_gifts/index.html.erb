@@ -6,72 +6,106 @@
       <div class="row">
         <%= render 'layouts/nav_item' %>
       </div>
-      <% @user_gifts.each do |user_gift| %>
-        <% translate = GiftTranslate.where(gift_id: user_gift.gift_id, locale_id: session[:locale_id]).first %>
-        <div class="box">
-          <div class="box-header box-header-small grey-background">
-            <h4>
-              <%= t('no_s') %> <strong class="text-muted">G<%= user_gift.id %></strong>
-              <small class="order-time"><%= t('build_time') %> <strong><%= user_gift.created_at.strftime('%Y/%m/%d %H:%M') %></strong></small>
-            </h4>
-          </div>
-          <div class="box-content box-no-padding" style="border:0;">
-            <div class="responsive-table">
-              <div class="scrollable-area">
-                <table class="table table-bordered text-center table-padding-10" style="margin-bottom:0;">
-                  <thead>
-
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td class="text-left col-md-4">
-                      <%= image_tag user_gift.gift.image.url(:thumb) %>
-                    </td>
-                    <td>
-                      <%= translate.name %>
-                    </td>
-                    <td>
-                      <% if !user_gift.payment %>
-                        <%= t('order.wait_paying') %>
-                      <% elsif user_gift.payment.amount == 0 || user_gift.payment.identifier.blank? %>
-                        <%= t('order.wait_remittance') %>
-                      <% elsif user_gift.payment.completed? %>
-                        <%= t('completed_payment') %>
-                      <% else %>
-                        <%= t('order.wait_confirm') %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <%= number_to_currency(translate.quota * user_gift.quantity.to_f, locale: translate.locale.lang) %><br/>
-                      <span class="text-muted"><%= "#{number_to_currency(translate.quota, locale: translate.locale.lang)} * #{user_gift.quantity}" %></span>
-                    </td>
-                    <td>
-                      <ul class="list-unstyled">
-                        <% if !user_gift.payment %>
-                          <li>
-                            <%= link_to t('pay'), pay_user_gift_path(user_gift), class: 'btn btn-u btn-orange hover-effect' %>
-                          </li>
-                          <li>
-                            <%= link_to t('cancel'), user_gift_path(user_gift), method: :delete %>
-                          </li>
-                        <% elsif !user_gift.payment.completed? && (user_gift.payment.amount == 0 || user_gift.payment.pay_time.blank?) %>
-                          <li>
-                            <%= link_to t('order.advice'), edit_payment_path(user_gift.payment), class: 'btn btn-u btn-orange hover-effect' %>
-                          </li>
-                        <% end %>
-                        <li>
-                          <%= link_to t('detail'), user_gift_path(user_gift), class: 'btn btn-u btn-default' %>
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+      <div class="box">
+        <div class="box-content">
+          <% if @user_gifts.size > 0 %>
+            <div class="col-sm-12 hidden-xs text-muted margin-bottom-5">
+              <div class="row">
+                <div class="col-sm-2">
+                  <%= t('user_gift.no_s') %>
+                </div>
+                <div class="col-sm-3">
+                  <%= t('user_gift.quota') %>
+                </div>
+                <div class="col-sm-2">
+                  <%= t('total_amount') %>
+                </div>
+                <div class="col-sm-5">
+                  <%= t('status') %>
+                </div>
               </div>
             </div>
-          </div>
+
+            <div class="items">
+              <% @user_gifts.each do |user_gift| %>
+                <div class="row item">
+                  <div class="col-xs-12 visible-xs text-muted">
+                    <%= t('user_gift.no_s') %>
+                  </div>
+                  <div class="col-sm-2 col-xs-12 margin-bottom-xs-5">
+                    <%= "G#{user_gift.id}" %>
+                  </div>
+
+                  <div class="col-xs-12 visible-xs tex-muted">
+                    <%= t('user_gift.quota') %>
+                  </div>
+                  <div class="col-sm-3 col-xs-12 margin-bottom-xs-5">
+                    <%= "#{user_gift.gift.gift_translates.find_by_locale_id(user_gift.locale_id).quota} x #{user_gift.quantity}" %>
+                  </div>
+
+                  <div class="col-xs-12 visible-xs text-muted">
+                    <%= t('total_amount') %>
+                  </div>
+                  <div class="col-sm-2 col-xs-12 margin-bottom-xs-5">
+                    <%= number_to_currency(user_gift.gift.gift_translates.find_by_locale_id(user_gift.locale_id).quota * user_gift.quantity) %>
+                  </div>
+
+                  <div class="col-xs-12 visible-xs text-muted">
+                    <%= t('status') %>
+                  </div>
+                  <div class="col-sm-4 col-xs-9 margin-bottom-xs-5">
+                    <% if user_gift.user_gift_payment.cancel? %>
+                      <span class="text-muted">
+                        <%= t('order.cancel') %>&nbsp;(<%= user_gift.user_gift_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S') %>)
+                      </span>
+                    <% elsif user_gift.user_gift_payment.completed? %>
+                      <%= "#{t('completed_payment')}" %>
+                      <div>
+                        <small>
+                          <%= "#{t('payment_method')}: #{t(user_gift.payment_method)}" %>
+                        </small>
+                      </div>
+                      <div>
+                        <small>
+                          <%= "#{t('payment_completed_time')}: #{user_gift.user_gift_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S')}" %>
+                        </small>
+                      </div>
+                    <% else %>
+                      <label>
+                        <%= t('order.wait_paying') %>
+                      </label>
+                      <div>
+                        <small>
+                          <%= "#{t('payment_method')}: #{t(user_gift.payment_method)}" %>
+                        </small>
+                      </div>
+                      <% if user_gift.has_expire_time? %>
+                        <div class="text-muted">
+                          <small>
+                            <%= "#{user_gift.user_gift_payment.expire_time.strftime('%Y/%m/%d %H:%I:%S')} #{t('expired')}" %>
+                          </small>
+                        </div>
+                      <% end %>
+                      <div>
+                        <small>
+                          <%= "#{t('checkout_time')}: #{user_gift.checkout_time.strftime('%Y/%m/%d %H:%I:%S')}" %>
+                        </small>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="col-sm-1 col-xs-3">
+                    <%= link_to t('detail'), user_gift_path(user_gift), class: 'btn btn-default pull-right' %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <h4 class="text-center">
+              <i class="fa fa-wd fa-exclamation"></i>&nbsp;<%= t('no_data') %>
+            </h4>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>

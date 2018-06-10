@@ -162,6 +162,26 @@ class RegistrationPaymentController < ApplicationController
                                                    })
   end
 
+  def free
+    # Record payment information
+    if @registration.registration_payment.nil? && @registration.subtotal == 0
+      registration_payment = @registration.build_registration_payment
+      registration_payment.amount = @registration.subtotal
+      registration_payment.payment_time = Time.now
+      registration_payment.completed =  true
+      registration_payment.completed_time = Time.now
+      registration_payment.save!
+
+      RegistrationMailer.completed_confirmation(registration_payment.registration_id).deliver_later
+
+      flash.now[:icon] = 'fa-smile-o'
+      flash.now[:status] = 'success'
+      flash.now[:message] = t('payment_completed')
+
+      redirect_to registration_path(@registration.id)
+    end
+  end
+
   private
 
   # Complete register here to prevent that is the registration but no registration_payment
@@ -177,7 +197,40 @@ class RegistrationPaymentController < ApplicationController
     @registration.checkout = true
     @registration.checkout_time = Time.now
 
+    user_gift_serial = UserGiftSerial.find_by_serial(params[:user_gift_serial])
+
+    begin
+      if !params[:user_gift_serial].nil? && params[:user_gift_serial] != ''
+
+        if user_gift_serial.used_time.nil?
+          discount = user_gift_serial
+                         .user_gift
+                         .gift
+                         .gift_translates
+                         .find_by_locale_id(@registration.locale_id)
+                         .quota
+
+          @registration.subtotal -= discount
+
+          if @registration.subtotal < 0
+            @registration.subtotal = 0
+          end
+        end
+      end
+    end
+
     @registration.save!
+
+    begin
+      if !user_gift_serial.nil?
+        user_gift_serial.registration_id = @registration.id
+        user_gift_serial.used_time = Time.now
+        user_gift_serial.email = @registration.user.nil? ? @registration.email : @registration.user.email
+        user_gift_serial.save
+
+        UserGiftMailer.used_remind(user_gift_serial.id).deliver_later
+      end
+    end
   end
 
   def set_breadcrumb

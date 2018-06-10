@@ -1,0 +1,9 @@
+<div class="alert alert-danger alert-dismissable">
+  <a class="close" data-dismiss="alert" href="#">×</a>
+  將&nbsp;
+  <%= link_to(admin_user_gift_remittance_path(flash[:id])) do %>
+    回報編號&nbsp;
+    <%= flash[:id] %>
+  <% end %>
+  &nbsp;標記成匯款資料有誤, 系統已寄出通知信件, 請注意客戶是否重新提出匯款確認
+</div>

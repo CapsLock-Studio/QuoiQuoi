@@ -178,29 +178,27 @@
         </ul>
       <% end %>
 
-      <!--
       <%= nav_item_with_resource('#', nil, UserGift) do %>
-        <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) %>" href="#">
+        <a class="dropdown-collapse <%= 'in' if is_in(:user_gifts) || is_in(:user_gift_remittances) %>" href="#">
           <i class="icon-gift"></i>
           <span>禮券交易管理</span>
           <i class="icon-angle-down"></i>
         </a>
-        <ul class="nav <%= 'in' if is_in(:user_gifts) %>">
-          <%= nav_item_with_resource(check_admin_user_gifts_path, {rule: /#{admin_user_gifts_path}(\/\d+)?\/check/}, UserGift) do %>
-            <%= link_to(check_admin_user_gifts_path) do %>
-              <i class="icon-check"></i>
-              <span>待確認購買禮券匯款</span>
+        <ul class="nav <%= 'in' if is_in(:user_gifts) || is_in(:user_gift_remittances) %>">
+          <%= nav_item_with_resource(nil, {rule: /#{admin_user_gift_remittances_path}(\/\d+)?\/check/}, UserGiftRemittanceReport) do %>
+            <%= link_to(check_admin_user_gift_remittances_path) do %>
+                <i class="icon-check"></i>
+                <span>待確認匯款回報</span>
             <% end %>
           <% end %>
           <%= nav_item_with_resource(nil, {rule: /#{admin_user_gifts_path}(\/\d+)?(?!\/check)/}, UserGift) do %>
             <%= link_to(admin_user_gifts_path) do %>
               <i class="icon-flag"></i>
-              <span>禮券記錄</span>
+              <span>所有禮券管理</span>
             <% end %>
           <% end %>
         </ul>
       <% end %>
-      -->
 
       <%= nav_item_with_resource(admin_products_path, {rule: /(#{admin_products_path}.*)|(#{admin_other_products_path}.*|#{admin_product_types_path}.*)/}, Product) do %>
         <a class="dropdown-collapse <%= 'in' if is_in(:products) or is_in(:other_products) or is_in(:gifts) or is_in(:product_types) or is_in(:product_material_types) %>" href="#">
@@ -244,34 +242,6 @@
           <span>過去作品管理</span>
         <% end %>
       <% end %>
-
-      <!--
-      <%= nav_item_with_resource('#', nil, Material) do %>
-        <a class="dropdown-collapse <%= 'in' if (is_in(:order_information) or is_in(:instructions)) %>" href="#">
-          <i class="icon-heart-empty"></i>
-          <span>訂製手作包管理</span>
-          <i class="icon-angle-down"></i>
-        </a>
-        <ul class="nav <%= 'in' if is_in(:order_information) or is_in(:instructions) %>">
-          <% Locale.all.each do |locale| %>
-            <%= nav_item_with_resource(nil, {rule: /#{admin_locale_order_information_index_path(locale)}.*/}, OrderInformation) do %>
-              <%= link_to(admin_locale_order_information_index_path(locale)) do %>
-                <i class="icon-info"></i>
-                <span>訂購須知管理 (<%= locale.name %>)</span>
-              <% end %>
-            <% end %>
-          <% end %>
-          <% Locale.all.each do |locale| %>
-            <%= nav_item_with_resource(nil, {rule: /#{admin_locale_instructions_path(locale)}.*/}, Instruction) do %>
-              <%= link_to(admin_locale_instructions_path(locale)) do %>
-                <i class="icon-info-sign"></i>
-                <span>訂購說明管理 (<%= locale.name %>)</span>
-              <% end %>
-            <% end %>
-          <% end %>
-        </ul>
-      <% end %>
-      -->
 
       <%= nav_item_with_resource('#', {rule: /#{admin_articles_path}.*|#{admin_article_types_path}.*/}, Article) do %>
       <a class="dropdown-collapse <%= 'in' if is_in(:articles) or is_in(:article_types) %>" href="#">
