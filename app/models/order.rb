@@ -60,7 +60,7 @@ class Order < ApplicationRecord
     custom_items_subtotal = order_custom_items.map{ |item| (item.custom_order.locale_id != locale.id) ? (custom_order.price * 30) : custom_order.price  }.sum
     products_subtotal = self.order_products.map{|order_product| order_product.raw_price(locale.id) * order_product.quantity}.sum
 
-    custom_items_subtotal + products_subtotal
+    custom_items_subtotal + products_subtotal + self.shipping_fee!
   end
 
   def shipping_fee!
