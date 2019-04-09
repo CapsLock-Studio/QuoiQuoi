@@ -135,6 +135,42 @@
     initMaterialLikes();
     initCustomOrderModel();
 
+    $('body').on('keyup', '.validate-form .form-group.required input', function (e) {
+        var input = $(e.target);
+        var isInputNotEmpty = !!input.val();
+        var formItem = input.closest('.form-group.required');
+
+        if (!isInputNotEmpty) {
+            formItem.addClass('has-error');
+        } else {
+            formItem.removeClass('has-error');
+        }
+    });
+
+    $('body').on('submit', '.validate-form', function(e) {
+        var form = $(e.target);
+        var isValid = form.find('.form-group.required').get().reduce((accu, item) => {
+            var formItem = $(item);
+            var input = formItem.find('input');
+            if (input.length === 0) {
+                return accu;
+            }
+            var isInputNotEmpty = !!input.val();
+            if (!isInputNotEmpty) {
+                formItem.addClass('has-error');
+            } else {
+                formItem.removeClass('has-error');
+            }
+            return accu && isInputNotEmpty;
+        }, true);
+
+        if (isValid) {
+            return;
+        }
+
+        e.preventDefault();
+    });
+
     $('img').on('load', function(){
         $(this).animate({opacity: 1}, 500);
     }).each(function(){
