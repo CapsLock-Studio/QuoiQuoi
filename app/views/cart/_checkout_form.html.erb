@@ -1,8 +1,8 @@
 <%= form_for @order_in_cart, url: cart_payment_path, method: :post, html: {class: 'validate-form'} do |f| %>
   <div class="box">
     <div class="box-content">
-      <div class="form-group">
-        <%= f.label :name do %>
+      <div class="form-group required">
+        <%= f.label :name, class: 'control-label' do %>
           <%= t('recipient_name') %>
           <span class="color-red">*</span>
         <% end %>
@@ -10,8 +10,8 @@
           <%= f.text_field :name, value: @order_in_cart.name ||= current_user.name, class: 'form-control', data: {'rule-required' => true} %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :zip_code do %>
+      <div class="form-group required">
+        <%= f.label :zip_code, class: 'control-label' do %>
           <%= t('zip_code') %>
           <span class="color-red">*</span>
         <% end %>
@@ -19,8 +19,8 @@
           <%= f.text_field :zip_code, value: @order_in_cart.zip_code ||= current_user.zip_code, class: 'form-control', data: {'rule-required' => true, 'rule-number' => 'true', 'rule-minlength' => '3', 'rule-maxlength' => '5'} %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :area do %>
+      <div class="form-group required">
+        <%= f.label :area, class: 'control-label' do %>
           <%= t('area') %>
           <span class="color-red">*</span>
         <% end %>
@@ -46,8 +46,8 @@
           <small class="text-muted"><%= t('free_shipping_fee', free_condition: number_to_currency(ShippingFeeTranslate.where(locale_id: session[:locale_id]).first.free_condition)) %></small>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :address do %>
+      <div class="form-group required">
+        <%= f.label :address, class: 'control-label' do %>
           <%= t('address') %>
           <span class="color-red">*</span>
         <% end %>
@@ -55,9 +55,10 @@
           <%= f.text_field :address, value: @order_in_cart.address ||= current_user.address, class: 'form-control', data: {'rule-required' => true} %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :phone do %>
+      <div class="form-group required">
+        <%= f.label :phone, class: 'control-label' do %>
           <%= t('phone_number') %>
+          <span class="color-red">*</span>
         <% end %>
         <div class="controls">
           <%= f.text_field :phone, value: @order_in_cart.phone ||= current_user.phone, class: 'form-control' %>
