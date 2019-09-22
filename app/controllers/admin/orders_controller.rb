@@ -1,3 +1,5 @@
+require 'csv'
+
 class Admin::OrdersController < AdminController
   authorize_resource
   before_action :set_order, only: [:edit, :show, :update]
@@ -62,9 +64,9 @@ class Admin::OrdersController < AdminController
         # Including not archived items.
         conditions['closed_time'] = [dates[0]..dates[1], nil]
       end
-
-      @orders = @orders.where(conditions)
     end
+
+    @orders = Order.includes(:order_payment).where(conditions).where.not(order_payments: {id: nil})
   end
 
   # GET /admin/orders/canceled
@@ -211,6 +213,106 @@ class Admin::OrdersController < AdminController
       end
 
       sanitize_params
+    end
+  end
+
+  def download_csv
+    conditions = {}
+
+    unless search_filter_params.nil?
+      @search_filter = search_filter_params
+      conditions = search_filter_params
+
+      unless conditions['order_payments']['completed'].nil?
+        if conditions['order_payments']['completed'].include? 'false'
+          conditions['order_payments']['completed'] << nil
+        end
+
+        conditions['order_payments']['completed'] = conditions['order_payments']['completed'].map do |completedCondition|
+          case completedCondition
+          when 'true'
+            true
+          when 'false'
+            false
+          end
+        end
+      end
+
+      unless conditions['delivered'].nil?
+        if conditions['delivered'].include? 'false'
+          conditions['delivered'] << nil
+        end
+        conditions['delivered'] = conditions['delivered'].map do |deliveredCondition|
+          case deliveredCondition
+          when 'true'
+            true
+          when 'false'
+            false
+          end
+        end
+      end
+
+      # Unless the completed_time is not nil, translate it to date range for rails.
+      unless conditions['order_payments']['completed_time'].nil?
+        dates = conditions['order_payments']['completed_time'].split(' - ')
+        conditions['order_payments']['completed_time'] = dates[0]..dates[1]
+      end
+
+      # Unless the delivered_time is not nil, translate it to date range for rails.
+      unless conditions['delivered_time'].nil?
+        dates = conditions['delivered_time'].split(' - ')
+        conditions['delivered_time'] = dates[0]..dates[1]
+      end
+
+      # Unless the closed_time is not nil, translate it to date range for rails.
+      unless conditions['closed_time'].nil?
+        dates = conditions['closed_time'].split(' - ')
+
+        # Including not archived items.
+        conditions['closed_time'] = [dates[0]..dates[1], nil]
+      end
+    end
+
+    @orders = Order.includes(:order_payment).where(conditions).where.not(order_payments: {id: nil})
+
+    csv_data = CSV.generate({}) do |csv|
+      csv << [
+        'id',
+        '訂單已取消',
+        '訂單金額',
+        '會員資訊',
+        '姓名',
+        '電話',
+        '區號',
+        '地址',
+        '付款金額',
+        '付款完成時間',
+        '訂單寄出時間',
+        '訂單問題回報',
+        '訂單關閉(已完成配送)'
+      ]
+      @orders.each do |order|
+        order_payment = order.order_payment || OrderPayment.new
+        csv << [
+          order.id,
+          order_payment.cancel? ? "#{order_payment.cancel_reason} (#{order_payment.cancel_time.strftime('%Y/%m/%d %H:%I:%S')})" : '',
+          order.subtotal,
+          "https://quoiquoi.tw/admin/users/#{order.user_id}",
+          order.name,
+          order.phone,
+          order.zip_code,
+          order.address,
+          order_payment.completed? ? "#{order.currency} #{order_payment.amount} (#{order.payment_method})" : '',
+          order_payment.completed? ? order_payment.completed_time.strftime('%Y/%m/%d %H:%I:%S') : '尚未完成付款',
+          order.delivered? ? order.delivered_time.strftime('%Y/%m/%d %H:%I:%S') : '尚未寄出',
+          order.delivery_report? ? "#{order.delivery_report_message} (#{delivery_report_time.strftime('%Y/%m/%d %H:%I:%S')})" : '',
+          order.closed_time.nil? ? '' : '已完成'
+        ]
+      end
+    end
+
+    respond_to do |format|
+      format.csv { send_data csv_data, filename: "#{Time.now.strftime('%Y/%m/%d_%H:%M')}.csv" }
     end
   end
 end
