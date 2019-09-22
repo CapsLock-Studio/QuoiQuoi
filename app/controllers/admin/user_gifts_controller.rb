@@ -4,11 +4,13 @@ class Admin::UserGiftsController < AdminController
   def index
     @event_gifts = UserGift.includes(:user_gift_payment)
                        .where({ payment_method: UserGift.payment_methods[:event] })
+                       .where.not(user_gift_payment: {id: nil})
                        .order(id: :desc)
 
     @user_gifts = UserGift.includes(:user_gift_payment)
                       .where
                       .not({ payment_method: UserGift.payment_methods[:event] })
+                      .where.not(user_gift_payment: {id: nil})
                       .order(id: :desc)
   end
 
