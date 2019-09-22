@@ -8,11 +8,40 @@ class Admin::OrdersController < AdminController
   # GET /admin/orders
   # GET /admin/orders.json
   def index
-    @orders = Order.includes(:order_payment).where.not(order_payments: {id: nil})
+    conditions = {}
 
     unless search_filter_params.nil?
       @search_filter = search_filter_params
       conditions = search_filter_params
+
+      unless conditions['order_payments']['completed'].nil?
+        if conditions['order_payments']['completed'].include? 'false'
+          conditions['order_payments']['completed'] << nil
+        end
+
+        conditions['order_payments']['completed'] = conditions['order_payments']['completed'].map do |completedCondition|
+          case completedCondition
+          when 'true'
+            true
+          when 'false'
+            false
+          end
+        end
+      end
+
+      unless conditions['delivered'].nil?
+        if conditions['delivered'].include? 'false'
+          conditions['delivered'] << nil
+        end
+        conditions['delivered'] = conditions['delivered'].map do |deliveredCondition|
+          case deliveredCondition
+          when 'true'
+            true
+          when 'false'
+            false
+          end
+        end
+      end
 
       # Unless the completed_time is not nil, translate it to date range for rails.
       unless conditions['order_payments']['completed_time'].nil?
