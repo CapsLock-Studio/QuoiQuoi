@@ -20,6 +20,11 @@
     <div class="box-content box-no-padding">
       <div class="responsive-table">
         <div class="scrollable-table">
+          <div style="text-align: right">
+            <a href="/admin/orders/csv" class="btn btn-success" id="download-csv">
+              下載訂單
+            </a>
+          </div>
           <table class="data-table table table-striped" style="margin-bottom:0;">
             <thead>
             <tr>
@@ -102,3 +107,16 @@
 
 <div class="modal fade reload-modal" id="user-detail"></div><!-- /.modal -->
 <div class="modal fade" id="cancel-dialog"></div><!-- /.modal -->
+
+<script>
+
+document.getElementById('download-csv').addEventListener('click', (event) => {
+  event.preventDefault();
+
+  const { target: { href } } = event;
+  const { search } = window.location;
+  
+  window.open(`${href}${search}`, '_blank');
+});
+
+</script>

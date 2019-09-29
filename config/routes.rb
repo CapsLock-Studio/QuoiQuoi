@@ -146,6 +146,7 @@ QuoiQuoi::Application.routes.draw do
         get :canceled, action: :show
       end
       collection do
+        get :csv, action: :download_csv, defaults: { format: :csv }
         get :check
         get :accept
         get :closed
