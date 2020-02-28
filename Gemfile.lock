@@ -192,7 +192,7 @@ GEM
       attr_required (>= 0.0.5)
       rest-client
     pg (0.20.0)
-    puma (3.8.2)
+    puma (3.12.3)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -326,7 +326,7 @@ DEPENDENCIES
   paperclip
   paypal-express
   pg
-  puma (~> 3.0)
+  puma (~> 3.12)
   rails (~> 5.0.2)
   recaptcha
   redis (~> 3.0)
