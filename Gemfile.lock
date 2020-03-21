@@ -86,7 +86,7 @@ GEM
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
-    concurrent-ruby (1.0.5)
+    concurrent-ruby (1.1.6)
     connection_pool (2.2.1)
     crass (1.0.2)
     devise (4.2.1)
@@ -193,7 +193,7 @@ GEM
       rest-client
     pg (0.20.0)
     puma (3.8.2)
-    rack (2.0.3)
+    rack (2.2.2)
     rack-protection (2.0.0)
       rack
     rack-test (0.6.3)
@@ -259,7 +259,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (3.7.1)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.0)
