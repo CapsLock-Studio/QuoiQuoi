@@ -11,6 +11,35 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-12 form">
+      <div class="title" style="margin-bottom: 20px;">
+        顯示標籤
+        <div class="btn-group">
+          <%= link_to '前往商品標籤管理', admin_product_tags_path, class: 'btn btn-xs btn-success stop-interval-check' %>
+        </div>
+      </div>
+      <div class="row">
+        <% @product_tags.each do |product_tag| %>
+          <div class="col-sm-2 col-xs-3 margin-bottom-10">
+            <div class='product-tag-switch switch switch-small' data-off-label='<i class="icon-remove"></i>' data-on-label='<i class="icon-ok"></i>' style="vertical-align: middle;">
+              <%= check_box_tag('product.product_tags',
+                product_tag.id,
+                @selected_tag_ids.nil? ? true : @selected_tag_ids.include?(product_tag.id)
+              )
+              %>
+            </div>
+            <div>
+              <% product_tag.product_tag_translates.each do |translate| %>
+                <label class="label label-default"><%= translate.locale.name %></label>&nbsp;
+                <%= translate.name %><br/>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-12">
       <div class="box bordered-box sea-blue-border" style="margin-bottom:0;">
         <div class="box-header">
@@ -71,16 +100,16 @@
                       </td>
                       <td>
                         <div class='text-right'>
-                          <%= link_to(edit_admin_product_path(product), class: 'btn') do %>
+                          <%= link_to(edit_admin_product_path(product), class: 'btn stop-interval-check') do %>
                             <i class='icon-pencil'></i>
                           <% end %>
 
                           <% if product.visible? %>
-                            <%= link_to(visible_admin_product_path(product, visible: false), class: 'btn btn-info', method: :put) do %>
+                            <%= link_to(visible_admin_product_path(product, visible: false), class: 'btn btn-info stop-interval-check', method: :put) do %>
                               <i class="icon-level-down"></i>
                             <% end %>
                           <% else %>
-                            <%= link_to(visible_admin_product_path(product, visible: true), class: 'btn btn-primary', method: :put) do %>
+                            <%= link_to(visible_admin_product_path(product, visible: true), class: 'btn btn-primary stop-interval-check', method: :put) do %>
                               <i class="icon-level-up"></i>
                             <% end %>
                           <% end %>
@@ -101,3 +130,41 @@
     </div>
   </div>
 </div>
+<script>
+
+const getSelectedIds = () => {
+  return Array.from(document.querySelectorAll('input[name="product.product_tags"]'))
+    .reduce((accu, productTagDOM) => {
+      if (!productTagDOM.checked) {
+        return accu;
+      }
+      return [...accu, productTagDOM.value];
+    }, []);
+};
+
+const lastSelectedIds = getSelectedIds();
+let isRedirecting = false;
+
+document.querySelector('.stop-interval-check').addEventListener('click', () => {
+  isRedirecting = true;
+});
+
+const timer = setInterval(() => {
+  const selectedIds = getSelectedIds();
+
+  if (isRedirecting) {
+    return;
+  }
+
+  if (JSON.stringify(lastSelectedIds) === JSON.stringify(selectedIds)) {
+    return;
+  }
+
+  isRedirecting = true;
+
+  clearInterval(timer);
+
+  window.location.href = `/admin/products?selected_tag_ids=${selectedIds.join(',')}`
+}, 100);
+
+</script>
