@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   belongs_to :product_type
 
+  has_and_belongs_to_many :product_tags
+
   has_one :product_translate
   has_many :product_translates, dependent: :destroy
   has_many :locales, through: :product_translates
