@@ -1,5 +1,5 @@
 class Admin::ProductTagsController < AdminController
-  before_action :set_product_tag, except: [:index, :new, :create]
+  before_action :set_product_tag, except: [:index, :new, :create, :sort]
 
   add_breadcrumb '首頁', :admin_root_path
   add_breadcrumb '商品管理', :admin_products_path
@@ -8,7 +8,7 @@ class Admin::ProductTagsController < AdminController
   # GET /admin/product_tags
   # GET /admin/product_tags.json
   def index
-    @product_tags = ProductTag.all
+    @product_tags = ProductTag.all.order(:sort)
     @locales = Locale.all
   end
 
@@ -73,6 +73,14 @@ class Admin::ProductTagsController < AdminController
     end
   end
 
+  def sort
+    if ProductTag.update(sort_update_params[:product_tags].keys, sort_update_params[:product_tags].values)
+      redirect_to :back, flash: {sorted: true}
+    else
+      render json: [message: 'Update Failed.']
+    end
+  end
+
   private
   def set_product_tag
     @product_tag = ProductTag.find(params[:id])
@@ -80,5 +88,9 @@ class Admin::ProductTagsController < AdminController
 
   def product_tag_params
     params.require(:product_tag).permit(:id, :thumbnail, :image, product_tag_translates_attributes: [:id, :name, :locale_id])
+  end
+
+  def sort_update_params
+    params.permit(product_tags: [:id, :sort])
   end
 end
