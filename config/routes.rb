@@ -21,6 +21,9 @@ QuoiQuoi::Application.routes.draw do
     resources :instruction_images
     resources :article_images
     resources :article_types
+    resources :product_tags do
+      put 'sort', on: :collection
+    end
     resources :products do
       member do
         put :visible
