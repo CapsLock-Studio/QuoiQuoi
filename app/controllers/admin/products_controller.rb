@@ -12,6 +12,8 @@ class Admin::ProductsController < AdminController
   # GET /products.json
   def index
     @products = Product.where(product_type_id: nil)
+    @product_tags = ProductTag.all
+    @selected_tag_ids = params[:selected_tag_ids].nil? ? nil : params[:selected_tag_ids].split(',').map {|id| id.to_i}
   end
   # GET /products/1
   # GET /products/1.json
@@ -30,6 +32,7 @@ class Admin::ProductsController < AdminController
 
     @article = @product
     @image_addition = ProductAdditionImage.new(product_id: @product.id)
+    @product_tags = ProductTag.all
   end
   # GET /products/1/edit
   def edit
@@ -37,6 +40,7 @@ class Admin::ProductsController < AdminController
 
     @article = @product
     @image_addition = ProductAdditionImage.new(product_id: @product.id)
+    @product_tags = ProductTag.all
   end
 
   def visible
@@ -97,11 +101,11 @@ class Admin::ProductsController < AdminController
 
   private
   def set_product
-    @product = Product.find(params[:id])
+    @product = Product.includes(:product_tags).find(params[:id])
   end
 
   def product_params
-    params.require(:product).permit(:id, :image, :product_type_id, :quantity, :discount,
+    value = params.require(:product).permit(:id, :image, :product_type_id, :quantity, :discount,
                                     product_youtubes_attributes: [:_destroy, :id, :link],
                                     product_images_attributes: [:_destroy, :id, :image],
                                     product_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
@@ -110,6 +114,12 @@ class Admin::ProductsController < AdminController
                                                                       product_custom_item_translates_attributes: [:id, :name, :locale_id
                                                                       ]
                                     ])
+
+    selected_product_tags = params[:product_tag_ids].split(',').map{|tag| ProductTag.find(tag.to_i)}
+
+    value[:product_tags] = selected_product_tags
+
+    value
   end
 
   def delete_empty_product

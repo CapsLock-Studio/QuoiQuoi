@@ -367,4 +367,11 @@
             }
         });
     }
+
+    if ($('#product_tag_ids').length > 0) {
+        const select2 = $('#product_tag_ids').select2();
+        select2.on('change', (e) => {
+            $('[name="product_tag_ids"]').val(e.val.join(','));
+        })
+    }
 })();

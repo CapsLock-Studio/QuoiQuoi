@@ -85,6 +85,22 @@
             </div>
           </div>
           <div class="col-sm-6">
+            <div class="gorm-group" style="margin-bottom: 15px;">
+              <div class="controls">
+                <label>產品標籤</label>
+                <select id="product_tag_ids" class='form-control' multiple placeholder='查詢標籤'>
+                  <% @product_tags.each do |product_tag| %>
+                    <option
+                      value="<%= product_tag.id %>"
+                      <%= @product.product_tags.map{|tag| tag.id}.include?(product_tag.id) ? 'selected="selected"' : '' %>
+                    >
+                      <%= product_tag.product_tag_translates.map{|translate| translate.name}.join(' / ') %>
+                    </option>
+                  <% end %>
+                </select>
+                <input name="product_tag_ids" type="hidden" value="<%= @product.product_tags.map{|tag| tag.id}.join(',') %>%">
+              </div>
+            </div>
             <div class="form-group">
               <%= f.label :quantity, '商品現存數量' %>
               <div class="controls">

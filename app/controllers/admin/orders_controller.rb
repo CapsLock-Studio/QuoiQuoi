@@ -275,6 +275,8 @@ class Admin::OrdersController < AdminController
 
     @orders = Order.includes(:order_payment).where(conditions).where.not(order_payments: {id: nil})
 
+    bom = "\uFEFF"
+
     csv_data = CSV.generate({}) do |csv|
       csv << [
         'id',
@@ -312,7 +314,7 @@ class Admin::OrdersController < AdminController
     end
 
     respond_to do |format|
-      format.csv { send_data csv_data, filename: "#{Time.now.strftime('%Y/%m/%d_%H:%M')}.csv" }
+      format.csv { send_data bom << csv_data, filename: "#{Time.now.strftime('%Y/%m/%d_%H:%M')}.csv" }
     end
   end
 end
