@@ -17,6 +17,7 @@
         <div class="btn-group">
           <%= link_to '前往商品標籤管理', admin_product_tags_path, class: 'btn btn-xs btn-success stop-interval-check' %>
         </div>
+        <%= link_to '顯示全部 (清除標籤篩選)', admin_products_path, class: 'btn btn-xs stop-interval-check' %>
       </div>
       <div class="row">
         <% @product_tags.each do |product_tag| %>
