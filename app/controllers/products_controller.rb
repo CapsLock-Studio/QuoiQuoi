@@ -7,6 +7,8 @@ class ProductsController < ApplicationController
   def index
     flash[:message] = nil
 
+    @type_mode = @product_type.nil? ? 'tag' : 'type'
+
     respond_to do |format|
       format.html do
         add_breadcrumb t('home'), :root_path
@@ -84,6 +86,8 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @type_mode = @product.product_type.nil? ? 'tag' : 'type'
+
     add_breadcrumb t('home'), :root_path
     if @product.product_type_id.nil?
       add_breadcrumb t('handmadebag'), products_path
@@ -156,11 +160,21 @@ class ProductsController < ApplicationController
       @product_type = ProductType.find_by_id(params[:product_type_id])
     end
 
+    def tag_id
+      params[:tag].split('-')[0] if !params[:tag].nil?
+    end
+
     def get_products
-      Product.includes(:product_translate)
+      condition = Product.includes(:product_translate, :product_tags)
              .where(product_type_id: params[:product_type_id],
                     product_translates: {locale_id: session[:locale_id]},
                     visible: true)
+
+      unless tag_id.nil?
+        condition = condition.where(product_tags: { id: tag_id })
+      end
+
+      condition
              .where.not(product_translates: {name: '', description: '', price: nil})
              .order(id: :desc)
              .page(params[:page]).per(24)
