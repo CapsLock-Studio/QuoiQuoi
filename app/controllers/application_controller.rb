@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
   before_action :set_locale
   before_action :set_product_types
+  before_action :set_product_tags
   before_action :set_article_types
   before_action :set_order_in_cart
   before_action :configure_devise_params, if: :devise_controller?
@@ -37,6 +38,12 @@ class ApplicationController < ActionController::Base
   def set_product_types
     @product_types = ProductType.includes(:product_type_translate)
                                 .where(product_type_translates: {locale_id: session[:locale_id]})
+  end
+
+  def set_product_tags
+    @product_tags = ProductTag.includes(:product_tag_translate)
+                                .where(product_tag_translates: {locale_id: session[:locale_id]})
+                                .order(:sort)
   end
 
   def set_article_types
