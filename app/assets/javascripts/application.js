@@ -149,7 +149,7 @@
 
     $('body').on('submit', '.validate-form', function(e) {
         var form = $(e.target);
-        var isValid = form.find('.form-group.required').get().reduce((accu, item) => {
+        var isValid = form.find('.form-group.required').get().reduce(function (accu, item) {
             var formItem = $(item);
             var input = formItem.find('input');
             if (input.length === 0) {
