@@ -341,7 +341,11 @@ QuoiQuoi::Application.routes.draw do
       get 'style1' => 'home#style1'
       get 'style2' => 'home#style2'
     end
-    resources :products
+    resources :products do
+      collection do
+        get 'tag(/:tag)', action: :index
+      end
+    end
     resources :news
     resources :courses do
       get 'calendar', on: :collection

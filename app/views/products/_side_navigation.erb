@@ -1,15 +1,24 @@
 <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
   <ul class="list-group sidebar-nav-v1">
-    <%= nav_item(products_path, {class: 'list-group-item', rule: /^\/#{:products}(?!\/search)/}) do %>
-      <%= link_to t('handmadebag').titleize, products_path %>
-    <% end %>
-    <% @product_types.each do |product_type| %>
-      <%= nav_item(product_type_products_path(product_type), {class: 'list-group-item', rule: /^\/#{:product_types}\/#{product_type.id}\/#{:products}(\/\d*)?$/}) do %>
-        <%= link_to product_type.product_type_translate.name.titleize, product_type_products_path(product_type) %>
+    <% if @type_mode == 'tag' %>
+      <% @product_tags.each do |product_tag| %>
+        <%= nav_item({ controller: :products, action: :index, tag: "#{product_tag.id}-#{product_tag.product_tag_translate.name}" }, {class: 'list-group-item', rule: /^\/tag\/#{product_tag.id}\/(\/\d*)?$/}) do %>
+          <%= link_to product_tag.product_tag_translate.name, { controller: :products, action: :index, tag: "#{product_tag.id}-#{product_tag.product_tag_translate.name}" } %>
+        <% end %>
+      <% end %>
+      <%= nav_item(products_path, {class: 'list-group-item' }) do %>
+        <%= link_to '全部', products_path %>
       <% end %>
     <% end %>
-    <%= nav_item(gifts_path, {class: 'list-group-item', rule: /#{gifts_path}(\/\d*)?/}) do %>
-      <%= link_to t('gift').titleize, gifts_path %>
+    <% if @type_mode == 'type' %>
+      <% @product_types.each do |product_type| %>
+        <%= nav_item(product_type_products_path(product_type), {class: 'list-group-item', rule: /^\/#{:product_types}\/#{product_type.id}\/#{:products}(\/\d*)?$/}) do %>
+          <%= link_to product_type.product_type_translate.name.titleize, product_type_products_path(product_type) %>
+        <% end %>
+      <% end %>
+      <%= nav_item(gifts_path, {class: 'list-group-item', rule: /#{gifts_path}(\/\d*)?/}) do %>
+        <%= link_to t('gift').titleize, gifts_path %>
+      <% end %>
     <% end %>
   </ul>
 </div>

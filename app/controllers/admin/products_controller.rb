@@ -11,9 +11,9 @@ class Admin::ProductsController < AdminController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.where(product_type_id: nil)
     @product_tags = ProductTag.all
     @selected_tag_ids = params[:selected_tag_ids].nil? ? nil : params[:selected_tag_ids].split(',').map {|id| id.to_i}
+    @products = @selected_tag_ids.nil? ? Product.where(product_type_id: nil) : Product.includes(:product_tags).where(product_tags: { id: @selected_tag_ids })
   end
   # GET /products/1
   # GET /products/1.json
@@ -115,7 +115,7 @@ class Admin::ProductsController < AdminController
                                                                       ]
                                     ])
 
-    selected_product_tags = params[:product_tag_ids].split(',').map{|tag| ProductTag.find(tag.to_i)}
+    selected_product_tags = (params[:product_tag_ids] || '').split(',').map{|tag| ProductTag.find(tag.to_i)}
 
     value[:product_tags] = selected_product_tags
 

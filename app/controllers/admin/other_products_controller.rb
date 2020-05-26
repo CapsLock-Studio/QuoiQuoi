@@ -91,7 +91,7 @@ class Admin::OtherProductsController < AdminController
   end
 
   def product_params
-    params.require(:product).permit(:id, :quantity, :image, :discount,
+    params.require(:product).permit(:id, :quantity, :image, :discount, :product_type_id,
                                     product_options_attributes: [:_destroy, :id, :content, :price, :locale_id],
                                     product_translates_attributes: [:id, :price, :name, :description, :locale_id],
                                     product_custom_items_attributes: [:_destroy, :id, :product_custom_type_id, :workday, :price, :image])
