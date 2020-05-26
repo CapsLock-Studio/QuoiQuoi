@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="box-content box-padding">
-    <%= form_for([:admin, @product], controller: :other_products, html: { class: 'form validate-form', multipart: true }) do |f| %>
+    <%= form_for([:admin, @product], url: admin_other_product_path(@product), html: { class: 'form validate-form', multipart: true }) do |f| %>
       <fieldset>
         <div class="row">
           <div class="col-sm-6">
