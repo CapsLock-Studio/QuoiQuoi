@@ -115,7 +115,7 @@ class Admin::ProductsController < AdminController
                                                                       ]
                                     ])
 
-    selected_product_tags = (params[:product_tag_ids] || '').split(',').map{|tag| ProductTag.find(tag.to_i)}
+    selected_product_tags = (params[:product_tag_ids] || '').split(',').map{|tag| ProductTag.find_by_id(tag.to_i)}.select{|tag| !tag.nil?}
 
     value[:product_tags] = selected_product_tags
 
