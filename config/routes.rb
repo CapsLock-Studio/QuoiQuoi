@@ -286,6 +286,12 @@ QuoiQuoi::Application.routes.draw do
   end
   ###### namespace admin end ######
 
+  resources :products do
+    collection do
+      get 'tag(/:tag)', action: :index, as: :tag
+    end
+  end
+
   localized do
 
     # For handling payment
@@ -340,11 +346,6 @@ QuoiQuoi::Application.routes.draw do
     resource :home do
       get 'style1' => 'home#style1'
       get 'style2' => 'home#style2'
-    end
-    resources :products do
-      collection do
-        get 'tag(/:tag)', action: :index
-      end
     end
     resources :news
     resources :courses do

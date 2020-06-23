@@ -21,7 +21,7 @@
       <ul class="dropdown-menu">
         <% @product_tags.each do |product_tag| %>
           <li>
-            <%= link_to product_tag.product_tag_translate.name, { controller: :products, action: :index, tag: "#{product_tag.id}-#{product_tag.product_tag_translate.name}" }, { class: 'btn btn-link' } %>
+            <%= link_to product_tag.product_tag_translate.name, tag_products_path(tag: "#{product_tag.id}-#{product_tag.product_tag_translate.name}"), { class: 'btn btn-link' } %>
           </li>
         <% end %>
       </ul>
