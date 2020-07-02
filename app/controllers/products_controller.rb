@@ -66,7 +66,7 @@ class ProductsController < ApplicationController
                           }
                       ]
                     end,
-                    nextPage: (products.total_pages > products.current_page) ? polymorphic_path([@product_type, :products], page: ((params[:page] || 1).to_i + 1), format: :json) : nil
+                    nextPage: (products.total_pages > products.current_page) ? polymorphic_path([@product_type, :products], page: ((params[:page] || 1).to_i + 1), tag: params[:tag], format: :json) : nil
                 }
         )
       end
