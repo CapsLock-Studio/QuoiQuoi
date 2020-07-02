@@ -101,9 +101,9 @@
                       </td>
                       <td>
                         <div class='text-right'>
-                          <%= link_to(edit_admin_product_path(product), class: 'btn stop-interval-check') do %>
+                          <a class="btn stop-interval-check" href="javascript:;" onclick="function redirect(e){ e.preventDefault(); console.log();window.location='<%= edit_admin_product_path(product) %>'; } redirect(event)">
                             <i class='icon-pencil'></i>
-                          <% end %>
+                          </a>
 
                           <% if product.visible? %>
                             <%= link_to(visible_admin_product_path(product, visible: false), class: 'btn btn-info stop-interval-check', method: :put) do %>
