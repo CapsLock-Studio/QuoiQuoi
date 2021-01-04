@@ -3,10 +3,12 @@
     <i class="fa fa-user fa-fw"></i>
     <span><%= t('quoiquoi') %></span>
   </li>
-  <li>
-    <i class="fa fa-home fa-fw"></i>
-    <span><%= $redis.get("about:locale:#{session[:locale_id]}:address") %></span>
-  </li>
+  <% $redis.get("about:locale:#{session[:locale_id]}:address").split('\n').each do |address| %>
+    <li>
+      <i class="fa fa-home fa-fw"></i>
+      <span><%= address %></span>
+    </li>
+  <% end %>
   <li>
     <%= mail_to $redis.get("about:locale:#{session[:locale_id]}:email") do %>
       <i class="fa fa-envelope-o fa-fw"></i>
