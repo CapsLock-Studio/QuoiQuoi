@@ -6,7 +6,7 @@ class Admin::AboutUsController < AdminController
   end
 
   def edit
-
+    @image = Image.new
   end
 
   def update

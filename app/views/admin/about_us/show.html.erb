@@ -63,7 +63,7 @@
                     <div class="form-group">
                       <label>介紹文字</label>
                       <div class="controls">
-                        <%= text_area_tag :introduction, $redis.get("about:locale:#{locale.id}:introduction"), class: 'form-control autosize', disabled: 'disabled' %>
+                        <%= $redis.get("about:locale:#{locale.id}:introduction").gsub('target=""', 'target="_blank"').gsub('<img', '<img class="img-responsive"').html_safe %>
                       </div>
                     </div>
                   </div>
