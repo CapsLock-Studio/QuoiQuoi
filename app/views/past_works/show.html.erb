@@ -23,15 +23,6 @@
           </div>
         </div>
         <div class="col-xs-12">
-          <div class="row">
-            <div class="col-sm-6 col-xs-12">
-              <%= link_to new_custom_order_path(references: past_work_type_past_work_url(@past_work.past_work_type, @past_work), order_type: @past_work.past_work_translate.order_type, style: @past_work.past_work_translate.style, size: @past_work.past_work_translate.size),
-                          class: 'btn btn-link btn-primary cta-btn btn-block btn-lg' do %>
-                <i class="icon icon-handwriting"></i>
-                <%= t('customization') %>
-              <% end %>
-            </div>
-          </div>
           <%= render 'layouts/social_share', image: "#{request.protocol}#{request.host_with_port}#{@past_work.image.url(:large)}", text: "#{t('share_text')}#{@past_work.past_work_translate.name}" %>
         </div>
       </div>

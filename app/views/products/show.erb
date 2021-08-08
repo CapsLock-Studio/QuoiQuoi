@@ -120,15 +120,6 @@
                     <% end %>
                   <% end %>
                 </div>
-                <% unless @product.product_type %>
-                  <div class="col-md-12 margin-bottom-10">
-                    <h5><%= t('customize_hint') %></h5>
-                    <button type="button" class="btn btn-lg btn-blue btn-block" data-toggle="modal" data-target="#custom-product-modal">
-                      <i class="fa fa-edit"></i>
-                      <span><%= t('customize') %></span>
-                    </button>
-                  </div>
-                <% end %>
               <% else %>
                 <div class="col-md-12">
                   <a href="#" class="btn btn-lg btn-default btn-block" disabled="disabled">
