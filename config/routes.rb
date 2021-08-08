@@ -15,6 +15,7 @@ QuoiQuoi::Application.routes.draw do
     resources :articles do
       resources :article_images
     end
+    resources :images
     resources :instructions do
       resources :instruction_images
     end
