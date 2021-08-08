@@ -11,8 +11,10 @@ class AdminAbility
       can :manage, Admin
       can :manage, Locale
       can :manage, SlidePosition
+      can :manage, Image
     else admin.role == 'author'
       can :manage, Admin
+      can :manage, Image
       can :manage, ArticleType
       can :manage, Product
       can :manage, ProductCustomItem
