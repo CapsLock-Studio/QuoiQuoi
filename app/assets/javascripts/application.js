@@ -171,6 +171,18 @@
         e.preventDefault();
     });
 
+    $('body').on('submit', '.search-form', function (e) {
+        fbq('track', 'Search');
+    });
+
+    $('body').on('submit', '.new_order_product', function (e) {
+        fbq('track', 'AddToCart');
+    });
+
+    $('body').on('click', '.social-btn', function (e) {
+        fbq('track', 'CompleteRegistration');
+    });
+
     $('img').on('load', function(){
         $(this).animate({opacity: 1}, 500);
     }).each(function(){
