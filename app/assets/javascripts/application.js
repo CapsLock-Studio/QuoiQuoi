@@ -179,6 +179,37 @@
         fbq('track', 'AddToCart');
     });
 
+    $('body').on('submit', 'form.checkout-form', function (e) {
+        fbq('track', 'AddPaymentInfo');
+    })
+
+    $('body').on('submit', 'form.purchase-form', function (e) {
+        fbq('track', 'Purchase');
+
+        const dom = document.querySelector('#order-products')
+        const products = JSON.parse(dom.innerHTML)
+        const trackPayload = {
+            value: dom.dataset.subtotal,
+            currency: 'TWD',
+            contents: [
+                products.map(function (product) {
+                    return product.id
+                })
+            ],
+            content_ids: products
+                .map(function (product) {
+                    return product.id
+                })
+                .join(','),
+        };
+        console.log(trackPayload);
+        fbq('track', 'Purchase', trackPayload)
+    })
+
+    $('body').on('submit', 'form#new_user', function (e) {
+        fbq('track', 'CompleteRegistration');
+    })
+
     $('body').on('click', '.social-btn', function (e) {
         fbq('track', 'CompleteRegistration');
     });

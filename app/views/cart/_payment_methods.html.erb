@@ -1,4 +1,7 @@
-<%= form_for @order_in_cart, url: orders_path, method: :post, html: {class: 'form'} do |form| %>
+<%= form_for @order_in_cart, url: orders_path, method: :post, html: {class: 'form purchase-form'} do |form| %>
+  <div style="display:none;" id="order-products" data-subtotal="<%= @order_in_cart.get_subtotal %>">
+    <%= @order_in_cart.order_products.to_json %>
+  </div>
   <div class="box-content">
     <div class="row">
       <% if (@order_in_cart.get_subtotal - discount) > 0 %>
